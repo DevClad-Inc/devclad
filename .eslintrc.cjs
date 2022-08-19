@@ -15,7 +15,9 @@ module.exports = {
       jsx: true,
     },
     ecmaVersion: 'latest',
-    project: './tsconfig.json',
+    sourceType: 'module',
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
   },
   plugins: [
     'react',
