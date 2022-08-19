@@ -14,7 +14,7 @@ Built using [React](https://reactjs.org/) + [Vite](https://vitejs.dev).
 1. Install packages - `yarn install`
 2. Run dev server - `yarn run dev` (default port is `5173`)
 
-`npm` works fine too. `yarn` is recommended.
+`npm` works fine too. `yarn` is STRONGLY recommended.
 
 >Run `pre-commit run -a` when running `pre-commit` hooks for the first time.
 
@@ -33,9 +33,21 @@ Our SPA will consume APIs built using Django REST Framework deployed on AWS.
 
 ---
 
+## UI
+
+- **Primarily using**: [Tailwind UI](https://tailwindui.com/) - Application UI. (I have a personal license for this, I'll be adding everything we need from it in the repo anyway.)
+  - Use `clsx` for classnames. Helpful for conditional styling like dark mode and stuff.
+  - TailwindUI also uses Headless UI for interactivity+accessibility in its components.
+    - [Headless UI](https://headlessui.dev)
+
+- We could use [Radix](https://radix-ui.dev) with Tailwind [like this](https://tailwindcss-radix.vercel.app/) in certain places since it's a component-basis installation without bloat.
+
 ## State Management
 
 - [`useContext`](https://reactjs.org/docs/hooks-reference.html#usecontext) + [`useReducer`](https://reactjs.org/docs/hooks-reference.html#usereducer)
+- [React Query](https://react-query.tanstack.com/) to keep client state and server states in sync.
+- Something like Little State Machine with React Hook Form for multi-step forms (maybe).
+- Zustand if needed later.
 
 Read more about it [here](https://beta.reactjs.org/learn/scaling-up-with-reducer-and-context).
 
@@ -44,7 +56,6 @@ But, for now, we'll use these hooks to build our own solution.
 
 ## Consuming APIs
 
-- `react-query` - [React Query](https://reactquery.com/)
 - `axios` - [Axios](https://axios-http.com/docs/intro)
 
 ## Styling
