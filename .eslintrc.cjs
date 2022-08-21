@@ -45,6 +45,12 @@ module.exports = {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'ts', 'tsx'] }],
-
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        controlComponents: ['Field', 'input'],
+        assert: 'both',
+      },
+    ],
   },
 };
