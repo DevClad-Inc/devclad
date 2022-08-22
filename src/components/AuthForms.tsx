@@ -37,8 +37,8 @@ interface SignupFormValues {
 }
 
 interface SignupFormProps {
-  signupError: boolean;
-  setSignupError: (signupError: boolean) => void;
+  signupErrorState: string;
+  setSignupErrorState: (signupErrorState: string) => void;
 }
 
 // interface ForgotPasswordFormValues {
@@ -187,7 +187,7 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
   );
 }
 
-export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX.Element {
+export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormProps): JSX.Element {
   const [signedUp, setSignedUp] = useState(false);
   const validate = (values: SignupFormValues) => {
     const errors: SignupFormValues['errors'] = {};
@@ -208,42 +208,64 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
     if (!values.password2) {
       errors.password2 = 'Required';
     }
-    if (values.password1.length < 16) {
-      errors.password1 = 'Password must be at least 16 characters.';
+    if (values.password1.length < 8) {
+      errors.password1 = 'Password must be at least 8 characters.';
     }
     if ((values.password1 !== values.password2) && (values.password2.length > 0)) {
       errors.password1 = 'Passwords do not match';
       errors.password2 = 'Passwords do not match';
+    }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=[\S]+$)/;
+    // const passwordRegex2 = /^[@#](?=.{7,13}$)(?=\w{7,13})(?=[^aeiou_]{7,13})(?=.*[A-Z])(?=.*\d)/;
+    if (!passwordRegex.test(values.password1)) {
+      errors.password1 = 'Password must contain at least one number, one lowercase, one uppercase, and one special character.';
     }
     return errors;
   };
 
   // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
   const handleSignUp = async (values: SignupFormValues, { setSubmitting }: any) => {
-    try {
-      setSubmitting(true);
-      const {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        first_name, last_name, email, password1, password2,
-      } = values;
-      const user = {
-        first_name,
-        last_name,
-        email,
-        password1,
-        password2,
-      };
-      await SignUp(user);
-      if (signupError) {
-        setSignupError(false);
+    setSubmitting(true);
+    const {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      first_name, last_name, email, password1, password2,
+    } = values;
+    const user = {
+      first_name,
+      last_name,
+      email,
+      password1,
+      password2,
+    };
+    await SignUp(user).then((resp) => {
+      if (resp.status === 201) {
+        if (signupErrorState) {
+          setSignupErrorState('');
+        }
+        setSignedUp(true);
+      } else if (resp.response.status === 400) {
+        setSubmitting(false);
+        const { data } = resp.response;
+        if (data.email) {
+          setSignupErrorState(data.email.toString());
+        } else if (data.non_field_errors) {
+          setSignupErrorState(data.non_field_errors.toString());
+        } else if (data.password1) {
+          setSignupErrorState(data.password1.toString());
+        } else if (data.password2) {
+          setSignupErrorState(data.password2.toString());
+        }
+      } else if (resp.response.status === 500) {
+        setSignedUp(false);
+        setSubmitting(false);
+        setSignupErrorState('Server error. Please try again later.');
+      } else if (resp.response.status === 429) {
+        setSignedUp(false);
+        setSubmitting(false);
+        setSignupErrorState('Too many requests. Please try again in 24 hours.');
       }
-      // todo: add email verification!!
-      setSignedUp(true);
-    } catch (error) {
-      setSignedUp(false);
-      setSignupError(true);
-      setSubmitting(false);
-    }
+    });
+    // todo: add email verification!!
   };
   return (
     <Formik
@@ -278,7 +300,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
                       focus:outline-none focus:ring-indigo-500
                     focus:border-indigo-500 sm:text-sm"
                 />
-                {signupError && (
+                {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                   <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                 </div>
@@ -313,7 +335,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
                       focus:outline-none focus:ring-indigo-500
                     focus:border-indigo-500 sm:text-sm"
                 />
-                {signupError && (
+                {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                   </div>
@@ -348,7 +370,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
                       focus:outline-none focus:ring-indigo-500
                     focus:border-indigo-500 sm:text-sm"
                 />
-                {signupError && (
+                {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                   </div>
@@ -376,7 +398,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
-                {signupError && (
+                {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                   </div>
@@ -389,7 +411,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
               />
             </label>
             <p className="mt-2 pl-2 text-sm text-gray-500" id="password-description">
-              At least 16 characters.
+              At least 8 characters.
             </p>
             <p className="mt-2 pl-2 text-xs text-gray-400" id="password-description">
               Tip: Autogenerate a password.
@@ -408,7 +430,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
-                {signupError && (
+                {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                   </div>
@@ -438,7 +460,7 @@ export function SignupForm({ signupError, setSignupError }:SignupFormProps): JSX
                 </button>
               )
               : (
-                <Link to="/login" className="w-full">
+                <Link to="/" className="w-full">
                   <span
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
                   text-sm font-medium text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300

@@ -5,7 +5,7 @@ import { SignupForm } from './AuthForms';
 import { AuthError } from '../utils/Feedback';
 
 function Signup() {
-  const [signupError, setSignupError] = useState(false);
+  const [signupError, setSignupError] = useState('');
 
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -25,10 +25,10 @@ function Signup() {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         {signupError && (
-          <AuthError error="Error Signing Up" />
+          <AuthError error={signupError} />
         )}
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <SignupForm signupError={signupError} setSignupError={setSignupError} />
+          <SignupForm signupErrorState={signupError} setSignupErrorState={setSignupError} />
         </div>
       </div>
     </div>

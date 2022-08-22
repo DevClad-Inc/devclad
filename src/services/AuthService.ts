@@ -44,8 +44,7 @@ export async function SignUp(user: NewUser) {
         headers,
       },
     )
-    .then((resp) => resp)
-    .catch(() => {});
+    .then((resp) => resp).catch((err) => err);
 }
 
 export async function logIn(email: string, password: string) {
