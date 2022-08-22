@@ -15,7 +15,7 @@ function Home(): JSX.Element {
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
-        <h1 className="text-center text-2xl font-bold text-black sm:text-3xl">{`Welcome, ${loggedInUser.username}`}</h1>
+        <h1 className="text-center text-2xl font-bold text-black sm:text-3xl">{`Welcome, ${loggedInUser.first_name}`}</h1>
       </div>
       <br />
       <div className="mx-auto w-1/2 max-w-lg">

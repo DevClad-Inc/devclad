@@ -10,7 +10,7 @@ export interface UserContextState {
   last_name?: string;
 }
 
-enum UserReducerActionTypes {
+export enum UserReducerActionTypes {
   SET_USER_DATA = 'SET_USER_DATA',
 }
 
@@ -49,7 +49,7 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [loggedInUser, dispatch] = useReducer(userReducer, initialLoginState);
+  const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
   const localLoggedInUser = JSON.parse(localStorage.getItem('loggedInUser') as string);
   if (Object.values(loggedInUser).every((v) => v === undefined)) {

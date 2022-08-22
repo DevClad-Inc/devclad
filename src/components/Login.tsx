@@ -1,21 +1,8 @@
 import React, { useState } from 'react';
-import { XCircleIcon } from '@heroicons/react/outline';
+import { Link } from 'react-router-dom';
+import DevCladLogo from '../assets/devclad.svg';
 import { LoginForm } from './AuthForms';
-
-function AuthError({ error }: { error: string }): JSX.Element {
-  return (
-    <div className="rounded-md bg-red-50 p-4 mb-4">
-      <div className="flex">
-        <div className="flex-shrink-0">
-          <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
-        </div>
-        <div className="ml-3">
-          <h3 className="text-sm font-medium text-red-800">{error}</h3>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { AuthError } from '../utils/Feedback';
 
 function Login() {
   const [loginError, setLoginError] = useState(false);
@@ -24,20 +11,20 @@ function Login() {
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-full">
         <img
-          className="mx-auto mb-10 h-24 w-auto"
-          src="../devclad.svg"
+          className="mx-auto h-24 w-auto"
+          src={DevCladLogo}
           alt="DevClad"
         />
-        <h1 className="mt-6 text-center text-3xl font-bold text-black">Sign In</h1>
+        <h1 className="text-center text-4xl mb-10 font-black text-gray-900">DevClad</h1>
+        <h2 className="text-center text-2xl mt-10 font-bold text-gray-700">Sign In</h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Or,
+          Not a member?
           {' '}
-          <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
-            join DevClad now
-          </a>
+          <Link className="font-medium text-indigo-600 hover:text-indigo-500" to="/signup">Join DevClad</Link>
         </p>
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+
         {loginError && (
           <AuthError error="Invalid email/password." />
         )}

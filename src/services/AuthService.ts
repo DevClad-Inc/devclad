@@ -23,6 +23,31 @@ export async function getUser() {
   return null;
 }
 
+export interface NewUser {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password1: string;
+  password2: string;
+}
+
+export async function SignUp(user: NewUser) {
+  return axios
+    .post(
+      `${API_URL}/auth/registration/`,
+      {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        password1: user.password1,
+        password2: user.password2,
+        headers,
+      },
+    )
+    .then((resp) => resp)
+    .catch(() => {});
+}
+
 export async function logIn(email: string, password: string) {
   const url = `${API_URL}/auth/login/`;
   const response = await axios
