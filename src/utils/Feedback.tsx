@@ -2,7 +2,7 @@ import React from 'react';
 import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/outline';
 
 // unused right now
-export function AuthSuccess({ success }: { success: string }): JSX.Element {
+export function Success({ success }: { success: string }): JSX.Element {
   return (
     <div className="rounded-md bg-green-50 p-4 mb-4">
       <div className="flex">
@@ -17,7 +17,7 @@ export function AuthSuccess({ success }: { success: string }): JSX.Element {
   );
 }
 
-export function AuthError({ error }: { error: string }): JSX.Element {
+export function Error({ error }: { error: string }): JSX.Element {
   return (
     <div className="rounded-md bg-red-50 p-4 mb-4">
       <div className="flex">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DevCladLogo from '../assets/devclad.svg';
 import { LoginForm } from './AuthForms';
-import { AuthError } from '../utils/Feedback';
+import { Error } from '../utils/Feedback';
 
 function Login() {
   const [loginError, setLoginError] = useState(false);
@@ -26,7 +26,7 @@ function Login() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 
         {loginError && (
-          <AuthError error="Invalid email/password." />
+          <Error error="Invalid email/password." />
         )}
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <LoginForm loginError={loginError} setLoginError={setLoginError} />

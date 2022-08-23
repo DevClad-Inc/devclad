@@ -4,8 +4,14 @@ import {
 } from 'formik';
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
-import { getUser, logIn, SignUp } from '../services/AuthService';
-import { UserContextState, UserReducerActionTypes, useUserDispatch } from '../services/userContext';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  getUser, logIn, SignUp, updateUser,
+} from '../services/AuthService';
+import {
+  UserContextState, UserReducerActionTypes,
+  useUserContext, useUserDispatch, setLocalStorage,
+} from '../context/UserContext';
 
 interface LoginFormValues {
   email: string;
@@ -39,6 +45,28 @@ interface SignupFormValues {
 interface SignupFormProps {
   signupErrorState: string;
   setSignupErrorState: (signupErrorState: string) => void;
+}
+
+interface UpdateUserFormValues {
+  /* why are some of these values optional?
+  when logged out, useUserContext is set to undefined for values of user.
+  Hence, UserContextState has optional values.
+  UpdateUserValues accomodates loggedInUser for optional values.
+  Hence, UpdateUserValues has optional values too.
+  */
+  firstName?: string;
+  lastName?: string;
+  username?: string;
+  errors?: {
+    firstName?: string;
+    lastName?: string;
+    username?: string;
+  };
+}
+
+interface UpdateUserFormProps {
+  updateErrorState: string;
+  setUpdateErrorState: (updateUserErrorState: string) => void;
 }
 
 // interface ForgotPasswordFormValues {
@@ -496,5 +524,96 @@ export function ForgotPasswordForm(): JSX.Element {
     <div>
       <h1>Forgot Password Form</h1>
     </div>
+  );
+}
+
+// only first name, last name, and username can be updated via this form
+export function UpdateUserForm({
+  updateErrorState,
+  setUpdateErrorState,
+}: UpdateUserFormProps): JSX.Element {
+  const loggedInUser = useUserContext();
+  const { pk, email } = loggedInUser;
+  const dispatch = useUserDispatch();
+  const qc = useQueryClient();
+  const validate = (values: UpdateUserFormValues) => {
+    const errors: UpdateUserFormValues['errors'] = {};
+    if (!values.firstName) {
+      errors.firstName = 'Required';
+    }
+    if (!values.lastName) {
+      errors.lastName = 'Required';
+    }
+    if (!values.username) {
+      errors.username = 'Required';
+    }
+    return errors;
+  };
+  const handleSubmit = async (values: UpdateUserFormValues, { setSubmitting }: any) => {
+    try {
+      setSubmitting(true);
+      const { firstName, lastName } = values;
+      let { username } = values;
+      if (username === loggedInUser.username) {
+        username = undefined;
+      }
+      await updateUser(firstName, lastName, username)
+        .then(async () => {
+          if (updateErrorState) {
+            setUpdateErrorState('');
+          }
+          localStorage.removeItem('loggedInUser');
+          if (username === undefined) {
+            username = loggedInUser.username;
+          }
+          setSubmitting(false);
+          dispatch({
+            type: 'SET_USER_DATA',
+            payload: {
+              pk,
+              username,
+              email,
+              first_name: firstName,
+              last_name: lastName,
+            },
+          });
+          await setLocalStorage(qc);
+        });
+    } catch (error: any) {
+      const { data } = error.response;
+      if (data.username) {
+        setUpdateErrorState(data.username);
+      } else {
+        setUpdateErrorState('Check First Name and Last Name');
+      }
+      setSubmitting(false);
+    }
+  };
+  return (
+    <Formik
+      initialValues={{
+        firstName: loggedInUser.first_name,
+        lastName: loggedInUser.last_name,
+        username: loggedInUser.username,
+      }}
+      validate={validate}
+      onSubmit={(values, { setSubmitting }) => {
+        handleSubmit(values, { setSubmitting });
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <Field type="text" name="firstName" placeholder="First Name" />
+          <ErrorMessage name="firstName" component="div" />
+          <Field type="text" name="lastName" placeholder="Last Name" />
+          <ErrorMessage name="lastName" component="div" />
+          <Field type="text" name="username" placeholder="Username" />
+          <ErrorMessage name="username" component="div" />
+          <button type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
 }

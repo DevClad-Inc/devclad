@@ -1,6 +1,6 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getUser } from './AuthService';
+import { getUser } from '../services/AuthService';
 
 export interface UserContextState {
   pk?: number;
@@ -89,4 +89,10 @@ export function useUserDispatch() {
 
 export function useUserContext() {
   return useContext(UserContext);
+}
+
+export async function setLocalStorage(qc: any) {
+  await qc.invalidateQueries(['user']);
+  const cacheUserData = qc.getQueryData(['user']) as { data: UserContextState; };
+  localStorage.setItem('loggedInUser', JSON.stringify(cacheUserData.data));
 }

@@ -23,6 +23,26 @@ export async function getUser() {
   return null;
 }
 
+export async function updateUser(first_name?: string, last_name?: string, username?: string) {
+  const token = localStorage.getItem('token');
+  if (token) {
+    // method signature does not work with Patch/Put idk why
+    return axios({
+      method: 'PATCH',
+      url: `${API_URL}/auth/user/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        first_name,
+        last_name,
+        username,
+      },
+    });
+  }
+  return null;
+}
+
 export interface NewUser {
   first_name: string;
   last_name: string;

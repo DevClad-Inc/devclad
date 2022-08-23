@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DevCladLogo from '../assets/devclad.svg';
 import { SignupForm } from './AuthForms';
-import { AuthError } from '../utils/Feedback';
+import { Error } from '../utils/Feedback';
 
 function Signup() {
   const [signupError, setSignupError] = useState('');
@@ -25,7 +25,7 @@ function Signup() {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         {signupError && (
-          <AuthError error={signupError} />
+          <Error error={signupError} />
         )}
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <SignupForm signupErrorState={signupError} setSignupErrorState={setSignupError} />

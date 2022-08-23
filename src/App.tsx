@@ -3,7 +3,7 @@ import {
   Routes, Route, useNavigate,
 } from 'react-router-dom';
 import { refreshToken } from './services/AuthService';
-import { useUserContext } from './services/userContext';
+import { useUserContext } from './context/UserContext';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
