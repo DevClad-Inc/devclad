@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './App';
 import './index.css';
-import { UserProvider } from './context/UserContext';
+import { UserProvider } from './components/UserContext';
 
 function QueryLoader() {
   const isFetching = useIsFetching();

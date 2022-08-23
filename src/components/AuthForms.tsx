@@ -11,7 +11,7 @@ import {
 import {
   UserContextState, UserReducerActionTypes,
   useUserContext, useUserDispatch, setLocalStorage,
-} from '../context/UserContext';
+} from './UserContext';
 
 interface LoginFormValues {
   email: string;
