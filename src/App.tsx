@@ -18,8 +18,6 @@ function App() {
   );
   useEffect(() => {
     if (window.location.pathname === '/signup' || window.location.pathname === '/signup/') {
-      // remove /signup from the pathname if it's there
-      // window.history.pushState({}, '', '/');
       window.history.replaceState({}, '', '/#/signup');
       navigate(0);
     }
