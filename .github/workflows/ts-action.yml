@@ -14,7 +14,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
+      - name: Install dependencies on ACT
+        if: ${{ env.ACT }}
+        run: |
+          npm i -g yarn
+          sudo apt-get update
+      - name: Install dependencies on Ubuntu
         run: yarn install --frozen-lockfile
       - name: tsc
         uses: icrawl/action-tsc@v1

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {
   Routes, Route, useNavigate,
 } from 'react-router-dom';
-import { useUserContext } from './components/UserContext';
+import { useUserContext } from './context/User.context';
 import { refreshToken } from './services/AuthService';
 import './App.css';
 import Login from './components/Login';

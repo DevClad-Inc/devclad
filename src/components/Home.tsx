@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUserContext } from './UserContext';
+import { useUserContext } from '../context/User.context';
 import { logOut } from '../services/AuthService';
 
 function Home(): JSX.Element {
