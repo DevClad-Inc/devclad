@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import {
   Routes, Route, useNavigate,
 } from 'react-router-dom';
-import { refreshToken } from './services/AuthService';
 import { useUserContext } from './context/UserContext';
+import { refreshToken } from './services/AuthService';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
