@@ -8,6 +8,7 @@ export interface UserContextState {
   email?: string;
   first_name?: string;
   last_name?: string;
+
 }
 
 export enum UserReducerActionTypes {
@@ -19,7 +20,7 @@ interface UserReducerAction {
   payload: UserContextState;
 }
 
-export const UserContext = React.createContext({} as UserContextState);
+export const UserContext = createContext({} as UserContextState);
 export const UserDispatch = createContext({} as React.Dispatch<any>);
 
 function userReducer(state:UserContextState, action: UserReducerAction): UserContextState {

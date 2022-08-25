@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './App';
 import './index.css';
 import { UserProvider } from './context/User.context';
+import { ThemeProvider } from './context/Theme.context';
 
 function QueryLoader() {
   const isFetching = useIsFetching();
@@ -26,7 +27,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <UserProvider>
         <HashRouter>
           <QueryLoader />
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </HashRouter>
       </UserProvider>
       <ReactQueryDevtools initialIsOpen={false} />
