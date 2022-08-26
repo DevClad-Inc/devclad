@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useUserContext } from '../context/User.context';
 import { UpdateUserForm } from './AuthForms';
 import { Error } from '../utils/Feedback';
+import ToggleTheme from './ToggleTheme';
 
 function Settings(): JSX.Element {
   const loggedInUser = useUserContext();
@@ -25,6 +26,9 @@ function Settings(): JSX.Element {
         <Link to="/">Go back</Link>
         {' '}
       </span>
+      <div className="flex items-center justify-center">
+        <ToggleTheme />
+      </div>
     </div>
   );
 }

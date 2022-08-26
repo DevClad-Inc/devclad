@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 const defaultTheme = require('tailwindcss/defaultTheme');
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   content: [
@@ -37,10 +38,47 @@ module.exports = {
         system: ['system-ui', 'sans-serif'],
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        darkglow: {
+          '0%': {
+            boxShadow: '0 0 0 1px #3a015c',
+          },
+          '25%': {
+            boxShadow: '0 0 0 1px #35012c',
+          },
+          '50%': {
+            boxShadow: '0 0 0 1px #290025',
+          },
+          '75%': {
+            boxShadow: '0 0 0 1px #280000',
+          },
+          '100%': { boxShadow: '0 0 0 1px #3a015c' },
+        },
+      },
       animation: {
         'spin-slow': 'spin 10s linear',
+        'pulse-slow': 'pulse 10s linear infinite',
+        darkglow: 'darkglow 5s ease-out infinite',
       },
     },
   },
-  plugins: ['@tailwindcss/forms'],
+  plugins: ['@tailwindcss/forms',
+  // add scrollbar color
+    plugin(({ addBase, theme }) => {
+      addBase({
+        '.scrollbar': {
+          overflowY: 'auto',
+          // if dark mode is enabled, use the dark scrollbar color
+          scrollbarWidth: 'thin',
+        },
+        '.scrollbar::-webkit-scrollbar': {
+          height: '6px',
+          width: '6px',
+        },
+        '.scrollbar::-webkit-scrollbar-thumb': {
+          backgroundColor: theme('colors.fuchsia.900'),
+        },
+      });
+    }),
+  ],
 };
