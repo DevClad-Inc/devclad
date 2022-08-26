@@ -15,39 +15,18 @@ function Home(): JSX.Element {
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
-        <h1 className="text-center text-2xl font-bold text-black sm:text-3xl">{`Welcome, ${loggedInUser.first_name}`}</h1>
+        <h1 className="text-center text-2xl font-bold text-black sm:text-3xl dark:text-white">{`Welcome, ${loggedInUser.first_name}`}</h1>
       </div>
       <br />
       <div className="mx-auto w-3/4 max-w-lg">
         <div className="text-center text-sm text-gray-500">
-          <p className="mt-6 mb-0 space-y-4 rounded-xl p-8 shadow-2xl">
-            You are now logged in.
-          </p>
-        </div>
-      </div>
-      <div className="mx-auto w-3/4 max-w-lg">
-        <div className="text-center text-sm text-gray-500">
-          <p className="mt-6 mb-0 space-y-4 rounded-xl p-8 shadow-2xl">
-            <Link to="/settings" className="text-blue-500 hover:text-blue-700">
-              Go to settings
-            </Link>
-            {' '}
-            OR
-            {' '}
-            <Link to="/beta" className="text-blue-500 hover:text-blue-700">
-              Go to beta
-            </Link>
-            {' '}
-            OR
-            {' '}
-            <button
-              type="button"
-              onClick={handlelogOut}
-              className="text-blue-500 hover:text-blue-700"
-            >
-              Log out
-            </button>
-          </p>
+          <button
+            onClick={handlelogOut}
+            type="button"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-bloodRed hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Logout
+          </button>
         </div>
       </div>
       <br />

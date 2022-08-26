@@ -4,14 +4,14 @@ import {
 } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { useUserContext } from './context/User.context';
+import { ThemeContext } from './context/Theme.context';
 import { refreshToken } from './services/AuthService';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Settings from './components/Settings';
-import TestHome from './components/TestHome';
-import { ThemeContext } from './context/Theme.context';
+import AppShell from './components/AppShell';
 
 function App() {
   const navigate = useNavigate();
@@ -32,14 +32,15 @@ function App() {
   }, [loggedInUser]);
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
-      <div className="App h-screen dark:bg-black">
+      <div className="App h-screen dark:bg-darkBG">
         {!undefinedUser ? (
-          <Routes>
-            <Route path="*" element={<Home />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/beta" element={<TestHome />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
+          <AppShell>
+            <Routes>
+              <Route path="*" element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </AppShell>
         ) : (
           <Routes>
             <Route path="*" element={<Signup />} />

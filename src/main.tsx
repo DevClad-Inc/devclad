@@ -25,14 +25,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={new QueryClient()}>
       <UserProvider>
-        <HashRouter>
-          <QueryLoader />
-          <ThemeProvider>
+        <ThemeProvider>
+          <HashRouter>
+            <QueryLoader />
             <App />
-          </ThemeProvider>
-        </HashRouter>
+          </HashRouter>
+        </ThemeProvider>
       </UserProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   </React.StrictMode>,
 );
