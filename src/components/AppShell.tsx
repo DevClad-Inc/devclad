@@ -2,10 +2,9 @@
 import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {
-  CalendarIcon,
+  FireIcon,
   FolderIcon,
   HomeIcon,
-  InboxIcon,
   MenuIcon,
   UsersIcon,
   XIcon,
@@ -26,7 +25,7 @@ const navigation = [
     name: 'Projects', href: '/projects', icon: FolderIcon,
   },
   {
-    name: 'Hackathons', href: '/hackathons', icon: CalendarIcon,
+    name: 'Hackathons', href: '/hackathons', icon: FireIcon,
   },
 ];
 
@@ -157,12 +156,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  // hover for tooltip
                   className={({ isActive }) => classNames(
                     isActive
                       ? ' text-orange-700 dark:text-fuchsia-400 dark:bg-darkBG'
-                      : 'text-black dark:text-white',
-                    'font-sans subpixel-antialiased tracking-wide font-bold group flex items-center px-4 py-4 text-md rounded-md hover:shadow-md hover:shadow-fuchsia-700/20 uppercase',
+                      : '',
+                    'duration-500 font-sans subpixel-antialiased tracking-tight font-bold group flex items-center px-4 py-4 text-md rounded-lg hover:shadow-md hover:shadow-fuchsia-700/20 uppercase',
                   )}
                 >
                   <item.icon className="mr-3 flex-shrink-1 stroke-2 h-8 w-6" aria-hidden="true" />
@@ -208,16 +206,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+              <h1 className="text-2xl font-semibold">Dashboard</h1>
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              {/* Render component here */}
               <div className="py-4">
                 <div className="border-2 border-dashed border-gray-200 rounded-lg h-96">
                   {children}
                 </div>
               </div>
-              {/* /Render component here */}
             </div>
           </div>
         </main>
