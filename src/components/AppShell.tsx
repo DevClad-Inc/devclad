@@ -147,7 +147,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex-1 flex flex-col pt-5 overflow-y-hidden">
             <div className="flex items-center flex-shrink-0 px-2">
               <img
-                className="h-24 m-auto w-auto shadow-md rounded-full"
+                className="h-32 m-auto w-auto shadow-md rounded-full"
                 src={DevCladLogo}
                 alt="DevClad"
               />
@@ -162,7 +162,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     isActive
                       ? ' text-orange-700 dark:text-fuchsia-400 dark:bg-darkBG'
                       : 'text-black dark:text-white',
-                    'font-sans subpixel-antialiased tracking-wide font-extrabold group flex items-center px-4 py-4 text-md rounded-md hover:shadow-md hover:shadow-fuchsia-700/20 uppercase',
+                    'font-sans subpixel-antialiased tracking-wide font-bold group flex items-center px-4 py-4 text-md rounded-md hover:shadow-md hover:shadow-fuchsia-700/20 uppercase',
                   )}
                 >
                   <item.icon className="mr-3 flex-shrink-1 stroke-2 h-8 w-6" aria-hidden="true" />
