@@ -32,7 +32,9 @@ function App() {
   }, [loggedInUser]);
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
-      <div className="App h-screen dark:bg-darkBG dark:text-white">
+      <div
+        className="App h-screen dark:bg-darkBG dark:text-white"
+      >
         {!undefinedUser ? (
           <AppShell>
             <Routes>

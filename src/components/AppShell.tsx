@@ -35,8 +35,8 @@ function classNames(...classes: string[]) {
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
-  const title = useLocation().pathname.split('/').pop() || 'DevClad';
   const loggedInUser = useUserContext();
+  const title = useLocation().pathname.split('/').pop() || 'Dashboard';
   return (
     <div className="h-full flex">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -161,8 +161,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </div>
             <nav className={classNames(
               sidebarExpand
-                ? 'mt-10 flex-1 px-2 space-y-4 overflow-auto scrollbar'
-                : 'mt-10 flex-1 px-2 space-y-24 overflow-hidden scrollbar',
+                ? 'space-y-4'
+                : 'space-y-24',
+              'mt-10 flex-1 px-2 overflow-auto scrollbar',
             )}
             >
               {navigation.map((item) => (
@@ -172,9 +173,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   className={({ isActive }) => classNames(
                     isActive
                       ? ' text-orange-700 dark:text-fuchsia-300 dark:bg-fuchsia-900/30'
-                      : '',
-                    sidebarExpand ? 'rounded-md' : 'rounded-2xl',
-                    'duration-500 uppercase font-sans font-black flex items-center text-md px-4 py-4 hover:shadow-lg hover:shadow-fuchsia-700/30',
+                      : 'dark:text-fuchsia-100 text-gray-800',
+                    sidebarExpand ? 'rounded-md duration-500' : 'rounded-2xl duration-700',
+                    'uppercase font-mono font-extrabold flex items-center text-md px-4 py-4 hover:shadow-lg hover:shadow-fuchsia-700/30',
                   )}
                 >
                   <item.icon
@@ -229,7 +230,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold">{title}</h1>
+              <h1 className="text-2xl font-sans font-black uppercase">{title}</h1>
               <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
