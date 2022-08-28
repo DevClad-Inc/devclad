@@ -132,7 +132,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       </div>
                       <div className="ml-3">
                         <p className="text-base font-medium text-white">{loggedInUser.first_name}</p>
-                        <p className="text-sm font-medium text-indigo-200 group-hover:text-white">View profile</p>
+                        <p className="text-sm font-medium text-indigo-200 group-hover:text-white">Settings</p>
                       </div>
                     </div>
                   </Link>
@@ -203,7 +203,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {sidebarExpand && (
                 <div className="ml-3">
                   <p className="text-sm font-medium">{loggedInUser.first_name}</p>
-                  <p className="text-xs font-medium text-gray-600 dark:text-fuchsia-300 hover:text-black dark:group-hover:text-fuchsia-400 duration-300">View profile</p>
+                  <p className="text-xs font-medium text-gray-600 dark:text-fuchsia-300 hover:text-black
+                  dark:group-hover:text-fuchsia-400 duration-300"
+                  >
+                    Settings
+                  </p>
                 </div>
                 )}
               </div>

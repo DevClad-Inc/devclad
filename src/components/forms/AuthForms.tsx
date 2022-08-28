@@ -67,8 +67,10 @@ interface UpdateUserFormValues {
 }
 
 interface UpdateUserFormProps {
-  updateErrorState: string;
-  setUpdateErrorState: (updateUserErrorState: string) => void;
+  setUpdateUserMessageState: (updateUserMessageState: {
+    error: string;
+    success: string;
+  }) => void;
 }
 
 export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Element {
@@ -139,8 +141,7 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
                   autoComplete="email"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {loginError && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -172,8 +173,7 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
                   autoComplete="current-password"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {loginError && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -321,8 +321,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   autoComplete="First Name"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -354,8 +353,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   autoComplete="Last Name"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -387,8 +385,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   autoComplete="email"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -421,8 +418,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   aria-describedby="password-description"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -459,8 +455,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   autoComplete="current-password"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -526,8 +521,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
 
 // only first name, last name, and username can be updated via this form
 export function UpdateUserForm({
-  updateErrorState,
-  setUpdateErrorState,
+  setUpdateUserMessageState,
 }: UpdateUserFormProps): JSX.Element {
   const loggedInUser = useUserContext();
   const { pk, email } = loggedInUser;
@@ -556,9 +550,10 @@ export function UpdateUserForm({
       }
       await updateUser(firstName, lastName, username)
         .then(async () => {
-          if (updateErrorState) {
-            setUpdateErrorState('');
-          }
+          setUpdateUserMessageState({
+            error: '',
+            success: 'User updated successfully.',
+          });
           del('loggedInUser');
           if (username === undefined) {
             username = loggedInUser.username;
@@ -574,14 +569,20 @@ export function UpdateUserForm({
               last_name: lastName,
             },
           });
-          await setIndexDBStore(qc);
+          await setIndexDBStore(qc, 'user');
         });
     } catch (error: any) {
       const { data } = error.response;
       if (data.username) {
-        setUpdateErrorState(data.username);
+        setUpdateUserMessageState({
+          error: data.username,
+          success: '',
+        });
       } else {
-        setUpdateErrorState('Check First Name and Last Name');
+        setUpdateUserMessageState({
+          error: 'Check First and Last name',
+          success: '',
+        });
       }
       setSubmitting(false);
     }
@@ -615,8 +616,7 @@ export function UpdateUserForm({
                   placeholder="First name"
                   autoComplete="given-name"
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 <ErrorMessage
                   name="firstName"
@@ -639,8 +639,7 @@ export function UpdateUserForm({
                   placeholder="Last Name"
                   autoComplete="family-name"
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 <ErrorMessage
                   name="lastName"
@@ -661,8 +660,7 @@ export function UpdateUserForm({
                   id="username"
                   placeholder="username"
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 <ErrorMessage
                   name="username"

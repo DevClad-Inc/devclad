@@ -102,8 +102,8 @@ export function useUserContext() {
   return useContext(UserContext);
 }
 
-export async function setIndexDBStore(qc: any) {
-  await qc.invalidateQueries(['user']);
+export async function setIndexDBStore(qc: any, key: string) {
+  await qc.invalidateQueries([key]);
   const cacheUserData = qc.getQueryData(['user']) as { data: UserContextState; };
   set('loggedInUser', cacheUserData.data);
 }

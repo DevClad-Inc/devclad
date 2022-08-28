@@ -15,7 +15,7 @@ function QueryLoader() {
   const isFetching = useIsFetching();
   if (isFetching) {
     return (
-      <button type="button" className="bg-indigo-500 ..." disabled>
+      <button type="button" className="bg-fuchsia-500 ..." disabled>
         <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24" />
         Processing...
       </button>

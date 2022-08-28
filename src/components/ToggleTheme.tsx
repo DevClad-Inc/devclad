@@ -16,8 +16,8 @@ function ToggleTheme() {
         toggle(darkMode);
       }}
       className={classNames(
-        darkMode ? 'bg-indigo-600' : 'bg-gray-200',
-        'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+        darkMode ? 'bg-gray-600' : 'bg-gray-200',
+        'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-3xl cursor-pointer transition-colors ease-in-out duration-200',
       )}
     >
       <span className="sr-only">Use setting</span>

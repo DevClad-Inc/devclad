@@ -11,7 +11,6 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Settings from './components/Settings';
-import NewSettings from './components/NewSettings';
 import AppShell from './components/AppShell';
 
 function App() {
@@ -41,7 +40,6 @@ function App() {
               <Route path="*" element={<Home />} />
               <Route path="/" element={<Home />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/newset" element={<NewSettings />} />
             </Routes>
           </AppShell>
         ) : (
