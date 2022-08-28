@@ -66,7 +66,7 @@ interface UpdateUserFormValues {
   };
 }
 
-interface UpdateUserFormProps {
+export interface UpdateFormProps {
   setUpdateUserMessageState: (updateUserMessageState: {
     error: string;
     success: string;
@@ -522,7 +522,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
 // only first name, last name, and username can be updated via this form
 export function UpdateUserForm({
   setUpdateUserMessageState,
-}: UpdateUserFormProps): JSX.Element {
+}: UpdateFormProps): JSX.Element {
   const loggedInUser = useUserContext();
   const { pk, email } = loggedInUser;
   const dispatch = useUserDispatch();

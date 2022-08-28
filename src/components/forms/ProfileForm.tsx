@@ -1,76 +1,58 @@
-import { useQueryClient } from '@tanstack/react-query';
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
-import { del } from 'idb-keyval';
 import React from 'react';
-import { useUserContext, useUserDispatch, setIndexDBStore } from '../../context/User.context';
-import { updateUser } from '../../services/AuthService';
+// import { useQueryClient } from '@tanstack/react-query';
+import {
+  Formik, Form, ErrorMessage,
+} from 'formik';
+import TimezoneSelect from 'react-timezone-select';
+import { updateProfile } from '../../services/AuthService';
 import { PrimaryButton } from '../../utils/Buttons';
+import { UpdateFormProps } from './AuthForms';
 
-interface UpdateProfileFormProps {
-  updateErrorState: string;
-  setUpdateErrorState: (updateErrorState: string) => void;
+interface UpdateProfileFormValues {
+  timezone: string;
+  errors?: {
+    timezone?: string;
+  };
 }
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateProfileForm({
-  updateErrorState,
-  setUpdateErrorState,
-}: UpdateProfileFormProps): JSX.Element {
-  const loggedInUser = useUserContext();
-  const { pk, email } = loggedInUser;
-  const dispatch = useUserDispatch();
-  const qc = useQueryClient();
+  setUpdateUserMessageState,
+}: UpdateFormProps): JSX.Element {
+  const [profileTimezone, setProfileTimezone] = React.useState(
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+  );
   const validate = (values: UpdateProfileFormValues) => {
-    const errors: UpdateProfileFormProps['errors'] = {};
-    if (!values.firstName) {
-      errors.firstName = 'Required';
-    }
-    if (!values.lastName) {
-      errors.lastName = 'Required';
-    }
-    if (!values.username) {
-      errors.username = 'Required';
+    const errors: UpdateProfileFormValues['errors'] = {};
+    if (!values.timezone) {
+      errors.timezone = 'Required';
     }
     return errors;
   };
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
     try {
       setSubmitting(true);
-      const { firstName, lastName } = values;
-      let { username } = values;
-      if (username === loggedInUser.username) {
-        username = undefined;
-      }
-      await updateUser(firstName, lastName, username)
+      const { timezone } = values;
+      await updateProfile(timezone)
         .then(async () => {
-          if (updateErrorState) {
-            setUpdateErrorState('');
-          }
-          del('loggedInUser');
-          if (username === undefined) {
-            username = loggedInUser.username;
-          }
-          setSubmitting(false);
-          dispatch({
-            type: 'SET_USER_DATA',
-            payload: {
-              pk,
-              username,
-              email,
-              first_name: firstName,
-              last_name: lastName,
-            },
+          setUpdateUserMessageState({
+            error: '',
+            success: 'Profile updated successfully.',
           });
-          await setIndexDBStore(qc, 'user');
+          setSubmitting(false);
         });
     } catch (error: any) {
       const { data } = error.response;
-      if (data.username) {
-        setUpdateErrorState(data.username);
+      if (data.timezone) {
+        setUpdateUserMessageState({
+          error: data.timezone,
+          success: '',
+        });
       } else {
-        setUpdateErrorState('Check First Name and Last Name');
+        setUpdateUserMessageState({
+          error: 'Something went wrong. Please try again.',
+          success: '',
+        });
       }
       setSubmitting(false);
     }
@@ -78,80 +60,37 @@ export default function UpdateProfileForm({
   return (
     <Formik
       initialValues={{
-        firstName: loggedInUser.first_name,
-        lastName: loggedInUser.last_name,
-        username: loggedInUser.username,
+        timezone: profileTimezone,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(values, { setSubmitting });
       }}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, setFieldValue }) => (
         <Form>
           <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6 sm:col-span-3">
-              <label
-                htmlFor="firstName"
-                className="block text-sm font-medium
-                 text-gray-700 dark:text-gray-300"
-              >
-                First name
-                <Field
-                  type="text"
-                  name="firstName"
-                  id="firstName"
-                  placeholder="First name"
-                  autoComplete="given-name"
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
-                />
-                <ErrorMessage
-                  name="firstName"
-                  component="div"
-                  className="text-sm text-bloodRed dark:text-mistyRose"
-                />
-              </label>
-            </div>
-            <div className="col-span-6 sm:col-span-3">
-              <label
-                htmlFor="lastName"
-                className="block text-sm font-medium
-                 text-gray-700 dark:text-gray-300"
-              >
-                Last name
-                <Field
-                  type="text"
-                  name="lastName"
-                  id="lastName"
-                  placeholder="Last Name"
-                  autoComplete="family-name"
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
-                />
-                <ErrorMessage
-                  name="lastName"
-                  component="div"
-                  className="text-sm text-bloodRed dark:text-mistyRose"
-                />
-              </label>
-            </div>
             <div className="col-span-6 sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="timezone"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                Username
-                <Field
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="username"
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                TimeZone
+                {/* DST aware timezone selector */}
+                <TimezoneSelect
+                  name="timezone"
+                  id="timezone"
+                  value={profileTimezone}
+                  onChange={(e) => {
+                    setProfileTimezone(e.value);
+                    setFieldValue('timezone', e.value);
+                  }}
+                  className="mt-1 block w-full dark:bg-raisinBlack2"
+                  classNamePrefix="react-timezone-select"
                 />
+
                 <ErrorMessage
-                  name="username"
+                  name="timezone"
                   component="div"
                   className="text-sm text-bloodRed dark:text-mistyRose"
                 />

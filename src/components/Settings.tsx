@@ -7,6 +7,7 @@ import { UpdateUserForm } from './forms/AuthForms';
 // import { useUserContext } from '../context/User.context';
 import { Error, Success } from '../utils/Feedback';
 import ToggleTheme from './ToggleTheme';
+import UpdateProfileForm from './forms/ProfileForm';
 
 const navigation = [
   {
@@ -82,9 +83,20 @@ export default function Settings() {
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
               <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                This information will be displayed publicly so be careful what you share.
-              </p>
+            </div>
+            {updateUserMessage.error && (
+              <Error error={updateUserMessage.error} />
+            )}
+            {updateUserMessage.success && (
+            <Success success={updateUserMessage.success} />
+            )}
+            <UpdateProfileForm
+              setUpdateUserMessageState={setUpdateUserMessage}
+            />
+          </div>
+          <div className="py-6 px-4 space-y-6 sm:p-6">
+            <div>
+              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h3>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
@@ -103,7 +115,7 @@ export default function Settings() {
                   />
                 </div>
                 <p className="mt-2 text-sm text-gray-500">
-                  Brief description for your profile. URLs are hyperlinked.
+                  Tip: Talk about what you like to build and what you are currently working on.
                 </p>
               </div>
               <div className="col-span-6 sm:col-span-3">

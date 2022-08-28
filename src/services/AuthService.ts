@@ -10,6 +10,28 @@ const headers = {
 const API_URL = import.meta.env.VITE_API_URL;
 const fortyFive = new Date(new Date().getTime() + ((45 * 60) * 1000));
 
+export async function refreshToken() {
+  const url = `${API_URL}/auth/token/refresh/`;
+  const token = Cookies.get('token');
+  const response = await axios
+    .post(url, {
+      refresh: Cookies.get('refresh'),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: 'same-origin',
+    })
+    .then((resp) => {
+      Cookies.set('token', resp.data.access_token, {
+        expires: fortyFive,
+        sameSite: 'lax',
+        secure: true,
+      });
+    })
+    .catch(() => {});
+  return response;
+}
+
 export async function getUser() {
   const token = Cookies.get('token');
   if (token) {
@@ -22,6 +44,10 @@ export async function getUser() {
       })
       .then((resp) => resp)
       .catch(() => {});
+  }
+  if (token === undefined && Cookies.get('refresh')) {
+    // refresh token
+    refreshToken();
   }
   return null;
 }
@@ -40,6 +66,24 @@ export async function updateUser(first_name?: string, last_name?: string, userna
         first_name,
         last_name,
         username,
+      },
+    });
+  }
+  return null;
+}
+
+export async function updateProfile(timezone?:string) {
+  const token = Cookies.get('token');
+  if (token) {
+    // method signature does not work with Patch/Put idk why
+    return axios({
+      method: 'PATCH',
+      url: `${API_URL}/users/profile/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        timezone,
       },
     });
   }
@@ -102,28 +146,6 @@ export async function logIn(email: string, password: string) {
         secure: true,
       });
     });
-  return response;
-}
-
-export async function refreshToken() {
-  const url = `${API_URL}/auth/token/refresh/`;
-  const token = Cookies.get('token');
-  const response = await axios
-    .post(url, {
-      refresh: Cookies.get('refresh'),
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: 'same-origin',
-    })
-    .then((resp) => {
-      Cookies.set('token', resp.data.access_token, {
-        expires: fortyFive,
-        sameSite: 'lax',
-        secure: true,
-      });
-    })
-    .catch(() => {});
   return response;
 }
 
