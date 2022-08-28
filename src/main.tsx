@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import { HashRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react-query';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './App';
 import './index.css';
 import { UserProvider } from './context/User.context';
@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </HashRouter>
         </ThemeProvider>
       </UserProvider>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
 );

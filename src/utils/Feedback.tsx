@@ -3,6 +3,7 @@ import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/outline';
 
 // unused right now
 export function Success({ success }: { success: string }): JSX.Element {
+  // make message disimissable
   return (
     <div className="rounded-md bg-green-50 p-4 mb-4">
       <div className="flex">

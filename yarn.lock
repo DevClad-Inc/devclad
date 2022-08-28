@@ -2515,7 +2515,7 @@ react-router@6.3.0:
   dependencies:
     history "^5.2.0"
 
-react-select@^5.2.2:
+react-select@^5.2.2, react-select@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.4.0.tgz#81f6ac73906126706f104751ee14437bd16798f4"
   integrity sha512-CjE9RFLUvChd5SdlfG4vqxZd55AZJRrLrHzkQyTYeHlpOztqcgnyftYAolJ0SGsBev6zAs6qFrjm6KU3eo2hzg==

@@ -1,7 +1,7 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { del, get, set } from 'idb-keyval';
+import { delMany, get, set } from 'idb-keyval';
 import { getUser } from '../services/AuthService';
 
 export interface UserContextState {
@@ -21,7 +21,37 @@ interface UserReducerAction {
   type: UserReducerActionTypes;
   payload: UserContextState;
 }
+export interface Profile {
+  'uid'?: string;
+  'timezone'?: string;
+  'avatar'?: string;
+  'pronouns'?: string;
+  'about'?: string;
+  'website'?: string;
+  'linkedin'?: string;
+  'languages'?: string;
+  'dev_type'?: string;
+  'raw_xp'?: number;
+  'age_range'?: string;
+  'purpose'?: string;
+  'location'?: string;
+}
 
+export const initialProfileState : Profile = {
+  uid: undefined,
+  timezone: undefined,
+  avatar: undefined,
+  pronouns: undefined,
+  about: undefined,
+  website: undefined,
+  linkedin: undefined,
+  languages: undefined,
+  dev_type: undefined,
+  raw_xp: undefined,
+  age_range: undefined,
+  purpose: undefined,
+  location: undefined,
+};
 export const UserContext = createContext({} as UserContextState);
 export const UserDispatch = createContext({} as React.Dispatch<any>);
 
@@ -79,7 +109,7 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }
   if (isError) {
-    del('loggedInUser');
+    delMany(['loggedInUser', 'profile']);
     Cookies.remove('token');
     Cookies.remove('refresh');
   }
@@ -104,6 +134,12 @@ export function useUserContext() {
 
 export async function setIndexDBStore(qc: any, key: string) {
   await qc.invalidateQueries([key]);
-  const cacheUserData = qc.getQueryData(['user']) as { data: UserContextState; };
-  set('loggedInUser', cacheUserData.data);
+  if (key === 'user') {
+    const cacheUserData = qc.getQueryData([key]) as { data: UserContextState };
+    set('loggedInUser', cacheUserData.data);
+  } else if (key === 'profile') {
+    const cacheProfileData = qc.getQueryData([key]) as { data: Profile };
+    set('profile', cacheProfileData.data);
+    // could access profile data if needed faster *maybe*
+  }
 }

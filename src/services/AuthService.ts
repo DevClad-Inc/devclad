@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { del } from 'idb-keyval';
+import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 
 const headers = {
@@ -22,7 +22,7 @@ export async function refreshToken() {
       credentials: 'same-origin',
     })
     .then((resp) => {
-      Cookies.set('token', resp.data.access_token, {
+      Cookies.set('token', resp.data.access, {
         expires: fortyFive,
         sameSite: 'lax',
         secure: true,
@@ -30,6 +30,25 @@ export async function refreshToken() {
     })
     .catch(() => {});
   return response;
+}
+
+export async function getProfile() {
+  const url = `${API_URL}/users/profile/`;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => resp)
+      .catch(() => null);
+  }
+  if (token === 'undefined' && Cookies.get('refresh')) {
+    refreshToken();
+  }
+  return null;
 }
 
 export async function getUser() {
@@ -160,7 +179,7 @@ export async function logOut() {
       // console.log('resp.data ->', resp.data);
       Cookies.remove('token');
       Cookies.remove('refresh');
-      del('loggedInUser');
+      delMany(['loggedInUser', 'profile']);
     })
     .catch(() => {});
   return response;

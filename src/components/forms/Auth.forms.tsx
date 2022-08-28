@@ -5,7 +5,7 @@ import {
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { del, set } from 'idb-keyval';
+import { del, delMany, set } from 'idb-keyval';
 import {
   getUser, logIn, SignUp, updateUser,
 } from '../../services/AuthService';
@@ -108,7 +108,7 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
           set('loggedInUser', data);
         })
         .catch(() => {
-          del('loggedInUser');
+          delMany(['loggedInUser', 'profile']);
         });
     } catch (error) {
       setLoginError(true);

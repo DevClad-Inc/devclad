@@ -3,11 +3,11 @@ import {
   CreditCardIcon, KeyIcon, UserCircleIcon,
 } from '@heroicons/react/outline';
 import { NavLink } from 'react-router-dom';
-import { UpdateUserForm } from './forms/AuthForms';
+import { UpdateUserForm } from './forms/Auth.forms';
 // import { useUserContext } from '../context/User.context';
 import { Error, Success } from '../utils/Feedback';
 import ToggleTheme from './ToggleTheme';
-import UpdateProfileForm from './forms/ProfileForm';
+import UpdateProfileForm from './forms/Profile.forms';
 
 const navigation = [
   {
@@ -64,18 +64,17 @@ export default function Settings() {
       </aside>
 
       <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-
+        {updateUserMessage.error && (
+        <Error error={updateUserMessage.error} />
+        )}
+        {updateUserMessage.success && (
+        <Success success={updateUserMessage.success} />
+        )}
         <div className="shadow sm:rounded-md sm:overflow-hidden">
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
               <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h3>
             </div>
-            {updateUserMessage.error && (
-              <Error error={updateUserMessage.error} />
-            )}
-            {updateUserMessage.success && (
-            <Success success={updateUserMessage.success} />
-            )}
             <UpdateUserForm
               setUpdateUserMessageState={setUpdateUserMessage}
             />
@@ -84,12 +83,6 @@ export default function Settings() {
             <div>
               <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h3>
             </div>
-            {updateUserMessage.error && (
-              <Error error={updateUserMessage.error} />
-            )}
-            {updateUserMessage.success && (
-            <Success success={updateUserMessage.success} />
-            )}
             <UpdateProfileForm
               setUpdateUserMessageState={setUpdateUserMessage}
             />
