@@ -8,11 +8,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { del, set } from 'idb-keyval';
 import {
   getUser, logIn, SignUp, updateUser,
-} from '../services/AuthService';
+} from '../../services/AuthService';
 import {
   UserContextState, UserReducerActionTypes,
   useUserContext, useUserDispatch, setIndexDBStore,
-} from '../context/User.context';
+} from '../../context/User.context';
+import { PrimaryButton } from '../../utils/Buttons';
 
 interface LoginFormValues {
   email: string;
@@ -70,10 +71,6 @@ interface UpdateUserFormProps {
   setUpdateErrorState: (updateUserErrorState: string) => void;
 }
 
-// interface ForgotPasswordFormValues {
-//   email: string;
-// }
-
 export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Element {
   const dispatch = useUserDispatch();
   const validate = (values: LoginFormValues) => {
@@ -130,7 +127,7 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
             <label
               htmlFor="email"
               className="block text-sm text-left pl-1
-          font-medium text-gray-700"
+          font-medium text-gray-700 dark:text-gray-300"
             >
               Email
               <div className="mt-1 relative">
@@ -141,15 +138,13 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
                   placeholder="work@devclad.com"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full
-                    px-3 py-2 border border-gray-300 rounded-md
-                    shadow-sm placeholder-gray-400
-                    focus:outline-none focus:ring-indigo-500
-                  focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {loginError && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -157,12 +152,16 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
               <ErrorMessage
                 name="email"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm text-left pl-1 font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+            >
               Password
               <div className="mt-1 relative">
                 <Field
@@ -172,43 +171,41 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {loginError && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
               <ErrorMessage
                 name="password"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
           </div>
 
           <div className="inline-flex items-center">
             <div className="text-sm">
-              <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="/" className="font-medium text-orange-700 dark:text-fuchsia-300">
                 Forgot your password?
               </a>
             </div>
 
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span>
+          <div className="w-full flex justify-center">
+            <PrimaryButton isSubmitting={isSubmitting} wFull>
+              <span className="w-full">
                 {isSubmitting ? 'Signing...' : 'Sign In'}
                 {' '}
                 <span className="text-xs">✨</span>
               </span>
-            </button>
+            </PrimaryButton>
           </div>
         </Form>
       )}
@@ -312,7 +309,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
             <label
               htmlFor="first_name"
               className="block text-sm text-left pl-1
-            font-medium text-gray-700"
+          font-medium text-gray-700 dark:text-gray-300"
             >
               First Name
               <div className="mt-1 relative">
@@ -323,15 +320,13 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   placeholder="Ye"
                   autoComplete="First Name"
                   required
-                  className="appearance-none block w-full
-                      px-3 py-2 border border-gray-300 rounded-md
-                      shadow-sm placeholder-gray-400
-                      focus:outline-none focus:ring-indigo-500
-                    focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -339,7 +334,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
               <ErrorMessage
                 name="first_name"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
           </div>
@@ -347,7 +342,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
             <label
               htmlFor="last_name"
               className="block text-sm text-left pl-1
-            font-medium text-gray-700"
+            font-medium text-gray-700 dark:text-gray-300"
             >
               Last Name
               <div className="mt-1 relative">
@@ -358,15 +353,13 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   placeholder="West"
                   autoComplete="Last Name"
                   required
-                  className="appearance-none block w-full
-                      px-3 py-2 border border-gray-300 rounded-md
-                      shadow-sm placeholder-gray-400
-                      focus:outline-none focus:ring-indigo-500
-                    focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -374,7 +367,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
               <ErrorMessage
                 name="last_name"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose0"
               />
             </label>
           </div>
@@ -382,7 +375,7 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
             <label
               htmlFor="email"
               className="block text-sm text-left pl-1
-            font-medium text-gray-700"
+            font-medium text-gray-700 dark:text-gray-300"
             >
               Email
               <div className="mt-1 relative">
@@ -393,15 +386,13 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   placeholder="cactus@jack.com"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full
-                      px-3 py-2 border border-gray-300 rounded-md
-                      shadow-sm placeholder-gray-400
-                      focus:outline-none focus:ring-indigo-500
-                    focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -409,12 +400,16 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
               <ErrorMessage
                 name="email"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
           </div>
           <div>
-            <label htmlFor="password1" className="block text-sm text-left pl-1 font-medium text-gray-700">
+            <label
+              htmlFor="password1"
+              className="block text-sm text-left pl-1
+            font-medium text-gray-700 dark:text-gray-300"
+            >
               Password
               <div className="mt-1 relative">
                 <Field
@@ -425,29 +420,35 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
               <ErrorMessage
                 name="password1"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
-            <p className="mt-2 pl-2 text-sm text-gray-500" id="password-description">
+            <p className="mt-2 pl-2 text-sm text-gray-600 dark:text-gray-400" id="password-description">
               At least 8 characters.
             </p>
-            <p className="mt-2 pl-2 text-xs text-gray-400" id="password-description">
+            <p className="mt-2 pl-2 text-xs text-gray-600 dark:text-gray-400" id="password-description">
               Tip: Autogenerate a password.
             </p>
           </div>
           <div>
-            <label htmlFor="password2" className="block text-sm text-left pl-1 font-medium text-gray-700">
+            <label
+              htmlFor="password2"
+              className="block text-sm text-left pl-1
+            font-medium text-gray-700 dark:text-gray-300"
+            >
               Confirm Password
               <div className="mt-1 relative">
                 <Field
@@ -457,18 +458,20 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
               <ErrorMessage
                 name="password2"
                 component="div"
-                className="text-sm text-red-400"
+                className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
           </div>
@@ -476,17 +479,18 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
           <div>
             {!signedUp
               ? (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <span>
-                    {isSubmitting ? 'Signing up...' : 'Sign Up'}
-                    {' '}
-                    <span className="text-xs">✨</span>
-                  </span>
-                </button>
+                <div className="flex justify-center">
+                  <PrimaryButton
+                    isSubmitting={isSubmitting}
+                    wFull
+                  >
+                    <span className="font-bold text-lg">
+                      {isSubmitting ? 'Signing up...' : 'Sign Up'}
+                      {' '}
+                      <span className="text-xs">✨</span>
+                    </span>
+                  </PrimaryButton>
+                </div>
               )
               : (
                 <Link to="/" className="w-full">
@@ -517,14 +521,6 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
         </Form>
       )}
     </Formik>
-  );
-}
-
-export function ForgotPasswordForm(): JSX.Element {
-  return (
-    <div>
-      <h1>Forgot Password Form</h1>
-    </div>
   );
 }
 
@@ -604,15 +600,85 @@ export function UpdateUserForm({
     >
       {({ isSubmitting }) => (
         <Form>
-          <Field type="text" name="firstName" placeholder="First Name" />
-          <ErrorMessage name="firstName" component="div" />
-          <Field type="text" name="lastName" placeholder="Last Name" />
-          <ErrorMessage name="lastName" component="div" />
-          <Field type="text" name="username" placeholder="Username" />
-          <ErrorMessage name="username" component="div" />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+          <div className="grid grid-cols-6 gap-6">
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium
+               text-gray-700 dark:text-gray-300"
+              >
+                First name
+                <Field
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="First name"
+                  autoComplete="given-name"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                <ErrorMessage
+                  name="firstName"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium
+               text-gray-700 dark:text-gray-300"
+              >
+                Last name
+                <Field
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  placeholder="Last Name"
+                  autoComplete="family-name"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                <ErrorMessage
+                  name="lastName"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-4">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Username
+                <Field
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="username"
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                <ErrorMessage
+                  name="username"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+              </label>
+            </div>
+          </div>
+          <div className="px-4 py-3 text-right sm:px-6">
+            <PrimaryButton
+              isSubmitting={isSubmitting}
+            >
+              Save
+            </PrimaryButton>
+          </div>
         </Form>
       )}
     </Formik>

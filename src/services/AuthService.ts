@@ -8,7 +8,7 @@ const headers = {
 };
 
 const API_URL = import.meta.env.VITE_API_URL;
-const oneHour = new Date(new Date().getTime() + (3600 * 1000));
+const fortyFive = new Date(new Date().getTime() + ((45 * 60) * 1000));
 
 export async function getUser() {
   const token = Cookies.get('token');
@@ -67,7 +67,18 @@ export async function SignUp(user: NewUser) {
         headers,
       },
     )
-    .then((resp) => resp).catch((err) => err);
+    .then((resp) => {
+      Cookies.set('token', resp.data.access_token, {
+        expires: fortyFive,
+        sameSite: 'lax',
+        secure: true,
+      });
+      Cookies.set('refresh', resp.data.refresh_token, {
+        expires: 30,
+        sameSite: 'lax',
+        secure: true,
+      });
+    }).catch((err) => err);
 }
 
 export async function logIn(email: string, password: string) {
@@ -81,7 +92,7 @@ export async function logIn(email: string, password: string) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: oneHour,
+        expires: fortyFive,
         sameSite: 'lax',
         secure: true,
       });
@@ -107,7 +118,7 @@ export async function refreshToken() {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: oneHour,
+        expires: fortyFive,
         sameSite: 'lax',
         secure: true,
       });

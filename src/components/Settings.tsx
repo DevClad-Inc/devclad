@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useUserContext } from '../context/User.context';
-import { UpdateUserForm } from './AuthForms';
+import { UpdateUserForm } from './forms/AuthForms';
 import { Error } from '../utils/Feedback';
 import ToggleTheme from './ToggleTheme';
 
@@ -21,7 +21,7 @@ function Settings(): JSX.Element {
         updateErrorState={updateUserError}
         setUpdateErrorState={setUpdateUserError}
       />
-      <span className="text-red-500">
+      <span className="text-bloodRed dark:text-mistyRose">
         {' '}
         <Link to="/">Go back</Link>
         {' '}
