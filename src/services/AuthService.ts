@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -6,9 +7,10 @@ const headers = {
 };
 
 const API_URL = import.meta.env.VITE_API_URL;
+const oneHour = new Date(new Date().getTime() + (3600 * 1000));
 
 export async function getUser() {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   if (token) {
     // return user data
     return axios
@@ -24,7 +26,7 @@ export async function getUser() {
 }
 
 export async function updateUser(first_name?: string, last_name?: string, username?: string) {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   if (token) {
     // method signature does not work with Patch/Put idk why
     return axios({
@@ -75,28 +77,39 @@ export async function logIn(email: string, password: string) {
       password,
       headers,
       credentials: 'same-origin',
-      withCredentials: true,
     })
     .then((resp) => {
-      // console.log('resp.data ->', resp.data);
-      localStorage.setItem('token', resp.data.access_token);
-      localStorage.setItem('refresh', resp.data.refresh_token);
+      Cookies.set('token', resp.data.access_token, {
+        expires: oneHour,
+        sameSite: 'lax',
+        secure: true,
+      });
+      Cookies.set('refresh', resp.data.refresh_token, {
+        expires: 30,
+        sameSite: 'lax',
+        secure: true,
+      });
     });
   return response;
 }
 
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
+  const token = Cookies.get('token');
   const response = await axios
     .post(url, {
-      refresh: localStorage.getItem('refresh'),
-      headers,
+      refresh: Cookies.get('refresh'),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       credentials: 'same-origin',
-      withCredentials: true,
     })
     .then((resp) => {
-      // console.log('resp.data ->', resp.data);
-      localStorage.setItem('token', resp.data.access);
+      Cookies.set('token', resp.data.access_token, {
+        expires: oneHour,
+        sameSite: 'lax',
+        secure: true,
+      });
     })
     .catch(() => {});
   return response;
@@ -108,12 +121,11 @@ export async function logOut() {
     .post(url, {
       headers,
       credentials: 'same-origin',
-      withCredentials: true,
     })
     .then(() => {
       // console.log('resp.data ->', resp.data);
-      localStorage.removeItem('token');
-      localStorage.removeItem('refresh');
+      Cookies.remove('token');
+      Cookies.remove('refresh');
       localStorage.removeItem('loggedInUser');
     })
     .catch(() => {});

@@ -26,8 +26,7 @@ function App() {
       navigate(0);
     }
     if (!undefinedUser) {
-      // console.log('logged in');
-      setInterval(refreshToken, 1000 * 60 * 60 * 12);
+      setInterval(refreshToken, (60 * 1000) * 60);
     }
   }, [loggedInUser]);
   return (

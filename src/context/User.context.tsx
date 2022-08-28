@@ -1,5 +1,6 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import { getUser } from '../services/AuthService';
 
 export interface UserContextState {
@@ -70,8 +71,8 @@ export function UserProvider({ children }: UserProviderProps) {
   }
   if (isError) {
     localStorage.removeItem('loggedInUser');
-    localStorage.removeItem('token');
-    localStorage.removeItem('refresh');
+    Cookies.remove('token');
+    Cookies.remove('refresh');
   }
   return (
     <UserContext.Provider value={loggedInUser}>
