@@ -1,3 +1,4 @@
+import { get, set } from 'idb-keyval';
 import React, { useMemo, useState } from 'react';
 
 export const ThemeContext = React.createContext({
@@ -7,11 +8,18 @@ export const ThemeContext = React.createContext({
   toggle: (darkMode: boolean) => void;
 });
 
+async function getDarkMode(): Promise<any> {
+  const darkModeVal = await get('darkMode');
+  return darkModeVal;
+}
+
+const darkModeVal = await getDarkMode();
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+  const [darkMode, setDarkMode] = useState(darkModeVal);
   const toggle = (dark:boolean) => {
     setDarkMode(!dark);
-    localStorage.setItem('darkMode', JSON.stringify(!dark));
+    set('darkMode', !dark);
   };
   const value = useMemo(() => ({ darkMode, toggle }), [darkMode]);
   return (

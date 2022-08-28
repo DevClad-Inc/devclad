@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { del } from 'idb-keyval';
 import Cookies from 'js-cookie';
 
 const headers = {
@@ -126,7 +127,7 @@ export async function logOut() {
       // console.log('resp.data ->', resp.data);
       Cookies.remove('token');
       Cookies.remove('refresh');
-      localStorage.removeItem('loggedInUser');
+      del('loggedInUser');
     })
     .catch(() => {});
   return response;

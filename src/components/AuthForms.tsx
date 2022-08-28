@@ -5,12 +5,13 @@ import {
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { del, set } from 'idb-keyval';
 import {
   getUser, logIn, SignUp, updateUser,
 } from '../services/AuthService';
 import {
   UserContextState, UserReducerActionTypes,
-  useUserContext, useUserDispatch, setLocalStorage,
+  useUserContext, useUserDispatch, setIndexDBStore,
 } from '../context/User.context';
 
 interface LoginFormValues {
@@ -104,11 +105,11 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
             type: UserReducerActionTypes.SET_USER_DATA,
             payload: data,
           });
-          // persist user data in local storage
-          localStorage.setItem('loggedInUser', JSON.stringify(data));
+          // persist user data in IndexedDB
+          set('loggedInUser', data);
         })
         .catch(() => {
-          localStorage.removeItem('loggedInUser');
+          del('loggedInUser');
         });
     } catch (error) {
       setLoginError(true);
@@ -562,7 +563,7 @@ export function UpdateUserForm({
           if (updateErrorState) {
             setUpdateErrorState('');
           }
-          localStorage.removeItem('loggedInUser');
+          del('loggedInUser');
           if (username === undefined) {
             username = loggedInUser.username;
           }
@@ -577,7 +578,7 @@ export function UpdateUserForm({
               last_name: lastName,
             },
           });
-          await setLocalStorage(qc);
+          await setIndexDBStore(qc);
         });
     } catch (error: any) {
       const { data } = error.response;

@@ -1,6 +1,7 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
+import { del, get, set } from 'idb-keyval';
 import { getUser } from '../services/AuthService';
 
 export interface UserContextState {
@@ -50,15 +51,23 @@ interface UserProviderProps {
   children?: React.ReactNode;
 }
 
+async function getLocalUser(): Promise<any> {
+  const localLoggedInUser = await get('loggedInUser');
+  return localLoggedInUser;
+}
+
+const localloggedInUser : UserContextState = await getLocalUser();
+// convert to UserContextState
+
 export function UserProvider({ children }: UserProviderProps) {
   const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
-  const localLoggedInUser = JSON.parse(localStorage.getItem('loggedInUser') as string);
   if (Object.values(loggedInUser).every((v) => v === undefined)) {
-    if (localLoggedInUser) {
+    // check if idb keyval has a value
+    if (localloggedInUser) {
       dispatch({
         type: UserReducerActionTypes.SET_USER_DATA,
-        payload: localLoggedInUser,
+        payload: localloggedInUser,
       });
     } else if (isSuccess && data !== null) {
       const userData = data as { data: UserContextState };
@@ -66,11 +75,11 @@ export function UserProvider({ children }: UserProviderProps) {
         type: UserReducerActionTypes.SET_USER_DATA,
         payload: userData.data,
       });
-      localStorage.setItem('loggedInUser', JSON.stringify(userData.data));
+      set('loggedInUser', (userData.data));
     }
   }
   if (isError) {
-    localStorage.removeItem('loggedInUser');
+    del('loggedInUser');
     Cookies.remove('token');
     Cookies.remove('refresh');
   }
@@ -93,8 +102,8 @@ export function useUserContext() {
   return useContext(UserContext);
 }
 
-export async function setLocalStorage(qc: any) {
+export async function setIndexDBStore(qc: any) {
   await qc.invalidateQueries(['user']);
   const cacheUserData = qc.getQueryData(['user']) as { data: UserContextState; };
-  localStorage.setItem('loggedInUser', JSON.stringify(cacheUserData.data));
+  set('loggedInUser', cacheUserData.data);
 }

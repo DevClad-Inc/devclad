@@ -19,6 +19,8 @@
     "eslint": "^8.0.1",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "formik": "^2.2.9",
+    "idb": "^7.0.2",
+    "idb-keyval": "^6.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
