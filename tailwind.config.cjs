@@ -26,8 +26,8 @@ module.exports = {
         // dark palette
         darkBG: '#08090C',
         darkBG2: '#030405',
-        raisinBlack: '#191B24',
-        raisinBlack2: '#222430',
+        raisinBlack: '#191B45',
+        raisinBlack2: '#222435',
         oxfordBlue: '#002A52',
         bloodRed: '#660C00',
         phthaloGreen: '#113123',
@@ -36,7 +36,7 @@ module.exports = {
       fontFamily: {
         mono: ['IBM Plex Mono', 'monospace'],
         system: ['system-ui', 'sans-serif'],
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        sans: [...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         darkglow: {

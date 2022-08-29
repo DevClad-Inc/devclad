@@ -10,6 +10,7 @@ import {
   XIcon,
 } from '@heroicons/react/outline';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '../assets/devclad.svg';
 import { useUserContext } from '../context/User.context';
 
@@ -33,6 +34,7 @@ export function classNames(...classes: string[]) {
 }
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
+  const qc = useQueryClient();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
   const loggedInUser = useUserContext();
@@ -116,7 +118,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     ))}
                   </nav>
                 </div>
-                <div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
+                <div
+                  onMouseEnter={() => { qc.prefetchQuery(['profile']); }}
+                  className="flex-shrink-0 flex border-t border-indigo-800 p-4"
+                >
                   <Link
                     to="/settings"
                     onClick={() => setSidebarOpen(false)}

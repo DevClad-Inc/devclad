@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 
 const headers = {
@@ -179,7 +178,7 @@ export async function logOut() {
       // console.log('resp.data ->', resp.data);
       Cookies.remove('token');
       Cookies.remove('refresh');
-      delMany(['loggedInUser', 'profile']);
+      // delMany(['loggedInUser', 'profile']);
     })
     .catch(() => {});
   return response;

@@ -1,7 +1,6 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { delMany, get, set } from 'idb-keyval';
 import { getUser } from '../services/AuthService';
 
 export interface UserContextState {
@@ -80,36 +79,30 @@ const initialLoginState: UserContextState = {
 interface UserProviderProps {
   children?: React.ReactNode;
 }
-
+/*
 async function getLocalUser(): Promise<any> {
   const localLoggedInUser = await get('loggedInUser');
   return localLoggedInUser;
 }
 
 const localloggedInUser : UserContextState = await getLocalUser();
-// convert to UserContextState
+
+*/
 
 export function UserProvider({ children }: UserProviderProps) {
   const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
   if (Object.values(loggedInUser).every((v) => v === undefined)) {
-    // check if idb keyval has a value
-    if (localloggedInUser) {
-      dispatch({
-        type: UserReducerActionTypes.SET_USER_DATA,
-        payload: localloggedInUser,
-      });
-    } else if (isSuccess && data !== null) {
+    if (isSuccess && data !== null) {
       const userData = data as { data: UserContextState };
       dispatch({
         type: UserReducerActionTypes.SET_USER_DATA,
         payload: userData.data,
       });
-      set('loggedInUser', (userData.data));
     }
   }
   if (isError) {
-    delMany(['loggedInUser', 'profile']);
+    // delMany(['loggedInUser', 'profile']);
     Cookies.remove('token');
     Cookies.remove('refresh');
   }
@@ -132,6 +125,7 @@ export function useUserContext() {
   return useContext(UserContext);
 }
 
+/*
 export async function setIndexDBStore(qc: any, key: string) {
   await qc.invalidateQueries([key]);
   if (key === 'user') {
@@ -140,6 +134,6 @@ export async function setIndexDBStore(qc: any, key: string) {
   } else if (key === 'profile') {
     const cacheProfileData = qc.getQueryData([key]) as { data: Profile };
     set('profile', cacheProfileData.data);
-    // could access profile data if needed faster *maybe*
   }
 }
+*/

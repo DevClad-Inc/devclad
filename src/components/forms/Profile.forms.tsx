@@ -4,11 +4,10 @@ import {
   Formik, Form, ErrorMessage,
 } from 'formik';
 import TimezoneSelect from 'react-timezone-select';
-import { set } from 'idb-keyval';
 import { getProfile, updateProfile } from '../../services/AuthService';
 import { PrimaryButton } from '../../utils/Buttons';
 import { UpdateFormProps } from './Auth.forms';
-import { initialProfileState, Profile, setIndexDBStore } from '../../context/User.context';
+import { initialProfileState, Profile } from '../../context/User.context';
 import { ThemeContext } from '../../context/Theme.context';
 
 interface UpdateProfileFormValues {
@@ -49,7 +48,7 @@ export default function UpdateProfileForm({
   if (profileQuery.isSuccess && profileQuery.data !== null) {
     const { data } = profileQuery;
     profileData = data.data;
-    set('profile', profileData);
+    // set('profile', profileData);
   }
   const [profileTimezone, setProfileTimezone] = React.useState<string>(
     profileData.timezone
@@ -75,7 +74,7 @@ export default function UpdateProfileForm({
             success: 'Profile updated successfully.',
           });
           setSubmitting(false);
-          await setIndexDBStore(qc, 'profile');
+          qc.invalidateQueries(['profile']);
         });
     } catch (error: any) {
       const { data } = error.response;
