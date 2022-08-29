@@ -1,20 +1,42 @@
 import React, { useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  Formik, Form, ErrorMessage,
+  Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import TimezoneSelect from 'react-timezone-select';
 import { getProfile, updateProfile } from '../../services/AuthService';
-import { PrimaryButton } from '../../utils/Buttons';
+import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import { UpdateFormProps } from './Auth.forms';
 import { initialProfileState, Profile } from '../../context/User.context';
 import { ThemeContext } from '../../context/Theme.context';
 // todo: remove react-select and react-timezone-select; build our own
 interface UpdateProfileFormValues {
   timezone?: string;
+  avatar?: string;
+  pronouns?: string;
+  about?: string;
+  website?: string;
+  linkedin?: string;
+  languages?: string;
+  dev_type?: string;
+  raw_xp?: number;
+  age_range?: string;
+  purpose?: string;
+  location?: string;
   errors?: {
     timezone?: string;
-  };
+    avatar?: string;
+    pronouns?: string;
+    about?: string;
+    website?: string;
+    linkedin?: string;
+    languages?: string;
+    dev_type?: string;
+    raw_xp?: string;
+    age_range?: string;
+    purpose?: string;
+    location?: string;
+  }
 }
 
 // only first name, last name, and username can be updated via this form
@@ -48,7 +70,6 @@ export default function UpdateProfileForm({
   if (profileQuery.isSuccess && profileQuery.data !== null) {
     const { data } = profileQuery;
     profileData = data.data;
-    // set('profile', profileData);
   }
   const [profileTimezone, setProfileTimezone] = React.useState<string>(
     profileData.timezone
@@ -61,13 +82,39 @@ export default function UpdateProfileForm({
     if (!values.timezone) {
       errors.timezone = 'Required';
     }
+    if (!values.about) {
+      errors.about = 'Required';
+    }
+    if (!values.languages) {
+      errors.languages = 'Required';
+    }
+    if (!values.dev_type) {
+      errors.dev_type = 'Required';
+    }
+    if (!values.raw_xp) {
+      errors.raw_xp = 'Required';
+    }
+    if (!values.age_range) {
+      errors.age_range = 'Required';
+    }
+    if (!values.purpose) {
+      errors.purpose = 'Required';
+    }
+    if (!values.location) {
+      errors.location = 'Required';
+    }
     return errors;
   };
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
     try {
       setSubmitting(true);
-      const { timezone } = values;
-      await updateProfile(timezone)
+      const {
+        timezone, avatar, pronouns,
+        about, website, linkedin,
+        languages, dev_type, raw_xp,
+        age_range, purpose, location,
+      } = values;
+      await updateProfile(values)
         .then(async () => {
           setUpdateUserMessageState({
             error: '',
@@ -92,10 +139,28 @@ export default function UpdateProfileForm({
       setSubmitting(false);
     }
   };
+  if (profileQuery.isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <LoadingButton />
+      </div>
+    );
+  }
   return (
     <Formik
       initialValues={{
+        about: profileData.about,
         timezone: profileTimezone,
+        avatar: profileData.avatar,
+        pronouns: profileData.pronouns,
+        website: profileData.website,
+        linkedin: profileData.linkedin,
+        languages: profileData.languages,
+        dev_type: profileData.dev_type,
+        raw_xp: profileData.raw_xp,
+        age_range: profileData.age_range,
+        purpose: profileData.purpose,
+        location: profileData.location,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -105,7 +170,104 @@ export default function UpdateProfileForm({
       {({ isSubmitting, setFieldValue }) => (
         <Form>
           <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6 sm:col-span-4">
+            <div className="col-span-6 sm:col-span-6">
+              <label
+                htmlFor="about"
+                className="block text-sm text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                About
+                <Field
+                  as="textarea"
+                  id="about"
+                  name="about"
+                  rows={3}
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  placeholder="Currently, I'm ..."
+                  defaultValue={profileData.about}
+                />
+                <ErrorMessage
+                  name="about"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+                <p className="mt-2 text-sm text-gray-500">
+                  Tip: Talk about what you like to build and what you are currently working on.
+                </p>
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="about"
+                className="block text-sm text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                Pronouns
+                <Field
+                  id="pronouns"
+                  name="pronouns"
+                  rows={3}
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  placeholder=""
+                />
+                <ErrorMessage
+                  name="pronouns"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="linkedin"
+                className="block text-sm text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                LinkedIn
+                <Field
+                  id="linkedin"
+                  name="linkedin"
+                  rows={3}
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  placeholder="Currently, I'm ..."
+                  defaultValue={profileData.linkedin}
+                />
+                <ErrorMessage
+                  name="linkedin"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="website"
+                className="block text-sm text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                Website
+                <Field
+                  id="website"
+                  name="website"
+                  rows={3}
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  placeholder="Currently, I'm ..."
+                />
+                <ErrorMessage
+                  name="website"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+                <p className="mt-2 text-sm text-gray-500">
+                  Tip: Showcase your best build yet if you do not have a website.
+                </p>
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-5">
               <label
                 htmlFor="timezone"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"

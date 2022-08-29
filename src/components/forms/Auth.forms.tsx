@@ -12,7 +12,7 @@ import {
   UserContextState, UserReducerActionTypes,
   useUserContext, useUserDispatch,
 } from '../../context/User.context';
-import { PrimaryButton } from '../../utils/Buttons';
+import { PrimaryButton } from '../../utils/Buttons.utils';
 
 interface LoginFormValues {
   email: string;

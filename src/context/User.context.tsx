@@ -21,19 +21,19 @@ interface UserReducerAction {
   payload: UserContextState;
 }
 export interface Profile {
-  'uid'?: string;
-  'timezone'?: string;
-  'avatar'?: string;
-  'pronouns'?: string;
-  'about'?: string;
-  'website'?: string;
-  'linkedin'?: string;
-  'languages'?: string;
-  'dev_type'?: string;
-  'raw_xp'?: number;
-  'age_range'?: string;
-  'purpose'?: string;
-  'location'?: string;
+  uid?: string;
+  timezone?: string;
+  avatar?: string;
+  pronouns?: string;
+  about?: string;
+  website?: string;
+  linkedin?: string;
+  languages?: string;
+  dev_type?: string;
+  raw_xp?: number;
+  age_range?: string;
+  purpose?: string;
+  location?: string;
 }
 
 export const initialProfileState : Profile = {

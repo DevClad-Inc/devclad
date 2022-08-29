@@ -13,6 +13,8 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '../assets/devclad.svg';
 import { useUserContext } from '../context/User.context';
+import QueryLoader from '../utils/QueryLoader.utils';
+import classNames from '../utils/ClassNames.utils';
 
 const navigation = [
   {
@@ -28,10 +30,6 @@ const navigation = [
     name: 'Projects', href: '/projects', icon: FolderIcon, alt: 'Projects',
   },
 ];
-
-export function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
@@ -239,6 +237,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
+              <div className="flex justify-center items-center">
+                <QueryLoader />
+              </div>
               <h1 className="text-2xl font-sans font-black uppercase">{title}</h1>
               <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
             </div>

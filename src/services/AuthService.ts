@@ -90,7 +90,7 @@ export async function updateUser(first_name?: string, last_name?: string, userna
   return null;
 }
 
-export async function updateProfile(timezone?:string) {
+export async function updateProfile(values: any) {
   const token = Cookies.get('token');
   if (token) {
     // method signature does not work with Patch/Put idk why
@@ -101,7 +101,7 @@ export async function updateProfile(timezone?:string) {
         Authorization: `Bearer ${token}`,
       },
       data: {
-        timezone,
+        values,
       },
     });
   }

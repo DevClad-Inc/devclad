@@ -5,7 +5,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { UpdateUserForm } from './forms/Auth.forms';
 // import { useUserContext } from '../context/User.context';
-import { Error, Success } from '../utils/Feedback';
+import { Error, Success } from '../utils/Feedback.utils';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm from './forms/Profile.forms';
 
@@ -88,29 +88,8 @@ export default function Settings() {
             />
           </div>
           <div className="py-6 px-4 space-y-6 sm:p-6">
-            <div>
-              <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
-            </div>
-
             <div className="grid grid-cols-3 gap-6">
-              <div className="col-span-3">
-                {/* <label htmlFor="about" className="block text-sm font-medium text-gray-700">
-                  About
-                </label> */}
-                <div className="mt-1">
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="shadow-sm focus:outline-none mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                    placeholder="you@example.com"
-                    defaultValue=""
-                  />
-                </div>
-                <p className="mt-2 text-sm text-gray-500">
-                  Tip: Talk about what you like to build and what you are currently working on.
-                </p>
-              </div>
+
               <div className="col-span-6 sm:col-span-3">
                 {/* <label htmlFor="country" className="block text-sm font-medium text-gray-700">
                   Country
