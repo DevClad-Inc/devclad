@@ -91,6 +91,10 @@ export async function updateUser(first_name?: string, last_name?: string, userna
 }
 
 export async function updateProfile(values: any) {
+  const {
+    timezone, pronouns,
+    about, website, linkedin,
+  } = values;
   const token = Cookies.get('token');
   if (token) {
     // method signature does not work with Patch/Put idk why
@@ -101,7 +105,11 @@ export async function updateProfile(values: any) {
         Authorization: `Bearer ${token}`,
       },
       data: {
-        values,
+        timezone,
+        pronouns,
+        about,
+        website,
+        linkedin,
       },
     });
   }

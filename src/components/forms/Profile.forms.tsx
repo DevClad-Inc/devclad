@@ -85,35 +85,12 @@ export default function UpdateProfileForm({
     if (!values.about) {
       errors.about = 'Required';
     }
-    if (!values.languages) {
-      errors.languages = 'Required';
-    }
-    if (!values.dev_type) {
-      errors.dev_type = 'Required';
-    }
-    if (!values.raw_xp) {
-      errors.raw_xp = 'Required';
-    }
-    if (!values.age_range) {
-      errors.age_range = 'Required';
-    }
-    if (!values.purpose) {
-      errors.purpose = 'Required';
-    }
-    if (!values.location) {
-      errors.location = 'Required';
-    }
+
     return errors;
   };
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
     try {
       setSubmitting(true);
-      const {
-        timezone, avatar, pronouns,
-        about, website, linkedin,
-        languages, dev_type, raw_xp,
-        age_range, purpose, location,
-      } = values;
       await updateProfile(values)
         .then(async () => {
           setUpdateUserMessageState({
@@ -151,16 +128,16 @@ export default function UpdateProfileForm({
       initialValues={{
         about: profileData.about,
         timezone: profileTimezone,
-        avatar: profileData.avatar,
+        // avatar: profileData.avatar,
         pronouns: profileData.pronouns,
         website: profileData.website,
         linkedin: profileData.linkedin,
-        languages: profileData.languages,
-        dev_type: profileData.dev_type,
-        raw_xp: profileData.raw_xp,
-        age_range: profileData.age_range,
-        purpose: profileData.purpose,
-        location: profileData.location,
+        // languages: profileData.languages,
+        // dev_type: profileData.dev_type,
+        // raw_xp: profileData.raw_xp,
+        // age_range: profileData.age_range,
+        // purpose: profileData.purpose,
+        // location: profileData.location,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -178,6 +155,7 @@ export default function UpdateProfileForm({
               >
                 About
                 <Field
+                  type="text"
                   as="textarea"
                   id="about"
                   name="about"
@@ -185,7 +163,6 @@ export default function UpdateProfileForm({
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                   dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                   placeholder="Currently, I'm ..."
-                  defaultValue={profileData.about}
                 />
                 <ErrorMessage
                   name="about"
@@ -205,6 +182,7 @@ export default function UpdateProfileForm({
               >
                 Pronouns
                 <Field
+                  type="text"
                   id="pronouns"
                   name="pronouns"
                   rows={3}
@@ -227,13 +205,13 @@ export default function UpdateProfileForm({
               >
                 LinkedIn
                 <Field
+                  type="text"
                   id="linkedin"
                   name="linkedin"
                   rows={3}
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                   dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                   placeholder="Currently, I'm ..."
-                  defaultValue={profileData.linkedin}
                 />
                 <ErrorMessage
                   name="linkedin"
@@ -250,6 +228,7 @@ export default function UpdateProfileForm({
               >
                 Website
                 <Field
+                  type="text"
                   id="website"
                   name="website"
                   rows={3}
