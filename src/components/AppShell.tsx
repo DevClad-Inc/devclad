@@ -10,11 +10,12 @@ import {
   XIcon,
 } from '@heroicons/react/outline';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '../assets/devclad.svg';
-import { useUserContext } from '../context/User.context';
+import { initialProfileState, Profile, useUserContext } from '../context/User.context';
 import QueryLoader from '../utils/QueryLoader.utils';
 import classNames from '../utils/ClassNames.utils';
+import { getProfile } from '../services/AuthService';
 
 const navigation = [
   {
@@ -33,6 +34,12 @@ const navigation = [
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
+  let profileData: Profile = { ...initialProfileState };
+  const profileQuery = useQuery(['profile'], () => getProfile());
+  if (profileQuery.isSuccess && profileQuery.data !== null) {
+    const { data } = profileQuery;
+    profileData = data.data;
+  }
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
   const loggedInUser = useUserContext();
@@ -129,7 +136,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       <div>
                         <img
                           className="inline-block h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          src={profileData.avatar}
                           alt=""
                         />
                       </div>
@@ -199,7 +206,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <div>
                   <img
                     className="inline-block object-cover h-12 w-12 rounded-full"
-                    src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80"
+                    src={profileData.avatar}
                     alt=""
                   />
                 </div>
