@@ -9,7 +9,7 @@ import { PrimaryButton } from '../../utils/Buttons';
 import { UpdateFormProps } from './Auth.forms';
 import { initialProfileState, Profile } from '../../context/User.context';
 import { ThemeContext } from '../../context/Theme.context';
-
+// todo: remove react-select and react-timezone-select; build our own
 interface UpdateProfileFormValues {
   timezone?: string;
   errors?: {
@@ -53,7 +53,7 @@ export default function UpdateProfileForm({
   const [profileTimezone, setProfileTimezone] = React.useState<string>(
     profileData.timezone
       ? profileData.timezone
-      : detected,
+      : '',
   );
 
   const validate = (values: UpdateProfileFormValues) => {
@@ -118,7 +118,7 @@ export default function UpdateProfileForm({
                   timezone detected.
                   {' '}
                 </p>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-orange-700 dark:text-orange-300">
                   You have currently set
                   {' '}
                   {profileData.timezone}

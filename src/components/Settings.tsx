@@ -73,7 +73,7 @@ export default function Settings() {
         <div className="shadow sm:rounded-md sm:overflow-hidden">
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h3>
+              <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
             </div>
             <UpdateUserForm
               setUpdateUserMessageState={setUpdateUserMessage}
@@ -81,7 +81,7 @@ export default function Settings() {
           </div>
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h3>
+              <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
             </div>
             <UpdateProfileForm
               setUpdateUserMessageState={setUpdateUserMessage}
@@ -89,7 +89,7 @@ export default function Settings() {
           </div>
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h3>
+              <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
