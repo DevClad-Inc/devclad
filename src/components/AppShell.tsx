@@ -182,10 +182,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   to={item.href}
                   className={({ isActive }) => classNames(
                     isActive
-                      ? ' text-orange-700 dark:text-fuchsia-300 dark:bg-fuchsia-900/30'
-                      : 'dark:text-fuchsia-100 text-gray-800',
+                      ? 'text-orange-700 dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500'
+                      : 'text-gray-800 dark:text-gray-400 group-hover:text-gray-500',
                     sidebarExpand ? 'rounded-md duration-500' : 'rounded-2xl duration-700',
-                    'uppercase font-mono font-extrabold flex items-center text-md px-4 py-4 hover:shadow-lg hover:shadow-fuchsia-700/30',
+                    'uppercase font-mono font-extrabold flex items-center text-md px-4 py-4 hover:shadow-lg dark:hover:shadow-fuchsia-700/30',
                   )}
                 >
                   <item.icon

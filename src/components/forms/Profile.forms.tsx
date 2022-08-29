@@ -18,9 +18,8 @@ interface UpdateProfileFormValues {
   website?: string;
   linkedin?: string;
   languages?: string;
-  dev_type?: string;
-  raw_xp?: number;
-  age_range?: string;
+  devType?: string;
+  rawXP?: number;
   purpose?: string;
   location?: string;
   errors?: {
@@ -31,9 +30,8 @@ interface UpdateProfileFormValues {
     website?: string;
     linkedin?: string;
     languages?: string;
-    dev_type?: string;
-    raw_xp?: string;
-    age_range?: string;
+    devType?: string;
+    rawXP?: string;
     purpose?: string;
     location?: string;
   }
@@ -65,27 +63,49 @@ export default function UpdateProfileForm({
   };
   const qc = useQueryClient();
   const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const [profileTimezone, setProfileTimezone] = React.useState<string>('');
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());
   if (profileQuery.isSuccess && profileQuery.data !== null) {
     const { data } = profileQuery;
     profileData = data.data;
   }
-  const [profileTimezone, setProfileTimezone] = React.useState<string>(
-    profileData.timezone
-      ? profileData.timezone
-      : '',
-  );
+  if (profileTimezone === '' && profileData.timezone !== undefined) {
+    const tz = profileData.timezone;
+    setProfileTimezone(tz);
+  }
 
   const validate = (values: UpdateProfileFormValues) => {
     const errors: UpdateProfileFormValues['errors'] = {};
+    // TIMEZONE
     if (!values.timezone) {
       errors.timezone = 'Required';
     }
+    // ABOUT
     if (!values.about) {
       errors.about = 'Required';
     }
-
+    // WEBSITE
+    if ((values.website)
+    && !((values.website.startsWith('http'))
+    || (values.website.startsWith('https')))) {
+      errors.website = 'Must start with http or https';
+    }
+    // LINKEDIN
+    if ((values.linkedin)
+    && (!((values.linkedin.startsWith('http'))
+    || (values.linkedin.startsWith('https')))
+    || (!values.linkedin.includes('linkedin.com')))) {
+      errors.linkedin = 'Must start with http or https and include linkedin.com';
+    }
+    // RAW XP
+    if (!values.rawXP) {
+      errors.rawXP = 'Required';
+    }
+    if ((values.rawXP)
+    && (values.rawXP > 50 || values.rawXP < 0)) {
+      errors.rawXP = 'Must be between 0 and 50';
+    }
     return errors;
   };
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
@@ -134,7 +154,7 @@ export default function UpdateProfileForm({
         linkedin: profileData.linkedin,
         // languages: profileData.languages,
         // dev_type: profileData.dev_type,
-        // raw_xp: profileData.raw_xp,
+        rawXP: profileData.raw_xp,
         // age_range: profileData.age_range,
         // purpose: profileData.purpose,
         // location: profileData.location,
@@ -176,7 +196,7 @@ export default function UpdateProfileForm({
             </div>
             <div className="col-span-6 sm:col-span-3">
               <label
-                htmlFor="about"
+                htmlFor="pronouns"
                 className="block text-sm text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
@@ -211,7 +231,7 @@ export default function UpdateProfileForm({
                   rows={3}
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                   dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
-                  placeholder="Currently, I'm ..."
+                  placeholder="https://linkedin.com/..."
                 />
                 <ErrorMessage
                   name="linkedin"
@@ -234,7 +254,7 @@ export default function UpdateProfileForm({
                   rows={3}
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                   dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
-                  placeholder="Currently, I'm ..."
+                  placeholder="https://"
                 />
                 <ErrorMessage
                   name="website"
@@ -243,6 +263,32 @@ export default function UpdateProfileForm({
                 />
                 <p className="mt-2 text-sm text-gray-500">
                   Tip: Showcase your best build yet if you do not have a website.
+                </p>
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="rawXP"
+                className="block text-sm text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                Raw Experience
+                <Field
+                  type="number"
+                  id="rawXP"
+                  name="rawXP"
+                  rows={3}
+                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  placeholder=""
+                />
+                <ErrorMessage
+                  name="rawXP"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+                <p className="mt-2 text-sm text-gray-500">
+                  Your raw experience building any piece of software/hardware. Max is 50.
                 </p>
               </label>
             </div>

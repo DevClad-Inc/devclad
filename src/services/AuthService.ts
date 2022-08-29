@@ -94,6 +94,7 @@ export async function updateProfile(values: any) {
   const {
     timezone, pronouns,
     about, website, linkedin,
+    rawXP,
   } = values;
   const token = Cookies.get('token');
   if (token) {
@@ -110,6 +111,7 @@ export async function updateProfile(values: any) {
         about,
         website,
         linkedin,
+        raw_xp: rawXP,
       },
     });
   }

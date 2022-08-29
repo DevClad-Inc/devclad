@@ -31,7 +31,6 @@ export interface Profile {
   languages?: string;
   dev_type?: string;
   raw_xp?: number;
-  age_range?: string;
   purpose?: string;
   location?: string;
 }
@@ -47,7 +46,6 @@ export const initialProfileState : Profile = {
   languages: undefined,
   dev_type: undefined,
   raw_xp: undefined,
-  age_range: undefined,
   purpose: undefined,
   location: undefined,
 };
@@ -93,6 +91,7 @@ export function UserProvider({ children }: UserProviderProps) {
   const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
   if (Object.values(loggedInUser).every((v) => v === undefined)) {
+    // console.log('setting user');
     if (isSuccess && data !== null) {
       const userData = data as { data: UserContextState };
       dispatch({
