@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { delMany, get } from 'idb-keyval';
 import Cookies from 'js-cookie';
 
 const headers = {
@@ -68,6 +69,11 @@ export async function getUser() {
     refreshToken();
   }
   return null;
+}
+
+export async function getLocalUser(): Promise<any> {
+  const localLoggedInUser = await get('loggedInUser');
+  return localLoggedInUser;
 }
 
 export async function updateUser(first_name?: string, last_name?: string, username?: string) {
@@ -188,7 +194,7 @@ export async function logOut() {
       // console.log('resp.data ->', resp.data);
       Cookies.remove('token');
       Cookies.remove('refresh');
-      // delMany(['loggedInUser', 'profile']);
+      delMany(['loggedInUser', 'profile']);
     })
     .catch(() => {});
   return response;

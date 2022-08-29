@@ -5,10 +5,12 @@ import {
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { del, delMany, set } from 'idb-keyval';
 import {
   getUser, logIn, SignUp, updateUser,
 } from '../../services/AuthService';
 import {
+  setIndexDBStore,
   UserContextState, UserReducerActionTypes,
   useUserContext, useUserDispatch,
 } from '../../context/User.context';
@@ -103,9 +105,10 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
             type: UserReducerActionTypes.SET_USER_DATA,
             payload: data,
           });
+          set('loggedInUser', data);
         })
         .catch(() => {
-          // delMany(['loggedInUser', 'profile']);
+          delMany(['loggedInUser', 'profile']);
         });
     } catch (error) {
       setLoginError(true);
@@ -551,7 +554,7 @@ export function UpdateUserForm({
             error: '',
             success: 'User updated successfully.',
           });
-          // del('loggedInUser');
+          del('loggedInUser');
           if (username === undefined) {
             username = loggedInUser.username;
           }
@@ -566,7 +569,8 @@ export function UpdateUserForm({
               last_name: lastName,
             },
           });
-          qc.invalidateQueries(['user']);
+          setIndexDBStore(qc, 'user');
+          // qc.invalidateQueries(['user']);
         });
     } catch (error: any) {
       const { data } = error.response;

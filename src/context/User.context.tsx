@@ -1,7 +1,8 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { getUser } from '../services/AuthService';
+import { delMany, set } from 'idb-keyval';
+import { getUser, getLocalUser } from '../services/AuthService';
 
 export interface UserContextState {
   pk?: number;
@@ -77,31 +78,30 @@ const initialLoginState: UserContextState = {
 interface UserProviderProps {
   children?: React.ReactNode;
 }
-/*
-async function getLocalUser(): Promise<any> {
-  const localLoggedInUser = await get('loggedInUser');
-  return localLoggedInUser;
-}
-
-const localloggedInUser : UserContextState = await getLocalUser();
-
-*/
 
 export function UserProvider({ children }: UserProviderProps) {
   const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
   if (Object.values(loggedInUser).every((v) => v === undefined)) {
     // console.log('setting user');
-    if (isSuccess && data !== null) {
-      const userData = data as { data: UserContextState };
-      dispatch({
-        type: UserReducerActionTypes.SET_USER_DATA,
-        payload: userData.data,
-      });
-    }
+    getLocalUser().then((localUser: UserContextState) => {
+      if (localUser) {
+        dispatch({
+          type: UserReducerActionTypes.SET_USER_DATA,
+          payload: localUser,
+        });
+      } else if (isSuccess && data !== null) {
+        const userData = data as { data: UserContextState };
+        dispatch({
+          type: UserReducerActionTypes.SET_USER_DATA,
+          payload: userData.data,
+        });
+        set('loggedInUser', userData.data);
+      }
+    });
   }
   if (isError) {
-    // delMany(['loggedInUser', 'profile']);
+    delMany(['loggedInUser', 'profile']);
     Cookies.remove('token');
     Cookies.remove('refresh');
   }
@@ -124,7 +124,6 @@ export function useUserContext() {
   return useContext(UserContext);
 }
 
-/*
 export async function setIndexDBStore(qc: any, key: string) {
   await qc.invalidateQueries([key]);
   if (key === 'user') {
@@ -135,4 +134,3 @@ export async function setIndexDBStore(qc: any, key: string) {
     set('profile', cacheProfileData.data);
   }
 }
-*/

@@ -29,6 +29,7 @@ function App() {
       setInterval(refreshToken, (1800 * 1000));
     }
   }, [loggedInUser]);
+  // todo: add splash screen
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
       <div
