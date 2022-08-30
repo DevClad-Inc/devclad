@@ -4,15 +4,15 @@ import {
 } from 'formik';
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
-import { del, delMany, set } from 'idb-keyval';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { del, delMany } from 'idb-keyval';
 import {
   getUser, logIn, SignUp, updateUser,
 } from '../../services/AuthService';
 import {
+  initialUserState,
   setIndexDBStore,
-  UserContextState, UserReducerActionTypes,
-  useUserContext, useUserDispatch,
+  User,
 } from '../../context/User.context';
 import { PrimaryButton } from '../../utils/Buttons.utils';
 
@@ -53,7 +53,7 @@ interface SignupFormProps {
 interface UpdateUserFormValues {
   /* why are some of these values optional?
   when logged out, useUserContext is set to undefined for values of user.
-  Hence, UserContextState has optional values.
+  Hence, User has optional values.
   UpdateUserValues accomodates loggedInUser for optional values.
   Hence, UpdateUserValues has optional values too.
   */
@@ -75,7 +75,7 @@ export interface UpdateFormProps {
 }
 
 export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Element {
-  const dispatch = useUserDispatch();
+  const qc = useQueryClient();
   const validate = (values: LoginFormValues) => {
     const errors: LoginFormValues['errors'] = {};
     if (!values.email) {
@@ -99,13 +99,8 @@ export function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Ele
         setLoginError(false);
       }
       await getUser()
-        .then((resp) => {
-          const { data } = resp as { data: UserContextState };
-          dispatch({
-            type: UserReducerActionTypes.SET_USER_DATA,
-            payload: data,
-          });
-          set('loggedInUser', data);
+        .then(() => {
+          setIndexDBStore(qc, 'user');
         })
         .catch(() => {
           delMany(['loggedInUser', 'profile']);
@@ -523,9 +518,12 @@ export function SignupForm({ signupErrorState, setSignupErrorState }:SignupFormP
 export function UpdateUserForm({
   setUpdateUserMessageState,
 }: UpdateFormProps): JSX.Element {
-  const loggedInUser = useUserContext();
-  const { pk, email } = loggedInUser;
-  const dispatch = useUserDispatch();
+  let loggedInUser: User = { ...initialUserState };
+  const userQuery = useQuery(['user'], () => getUser());
+  if (userQuery.isSuccess && userQuery.data !== null) {
+    const { data } = userQuery;
+    loggedInUser = data.data;
+  }
   const qc = useQueryClient();
   const validate = (values: UpdateUserFormValues) => {
     const errors: UpdateUserFormValues['errors'] = {};
@@ -559,18 +557,7 @@ export function UpdateUserForm({
             username = loggedInUser.username;
           }
           setSubmitting(false);
-          dispatch({
-            type: 'SET_USER_DATA',
-            payload: {
-              pk,
-              username,
-              email,
-              first_name: firstName,
-              last_name: lastName,
-            },
-          });
           setIndexDBStore(qc, 'user');
-          // qc.invalidateQueries(['user']);
         });
     } catch (error: any) {
       const { data } = error.response;

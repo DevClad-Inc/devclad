@@ -1,10 +1,16 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../context/User.context';
-import { logOut } from '../services/AuthService';
+import { initialUserState, User } from '../context/User.context';
+import { getUser, logOut } from '../services/AuthService';
 
 function Home(): JSX.Element {
-  const loggedInUser = useUserContext();
+  let loggedInUser: User = { ...initialUserState };
+  const userQuery = useQuery(['user'], () => getUser());
+  if (userQuery.isSuccess && userQuery.data !== null) {
+    const { data } = userQuery;
+    loggedInUser = data.data;
+  }
   const navigate = useNavigate();
   const handlelogOut = async () => {
     await logOut().then(() => {
@@ -15,7 +21,9 @@ function Home(): JSX.Element {
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
-        <h1 className="text-center text-2xl font-bold text-black sm:text-3xl dark:text-white">{`Welcome, ${loggedInUser.first_name}`}</h1>
+        <h1 className="text-center text-2xl font-bold text-black sm:text-3xl dark:text-white">
+          {loggedInUser && loggedInUser.first_name}
+        </h1>
       </div>
       <br />
       <div className="mx-auto w-3/4 max-w-lg">

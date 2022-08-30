@@ -32,7 +32,7 @@ export async function refreshToken() {
         secure: true,
       });
     })
-    .catch(() => {});
+    .catch(() => null);
   return response;
 }
 
@@ -49,7 +49,7 @@ export async function getProfile() {
       .then((resp) => resp)
       .catch(() => null);
   }
-  if (token === 'undefined' && Cookies.get('refresh')) {
+  if (token === undefined && Cookies.get('refresh')) {
     await refreshToken().catch(
       () => {
         Cookies.remove('token');
@@ -62,17 +62,18 @@ export async function getProfile() {
 }
 
 export async function getUser() {
+  const url = `${API_URL}/auth/user/`;
   const token = Cookies.get('token');
   if (token) {
     // return user data
     return axios
-      .get(`${API_URL}/auth/user/`, {
+      .get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((resp) => resp)
-      .catch(() => {});
+      .catch(() => null);
   }
   if (token === undefined && Cookies.get('refresh')) {
     await refreshToken().catch(
@@ -205,6 +206,6 @@ export async function logOut() {
       Cookies.remove('refresh');
       delMany(['loggedInUser', 'profile']);
     })
-    .catch(() => {});
+    .catch(() => null);
   return response;
 }

@@ -3,9 +3,10 @@ import {
   Routes, Route, useNavigate,
 } from 'react-router-dom';
 import { clsx } from 'clsx';
-import { useUserContext } from './context/User.context';
+import { useQuery } from '@tanstack/react-query';
+import { initialUserState, User } from './context/User.context';
 import { ThemeContext } from './context/Theme.context';
-import { refreshToken } from './services/AuthService';
+import { getUser, refreshToken } from './services/AuthService';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
@@ -16,7 +17,12 @@ import AppShell from './components/AppShell';
 function App() {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const loggedInUser = useUserContext();
+  let loggedInUser: User = { ...initialUserState };
+  const userQuery = useQuery(['user'], () => getUser());
+  if (userQuery.isSuccess && userQuery.data !== null) {
+    const { data } = userQuery;
+    loggedInUser = data.data;
+  }
   const undefinedUser = Object.values(loggedInUser).every(
     (value) => value === undefined,
   );
@@ -35,7 +41,13 @@ function App() {
       <div
         className="App h-screen dark:bg-darkBG dark:text-white"
       >
-        {!undefinedUser ? (
+        {(undefinedUser && !userQuery.isLoading) ? (
+          <Routes>
+            <Route path="*" element={<Signup />} />
+            <Route path="/" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+          </Routes>
+        ) : (
           <AppShell>
             <Routes>
               <Route path="*" element={<Home />} />
@@ -43,12 +55,6 @@ function App() {
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </AppShell>
-        ) : (
-          <Routes>
-            <Route path="*" element={<Signup />} />
-            <Route path="/" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-          </Routes>
         )}
       </div>
     </div>

@@ -4,7 +4,6 @@ import {
 } from '@heroicons/react/outline';
 import { NavLink } from 'react-router-dom';
 import { UpdateUserForm } from './forms/Auth.forms';
-// import { useUserContext } from '../context/User.context';
 import { Error, Success } from '../utils/Feedback.utils';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm from './forms/Profile.forms';
@@ -26,7 +25,6 @@ function classNames(...classes: string[]) {
 }
 
 export default function Settings() {
-//   const loggedInUser = useUserContext();
   const [updateUserMessage, setUpdateUserMessage] = React.useState({ error: '', success: '' });
   return (
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">

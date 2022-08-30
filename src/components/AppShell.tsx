@@ -12,10 +12,12 @@ import {
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '../assets/devclad.svg';
-import { initialProfileState, Profile, useUserContext } from '../context/User.context';
+import {
+  initialUserState, initialProfileState, Profile, User, useUserContext,
+} from '../context/User.context';
 import QueryLoader from '../utils/QueryLoader.utils';
 import classNames from '../utils/ClassNames.utils';
-import { getProfile } from '../services/AuthService';
+import { getProfile, getUser } from '../services/AuthService';
 
 const navigation = [
   {
@@ -34,16 +36,31 @@ const navigation = [
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
+  const contextUser = useUserContext();
+  let loggedInUser: User = { ...initialUserState };
+  const userQuery = useQuery(['user'], () => getUser());
+  if (userQuery.isSuccess && userQuery.data !== null) {
+    const { data } = userQuery;
+    loggedInUser = data.data;
+  }
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());
   if (profileQuery.isSuccess && profileQuery.data !== null) {
     const { data } = profileQuery;
     profileData = data.data;
   }
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
-  const loggedInUser = useUserContext();
+
   const title = useLocation().pathname.split('/').pop() || 'Dashboard';
+
+  if (Object.values(contextUser).every((value) => value === undefined)) {
+    return (
+      null
+    );
+  }
+
   return (
     <div className="h-full flex">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -141,7 +158,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         />
                       </div>
                       <div className="ml-3">
-                        <p className="text-base font-medium text-white">{loggedInUser.first_name}</p>
+                        <p className="text-base font-medium text-white">{loggedInUser && loggedInUser.first_name}</p>
                         <p className="text-sm font-medium text-indigo-200 group-hover:text-white">Settings</p>
                       </div>
                     </div>

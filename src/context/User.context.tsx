@@ -5,7 +5,7 @@ import { delMany, set } from 'idb-keyval';
 import { getUser } from '../services/AuthService';
 import getsetIndexedDB from '../utils/getsetIndexedDB';
 
-export interface UserContextState {
+export interface User {
   pk?: number;
   username?: string;
   email?: string;
@@ -20,7 +20,7 @@ export enum UserReducerActionTypes {
 
 interface UserReducerAction {
   type: UserReducerActionTypes;
-  payload: UserContextState;
+  payload: User;
 }
 export interface Profile {
   uid?: string;
@@ -51,24 +51,24 @@ export const initialProfileState : Profile = {
   purpose: undefined,
   location: undefined,
 };
-export const UserContext = createContext({} as UserContextState);
+export const UserContext = createContext({} as User);
 export const UserDispatch = createContext({} as React.Dispatch<any>);
 
-function userReducer(state:UserContextState, action: UserReducerAction): UserContextState {
+function userReducer(state:User, action: UserReducerAction): User {
   const { type, payload } = action;
   switch (type) {
     case UserReducerActionTypes.SET_USER_DATA:
       return {
         ...state,
         ...payload,
-        // data: { payload } as UserContextState['data'],
+        // data: { payload } as User['data'],
       };
     default:
       return state;
   }
 }
 
-const initialLoginState: UserContextState = {
+export const initialUserState: User = {
   pk: undefined,
   username: undefined,
   email: undefined,
@@ -81,7 +81,7 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
+  const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialUserState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
   if (Object.values(loggedInUser).every((v) => v === undefined)) {
     getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
@@ -91,12 +91,12 @@ export function UserProvider({ children }: UserProviderProps) {
           payload: localUser,
         });
       } else if (isSuccess && data !== null) {
-        const userData = data as { data: UserContextState };
+        const userData = data as { data: User };
         dispatch({
           type: UserReducerActionTypes.SET_USER_DATA,
           payload: userData.data,
         });
-        getsetIndexedDB<UserContextState>('loggedInUser', 'set', userData.data);
+        getsetIndexedDB<User>('loggedInUser', 'set', userData.data);
       }
     });
   }
@@ -127,7 +127,7 @@ export function useUserContext() {
 export async function setIndexDBStore(qc: any, key: string) {
   await qc.invalidateQueries([key]);
   if (key === 'user') {
-    const cacheUserData = qc.getQueryData([key]) as { data: UserContextState };
+    const cacheUserData = qc.getQueryData([key]) as { data: User };
     set('loggedInUser', cacheUserData.data);
   } else if (key === 'profile') {
     const cacheProfileData = qc.getQueryData([key]) as { data: Profile };
