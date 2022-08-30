@@ -8,6 +8,7 @@ import App from './App';
 import './index.css';
 import { UserProvider } from './context/User.context';
 import { ThemeProvider } from './context/Theme.context';
+import { SpeedProvider } from './context/Speed.context';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -15,11 +16,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={new QueryClient()}>
       <UserProvider>
-        <ThemeProvider>
-          <HashRouter>
-            <App />
-          </HashRouter>
-        </ThemeProvider>
+        <SpeedProvider>
+          <ThemeProvider>
+            <HashRouter>
+              <App />
+            </HashRouter>
+          </ThemeProvider>
+        </SpeedProvider>
       </UserProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

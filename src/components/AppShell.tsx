@@ -37,6 +37,8 @@ const navigation = [
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
   const contextUser = useUserContext();
+  // why not context for displaying purposes?
+  // context doesn't sync changes across different browser tabs
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
   if (userQuery.isSuccess && userQuery.data !== null) {
@@ -261,10 +263,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center z-10">
                 <QueryLoader />
               </div>
-              <h1 className="text-2xl font-sans font-black uppercase">{title}</h1>
+              <h1 className="text-2xl font-sans font-black uppercase">
+                {title}
+              </h1>
               <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
