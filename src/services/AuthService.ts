@@ -114,7 +114,7 @@ export async function updateProfile(values: any) {
     rawXP,
   } = values;
   const token = Cookies.get('token');
-  if (token) {
+  if (token && (devType !== '')) {
     return axios({
       method: 'PATCH',
       url: `${API_URL}/users/profile/`,
@@ -124,6 +124,23 @@ export async function updateProfile(values: any) {
       data: {
         timezone,
         dev_type: devType,
+        pronouns,
+        about,
+        website,
+        linkedin,
+        raw_xp: rawXP,
+      },
+    });
+  }
+  if (token && (devType === '')) {
+    return axios({
+      method: 'PATCH',
+      url: `${API_URL}/users/profile/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        timezone,
         pronouns,
         about,
         website,
