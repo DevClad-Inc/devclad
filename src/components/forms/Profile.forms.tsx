@@ -8,8 +8,10 @@ import {
 import { getProfile, updateProfile } from '../../services/AuthService';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import { UpdateFormProps } from './Login.forms';
-import { initialProfileState, Profile } from '../../context/User.context';
 import classNames from '../../utils/ClassNames.utils';
+import Languages from '../../utils/list/Languages.list.json';
+import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
+// import data from '../,,/utils/list/Languages.list.json'; into a const
 
 interface UpdateProfileFormValues {
   timezone?: string;
@@ -38,6 +40,11 @@ interface UpdateProfileFormValues {
   }
 }
 
+const languages = Languages.map((language) => ({ language })) as { language: {
+  name: string;
+  id: number;
+} }[];
+
 const devType = [
   { name: 'AI', id: 0 },
   { name: 'Blockchain', id: 1 },
@@ -54,6 +61,7 @@ export default function UpdateProfileForm({
 }: UpdateFormProps): JSX.Element {
   const qc = useQueryClient();
   const [selectedDevType, setselectedDevType] = useState<Array<{ name:string, id:number }>>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<Array<{ name:string, id:number }>>([]);
   const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [profileTimezone, setProfileTimezone] = React.useState<string>(detected);
   let profileData: Profile = { ...initialProfileState };
@@ -62,6 +70,18 @@ export default function UpdateProfileForm({
     const { data } = profileQuery;
     profileData = data.data;
   }
+  // if (selectedDevType.length === 0 && profileData.dev_type !== undefined) {
+  //   const devTypeArray = [] as Array<{ name:string, id:number }>;
+  //   const string2Array = profileData.dev_type.split(', ');
+  //   if (profileData.dev_type) {
+  //     string2Array.forEach((type, index) => {
+  //       const dTIndex = devType.findIndex((dT) => dT.name === type);
+  //       console.log(dTIndex);
+  //       devTypeArray.push({ name: type, id: dTIndex });
+  //     });
+  //   }
+  //   setselectedDevType(devTypeArray);
+  // }
   const validate = (values: UpdateProfileFormValues) => {
     const errors: UpdateProfileFormValues['errors'] = {};
     // ABOUT
@@ -95,8 +115,10 @@ export default function UpdateProfileForm({
     try {
       // eslint-disable-next-line no-param-reassign
       values.devType = selectedDevType.map((type: any) => type.name).sort().join(', ');
+      // eslint-disable-next-line no-param-reassign
+      values.languages = selectedLanguages.map((language: any) => language.name).sort().join(', ');
       setSubmitting(true);
-      await updateProfile(values)
+      await updateProfile(values, profileData)
         .then(async () => {
           setUpdateUserMessageState({
             error: '',
@@ -137,7 +159,6 @@ export default function UpdateProfileForm({
         pronouns: profileData.pronouns,
         website: profileData.website,
         linkedin: profileData.linkedin,
-        // languages: profileData.languages,
         rawXP: profileData.raw_xp,
         // age_range: profileData.age_range,
         // purpose: profileData.purpose,
@@ -297,23 +318,33 @@ export default function UpdateProfileForm({
               >
                 {({ open }) => (
                   <>
-                    <Listbox.Label id="devType" className="block text-sm font-medium text-gray-700">Type of Development</Listbox.Label>
+                    <Listbox.Label
+                      id="devType"
+                      className="block text-sm font-medium
+                    text-gray-700 dark:text-gray-300"
+                    >
+                      Type of Development
+
+                    </Listbox.Label>
                     {(profileData.dev_type && profileData.dev_type.length > 0) && (
-                    <p className="mt-2 text-sm text-orange-700 dark:text-orange-300">
-                      You have currently set
+                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+                      Currently set
                       {' '}
                       &#34;
                       {profileData.dev_type}
                       &#34;
                       {' '}
-                      as your development types.
+                      as development types.
                     </p>
                     )}
                     <p className="mt-2 text-sm text-gray-500">
                       Choose up to 3.
                     </p>
                     <div className="relative mt-1">
-                      <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md
+                      dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left border border-gray-300
+                      dark:border-gray-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      >
                         <span className="block truncate">
                           {
                         selectedDevType[0] ? (selectedDevType.map(({ name }) => name).join(', ')) : 'Select'
@@ -341,7 +372,9 @@ export default function UpdateProfileForm({
                             <Listbox.Option
                               key={type.id}
                               className={({ active }) => classNames(
-                                active ? 'text-black bg-indigo-100 dark:bg-indigo-200' : 'text-gray-900 dark:text-gray-100 bg-white dark:bg-raisinBlack2',
+                                active
+                                  ? 'text-black bg-orange-300 dark:bg-fuchsia-300'
+                                  : 'text-gray-900 dark:text-gray-100 bg-snow dark:bg-raisinBlack2',
                                 'relative cursor-default select-none py-2 pl-3 pr-9',
                               )}
                               value={type}
@@ -355,7 +388,116 @@ export default function UpdateProfileForm({
                                   {selected ? (
                                     <span
                                       className={classNames(
-                                        active ? 'text-white' : 'text-indigo-600',
+                                        active ? 'text-linen dark:text-raisinBlack2' : 'text-gray-900 dark:text-gray-100',
+                                        'absolute inset-y-0 right-0 flex items-center pr-4',
+                                      )}
+                                    >
+                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </>
+                )}
+              </Listbox>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <Listbox
+                value={selectedLanguages}
+                onChange={
+                  // check if selectedLanguages is empty or not
+                  (e: Array<{ name:string, id:number }>) => {
+                    if (e.length < 6) {
+                      if (e.length === 0) {
+                        setSelectedLanguages([]);
+                      } else if (e.length === 1) {
+                        setSelectedLanguages([e[0]]);
+                      } else {
+                        setSelectedLanguages(e);
+                      }
+                    }
+                  }
+                }
+                multiple
+              >
+                {({ open }) => (
+                  <>
+                    <Listbox.Label
+                      id=""
+                      className="block text-sm font-medium
+                    text-gray-700 dark:text-gray-300"
+                    >
+                      Languages
+
+                    </Listbox.Label>
+                    {(profileData.languages && profileData.languages.length > 0) && (
+                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+                      Currently set
+                      {' '}
+                      &#34;
+                      {profileData.languages}
+                      &#34;
+                      {' '}
+                      as languages.
+                    </p>
+                    )}
+                    <p className="mt-2 text-sm text-gray-500">
+                      Choose up to 5.
+                    </p>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md
+                      dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left border border-gray-300
+                      dark:border-gray-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      >
+                        <span className="block truncate">
+                          {
+                        selectedLanguages[0] ? (selectedLanguages.map(({ name }) => name).join(', ')) : 'Select'
+                        }
+
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </span>
+                      </Listbox.Button>
+
+                      <Transition
+                        show={open}
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options
+                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
+                        dark:bg-raisinBlack2 py-1 text-base shadow-lg ring-1 ring-black
+                        ring-opacity-5 focus:outline-none sm:text-sm"
+                        >
+                          {languages.map(({ language }) => (
+                            <Listbox.Option
+                              key={language.id}
+                              className={({ active }) => classNames(
+                                active
+                                  ? 'text-black bg-orange-300 dark:bg-fuchsia-300'
+                                  : 'text-gray-900 dark:text-gray-100 bg-snow dark:bg-raisinBlack2',
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                              )}
+                              value={language}
+                            >
+                              {({ active, selected }) => (
+                                <>
+                                  <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                    {language.name}
+                                  </span>
+
+                                  {selected ? (
+                                    <span
+                                      className={classNames(
+                                        active ? 'text-linen dark:text-raisinBlack2' : 'text-gray-900 dark:text-gray-100',
                                         'absolute inset-y-0 right-0 flex items-center pr-4',
                                       )}
                                     >
@@ -379,7 +521,7 @@ export default function UpdateProfileForm({
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 TimeZone
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
                   {profileTimezone}
                   {' '}
                   timezone detected.

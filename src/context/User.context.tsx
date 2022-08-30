@@ -2,8 +2,9 @@ import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany, set } from 'idb-keyval';
-import { getUser } from '../services/AuthService';
 import getsetIndexedDB from '../utils/getsetIndexedDB';
+import { getUser } from '../services/AuthService';
+import { Profile } from '../utils/InterfacesStates.utils';
 
 export interface User {
   pk?: number;
@@ -22,35 +23,7 @@ interface UserReducerAction {
   type: UserReducerActionTypes;
   payload: User;
 }
-export interface Profile {
-  uid?: string;
-  timezone?: string;
-  avatar?: string;
-  pronouns?: string;
-  about?: string;
-  website?: string;
-  linkedin?: string;
-  languages?: string;
-  dev_type?: string;
-  raw_xp?: number;
-  purpose?: string;
-  location?: string;
-}
 
-export const initialProfileState : Profile = {
-  uid: undefined,
-  timezone: undefined,
-  avatar: undefined,
-  pronouns: undefined,
-  about: undefined,
-  website: undefined,
-  linkedin: undefined,
-  languages: undefined,
-  dev_type: undefined,
-  raw_xp: undefined,
-  purpose: undefined,
-  location: undefined,
-};
 export const UserContext = createContext({} as User);
 export const UserDispatch = createContext({} as React.Dispatch<any>);
 

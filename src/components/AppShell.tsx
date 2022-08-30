@@ -13,11 +13,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '../assets/devclad.svg';
 import {
-  initialUserState, initialProfileState, Profile, User, useUserContext,
+  initialUserState, User, useUserContext,
 } from '../context/User.context';
 import QueryLoader from '../utils/QueryLoader.utils';
 import classNames from '../utils/ClassNames.utils';
 import { getProfile, getUser } from '../services/AuthService';
+import { Profile, initialProfileState } from '../utils/InterfacesStates.utils';
 
 const navigation = [
   {

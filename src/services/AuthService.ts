@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
+import { Profile } from '../utils/InterfacesStates.utils';
 
 /*
 Bug in Axios: method signature does not work with PATCH/PUT. Returning an axios call.
 */
-
 const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
@@ -87,6 +87,7 @@ export async function getUser() {
   return null;
 }
 
+// todo: make updateUser more like updateProfile, I wrote this earlier and it's sorta lower quality
 export async function updateUser(first_name?: string, last_name?: string, username?: string) {
   const token = Cookies.get('token');
   if (token) {
@@ -107,14 +108,14 @@ export async function updateUser(first_name?: string, last_name?: string, userna
   return null;
 }
 
-export async function updateProfile(values: any) {
+export async function updateProfile(values: any, profileData: Profile) {
   const {
     timezone, pronouns,
-    about, website, linkedin, devType,
+    about, website, linkedin, devType, languages,
     rawXP,
   } = values;
   const token = Cookies.get('token');
-  if (token && (devType !== '')) {
+  if (token && profileData) {
     return axios({
       method: 'PATCH',
       url: `${API_URL}/users/profile/`,
@@ -123,24 +124,8 @@ export async function updateProfile(values: any) {
       },
       data: {
         timezone,
-        dev_type: devType,
-        pronouns,
-        about,
-        website,
-        linkedin,
-        raw_xp: rawXP,
-      },
-    });
-  }
-  if (token && (devType === '')) {
-    return axios({
-      method: 'PATCH',
-      url: `${API_URL}/users/profile/`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: {
-        timezone,
+        dev_type: (devType === '') ? profileData.dev_type : devType,
+        languages: (languages === '') ? profileData.languages : languages,
         pronouns,
         about,
         website,
