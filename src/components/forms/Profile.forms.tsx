@@ -1,18 +1,16 @@
-import React, { useContext, Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
-import TimezoneSelect from 'react-timezone-select';
 import { getProfile, updateProfile } from '../../services/AuthService';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import { UpdateFormProps } from './Login.forms';
 import { initialProfileState, Profile } from '../../context/User.context';
-import { ThemeContext } from '../../context/Theme.context';
 import classNames from '../../utils/ClassNames.utils';
-// todo: remove react-select and react-timezone-select; build our own
+
 interface UpdateProfileFormValues {
   timezone?: string;
   avatar?: string;
@@ -54,47 +52,18 @@ const devType = [
 export default function UpdateProfileForm({
   setUpdateUserMessageState,
 }: UpdateFormProps): JSX.Element {
-  const { darkMode } = useContext(ThemeContext);
-  const customStyles = {
-    control: (base: any, state: { isFocused: any; }) => ({
-      ...base,
-      background: 'black',
-      borderRadius: state.isFocused ? '10px 10px 10px 10px' : '5px 5px 5px 5px',
-      borderColor: 'gray',
-
-      '&:hover': {
-        borderColor: 'black',
-      },
-      boxShadow: state.isFocused ? '#222430' : '#222430',
-    }),
-    menu: () => ({
-      borderRadius: 0,
-      color: 'black',
-      background: 'gray',
-      marginTop: 0,
-    }),
-  };
   const qc = useQueryClient();
   const [selectedDevType, setselectedDevType] = useState<Array<{ name:string, id:number }>>([]);
   const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const [profileTimezone, setProfileTimezone] = React.useState<string>('');
+  const [profileTimezone, setProfileTimezone] = React.useState<string>(detected);
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());
   if (profileQuery.isSuccess && profileQuery.data !== null) {
     const { data } = profileQuery;
     profileData = data.data;
   }
-  if (profileTimezone === '' && profileData.timezone !== undefined) {
-    const tz = profileData.timezone;
-    setProfileTimezone(tz);
-  }
-
   const validate = (values: UpdateProfileFormValues) => {
     const errors: UpdateProfileFormValues['errors'] = {};
-    // TIMEZONE
-    if (!values.timezone) {
-      errors.timezone = 'Required';
-    }
     // ABOUT
     if (!values.about) {
       errors.about = 'Required';
@@ -163,7 +132,7 @@ export default function UpdateProfileForm({
     <Formik
       initialValues={{
         about: profileData.about,
-        timezone: profileTimezone,
+        timezone: detected,
         // avatar: profileData.avatar,
         pronouns: profileData.pronouns,
         website: profileData.website,
@@ -344,7 +313,7 @@ export default function UpdateProfileForm({
                       Choose up to 3.
                     </p>
                     <div className="relative mt-1">
-                      <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
                         <span className="block truncate">
                           {
                         selectedDevType[0] ? (selectedDevType.map(({ name }) => name).join(', ')) : 'Select'
@@ -363,12 +332,16 @@ export default function UpdateProfileForm({
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                       >
-                        <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Listbox.Options
+                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
+                        dark:bg-raisinBlack2 py-1 text-base shadow-lg ring-1 ring-black
+                        ring-opacity-5 focus:outline-none sm:text-sm"
+                        >
                           {devType.map((type) => (
                             <Listbox.Option
                               key={type.id}
                               className={({ active }) => classNames(
-                                active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                active ? 'text-black bg-indigo-100 dark:bg-indigo-200' : 'text-gray-900 dark:text-gray-100 bg-white dark:bg-raisinBlack2',
                                 'relative cursor-default select-none py-2 pl-3 pr-9',
                               )}
                               value={type}
@@ -406,53 +379,19 @@ export default function UpdateProfileForm({
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 TimeZone
-                {/* DST aware timezone selector */}
-                <p className="mt-2 text-sm text-gray-500">
-                  {detected}
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                  {profileTimezone}
                   {' '}
                   timezone detected.
                   {' '}
+                  <button
+                    type="button"
+                    className="text-sm text-blue-500 dark:text-blue-300"
+                    onClick={() => { setProfileTimezone(detected); setFieldValue('timezone', detected); }}
+                  >
+                    Refetch
+                  </button>
                 </p>
-                <p className="mt-2 text-sm text-orange-700 dark:text-orange-300">
-                  You have currently set
-                  {' '}
-                  {profileData.timezone}
-                  {' '}
-                  as your timezone.
-                </p>
-                {
-                darkMode ? (
-                  <TimezoneSelect
-                    styles={customStyles}
-                    name="timezone"
-                    id="timezone"
-                    value={profileTimezone}
-                    onChange={(e) => {
-                      setProfileTimezone(e.value);
-                      setFieldValue('timezone', e.value);
-                    }}
-                    className="mt-1 block w-full text-gray-50"
-                    classNamePrefix="react-timezone-select"
-                  />
-                ) : (
-                  <TimezoneSelect
-                    name="timezone"
-                    id="timezone"
-                    value={profileTimezone}
-                    onChange={(e) => {
-                      setProfileTimezone(e.value);
-                      setFieldValue('timezone', e.value);
-                    }}
-                    className="mt-1 block w-full dark:bg-raisinBlack2"
-                    classNamePrefix="react-timezone-select"
-                  />
-                )
-}
-                <ErrorMessage
-                  name="timezone"
-                  component="div"
-                  className="text-sm text-bloodRed dark:text-mistyRose"
-                />
               </label>
             </div>
           </div>
