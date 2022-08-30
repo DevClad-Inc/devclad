@@ -231,14 +231,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   />
                 </div>
                 {sidebarExpand && (
-                <div className="ml-3">
-                  <p className="text-sm font-medium">{loggedInUser.first_name}</p>
-                  <p className="text-xs font-medium text-gray-600 dark:text-fuchsia-300 hover:text-black
+                  <div className="ml-3">
+                    <p className="text-sm font-medium">{loggedInUser.first_name}</p>
+                    <p className="text-xs font-medium text-gray-600 dark:text-fuchsia-300 hover:text-black
                   dark:group-hover:text-fuchsia-400 duration-300"
-                  >
-                    Settings
-                  </p>
-                </div>
+                    >
+                      Settings
+                    </p>
+                  </div>
                 )}
               </div>
             </Link>
