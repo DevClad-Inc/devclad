@@ -1,0 +1,27 @@
+name: TS Action
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies on ACT
+        if: ${{ env.ACT }}
+        run: |
+          npm i -g yarn
+          sudo apt-get update
+      - name: Install dependencies on Ubuntu
+        run: yarn install --frozen-lockfile
+      # - name: tsc
+      #   uses: icrawl/action-tsc@v1
+      - name: Typecheck
+        uses: andoshin11/typescript-error-reporter-action@v1.0.2
