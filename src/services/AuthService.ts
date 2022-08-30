@@ -1,6 +1,10 @@
 import axios from 'axios';
-import { delMany, get } from 'idb-keyval';
+import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
+
+/*
+Bug in Axios: method signature does not work with PATCH/PUT. Returning an axios call.
+*/
 
 const headers = {
   'Content-Type': 'application/json',
@@ -46,7 +50,13 @@ export async function getProfile() {
       .catch(() => null);
   }
   if (token === 'undefined' && Cookies.get('refresh')) {
-    refreshToken();
+    await refreshToken().catch(
+      () => {
+        Cookies.remove('token');
+        Cookies.remove('refresh');
+        delMany(['loggedInUser', 'profile']);
+      },
+    );
   }
   return null;
 }
@@ -65,15 +75,15 @@ export async function getUser() {
       .catch(() => {});
   }
   if (token === undefined && Cookies.get('refresh')) {
-    // refresh token
-    refreshToken();
+    await refreshToken().catch(
+      () => {
+        Cookies.remove('token');
+        Cookies.remove('refresh');
+        delMany(['loggedInUser', 'profile']);
+      },
+    );
   }
   return null;
-}
-
-export async function getLocalUser(): Promise<any> {
-  const localLoggedInUser = await get('loggedInUser');
-  return localLoggedInUser;
 }
 
 export async function updateUser(first_name?: string, last_name?: string, username?: string) {
@@ -104,7 +114,6 @@ export async function updateProfile(values: any) {
   } = values;
   const token = Cookies.get('token');
   if (token) {
-    // method signature does not work with Patch/Put idk why
     return axios({
       method: 'PATCH',
       url: `${API_URL}/users/profile/`,

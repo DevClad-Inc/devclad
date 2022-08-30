@@ -2,7 +2,8 @@ import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany, set } from 'idb-keyval';
-import { getUser, getLocalUser } from '../services/AuthService';
+import { getUser } from '../services/AuthService';
+import getsetIndexedDB from '../utils/getsetIndexedDB';
 
 export interface UserContextState {
   pk?: number;
@@ -83,8 +84,7 @@ export function UserProvider({ children }: UserProviderProps) {
   const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialLoginState });
   const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
   if (Object.values(loggedInUser).every((v) => v === undefined)) {
-    // console.log('setting user');
-    getLocalUser().then((localUser: UserContextState) => {
+    getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
       if (localUser) {
         dispatch({
           type: UserReducerActionTypes.SET_USER_DATA,
@@ -96,7 +96,7 @@ export function UserProvider({ children }: UserProviderProps) {
           type: UserReducerActionTypes.SET_USER_DATA,
           payload: userData.data,
         });
-        set('loggedInUser', userData.data);
+        getsetIndexedDB<UserContextState>('loggedInUser', 'set', userData.data);
       }
     });
   }
