@@ -40,9 +40,9 @@ export default function Settings() {
               to={item.href}
               className={({ isActive }) => classNames(
                 isActive
-                  ? 'bg-gray-50 dark:bg-gray-900 hover:text-gray-100 hover:bg-white'
-                  : 'text-gray-900 dark:text-gray-100 hover:text-gray-900 hover:bg-gray-50 hover:dark',
-                'group rounded-md px-3 py-2 flex items-center text-sm font-medium',
+                  ? 'bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-200 hover:text-gray-700'
+                  : 'text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white dark:hover:bg-gray-800 hover:bg-white',
+                'group rounded-md px-3 py-2 flex items-center text-sm font-medium ',
               )}
               aria-current={item.current ? 'page' : undefined}
             >
