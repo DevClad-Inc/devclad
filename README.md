@@ -1,5 +1,7 @@
 # DevClad Client
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DevClad-Inc/devclad-client/main.svg?badge_token=ptwMSAxYRcKAB0XY41u0DA)](https://results.pre-commit.ci/latest/github/DevClad-Inc/devclad-client/main?badge_token=ptwMSAxYRcKAB0XY41u0DA)
+
 Built using [React](https://reactjs.org/) + [Vite](https://vitejs.dev).
 
 **Developer Docs**:
