@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DevCladLogo from '../assets/devclad.svg';
-import { SignupForm } from './forms/Auth.forms';
 import { Error } from '../utils/Feedback.utils';
+import SignupForm from './forms/Signup.forms';
 
 function Signup() {
   const [signupError, setSignupError] = useState('');

@@ -110,7 +110,7 @@ export async function updateUser(first_name?: string, last_name?: string, userna
 export async function updateProfile(values: any) {
   const {
     timezone, pronouns,
-    about, website, linkedin,
+    about, website, linkedin, devType,
     rawXP,
   } = values;
   const token = Cookies.get('token');
@@ -123,6 +123,7 @@ export async function updateProfile(values: any) {
       },
       data: {
         timezone,
+        dev_type: devType,
         pronouns,
         about,
         website,

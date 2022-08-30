@@ -28,8 +28,10 @@ export default function QueryLoader() {
   if ((time > 3 && active) || (slowMode && active)) {
     // not a perfect mechanism; but works considering users are not
     // constantly switching back and forth between slow and fast connections
+    // if they are; a reload would reset state
+    // jic: I've added sessionstorage to persist the slowMode state if we want to later
     toggle(true);
-    console.log('Slow Internet Connection detected');
+    // console.log('Slow Internet Connection detected');
     return (
       <LoadingButton />
     );

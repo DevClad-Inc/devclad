@@ -3,10 +3,10 @@ import {
   CreditCardIcon, KeyIcon, UserCircleIcon,
 } from '@heroicons/react/outline';
 import { NavLink } from 'react-router-dom';
-import { UpdateUserForm } from './forms/Auth.forms';
 import { Error, Success } from '../utils/Feedback.utils';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm from './forms/Profile.forms';
+import UpdateUserForm from './forms/UpdateUser.forms';
 
 const navigation = [
   {

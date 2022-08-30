@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import TimezoneSelect from 'react-timezone-select';
 import { getProfile, updateProfile } from '../../services/AuthService';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
-import { UpdateFormProps } from './Auth.forms';
+import { UpdateFormProps } from './Login.forms';
 import { initialProfileState, Profile } from '../../context/User.context';
 import { ThemeContext } from '../../context/Theme.context';
+import classNames from '../../utils/ClassNames.utils';
 // todo: remove react-select and react-timezone-select; build our own
 interface UpdateProfileFormValues {
   timezone?: string;
@@ -37,6 +40,16 @@ interface UpdateProfileFormValues {
   }
 }
 
+const devType = [
+  { name: 'AI', id: 0 },
+  { name: 'Blockchain', id: 1 },
+  { name: 'Game Development', id: 2 },
+  { name: 'Hardware', id: 3 },
+  { name: 'Mobile/Web', id: 4 },
+  { name: 'Native Desktop', id: 5 },
+  { name: 'Systems', id: 6 },
+  { name: 'Other', id: 7 },
+];
 // only first name, last name, and username can be updated via this form
 export default function UpdateProfileForm({
   setUpdateUserMessageState,
@@ -62,6 +75,7 @@ export default function UpdateProfileForm({
     }),
   };
   const qc = useQueryClient();
+  const [selectedDevType, setselectedDevType] = useState<Array<{ name:string, id:number }>>([]);
   const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [profileTimezone, setProfileTimezone] = React.useState<string>('');
   let profileData: Profile = { ...initialProfileState };
@@ -110,6 +124,8 @@ export default function UpdateProfileForm({
   };
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
     try {
+      // eslint-disable-next-line no-param-reassign
+      values.devType = selectedDevType.map((type: any) => type.name).sort().join(', ');
       setSubmitting(true);
       await updateProfile(values)
         .then(async () => {
@@ -153,7 +169,6 @@ export default function UpdateProfileForm({
         website: profileData.website,
         linkedin: profileData.linkedin,
         // languages: profileData.languages,
-        // dev_type: profileData.dev_type,
         rawXP: profileData.raw_xp,
         // age_range: profileData.age_range,
         // purpose: profileData.purpose,
@@ -288,9 +303,102 @@ export default function UpdateProfileForm({
                   className="text-sm text-bloodRed dark:text-mistyRose"
                 />
                 <p className="mt-2 text-sm text-gray-500">
-                  Your raw experience building any piece of software/hardware. Max is 50.
+                  Raw experience (years) building any piece of software/hardware.
                 </p>
               </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <Listbox
+                value={selectedDevType}
+                // selectedDevType < 3 or selectedDevType should be already selected
+                onChange={
+                  (e: Array<{ name:string, id:number }>) => {
+                    if (e.length < 4) {
+                      if (e.length === 0) {
+                        setselectedDevType([]);
+                      } else if (e.length === 1) {
+                        setselectedDevType([e[0]]);
+                      } else {
+                        setselectedDevType(e);
+                      }
+                    }
+                  }
+                }
+                multiple
+              >
+                {({ open }) => (
+                  <>
+                    <Listbox.Label id="devType" className="block text-sm font-medium text-gray-700">Type of Development</Listbox.Label>
+                    {(profileData.dev_type && profileData.dev_type.length > 0) && (
+                    <p className="mt-2 text-sm text-orange-700 dark:text-orange-300">
+                      You have currently set
+                      {' '}
+                      &#34;
+                      {profileData.dev_type}
+                      &#34;
+                      {' '}
+                      as your development types.
+                    </p>
+                    )}
+                    <p className="mt-2 text-sm text-gray-500">
+                      Choose up to 3.
+                    </p>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+                        <span className="block truncate">
+                          {
+                        selectedDevType[0] ? (selectedDevType.map(({ name }) => name).join(', ')) : 'Select'
+                        }
+
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </span>
+                      </Listbox.Button>
+
+                      <Transition
+                        show={open}
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                          {devType.map((type) => (
+                            <Listbox.Option
+                              key={type.id}
+                              className={({ active }) => classNames(
+                                active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                              )}
+                              value={type}
+                            >
+                              {({ active, selected }) => (
+                                <>
+                                  <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                    {type.name}
+                                  </span>
+
+                                  {selected ? (
+                                    <span
+                                      className={classNames(
+                                        active ? 'text-white' : 'text-indigo-600',
+                                        'absolute inset-y-0 right-0 flex items-center pr-4',
+                                      )}
+                                    >
+                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </>
+                )}
+              </Listbox>
             </div>
             <div className="col-span-6 sm:col-span-5">
               <label

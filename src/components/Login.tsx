@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DevCladLogo from '../assets/devclad.svg';
-import { LoginForm } from './forms/Auth.forms';
+import LoginForm from './forms/Login.forms';
 import { Error } from '../utils/Feedback.utils';
 import { PrimaryButton } from '../utils/Buttons.utils';
 
