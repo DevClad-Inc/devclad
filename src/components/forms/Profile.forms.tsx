@@ -5,14 +5,15 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
+import { toast } from 'react-hot-toast';
 import { getProfile, updateProfile } from '../../services/AuthService';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
-import { UpdateFormProps } from './Login.forms';
 import classNames from '../../utils/ClassNames.utils';
 import Languages from '../../utils/list/Languages.list.json';
 import Countries from '../../utils/list/Countries.list.json';
 import Purposes from '../../utils/list/Purpose.list.json';
 import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
+import { Error, Success } from '../../utils/Feedback.utils';
 
 interface UpdateProfileFormValues {
   timezone?: string;
@@ -68,9 +69,7 @@ const devType = [
   { name: 'Other', id: 7 },
 ];
 
-export default function UpdateProfileForm({
-  setUpdateUserMessageState,
-}: UpdateFormProps): JSX.Element {
+export default function UpdateProfileForm(): JSX.Element {
   const qc = useQueryClient();
   const [selectedDevType, setselectedDevType] = useState<Array<{ name:string, id:number }>>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<Array<{ name:string, id:number }>>([]);
@@ -126,25 +125,19 @@ export default function UpdateProfileForm({
       setSubmitting(true);
       await updateProfile(values, profileData)
         .then(async () => {
-          setUpdateUserMessageState({
-            error: '',
-            success: 'Profile updated successfully.',
-          });
           setSubmitting(false);
           qc.invalidateQueries(['profile']);
+          toast.custom(
+            <Success success="Profile updated successfully" />,
+            { id: 'profile-update-success' },
+          );
         });
     } catch (error: any) {
       const { data } = error.response;
       if (data.timezone) {
-        setUpdateUserMessageState({
-          error: data.timezone,
-          success: '',
-        });
+        toast.custom(<Error error={data.timezone} />, { id: 'profile-update-error' });
       } else {
-        setUpdateUserMessageState({
-          error: 'Something went wrong. Please try again.',
-          success: '',
-        });
+        toast.custom(<Error error={data.message} />, { id: 'profile-update-error-unknown' });
       }
       setSubmitting(false);
     }

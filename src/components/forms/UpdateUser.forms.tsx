@@ -1,13 +1,14 @@
+import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
+import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
-import React from 'react';
 import { User, initialUserState, setIndexDBStore } from '../../context/User.context';
 import { getUser, updateUser } from '../../services/AuthService';
 import { PrimaryButton } from '../../utils/Buttons.utils';
-import { UpdateFormProps } from './Login.forms';
+import { Success, Error } from '../../utils/Feedback.utils';
 
 interface UpdateUserFormValues {
   /* why are some of these values optional?
@@ -27,9 +28,7 @@ interface UpdateUserFormValues {
 }
 
 // only first name, last name, and username can be updated via this form
-export default function UpdateUserForm({
-  setUpdateUserMessageState,
-}: UpdateFormProps): JSX.Element {
+export default function UpdateUserForm(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
   if (userQuery.isSuccess && userQuery.data !== null) {
@@ -60,29 +59,35 @@ export default function UpdateUserForm({
       }
       await updateUser(firstName, lastName, username)
         .then(async () => {
-          setUpdateUserMessageState({
-            error: '',
-            success: 'User updated successfully.',
-          });
           del('loggedInUser');
           if (username === undefined) {
             username = loggedInUser.username;
           }
           setSubmitting(false);
           setIndexDBStore(qc, 'user');
+          toast.custom(
+            <Success success="User updated successfully" />,
+            {
+              id: 'user-update-success',
+            },
+          );
         });
     } catch (error: any) {
       const { data } = error.response;
       if (data.username) {
-        setUpdateUserMessageState({
-          error: data.username,
-          success: '',
-        });
+        toast.custom(
+          <Error error={data.username} />,
+          {
+            id: 'user-update-username-error',
+          },
+        );
       } else {
-        setUpdateUserMessageState({
-          error: 'Check First and Last name',
-          success: '',
-        });
+        toast.custom(
+          <Error error="Check First and Last Name" />,
+          {
+            id: 'user-update-name-error',
+          },
+        );
       }
       setSubmitting(false);
     }

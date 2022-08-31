@@ -1,10 +1,8 @@
 import React from 'react';
-
 import { NavLink } from 'react-router-dom';
 import {
   UserCircleIcon, KeyIcon, CreditCardIcon,
 } from '@heroicons/react/24/solid';
-import { Error, Success } from '../utils/Feedback.utils';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm from './forms/Profile.forms';
 import UpdateUserForm from './forms/UpdateUser.forms';
@@ -26,7 +24,6 @@ function classNames(...classes: string[]) {
 }
 
 export default function Settings() {
-  const [updateUserMessage, setUpdateUserMessage] = React.useState({ error: '', success: '' });
   return (
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
       <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
@@ -69,23 +66,13 @@ export default function Settings() {
             <div>
               <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
             </div>
-            {updateUserMessage.error && (
-            <Error error={updateUserMessage.error} />
-            )}
-            {updateUserMessage.success && (
-            <Success success={updateUserMessage.success} />
-            )}
-            <UpdateUserForm
-              setUpdateUserMessageState={setUpdateUserMessage}
-            />
+            <UpdateUserForm />
           </div>
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
               <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
             </div>
-            <UpdateProfileForm
-              setUpdateUserMessageState={setUpdateUserMessage}
-            />
+            <UpdateProfileForm />
           </div>
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div className="grid grid-cols-3 gap-6">

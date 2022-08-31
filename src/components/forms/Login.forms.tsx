@@ -27,13 +27,6 @@ interface LoginFormProps {
   setLoginError: (loginError: boolean) => void;
 }
 
-export interface UpdateFormProps {
-  setUpdateUserMessageState: (updateUserMessageState: {
-    error: string;
-    success: string;
-  }) => void;
-}
-
 export default function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Element {
   const qc = useQueryClient();
   const validate = (values: LoginFormValues) => {
