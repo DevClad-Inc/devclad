@@ -802,7 +802,7 @@ export function AvatarUploadForm() {
         </div>
       </div>
       <div className="col-span-3">
-        <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
+        <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center" onDragOver={enableDropping} onDrop={handleDrop}>
           <div className="space-y-1 text-center">
             <svg
               className="mx-auto h-12 w-12 text-gray-400"
@@ -818,7 +818,7 @@ export function AvatarUploadForm() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div className="flex text-sm text-gray-600" onDragOver={enableDropping} onDrop={handleDrop}>
+            <div className="flex text-sm text-gray-600">
               <label
                 htmlFor="file-upload"
                 className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
