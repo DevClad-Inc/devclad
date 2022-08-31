@@ -67,7 +67,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         position="top-right"
         toastOptions={
           {
-            duration: 3000,
+            duration: 1500,
           }
       }
       />
@@ -161,7 +161,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       <div>
                         <img
                           className="inline-block h-10 w-10 rounded-full"
-                          src={profileData.avatar}
+                          src={
+                            import.meta.env.VITE_DEVELOPMENT
+                              ? (import.meta.env.VITE_API_URL + profileData.avatar)
+                              : profileData.avatar
+                          }
                           alt=""
                         />
                       </div>
@@ -210,7 +214,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       ? 'text-orange-700 dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500'
                       : 'text-gray-800 dark:text-gray-400 group-hover:text-gray-500',
                     sidebarExpand ? 'rounded-md duration-500' : 'rounded-2xl duration-700',
-                    'uppercase font-mono font-extrabold flex items-center text-md px-4 py-4 hover:shadow-lg dark:hover:shadow-fuchsia-700/30',
+                    'font-extrabold flex items-center text-sm px-4 py-4',
                   )}
                 >
                   <item.icon
@@ -231,7 +235,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <div>
                   <img
                     className="inline-block object-cover h-12 w-12 rounded-full"
-                    src={profileData.avatar}
+                    src={
+                      import.meta.env.VITE_DEVELOPMENT
+                        ? (import.meta.env.VITE_API_URL + profileData.avatar)
+                        : profileData.avatar
+                    }
                     alt=""
                   />
                 </div>

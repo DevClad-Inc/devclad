@@ -1,12 +1,14 @@
-import React, { Fragment, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { ChangeEvent, Fragment, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import { toast } from 'react-hot-toast';
-import { getProfile, updateProfile } from '../../services/AuthService';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { getProfile, updateProfile, updateProfileAvatar } from '../../services/AuthService';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import classNames from '../../utils/ClassNames.utils';
 import Languages from '../../utils/list/Languages.list.json';
@@ -17,7 +19,6 @@ import { Error, Success } from '../../utils/Feedback.utils';
 
 interface UpdateProfileFormValues {
   timezone?: string;
-  avatar?: string;
   pronouns?: string;
   about?: string;
   website?: string;
@@ -29,7 +30,6 @@ interface UpdateProfileFormValues {
   location?: string;
   errors?: {
     timezone?: string;
-    avatar?: string;
     pronouns?: string;
     about?: string;
     website?: string;
@@ -39,6 +39,13 @@ interface UpdateProfileFormValues {
     rawXP?: string;
     purpose?: string;
     location?: string;
+  }
+}
+
+interface UploadAvatarFormValues {
+  avatar?: File;
+  errors?: {
+    avatar?: string;
   }
 }
 
@@ -70,6 +77,12 @@ const devType = [
 ];
 
 export default function UpdateProfileForm(): JSX.Element {
+  let profileData: Profile = { ...initialProfileState };
+  const profileQuery = useQuery(['profile'], () => getProfile());
+  if (profileQuery.isSuccess && profileQuery.data !== null) {
+    const { data } = profileQuery;
+    profileData = data.data;
+  }
   const qc = useQueryClient();
   const [selectedDevType, setselectedDevType] = useState<Array<{ name:string, id:number }>>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<Array<{ name:string, id:number }>>([]);
@@ -77,12 +90,6 @@ export default function UpdateProfileForm(): JSX.Element {
   const [selectedCountry, setSelectedCountry] = useState<{ name:string, code:string }>();
   const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [profileTimezone, setProfileTimezone] = React.useState<string>(detected);
-  let profileData: Profile = { ...initialProfileState };
-  const profileQuery = useQuery(['profile'], () => getProfile());
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery;
-    profileData = data.data;
-  }
   const validate = (values: UpdateProfileFormValues) => {
     const errors: UpdateProfileFormValues['errors'] = {};
     // ABOUT
@@ -154,7 +161,6 @@ export default function UpdateProfileForm(): JSX.Element {
       initialValues={{
         about: profileData.about,
         timezone: detected,
-        // avatar: profileData.avatar,
         pronouns: profileData.pronouns,
         website: profileData.website,
         linkedin: profileData.linkedin,
@@ -325,8 +331,8 @@ export default function UpdateProfileForm(): JSX.Element {
 
                     </Listbox.Label>
                     {(profileData.dev_type && profileData.dev_type.length > 0) && (
-                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
-                      Currently set
+                    <p className="mt-2 text-xs italic text-gray-600 dark:text-gray-400">
+                      Currently set to
                       {' '}
                       &#34;
                       {profileData.dev_type}
@@ -432,8 +438,8 @@ export default function UpdateProfileForm(): JSX.Element {
 
                     </Listbox.Label>
                     {(profileData.languages && profileData.languages.length > 0) && (
-                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
-                      Currently set
+                    <p className="mt-2 text-xs italic text-gray-600 dark:text-gray-400">
+                      Currently set to
                       {' '}
                       &#34;
                       {profileData.languages}
@@ -537,8 +543,8 @@ export default function UpdateProfileForm(): JSX.Element {
                       What makes you want to use DevClad?
                     </Listbox.Label>
                     {(profileData.purpose && profileData.purpose.length > 0) && (
-                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
-                      Currently set
+                    <p className="mt-2 text-xs italic text-gray-600 dark:text-gray-400">
+                      Currently set to
                       {' '}
                       &#34;
                       {profileData.purpose}
@@ -632,8 +638,8 @@ export default function UpdateProfileForm(): JSX.Element {
 
                     </Listbox.Label>
                     {(profileData.location && profileData.location.length > 0) && (
-                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
-                      Currently set
+                    <p className="mt-2 text-xs italic text-gray-600 dark:text-gray-400">
+                      Currently set to
                       {' '}
                       &#34;
                       {profileData.location}
@@ -738,5 +744,67 @@ export default function UpdateProfileForm(): JSX.Element {
         </Form>
       )}
     </Formik>
+  );
+}
+
+export function AvatarUploadForm() {
+  let profileData: Profile = { ...initialProfileState };
+  const profileQuery = useQuery(['profile'], () => getProfile());
+  if (profileQuery.isSuccess && profileQuery.data !== null) {
+    const { data } = profileQuery;
+    profileData = data.data;
+  }
+  const validate = (values: UploadAvatarFormValues) => {
+    const errors: UploadAvatarFormValues['errors'] = {};
+    if (!values.avatar) {
+      errors.avatar = 'Required';
+    }
+    return errors;
+  };
+  const handleSubmit = async (values: UploadAvatarFormValues, { setSubmitting }: any) => {
+    try {
+      setSubmitting(true);
+      const { avatar } = values;
+      const formData = new FormData();
+      formData.append('avatar', avatar);
+      await updateProfileAvatar(formData).then((resp) => {
+        console.log(resp);
+        setSubmitting(false);
+      });
+    } catch (error: any) {
+      console.log(error);
+      setSubmitting(false);
+    }
+  };
+  if (profileQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+  const uploadFile = async (url: string, file: File) => {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    return axios({
+      method: 'PATCH',
+      url,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      },
+    }).then((resp) => {
+      console.log(resp);
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
+    const file = e.target.files[0];
+    console.log(url);
+    uploadFile(url, file);
+  };
+
+  return (
+    <input type="file" onChange={onChange} accept="image/*" />
+
   );
 }

@@ -139,6 +139,22 @@ export async function updateProfile(values: any, profileData: Profile) {
   return null;
 }
 
+export async function updateProfileAvatar(formData: FormData) {
+  const token = Cookies.get('token');
+  if (token) {
+    return axios({
+      method: 'PATCH',
+      url: `${API_URL}/users/profile/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      data: formData,
+    });
+  }
+  return null;
+}
+
 export interface NewUser {
   first_name: string;
   last_name: string;
