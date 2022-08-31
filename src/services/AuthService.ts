@@ -139,20 +139,23 @@ export async function updateProfile(values: any, profileData: Profile) {
   return null;
 }
 
-export async function updateProfileAvatar(formData: FormData) {
-  const token = Cookies.get('token');
-  if (token) {
-    return axios({
-      method: 'PATCH',
-      url: `${API_URL}/users/profile/`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
-      },
-      data: formData,
-    });
-  }
-  return null;
+export async function updateProfileAvatar(avatar: File) {
+  const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
+  const formData = new FormData();
+  formData.append('avatar', avatar);
+  return axios({
+    method: 'PATCH',
+    url,
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${Cookies.get('token')}`,
+    },
+  }).then((resp) => {
+    console.log(resp);
+  }).catch((error) => {
+    console.log(error);
+  });
 }
 
 export interface NewUser {

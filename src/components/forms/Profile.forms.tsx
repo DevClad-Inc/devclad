@@ -16,6 +16,7 @@ import Countries from '../../utils/list/Countries.list.json';
 import Purposes from '../../utils/list/Purpose.list.json';
 import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
 import { Error, Success } from '../../utils/Feedback.utils';
+import QueryLoader from '../../utils/QueryLoader.utils';
 
 interface UpdateProfileFormValues {
   timezone?: string;
@@ -754,20 +755,14 @@ export function AvatarUploadForm() {
     const { data } = profileQuery;
     profileData = data.data;
   }
-  const validate = (values: UploadAvatarFormValues) => {
-    const errors: UploadAvatarFormValues['errors'] = {};
-    if (!values.avatar) {
-      errors.avatar = 'Required';
-    }
-    return errors;
-  };
+  if (profileQuery.isLoading) {
+    return <QueryLoader />;
+  }
   const handleSubmit = async (values: UploadAvatarFormValues, { setSubmitting }: any) => {
     try {
-      setSubmitting(true);
       const { avatar } = values;
-      const formData = new FormData();
-      formData.append('avatar', avatar);
-      await updateProfileAvatar(formData).then((resp) => {
+      setSubmitting(true);
+      await updateProfileAvatar(avatar).then((resp) => {
         console.log(resp);
         setSubmitting(false);
       });
@@ -779,28 +774,11 @@ export function AvatarUploadForm() {
   if (profileQuery.isLoading) {
     return <div>Loading...</div>;
   }
-  const uploadFile = async (url: string, file: File) => {
-    const formData = new FormData();
-    formData.append('avatar', file);
-    return axios({
-      method: 'PATCH',
-      url,
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${Cookies.get('token')}`,
-      },
-    }).then((resp) => {
-      console.log(resp);
-    }).catch((error) => {
-      console.log(error);
-    });
-  };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
-    const file = e.target.files[0];
-    console.log(url);
-    uploadFile(url, file);
+    const avatar = e.target.files && e.target.files[0];
+    if (avatar) {
+      updateProfileAvatar(avatar);
+    }
   };
 
   return (
