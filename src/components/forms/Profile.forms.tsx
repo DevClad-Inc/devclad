@@ -121,6 +121,8 @@ export default function UpdateProfileForm({
       values.devType = selectedDevType.map((type: any) => type.name).sort().join(', ');
       // eslint-disable-next-line no-param-reassign
       values.languages = selectedLanguages.map((language: any) => language.name).sort().join(', ');
+      // eslint-disable-next-line no-param-reassign
+      values.purpose = selectedPurposes.map((purpose: any) => purpose.name).sort().join(', ');
       setSubmitting(true);
       await updateProfile(values, profileData)
         .then(async () => {
@@ -539,8 +541,7 @@ export default function UpdateProfileForm({
                       className="block text-sm font-medium
                     text-gray-700 dark:text-gray-300"
                     >
-                      Purposes
-
+                      What makes you want to use DevClad?
                     </Listbox.Label>
                     {(profileData.purpose && profileData.purpose.length > 0) && (
                     <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">

@@ -112,7 +112,7 @@ export async function updateProfile(values: any, profileData: Profile) {
   const {
     timezone, pronouns, location,
     about, website, linkedin, devType, languages,
-    rawXP,
+    rawXP, purpose,
   } = values;
   const token = Cookies.get('token');
   if (token && profileData) {
@@ -127,6 +127,7 @@ export async function updateProfile(values: any, profileData: Profile) {
         dev_type: (devType === '') ? profileData.dev_type : devType,
         languages: (languages === '') ? profileData.languages : languages,
         location: (location === '') ? profileData.location : location,
+        purpose: (purpose === '') ? profileData.purpose : purpose,
         pronouns,
         about,
         website,
