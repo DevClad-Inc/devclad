@@ -2,9 +2,9 @@ import React from 'react';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { useQueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import {
   getUser, logIn,
 } from '../../services/AuthService';

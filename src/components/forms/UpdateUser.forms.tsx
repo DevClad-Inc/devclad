@@ -87,12 +87,15 @@ export default function UpdateUserForm({
       setSubmitting(false);
     }
   };
+  if (userQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <Formik
       initialValues={{
-        firstName: loggedInUser.first_name,
-        lastName: loggedInUser.last_name,
-        username: loggedInUser.username,
+        firstName: loggedInUser && loggedInUser.first_name,
+        lastName: loggedInUser && loggedInUser.last_name,
+        username: loggedInUser && loggedInUser.username,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -113,7 +116,6 @@ export default function UpdateUserForm({
                   type="text"
                   name="firstName"
                   id="firstName"
-                  placeholder="First name"
                   autoComplete="given-name"
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                     dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"

@@ -12,7 +12,7 @@ const headers = {
 };
 
 const API_URL = import.meta.env.VITE_API_URL;
-const fortyFive = new Date(new Date().getTime() + ((45 * 60) * 1000));
+const oneHour = new Date(new Date().getTime() + ((60 * 60) * 1000));
 
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
@@ -27,7 +27,7 @@ export async function refreshToken() {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access, {
-        expires: fortyFive,
+        expires: oneHour,
         sameSite: 'lax',
         secure: true,
       });
@@ -110,7 +110,7 @@ export async function updateUser(first_name?: string, last_name?: string, userna
 
 export async function updateProfile(values: any, profileData: Profile) {
   const {
-    timezone, pronouns,
+    timezone, pronouns, location,
     about, website, linkedin, devType, languages,
     rawXP,
   } = values;
@@ -126,6 +126,7 @@ export async function updateProfile(values: any, profileData: Profile) {
         timezone,
         dev_type: (devType === '') ? profileData.dev_type : devType,
         languages: (languages === '') ? profileData.languages : languages,
+        location: (location === '') ? profileData.location : location,
         pronouns,
         about,
         website,
@@ -160,7 +161,7 @@ export async function SignUp(user: NewUser) {
     )
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: fortyFive,
+        expires: oneHour,
         sameSite: 'lax',
         secure: true,
       });
@@ -183,7 +184,7 @@ export async function logIn(email: string, password: string) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: fortyFive,
+        expires: oneHour,
         sameSite: 'lax',
         secure: true,
       });

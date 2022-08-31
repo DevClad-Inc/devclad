@@ -1,8 +1,9 @@
 import React from 'react';
-import {
-  CreditCardIcon, KeyIcon, UserCircleIcon,
-} from '@heroicons/react/outline';
+
 import { NavLink } from 'react-router-dom';
+import {
+  UserCircleIcon, KeyIcon, CreditCardIcon,
+} from '@heroicons/react/24/solid';
 import { Error, Success } from '../utils/Feedback.utils';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm from './forms/Profile.forms';
@@ -62,17 +63,18 @@ export default function Settings() {
       </aside>
 
       <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-        {updateUserMessage.error && (
-        <Error error={updateUserMessage.error} />
-        )}
-        {updateUserMessage.success && (
-        <Success success={updateUserMessage.success} />
-        )}
+
         <div className="shadow sm:rounded-md sm:overflow-hidden">
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div>
               <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
             </div>
+            {updateUserMessage.error && (
+            <Error error={updateUserMessage.error} />
+            )}
+            {updateUserMessage.success && (
+            <Success success={updateUserMessage.success} />
+            )}
             <UpdateUserForm
               setUpdateUserMessageState={setUpdateUserMessage}
             />
@@ -87,22 +89,6 @@ export default function Settings() {
           </div>
           <div className="py-6 px-4 space-y-6 sm:p-6">
             <div className="grid grid-cols-3 gap-6">
-
-              <div className="col-span-6 sm:col-span-3">
-                {/* <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                  Country
-                </label> */}
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-              </div>
 
               <div className="col-span-3">
                 {/* <label className="block text-sm font-medium text-gray-700">Photo</label> */}

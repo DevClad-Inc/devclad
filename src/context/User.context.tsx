@@ -98,7 +98,7 @@ export function useUserContext() {
 }
 
 export async function setIndexDBStore(qc: any, key: string) {
-  await qc.invalidateQueries([key]);
+  await qc.refetchQueries([key]);
   if (key === 'user') {
     const cacheUserData = qc.getQueryData([key]) as { data: User };
     set('loggedInUser', cacheUserData.data);

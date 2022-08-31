@@ -10,8 +10,9 @@ import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import { UpdateFormProps } from './Login.forms';
 import classNames from '../../utils/ClassNames.utils';
 import Languages from '../../utils/list/Languages.list.json';
+import Countries from '../../utils/list/Countries.list.json';
+import Purposes from '../../utils/list/Purpose.list.json';
 import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
-// import data from '../,,/utils/list/Languages.list.json'; into a const
 
 interface UpdateProfileFormValues {
   timezone?: string;
@@ -45,6 +46,17 @@ const languages = Languages.map((language) => ({ language })) as { language: {
   id: number;
 } }[];
 
+const countries = Countries.map((country) => ({ country })) as {
+  country: {
+    name:string, code:string
+  }
+}[];
+
+const purposes = Purposes.map((purpose) => ({ purpose })) as { purpose: {
+  name: string;
+  id: number;
+} }[];
+
 const devType = [
   { name: 'AI', id: 0 },
   { name: 'Blockchain', id: 1 },
@@ -55,13 +67,15 @@ const devType = [
   { name: 'Systems', id: 6 },
   { name: 'Other', id: 7 },
 ];
-// only first name, last name, and username can be updated via this form
+
 export default function UpdateProfileForm({
   setUpdateUserMessageState,
 }: UpdateFormProps): JSX.Element {
   const qc = useQueryClient();
   const [selectedDevType, setselectedDevType] = useState<Array<{ name:string, id:number }>>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<Array<{ name:string, id:number }>>([]);
+  const [selectedPurposes, setSelectedPurposes] = useState<Array<{ name:string, id:number }>>([]);
+  const [selectedCountry, setSelectedCountry] = useState<{ name:string, code:string }>();
   const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [profileTimezone, setProfileTimezone] = React.useState<string>(detected);
   let profileData: Profile = { ...initialProfileState };
@@ -70,18 +84,6 @@ export default function UpdateProfileForm({
     const { data } = profileQuery;
     profileData = data.data;
   }
-  // if (selectedDevType.length === 0 && profileData.dev_type !== undefined) {
-  //   const devTypeArray = [] as Array<{ name:string, id:number }>;
-  //   const string2Array = profileData.dev_type.split(', ');
-  //   if (profileData.dev_type) {
-  //     string2Array.forEach((type, index) => {
-  //       const dTIndex = devType.findIndex((dT) => dT.name === type);
-  //       console.log(dTIndex);
-  //       devTypeArray.push({ name: type, id: dTIndex });
-  //     });
-  //   }
-  //   setselectedDevType(devTypeArray);
-  // }
   const validate = (values: UpdateProfileFormValues) => {
     const errors: UpdateProfileFormValues['errors'] = {};
     // ABOUT
@@ -113,6 +115,8 @@ export default function UpdateProfileForm({
   };
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
     try {
+      // eslint-disable-next-line no-param-reassign
+      values.location = selectedCountry?.name;
       // eslint-disable-next-line no-param-reassign
       values.devType = selectedDevType.map((type: any) => type.name).sort().join(', ');
       // eslint-disable-next-line no-param-reassign
@@ -160,9 +164,8 @@ export default function UpdateProfileForm({
         website: profileData.website,
         linkedin: profileData.linkedin,
         rawXP: profileData.raw_xp,
-        // age_range: profileData.age_range,
-        // purpose: profileData.purpose,
-        // location: profileData.location,
+        purpose: profileData.purpose,
+        location: profileData.location,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -332,9 +335,7 @@ export default function UpdateProfileForm({
                       {' '}
                       &#34;
                       {profileData.dev_type}
-                      &#34;
-                      {' '}
-                      as development types.
+                      &#34;.
                     </p>
                     )}
                     <p className="mt-2 text-sm text-gray-500">
@@ -428,7 +429,7 @@ export default function UpdateProfileForm({
                 {({ open }) => (
                   <>
                     <Listbox.Label
-                      id=""
+                      id="languages"
                       className="block text-sm font-medium
                     text-gray-700 dark:text-gray-300"
                     >
@@ -441,9 +442,7 @@ export default function UpdateProfileForm({
                       {' '}
                       &#34;
                       {profileData.languages}
-                      &#34;
-                      {' '}
-                      as languages.
+                      &#34;.
                     </p>
                     )}
                     <p className="mt-2 text-sm text-gray-500">
@@ -492,6 +491,204 @@ export default function UpdateProfileForm({
                                 <>
                                   <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
                                     {language.name}
+                                  </span>
+
+                                  {selected ? (
+                                    <span
+                                      className={classNames(
+                                        active ? 'text-linen dark:text-raisinBlack2' : 'text-gray-900 dark:text-gray-100',
+                                        'absolute inset-y-0 right-0 flex items-center pr-4',
+                                      )}
+                                    >
+                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </>
+                )}
+              </Listbox>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <Listbox
+                value={selectedPurposes}
+                onChange={
+                  (e: Array<{ name:string, id:number }>) => {
+                    if (e.length < 4) {
+                      if (e.length === 0) {
+                        setSelectedPurposes([]);
+                      } else if (e.length === 1) {
+                        setSelectedPurposes([e[0]]);
+                      } else {
+                        setSelectedPurposes(e);
+                      }
+                    }
+                  }
+                }
+                multiple
+              >
+                {({ open }) => (
+                  <>
+                    <Listbox.Label
+                      id="purposes"
+                      className="block text-sm font-medium
+                    text-gray-700 dark:text-gray-300"
+                    >
+                      Purposes
+
+                    </Listbox.Label>
+                    {(profileData.purpose && profileData.purpose.length > 0) && (
+                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+                      Currently set
+                      {' '}
+                      &#34;
+                      {profileData.purpose}
+                      &#34;.
+                    </p>
+                    )}
+                    <p className="mt-2 text-sm text-gray-500">
+                      Choose up to 3.
+                    </p>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md
+                      dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left border border-gray-300
+                      dark:border-gray-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      >
+                        <span className="block truncate">
+                          {
+                        selectedPurposes[0] ? (selectedPurposes.map(({ name }) => name).join(', ')) : 'Select'
+                        }
+
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </span>
+                      </Listbox.Button>
+
+                      <Transition
+                        show={open}
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options
+                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
+                        dark:bg-raisinBlack2 py-1 text-base shadow-lg ring-1 ring-black
+                        ring-opacity-5 focus:outline-none sm:text-sm"
+                        >
+                          {purposes.map(({ purpose }) => (
+                            <Listbox.Option
+                              key={purpose.id}
+                              className={({ active }) => classNames(
+                                active
+                                  ? 'text-black bg-orange-300 dark:bg-fuchsia-300'
+                                  : 'text-gray-900 dark:text-gray-100 bg-snow dark:bg-raisinBlack2',
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                              )}
+                              value={purpose}
+                            >
+                              {({ active, selected }) => (
+                                <>
+                                  <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                    {purpose.name}
+                                  </span>
+
+                                  {selected ? (
+                                    <span
+                                      className={classNames(
+                                        active ? 'text-linen dark:text-raisinBlack2' : 'text-gray-900 dark:text-gray-100',
+                                        'absolute inset-y-0 right-0 flex items-center pr-4',
+                                      )}
+                                    >
+                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </>
+                )}
+              </Listbox>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <Listbox
+                value={selectedCountry}
+                onChange={(e: { name:string, code:string }) => {
+                  setSelectedCountry(e);
+                }}
+              >
+                {({ open }) => (
+                  <>
+                    <Listbox.Label
+                      id="location"
+                      className="block text-sm font-medium
+                    text-gray-700 dark:text-gray-300"
+                    >
+                      Location
+
+                    </Listbox.Label>
+                    {(profileData.location && profileData.location.length > 0) && (
+                    <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
+                      Currently set
+                      {' '}
+                      &#34;
+                      {profileData.location}
+                      &#34;.
+                    </p>
+                    )}
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md
+                      dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left border border-gray-300
+                      dark:border-gray-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      >
+                        <span className="block truncate">
+                          {
+                        (selectedCountry) ? (selectedCountry.name) : 'Select'
+                        }
+
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </span>
+                      </Listbox.Button>
+
+                      <Transition
+                        show={open}
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options
+                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
+                        dark:bg-raisinBlack2 py-1 text-base shadow-lg ring-1 ring-black
+                        ring-opacity-5 focus:outline-none sm:text-sm"
+                        >
+                          {countries.map(({ country }) => (
+                            <Listbox.Option
+                              key={country.code}
+                              className={({ active }) => classNames(
+                                active
+                                  ? 'text-black bg-orange-300 dark:bg-fuchsia-300'
+                                  : 'text-gray-900 dark:text-gray-100 bg-snow dark:bg-raisinBlack2',
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                              )}
+                              value={country}
+                            >
+                              {({ active, selected }) => (
+                                <>
+                                  <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                    {country.name}
                                   </span>
 
                                   {selected ? (

@@ -1,16 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import {
-  FireIcon,
-  FolderIcon,
-  HomeIcon,
-  MenuIcon,
-  UsersIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  HomeIcon, UsersIcon, FireIcon, FolderIcon, XMarkIcon,
+  Bars3Icon,
+} from '@heroicons/react/24/solid';
+
 import DevCladLogo from '../assets/devclad.svg';
 import {
   initialUserState, User, useUserContext,
@@ -52,7 +50,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     const { data } = profileQuery;
     profileData = data.data;
   }
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
 
@@ -108,7 +105,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
                     </button>
                   </div>
                 </Transition.Child>
@@ -258,7 +255,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
-            <MenuIcon className="h-6 w-6" aria-hidden="true" />
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <main className="flex-1 overflow-auto scrollbar">

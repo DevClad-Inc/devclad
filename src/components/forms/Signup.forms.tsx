@@ -1,4 +1,4 @@
-import { ExclamationCircleIcon, CheckCircleIcon } from '@heroicons/react/outline';
+import { ExclamationCircleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
