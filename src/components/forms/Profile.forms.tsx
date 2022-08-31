@@ -740,6 +740,9 @@ export default function UpdateProfileForm(): JSX.Element {
     </Formik>
   );
 }
+const enableDropping = (event: React.DragEvent<HTMLDivElement>) => {
+  event.preventDefault();
+};
 
 export function AvatarUploadForm() {
   const qc = useQueryClient();
@@ -755,11 +758,32 @@ export function AvatarUploadForm() {
   if (profileQuery.isLoading) {
     return <div>Loading...</div>;
   }
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const { files } = event.dataTransfer;
+    // read file[0] and send it to updateProfileAvatar
+    const file = files[0];
+    if (file) {
+      updateProfileAvatar(file).then(() => {
+        qc.invalidateQueries(['profile']);
+        toast.custom(
+          <Success success="Profile avatar updated successfully!" />,
+        );
+      }).catch(() => {
+        toast.custom(<Error error="Profile avatar update failed! Please upload a valid image." />);
+      });
+    }
+  };
   const handleonChange = (e: ChangeEvent<HTMLInputElement>) => {
     const avatar = e.target.files && e.target.files[0];
     if (avatar) {
       updateProfileAvatar(avatar).then(() => {
         qc.invalidateQueries(['profile']);
+        toast.custom(
+          <Success success="Profile avatar updated successfully!" />,
+        );
+      }).catch(() => {
+        toast.custom(<Error error="Profile avatar update failed! Please upload a valid image." />);
       });
     }
   };
@@ -767,7 +791,6 @@ export function AvatarUploadForm() {
   return (
     <>
       <div className="col-span-3">
-        {/* <label className="block text-sm font-medium text-gray-700">Photo</label> */}
         <div className="mt-1 flex items-center">
           <img
             className="inline-block object-cover h-24 w-24 rounded-full"
@@ -779,8 +802,6 @@ export function AvatarUploadForm() {
         </div>
       </div>
       <div className="col-span-3">
-        {/* <label className="block text-sm font-medium
-    text-gray-700">Cover photo</label> */}
         <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
           <div className="space-y-1 text-center">
             <svg
@@ -797,13 +818,21 @@ export function AvatarUploadForm() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div className="flex text-sm text-gray-600">
+            <div className="flex text-sm text-gray-600" onDragOver={enableDropping} onDrop={handleDrop}>
               <label
                 htmlFor="file-upload"
                 className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
               >
                 <span>Upload a file</span>
-                <input id="file-upload" name="file-upload" type="file" onChange={handleonChange} accept="image/*" className="sr-only" />
+                <input
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  onChange={handleonChange}
+                  accept="image/*"
+                  onDrop={handleDrop}
+                  className="sr-only"
+                />
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>

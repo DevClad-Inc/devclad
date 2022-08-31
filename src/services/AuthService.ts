@@ -141,21 +141,21 @@ export async function updateProfile(values: any, profileData: Profile) {
 
 export async function updateProfileAvatar(avatar: File) {
   const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
+  const token = Cookies.get('token');
   const formData = new FormData();
   formData.append('avatar', avatar);
-  return axios({
-    method: 'PATCH',
-    url,
-    data: formData,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${Cookies.get('token')}`,
-    },
-  }).then((resp) => {
-    console.log(resp);
-  }).catch((error) => {
-    console.log(error);
-  });
+  if (token) {
+    return axios({
+      method: 'PATCH',
+      url,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      },
+    });
+  }
+  return null;
 }
 
 export interface NewUser {

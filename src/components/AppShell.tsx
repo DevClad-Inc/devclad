@@ -67,7 +67,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         position="top-right"
         toastOptions={
           {
-            duration: 1500,
+            duration: 3000,
           }
       }
       />

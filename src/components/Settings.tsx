@@ -3,12 +3,9 @@ import { NavLink } from 'react-router-dom';
 import {
   UserCircleIcon, KeyIcon, CreditCardIcon,
 } from '@heroicons/react/24/solid';
-import { useQuery } from '@tanstack/react-query';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
 import UpdateUserForm from './forms/UpdateUser.forms';
-import { initialProfileState, Profile } from '../utils/InterfacesStates.utils';
-import { getProfile } from '../services/AuthService';
 
 const navigation = [
   {
@@ -27,12 +24,6 @@ function classNames(...classes: string[]) {
 }
 
 export default function Settings() {
-  let profileData: Profile = { ...initialProfileState };
-  const profileQuery = useQuery(['profile'], () => getProfile());
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery;
-    profileData = data.data;
-  }
   return (
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
       <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
