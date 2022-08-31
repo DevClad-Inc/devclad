@@ -1,13 +1,13 @@
-import React, { ChangeEvent, Fragment, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, {
+  ChangeEvent, Fragment, useState,
+} from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import { toast } from 'react-hot-toast';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { getProfile, updateProfile, updateProfileAvatar } from '../../services/AuthService';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import classNames from '../../utils/ClassNames.utils';
@@ -40,13 +40,6 @@ interface UpdateProfileFormValues {
     rawXP?: string;
     purpose?: string;
     location?: string;
-  }
-}
-
-interface UploadAvatarFormValues {
-  avatar?: File;
-  errors?: {
-    avatar?: string;
   }
 }
 
@@ -749,6 +742,7 @@ export default function UpdateProfileForm(): JSX.Element {
 }
 
 export function AvatarUploadForm() {
+  const qc = useQueryClient();
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());
   if (profileQuery.isSuccess && profileQuery.data !== null) {
@@ -758,31 +752,65 @@ export function AvatarUploadForm() {
   if (profileQuery.isLoading) {
     return <QueryLoader />;
   }
-  const handleSubmit = async (values: UploadAvatarFormValues, { setSubmitting }: any) => {
-    try {
-      const { avatar } = values;
-      setSubmitting(true);
-      await updateProfileAvatar(avatar).then((resp) => {
-        console.log(resp);
-        setSubmitting(false);
-      });
-    } catch (error: any) {
-      console.log(error);
-      setSubmitting(false);
-    }
-  };
   if (profileQuery.isLoading) {
     return <div>Loading...</div>;
   }
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleonChange = (e: ChangeEvent<HTMLInputElement>) => {
     const avatar = e.target.files && e.target.files[0];
     if (avatar) {
-      updateProfileAvatar(avatar);
+      updateProfileAvatar(avatar).then(() => {
+        qc.invalidateQueries(['profile']);
+      });
     }
   };
 
   return (
-    <input type="file" onChange={onChange} accept="image/*" />
-
+    <>
+      <div className="col-span-3">
+        {/* <label className="block text-sm font-medium text-gray-700">Photo</label> */}
+        <div className="mt-1 flex items-center">
+          <img
+            className="inline-block object-cover h-24 w-24 rounded-full"
+            src={import.meta.env.VITE_DEVELOPMENT
+              ? (import.meta.env.VITE_API_URL + profileData.avatar)
+              : profileData.avatar}
+            alt=""
+          />
+        </div>
+      </div>
+      <div className="col-span-3">
+        {/* <label className="block text-sm font-medium
+    text-gray-700">Cover photo</label> */}
+        <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
+          <div className="space-y-1 text-center">
+            <svg
+              className="mx-auto h-12 w-12 text-gray-400"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 48 48"
+              aria-hidden="true"
+            >
+              <path
+                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <div className="flex text-sm text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+              >
+                <span>Upload a file</span>
+                <input id="file-upload" name="file-upload" type="file" onChange={handleonChange} accept="image/*" className="sr-only" />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
