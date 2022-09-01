@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import { Profile } from '../utils/InterfacesStates.utils';
@@ -10,6 +11,8 @@ const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
+
+const qc = new QueryClient();
 
 const API_URL = import.meta.env.VITE_API_URL;
 const oneHour = new Date(new Date().getTime() + ((60 * 60) * 1000));
@@ -31,6 +34,7 @@ export async function refreshToken() {
         sameSite: 'strict',
         secure: true,
       });
+      qc.refetchQueries(['user']);
     })
     .catch(() => null);
   return response;
@@ -204,7 +208,7 @@ export async function logIn(email: string, password: string) {
       credentials: 'same-origin',
     })
     .then((resp) => {
-      console.log(resp);
+      // console.log(resp);
       Cookies.set('token', resp.data.access_token, {
         expires: oneHour,
         sameSite: 'strict',
@@ -215,7 +219,7 @@ export async function logIn(email: string, password: string) {
         sameSite: 'strict',
         secure: true,
       });
-      console.log(Cookies.get('token'));
+      // console.log(Cookies.get('token'));
     });
   return response;
 }

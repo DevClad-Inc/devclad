@@ -18,9 +18,9 @@ function Login() {
           preserveAspectRatio="none"
           width="1090"
           height="1090"
-          className="absolute -top-7 left-1/2 -z-11 h-[788px] -translate-x-1/2
+          className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
           stroke-gray-300/30
-          dark:stroke-fuchsia-700/30 sm:top-12 sm:h-auto"
+          dark:stroke-fuchsia-800/30 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -34,11 +34,11 @@ function Login() {
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
           <img
-            className="mx-auto h-24 w-auto"
+            className="mx-auto h-32 w-auto"
             src={DevCladLogo}
             alt="DevClad"
           />
-          <h1 className="text-center text-4xl font-black text-gray-900 dark:text-gray-100">DevClad</h1>
+          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-gray-100">DevClad</h1>
         </div>
         <h2 className="text-center text-2xl mt-5 font-bold text-gray-700 dark:text-gray-300">Sign In</h2>
         <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
@@ -52,7 +52,7 @@ function Login() {
           </Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-          <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="sm:mx-auto sm:w-full sm:max-w-md">
 
             {loginError && (
             <Error error="Invalid email/password." />

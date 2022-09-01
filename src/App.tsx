@@ -44,7 +44,7 @@ function App() {
       >
         {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching)) ? (
           <Routes>
-            <Route path="*" element={<Signup />} />
+            <Route path="*" element={<Login />} />
             <Route path="/" element={<Login />} />
             <Route path="signup" element={<Signup />} />
           </Routes>
