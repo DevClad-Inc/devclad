@@ -28,7 +28,7 @@ export async function refreshToken() {
     .then((resp) => {
       Cookies.set('token', resp.data.access, {
         expires: oneHour,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: true,
       });
     })
@@ -182,12 +182,13 @@ export async function SignUp(user: NewUser) {
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
         expires: oneHour,
-        sameSite: 'lax',
-        secure: true,
+        sameSite: 'strict',
+        secure: true, // change to false while developing on safari
+        // safari does not treat localhost as secure even for testing purposes
       });
       Cookies.set('refresh', resp.data.refresh_token, {
         expires: 30,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: true,
       });
     }).catch((err) => err);
@@ -203,16 +204,18 @@ export async function logIn(email: string, password: string) {
       credentials: 'same-origin',
     })
     .then((resp) => {
+      console.log(resp);
       Cookies.set('token', resp.data.access_token, {
         expires: oneHour,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: true,
       });
       Cookies.set('refresh', resp.data.refresh_token, {
         expires: 30,
-        sameSite: 'lax',
+        sameSite: 'strict',
         secure: true,
       });
+      console.log(Cookies.get('token'));
     });
   return response;
 }
