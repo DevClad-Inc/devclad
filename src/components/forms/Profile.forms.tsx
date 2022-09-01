@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent, Fragment, useState,
+  ChangeEvent, Fragment, useContext, useState,
 } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
@@ -17,6 +17,7 @@ import Purposes from '../../utils/list/Purpose.list.json';
 import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
 import { Error, Success } from '../../utils/Feedback.utils';
 import QueryLoader from '../../utils/QueryLoader.utils';
+import { ThemeContext } from '../../context/Theme.context';
 
 interface UpdateProfileFormValues {
   timezone?: string;
@@ -745,6 +746,7 @@ const enableDropping = (event: React.DragEvent<HTMLDivElement>) => {
 };
 
 export function AvatarUploadForm() {
+  const { darkMode } = useContext(ThemeContext);
   const qc = useQueryClient();
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());
@@ -761,9 +763,14 @@ export function AvatarUploadForm() {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const { files } = event.dataTransfer;
-    // read file[0] and send it to updateProfileAvatar
     const file = files[0];
     if (file) {
+      toast.loading('Uploading...', {
+        style: {
+          background: darkMode ? '#222435' : '#fff',
+          color: darkMode ? '#f0abfc' : '#1f2937',
+        },
+      });
       updateProfileAvatar(file).then(() => {
         qc.invalidateQueries(['profile']);
         toast.custom(

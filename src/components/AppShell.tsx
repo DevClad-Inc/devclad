@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';
@@ -13,7 +12,6 @@ import DevCladLogo from '../assets/devclad.svg';
 import {
   initialUserState, User, useUserContext,
 } from '../context/User.context';
-import QueryLoader from '../utils/QueryLoader.utils';
 import classNames from '../utils/ClassNames.utils';
 import { getProfile, getUser } from '../services/AuthService';
 import { Profile, initialProfileState } from '../utils/InterfacesStates.utils';
@@ -212,9 +210,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   className={({ isActive }) => classNames(
                     isActive
                       ? 'text-orange-700 dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500'
-                      : 'text-gray-800 dark:text-gray-400 group-hover:text-gray-500',
+                      : 'text-gray-800 dark:text-gray-200 group-hover:text-gray-500',
                     sidebarExpand ? 'rounded-md duration-500' : 'rounded-2xl duration-700',
-                    'font-extrabold flex items-center text-sm px-4 py-4',
+                    'uppercase font-black flex items-center text-sm px-4 py-2',
                   )}
                 >
                   <item.icon
@@ -277,9 +275,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <div className="flex justify-center items-center z-10">
-                <QueryLoader />
-              </div>
               <h1 className="text-2xl font-sans font-black uppercase">
                 {title}
               </h1>

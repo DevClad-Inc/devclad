@@ -1,9 +1,7 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
-// unused right now
 export function Success({ success }: { success: string }): JSX.Element {
-  // make message disimissable
   return (
     <div className="rounded-md bg-green-50 dark:bg-phthaloGreen p-4 mb-4">
       <div className="flex">

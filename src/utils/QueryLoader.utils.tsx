@@ -1,5 +1,6 @@
 import React from 'react';
 import { useIsFetching } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 import { LoadingButton } from './Buttons.utils';
 import { useSlowContext } from '../context/Speed.context';
 
@@ -25,15 +26,19 @@ export default function QueryLoader() {
       clearInterval(interval);
     };
   }, [isFetching]);
-  if ((time > 3 && active) || (slowMode && active)) {
-    // not a perfect mechanism; but works considering users are not
-    // constantly switching back and forth between slow and fast connections
-    // if they are; a reload would reset state
-    // jic: I've added sessionstorage to persist the slowMode state if we want to later
+  if ((time > 4 && active)) {
     toggle(true);
-    // console.log('Slow Internet Connection detected');
-    return (
-      <LoadingButton />
+  }
+  if ((slowMode && active)) {
+    // works considering users are not constantly switching
+    // back and forth between slow and fast connections
+    // jic: I've added sessionstorage to persist the slowMode state if we want to later
+    toast.custom(
+      <LoadingButton />,
+      {
+        id: 'slow-connection',
+        position: 'top-center',
+      },
     );
   }
   return null;
