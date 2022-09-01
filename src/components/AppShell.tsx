@@ -275,7 +275,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-sans font-black uppercase">
+              <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
                 {title}
               </h1>
               <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />

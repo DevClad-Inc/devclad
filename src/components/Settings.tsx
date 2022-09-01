@@ -28,7 +28,7 @@ export default function Settings() {
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
       <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
         <div className="flex items-center pb-5">
-          <span className="mr-2 text-xs italic font-sans font-bold">Dark Mode</span>
+          <span className="mr-2 text-xs font-black italic font-sans">Dark Mode</span>
           <ToggleTheme />
         </div>
         <nav className="space-y-1">

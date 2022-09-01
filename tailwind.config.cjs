@@ -16,7 +16,7 @@ module.exports = {
         white: '#FFFFFF',
         snow: '#FFFCFA',
         linen: '#FFF1E5',
-        almond: '#FFE9D6',
+        almond: '#ffffe3',
         beauBlue: '#D6EBFF',
         mistyRose: '#F3DDDD',
         honeyDew: '#DDF3E4',
@@ -37,6 +37,7 @@ module.exports = {
         mono: ['IBM Plex Mono', 'monospace'],
         system: ['system-ui', 'sans-serif'],
         sans: [...defaultTheme.fontFamily.sans],
+        display: ['"ClashDisplay-Variable"'],
       },
       keyframes: {
         darkglow: {
