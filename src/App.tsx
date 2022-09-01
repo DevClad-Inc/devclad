@@ -40,9 +40,9 @@ function App() {
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
       <div
-        className="App h-screen dark:bg-darkBG dark:text-white"
+        className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white"
       >
-        {(undefinedUser && !userQuery.isLoading) ? (
+        {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching)) ? (
           <Routes>
             <Route path="*" element={<Signup />} />
             <Route path="/" element={<Login />} />
