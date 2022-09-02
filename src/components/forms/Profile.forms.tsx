@@ -802,7 +802,7 @@ export function AvatarUploadForm() {
       <div className="col-span-3">
         <div className="mt-1 flex items-center">
           <img
-            className="inline-block object-cover h-24 w-24 rounded-full"
+            className="inline-block object-cover h-24 w-24 rounded-full bg-linen"
             src={import.meta.env.VITE_DEVELOPMENT
               ? (import.meta.env.VITE_API_URL + profileData.avatar)
               : profileData.avatar}
@@ -830,7 +830,9 @@ export function AvatarUploadForm() {
             <div className="flex text-sm text-gray-600">
               <label
                 htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                className="relative cursor-pointer rounded-md font-medium
+                dark:text-fuchsia-300 dark:hover:text-fuchsia-400 text-orange-700 hover:text-orange-600
+                focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-fuchsia-500"
               >
                 <span>Upload a file</span>
                 <input

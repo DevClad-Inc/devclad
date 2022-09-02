@@ -138,7 +138,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         )}
                       >
                         <item.icon
-                          className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
+                          className="mr-4 flex-shrink-0 h-6 w-6 text-fuchsia-300"
                           aria-hidden="true"
                         />
 
@@ -149,7 +149,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 </div>
                 <div
                   onMouseEnter={() => { qc.prefetchQuery(['profile']); }}
-                  className="flex-shrink-0 flex border-t border-indigo-800 p-4"
+                  className="flex-shrink-0 flex border-t border-fuchsia-800 p-4"
                 >
                   <Link
                     to="/settings"
@@ -159,7 +159,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     <div className="flex items-center">
                       <div>
                         <img
-                          className="inline-block h-10 w-10 rounded-full"
+                          className="inline-block h-10 w-10 rounded-full bg-linen"
                           src={
                             import.meta.env.VITE_DEVELOPMENT
                               ? (import.meta.env.VITE_API_URL + profileData.avatar)
@@ -233,7 +233,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               <div className="flex items-center">
                 <div>
                   <img
-                    className="inline-block object-cover h-12 w-12 rounded-full"
+                    className="inline-block object-cover h-12 w-12 rounded-full bg-linen"
                     src={
                       import.meta.env.VITE_DEVELOPMENT
                         ? (import.meta.env.VITE_API_URL + profileData.avatar)
