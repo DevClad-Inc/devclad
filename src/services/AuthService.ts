@@ -15,7 +15,7 @@ const headers = {
 const qc = new QueryClient();
 
 const API_URL = import.meta.env.VITE_API_URL;
-const oneHour = new Date(new Date().getTime() + ((60 * 60) * 1000));
+const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
 
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
@@ -30,11 +30,12 @@ export async function refreshToken() {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access, {
-        expires: oneHour,
+        expires: twoHour,
         sameSite: 'strict',
         secure: true,
       });
-      qc.refetchQueries(['user']);
+      qc.invalidateQueries();
+      window.location.reload();
     })
     .catch(() => null);
   return response;
@@ -185,7 +186,7 @@ export async function SignUp(user: NewUser) {
     )
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: oneHour,
+        expires: twoHour,
         sameSite: 'strict',
         secure: true, // change to false while developing on safari
         // safari does not treat localhost as secure even for testing purposes
@@ -210,7 +211,7 @@ export async function logIn(email: string, password: string) {
     .then((resp) => {
       // console.log(resp);
       Cookies.set('token', resp.data.access_token, {
-        expires: oneHour,
+        expires: twoHour,
         sameSite: 'strict',
         secure: true,
       });
