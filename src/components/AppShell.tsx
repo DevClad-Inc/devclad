@@ -159,7 +159,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     <div className="flex items-center">
                       <div>
                         <img
-                          className="inline-block h-10 w-10 rounded-full bg-linen"
+                          className="inline-block h-10 w-10 rounded-full bg-white"
                           src={
                             import.meta.env.VITE_DEVELOPMENT
                               ? (import.meta.env.VITE_API_URL + profileData.avatar)

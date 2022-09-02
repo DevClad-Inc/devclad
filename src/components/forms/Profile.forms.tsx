@@ -802,7 +802,7 @@ export function AvatarUploadForm() {
       <div className="col-span-3">
         <div className="mt-1 flex items-center">
           <img
-            className="inline-block object-cover h-24 w-24 rounded-full bg-linen"
+            className="inline-block object-cover h-24 w-24 rounded-full bg-white"
             src={import.meta.env.VITE_DEVELOPMENT
               ? (import.meta.env.VITE_API_URL + profileData.avatar)
               : profileData.avatar}
