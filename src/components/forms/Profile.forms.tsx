@@ -777,7 +777,9 @@ export function AvatarUploadForm() {
           <Success success="Profile avatar updated successfully!" />,
         );
       }).catch(() => {
-        toast.custom(<Error error="Profile avatar update failed! Please upload a valid image." />);
+        toast.custom(<Error error="Please upload a valid image.
+        And, keep it below 5MB."
+        />);
       });
     }
   };

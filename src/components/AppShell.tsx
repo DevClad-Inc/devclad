@@ -15,6 +15,7 @@ import {
 import classNames from '../utils/ClassNames.utils';
 import { getProfile, getUser } from '../services/AuthService';
 import { Profile, initialProfileState } from '../utils/InterfacesStates.utils';
+import QueryLoader from '../utils/QueryLoader.utils';
 
 const navigation = [
   {
@@ -283,6 +284,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               <div className="py-4">
                 {/* <div className="border-2 border-dashed border-gray-200 rounded-lg h-96"> */}
+                <QueryLoader />
                 {children}
                 {/* </div> */}
               </div>

@@ -37,7 +37,7 @@ export default function QueryLoader() {
       <LoadingButton />,
       {
         id: 'slow-connection',
-        position: 'top-center',
+
       },
     );
   }

@@ -13,7 +13,6 @@ import Home from './components/Home';
 import Signup from './components/Signup';
 import Settings from './components/Settings';
 import AppShell from './components/AppShell';
-import QueryLoader from './utils/QueryLoader.utils';
 
 function App() {
   const navigate = useNavigate();
@@ -58,7 +57,6 @@ function App() {
           </AppShell>
         )}
       </div>
-      <QueryLoader />
     </div>
   );
 }
