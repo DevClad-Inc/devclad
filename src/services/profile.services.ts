@@ -101,7 +101,7 @@ export async function updateSocialProfile(
   socialProfileData: SocialProfile,
 ) {
   const {
-    calendly, videoCallFriendly,
+    calendly, videoCallFriendly, preferredDevType,
     preferredTimezoneDeviation, ideaStatus,
   } = values;
   const token = Cookies.get('token');
@@ -111,10 +111,11 @@ export async function updateSocialProfile(
       url: `${API_URL}/social/profile/`,
       headers,
       data: {
-        calendly,
+        calendly: (calendly === '') ? socialProfileData.calendly : calendly,
         video_call_friendly: videoCallFriendly,
-        preferred_timezone_deviation: preferredTimezoneDeviation,
-        idea_status: ideaStatus,
+        preferred_timezone_deviation: (preferredTimezoneDeviation === '') ? socialProfileData.preferred_timezone_deviation : preferredTimezoneDeviation,
+        preferred_dev_type: (preferredDevType === '') ? socialProfileData.preferred_dev_type : preferredDevType,
+        idea_status: (ideaStatus === '') ? socialProfileData.idea_status : ideaStatus,
       },
     });
   }

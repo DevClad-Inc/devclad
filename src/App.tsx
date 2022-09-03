@@ -11,7 +11,7 @@ import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
-import { Settings, AccountProfile } from './components/Settings';
+import { Settings, AccountProfile, SocialProfile } from './components/Settings';
 import AppShell from './components/AppShell';
 import FourOFour from './components/404';
 
@@ -54,6 +54,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="settings" element={<Settings />}>
                 <Route index element={<AccountProfile />} />
+                <Route path="/settings/social" element={<SocialProfile />} />
               </Route>
             </Routes>
           </AppShell>
