@@ -195,6 +195,7 @@ export async function SignUp(user: NewUser) {
         sameSite: 'strict',
         secure: true,
       });
+      return resp;
     }).catch((err) => err);
 }
 
