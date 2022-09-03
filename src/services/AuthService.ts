@@ -2,7 +2,7 @@ import axios from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
-import { Profile } from '../utils/InterfacesStates.utils';
+import { Profile, ProfileUpdate } from '../utils/InterfacesStates.utils';
 
 /*
 Bug in Axios: method signature does not work with PATCH/PUT. Returning an axios call.
@@ -112,7 +112,7 @@ export async function updateUser(first_name?: string, last_name?: string, userna
   return null;
 }
 
-export async function updateProfile(values: any, profileData: Profile) {
+export async function updateProfile(values: ProfileUpdate, profileData: Profile) {
   const {
     timezone, pronouns, location,
     about, website, linkedin, devType, languages,

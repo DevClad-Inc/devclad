@@ -119,11 +119,11 @@ export default function UpdateProfileForm(): JSX.Element {
       // eslint-disable-next-line no-param-reassign
       values.location = selectedCountry?.name;
       // eslint-disable-next-line no-param-reassign
-      values.devType = selectedDevType.map((type: any) => type.name).sort().join(', ');
+      values.devType = selectedDevType.map((type: { name:string, id:number }) => type.name).sort().join(', ');
       // eslint-disable-next-line no-param-reassign
-      values.languages = selectedLanguages.map((language: any) => language.name).sort().join(', ');
+      values.languages = selectedLanguages.map((language: { name:string, id:number }) => language.name).sort().join(', ');
       // eslint-disable-next-line no-param-reassign
-      values.purpose = selectedPurposes.map((purpose: any) => purpose.name).sort().join(', ');
+      values.purpose = selectedPurposes.map((purpose: { name:string, id:number }) => purpose.name).sort().join(', ');
       setSubmitting(true);
       await updateProfile(values, profileData)
         .then(async () => {

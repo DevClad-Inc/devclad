@@ -10,7 +10,7 @@ export default function QueryLoader() {
   const [time, setTime] = React.useState(0);
   const [active, setActive] = React.useState(false);
   React.useEffect(() => {
-    let interval:any = null;
+    let interval:ReturnType<typeof setTimeout> = (null as unknown) as ReturnType<typeof setTimeout>;
     if (isFetching) {
       setActive(true);
       setTime((t) => t + 1);

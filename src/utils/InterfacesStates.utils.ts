@@ -13,6 +13,11 @@ export interface Profile {
   location?: string;
 }
 
+export interface ProfileUpdate extends Profile {
+  devType?: string;
+  rawXP?: number;
+}
+
 export const initialProfileState : Profile = {
   uid: undefined,
   timezone: undefined,

@@ -29,9 +29,9 @@ function classNames(...classes: string[]) {
 }
 
 const activeClass = `bg-gray-50 dark:bg-raisinBlack2
-                    dark:hover:bg-gray-200 hover:text-gray-700
-                    dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500
-                    text-orange-700 group-hover:text-orange-500`;
+                    hover:text-gray-700 dark:hover:text-fuchsia-400
+                    dark:text-fuchsia-300
+                    text-orange-700`;
 
 export function Settings() {
   useDocumentTitle('Settings');
