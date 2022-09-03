@@ -33,6 +33,12 @@ const tzDeviation = [
   { name: 'Any', id: 5 },
 ];
 
+const ideaStatus = [
+  { name: 'Open to exploring ideas.', id: 0 },
+  { name: 'Not open to exploring ideas.', id: 1 },
+  { name: 'Need people working on my idea.', id: 2 },
+];
+
 export default function SocialProfileForm(): JSX.Element {
   let socialProfileData: SocialProfile = { ...initialSocialProfileState };
   const socialProfileQuery = useQuery(['social-profile'], () => getSocialProfile());
@@ -43,6 +49,7 @@ export default function SocialProfileForm(): JSX.Element {
   const [selectedDevType, setselectedDevType] = useState<{ name:string, id:number }>();
   const [selectedTzDeviation,
     setselectedTzDeviation] = useState<{ name:string, id:number }>();
+  const [selectedIdeaStatus, setselectedIdeaStatus] = useState<{ name:string, id:number }>();
   const qc = useQueryClient();
   const validate = (values: SocialProfileFormValues) => {
     const errors: SocialProfileFormValues['errors'] = {};
@@ -51,6 +58,9 @@ export default function SocialProfileForm(): JSX.Element {
     }
     if (!values.preferredDevType && !socialProfileData.preferred_dev_type) {
       errors.preferredDevType = 'Required';
+    }
+    if (!values.ideaStatus && !socialProfileData.idea_status) {
+      errors.ideaStatus = 'Required';
     }
     if ((values.calendly)
     && (!((values.calendly.startsWith('http'))
@@ -98,6 +108,7 @@ export default function SocialProfileForm(): JSX.Element {
         videoCallFriendly: socialProfileData.video_call_friendly,
         preferredTimezoneDeviation: socialProfileData.preferred_timezone_deviation,
         preferredDevType: socialProfileData.preferred_dev_type,
+        ideaStatus: socialProfileData.idea_status,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -118,7 +129,7 @@ export default function SocialProfileForm(): JSX.Element {
                 {({ open }) => (
                   <>
                     <Listbox.Label
-                      id="devType"
+                      id="preferredDevType"
                       className="block text-sm font-medium
                     text-gray-700 dark:text-gray-300"
                     >
@@ -203,11 +214,16 @@ export default function SocialProfileForm(): JSX.Element {
                   </>
                 )}
               </Listbox>
+              <ErrorMessage
+                name="preferredDevType"
+                component="div"
+                className="text-sm text-bloodRed dark:text-mistyRose"
+              />
             </div>
 
             <div className="col-span-6 sm:col-span-3">
               <Listbox
-                value={selectedDevType}
+                value={selectedTzDeviation}
                 onChange={(e: { name:string, id: number }) => {
                   setselectedTzDeviation(e);
                 }}
@@ -215,7 +231,7 @@ export default function SocialProfileForm(): JSX.Element {
                 {({ open }) => (
                   <>
                     <Listbox.Label
-                      id="tzdeviation"
+                      id="preferredTimezoneDeviation"
                       className="block text-sm font-medium
                     text-gray-700 dark:text-gray-300"
                     >
@@ -300,8 +316,112 @@ export default function SocialProfileForm(): JSX.Element {
                   </>
                 )}
               </Listbox>
+              <ErrorMessage
+                name="preferredTimezoneDeviation"
+                component="div"
+                className="text-sm text-bloodRed dark:text-mistyRose"
+              />
             </div>
             <div className="col-span-6 sm:col-span-3">
+              <Listbox
+                value={selectedIdeaStatus}
+                onChange={(e: { name:string, id: number }) => setselectedIdeaStatus(e)}
+              >
+                {({ open }) => (
+                  <>
+                    <Listbox.Label
+                      id="ideaStatus"
+                      className="block text-sm font-medium
+                    text-gray-700 dark:text-gray-300"
+                    >
+                      Idea Status
+
+                    </Listbox.Label>
+                    {(socialProfileData.idea_status
+                    && socialProfileData.idea_status.length > 0) && (
+                    <p className="mt-2 text-xs italic text-gray-600 dark:text-gray-400">
+                      Currently set to
+                      {' '}
+                      &#34;
+                      {socialProfileData.idea_status}
+                      &#34;.
+                    </p>
+                    )}
+                    <p className="mt-2 text-sm text-gray-500">
+                      Your idea status. Tip: Be open to exploring!
+                    </p>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full cursor-default rounded-md
+                      dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left border border-gray-300
+                      dark:border-gray-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      >
+                        <span className="block truncate">
+                          {
+                        selectedIdeaStatus ? (selectedIdeaStatus.name) : 'Select'
+                        }
+
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </span>
+                      </Listbox.Button>
+
+                      <Transition
+                        show={open}
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options
+                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
+                        dark:bg-raisinBlack2 py-1 text-base shadow-lg ring-1 ring-black
+                        ring-opacity-5 focus:outline-none sm:text-sm"
+                        >
+                          {ideaStatus.map((status) => (
+                            <Listbox.Option
+                              key={status.id}
+                              className={({ active }) => classNames(
+                                active
+                                  ? 'text-black bg-orange-300 dark:bg-fuchsia-300'
+                                  : 'text-gray-900 dark:text-gray-100 bg-snow dark:bg-raisinBlack2',
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                              )}
+                              value={status}
+                            >
+                              {({ active, selected }) => (
+                                <>
+                                  <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                    {status.name}
+                                  </span>
+
+                                  {selected ? (
+                                    <span
+                                      className={classNames(
+                                        active ? 'text-linen dark:text-raisinBlack2' : 'text-gray-900 dark:text-gray-100',
+                                        'absolute inset-y-0 right-0 flex items-center pr-4',
+                                      )}
+                                    >
+                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </>
+                )}
+              </Listbox>
+              <ErrorMessage
+                name="ideaStatus"
+                component="div"
+                className="text-sm text-bloodRed dark:text-mistyRose"
+              />
+            </div>
+            <div className="mb-10 col-span-6 sm:col-span-3">
               <label
                 htmlFor="calendly"
                 className="block text-sm font-medium
@@ -327,7 +447,7 @@ export default function SocialProfileForm(): JSX.Element {
               </label>
             </div>
           </div>
-          <div className="px-4 py-3 text-right sm:px-6">
+          <div className="mt-10 px-4 py-3 text-right sm:px-6">
             <PrimaryButton
               isSubmitting={isSubmitting}
             >
