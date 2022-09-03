@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import {
-  UserCircleIcon, KeyIcon, CreditCardIcon,
+  UserCircleIcon, KeyIcon,
+  CreditCardIcon, UsersIcon,
 } from '@heroicons/react/24/solid';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
@@ -10,10 +11,13 @@ import useDocumentTitle from '../utils/useDocumentTitle';
 
 const navigation = [
   {
-    name: 'Account', href: '/settings', icon: UserCircleIcon, current: true,
+    name: 'Account/Profile', href: '/settings', icon: UserCircleIcon,
   },
   {
-    name: 'Password', href: '/password', icon: KeyIcon, current: false,
+    name: 'Social Preferences', href: '/settings/social', icon: UsersIcon,
+  },
+  {
+    name: 'Password', href: '/password', icon: KeyIcon,
   },
   {
     name: 'Plan & Billing', href: '/billing', icon: CreditCardIcon, current: false,
@@ -23,6 +27,11 @@ const navigation = [
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+const activeClass = `bg-gray-50 dark:bg-raisinBlack2
+                    dark:hover:bg-gray-200 hover:text-gray-700
+                    dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500
+                    text-orange-700 group-hover:text-orange-500`;
 
 export function Settings() {
   useDocumentTitle('Settings');
@@ -40,19 +49,14 @@ export function Settings() {
               to={item.href}
               className={({ isActive }) => classNames(
                 isActive
-                  ? 'bg-gray-50 dark:bg-raisinBlack2 dark:hover:bg-gray-200 hover:text-gray-700'
+                  ? activeClass
                   : 'text-gray-900 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white dark:hover:bg-gray-800 hover:bg-white',
                 'group rounded-md px-3 py-2 flex items-center text-sm font-medium ',
               )}
               aria-current={item.current ? 'page' : undefined}
             >
               <item.icon
-                className={classNames(
-                  item.current
-                    ? 'dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500 text-orange-700 group-hover:text-orange-500'
-                    : 'text-gray-400 group-hover:text-gray-500',
-                  'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
-                )}
+                className="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
                 aria-hidden="true"
               />
               <span className="truncate">{item.name}</span>
@@ -64,6 +68,8 @@ export function Settings() {
     </div>
   );
 }
+
+// todo : appearance instead of just a dark mode toggle
 
 export function AccountProfile() {
   return (
