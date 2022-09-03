@@ -4,18 +4,14 @@ import {
 } from 'formik';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SignUp } from '../../services/AuthService';
+import { SignUp } from '../../services/auth.services';
 import { PrimaryButton } from '../../utils/Buttons.utils';
+import { NewUser } from '../../utils/InterfacesStates.utils';
 
-interface SignupFormValues {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password1: string;
-  password2: string;
+interface SignupFormValues extends NewUser {
   errors?: {
-    first_name?: string;
-    last_name?: string;
+    firstName?: string;
+    lastName?: string;
     email?: string;
     password1?: string;
     password2?: string;
@@ -33,11 +29,11 @@ export default function SignupForm(
   const [signedUp, setSignedUp] = useState(false);
   const validate = (values: SignupFormValues) => {
     const errors: SignupFormValues['errors'] = {};
-    if (!values.first_name) {
-      errors.first_name = 'Required';
+    if (!values.firstName) {
+      errors.firstName = 'Required';
     }
-    if (!values.last_name) {
-      errors.last_name = 'Required';
+    if (!values.lastName) {
+      errors.lastName = 'Required';
     }
     if (!values.email) {
       errors.email = 'Required';
@@ -70,11 +66,11 @@ export default function SignupForm(
     setSubmitting(true);
     const {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      first_name, last_name, email, password1, password2,
+      firstName, lastName, email, password1, password2,
     } = values;
     const user = {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password1,
       password2,
@@ -112,7 +108,7 @@ export default function SignupForm(
   return (
     <Formik
       initialValues={{
-        first_name: '', last_name: '', email: '', password1: '', password2: '',
+        firstName: '', lastName: '', email: '', password1: '', password2: '',
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -123,15 +119,15 @@ export default function SignupForm(
         <Form className="space-y-6" action="#" method="POST">
           <div>
             <label
-              htmlFor="first_name"
+              htmlFor="firstName"
               className="block text-sm text-left pl-1
             font-medium text-gray-700 dark:text-gray-300"
             >
               First Name
               <div className="mt-1 relative">
                 <Field
-                  id="first_name"
-                  name="first_name"
+                  id="firstName"
+                  name="firstName"
                   type="text"
                   placeholder="Ye"
                   autoComplete="First Name"
@@ -147,7 +143,7 @@ export default function SignupForm(
               </div>
 
               <ErrorMessage
-                name="first_name"
+                name="firstName"
                 component="div"
                 className="text-sm text-bloodRed dark:text-mistyRose"
               />
@@ -155,16 +151,16 @@ export default function SignupForm(
           </div>
           <div>
             <label
-              htmlFor="last_name"
+              htmlFor="lastName"
               className="block text-sm text-left pl-1
               font-medium text-gray-700 dark:text-gray-300"
             >
               Last Name
               <div className="mt-1 relative">
                 <Field
-                  id="last_name"
-                  name="last_name"
-                  type="last_name"
+                  id="lastName"
+                  name="lastName"
+                  type="lastName"
                   placeholder="West"
                   autoComplete="Last Name"
                   required
@@ -179,7 +175,7 @@ export default function SignupForm(
               </div>
 
               <ErrorMessage
-                name="last_name"
+                name="lastName"
                 component="div"
                 className="text-sm text-bloodRed dark:text-mistyRose0"
               />

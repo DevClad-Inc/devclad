@@ -5,8 +5,9 @@ import {
 } from 'formik';
 import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
-import { User, initialUserState, setIndexDBStore } from '../../context/User.context';
-import { getUser, updateUser } from '../../services/AuthService';
+import { setIndexDBStore } from '../../context/User.context';
+import { getUser, updateUser } from '../../services/auth.services';
+import { User, initialUserState } from '../../utils/InterfacesStates.utils';
 import { PrimaryButton } from '../../utils/Buttons.utils';
 import { Success, Error } from '../../utils/Feedback.utils';
 

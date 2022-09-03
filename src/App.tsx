@@ -4,9 +4,9 @@ import {
 } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { useQuery } from '@tanstack/react-query';
-import { initialUserState, User } from './context/User.context';
 import { ThemeContext } from './context/Theme.context';
-import { getUser, refreshToken } from './services/AuthService';
+import { User, initialUserState } from './utils/InterfacesStates.utils';
+import { getUser, refreshToken } from './services/auth.services';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';

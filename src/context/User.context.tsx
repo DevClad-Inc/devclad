@@ -3,17 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany, set } from 'idb-keyval';
 import getsetIndexedDB from '../utils/getsetIndexedDB';
-import { getUser } from '../services/AuthService';
-import { Profile } from '../utils/InterfacesStates.utils';
-
-export interface User {
-  pk?: number;
-  username?: string;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-
-}
+import { getUser } from '../services/auth.services';
+import { initialUserState, Profile, User } from '../utils/InterfacesStates.utils';
 
 export enum UserReducerActionTypes {
   SET_USER_DATA = 'SET_USER_DATA',
@@ -40,14 +31,6 @@ function userReducer(state:User, action: UserReducerAction): User {
       return state;
   }
 }
-
-export const initialUserState: User = {
-  pk: undefined,
-  username: undefined,
-  email: undefined,
-  first_name: undefined,
-  last_name: undefined,
-};
 
 interface UserProviderProps {
   children?: React.ReactNode;

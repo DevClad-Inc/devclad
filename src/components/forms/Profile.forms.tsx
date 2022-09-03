@@ -8,28 +8,18 @@ import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import { toast } from 'react-hot-toast';
-import { getProfile, updateProfile, updateProfileAvatar } from '../../services/AuthService';
+import { getProfile, updateProfile, updateProfileAvatar } from '../../services/profile.services';
 import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import classNames from '../../utils/ClassNames.utils';
 import Languages from '../../utils/list/Languages.list.json';
 import Countries from '../../utils/list/Countries.list.json';
 import Purposes from '../../utils/list/Purpose.list.json';
-import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
+import { Profile, initialProfileState, ProfileUpdate } from '../../utils/InterfacesStates.utils';
 import { Error, Success } from '../../utils/Feedback.utils';
 import QueryLoader from '../../utils/QueryLoader.utils';
 import { ThemeContext } from '../../context/Theme.context';
 
-interface UpdateProfileFormValues {
-  timezone?: string;
-  pronouns?: string;
-  about?: string;
-  website?: string;
-  linkedin?: string;
-  languages?: string;
-  devType?: string;
-  rawXP?: number;
-  purpose?: string;
-  location?: string;
+interface UpdateProfileFormValues extends ProfileUpdate {
   errors?: {
     timezone?: string;
     pronouns?: string;
@@ -60,7 +50,7 @@ const purposes = Purposes.map((purpose) => ({ purpose })) as { purpose: {
   id: number;
 } }[];
 
-const devType = [
+export const devType = [
   { name: 'AI', id: 0 },
   { name: 'Blockchain', id: 1 },
   { name: 'Game Development', id: 2 },

@@ -4,7 +4,7 @@ export default async function getsetIndexedDB<TState>(
   key:string,
   operation: string,
   payload?: TState,
-): Promise<any> {
+): Promise<TState> {
   let kvData;
   if (operation === 'get') {
     kvData = await get(key);

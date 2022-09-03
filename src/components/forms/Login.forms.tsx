@@ -7,7 +7,7 @@ import { delMany } from 'idb-keyval';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import {
   getUser, logIn,
-} from '../../services/AuthService';
+} from '../../services/auth.services';
 import {
   setIndexDBStore,
 } from '../../context/User.context';

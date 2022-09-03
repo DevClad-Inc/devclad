@@ -9,12 +9,14 @@ import {
 } from '@heroicons/react/24/solid';
 
 import DevCladLogo from '../assets/devclad.svg';
-import {
-  initialUserState, User, useUserContext,
-} from '../context/User.context';
+import { useUserContext } from '../context/User.context';
 import classNames from '../utils/ClassNames.utils';
-import { getProfile, getUser } from '../services/AuthService';
-import { Profile, initialProfileState } from '../utils/InterfacesStates.utils';
+import { getUser } from '../services/auth.services';
+import { getProfile } from '../services/profile.services';
+import {
+  Profile, initialProfileState,
+  User, initialUserState,
+} from '../utils/InterfacesStates.utils';
 import QueryLoader from '../utils/QueryLoader.utils';
 
 const navigation = [

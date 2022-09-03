@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { initialUserState, User } from '../context/User.context';
-import { getUser, logOut } from '../services/AuthService';
+import { getUser, logOut } from '../services/auth.services';
+import { User, initialUserState } from '../utils/InterfacesStates.utils';
 import useDocumentTitle from '../utils/useDocumentTitle';
 
 function Home(): JSX.Element {
