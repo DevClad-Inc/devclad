@@ -1,21 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import {
   UserCircleIcon, KeyIcon, CreditCardIcon,
 } from '@heroicons/react/24/solid';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
 import UpdateUserForm from './forms/UpdateUser.forms';
+import useDocumentTitle from '../utils/useDocumentTitle';
 
 const navigation = [
   {
-    name: 'Account', href: '#', icon: UserCircleIcon, current: true,
+    name: 'Account', href: '/settings', icon: UserCircleIcon, current: true,
   },
   {
-    name: 'Password', href: '#', icon: KeyIcon, current: false,
+    name: 'Password', href: '/password', icon: KeyIcon, current: false,
   },
   {
-    name: 'Plan & Billing', href: '#', icon: CreditCardIcon, current: false,
+    name: 'Plan & Billing', href: '/billing', icon: CreditCardIcon, current: false,
   },
 ];
 
@@ -23,7 +24,8 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Settings() {
+export function Settings() {
+  useDocumentTitle('Settings');
   return (
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
       <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
@@ -47,7 +49,7 @@ export default function Settings() {
               <item.icon
                 className={classNames(
                   item.current
-                    ? 'text-fuchsia-300 group-hover:text-fuchsia-500'
+                    ? 'dark:text-fuchsia-300 dark:group-hover:text-fuchsia-500 text-orange-700 group-hover:text-orange-500'
                     : 'text-gray-400 group-hover:text-gray-500',
                   'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
                 )}
@@ -58,25 +60,30 @@ export default function Settings() {
           ))}
         </nav>
       </aside>
+      <Outlet />
+    </div>
+  );
+}
 
-      <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-
-        <div className="shadow sm:rounded-md sm:overflow-hidden">
-          <div className="py-6 px-4 space-y-6 sm:p-6">
-            <div>
-              <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
-            </div>
-            <UpdateUserForm />
+export function AccountProfile() {
+  return (
+    <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+      <div className="shadow sm:rounded-md sm:overflow-hidden">
+        <div className="py-6 px-4 space-y-6 sm:p-6">
+          <div>
+            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
           </div>
-          <div className="py-6 px-4 space-y-6 sm:p-6">
-            <div>
-              <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
-            </div>
-            <UpdateProfileForm />
+          <UpdateUserForm />
+          <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        </div>
+        <div className="py-6 px-4 space-y-6 sm:p-6">
+          <div>
+            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
           </div>
-          <div className="py-6 px-4 space-y-6 sm:p-6">
-            <AvatarUploadForm />
-          </div>
+          <UpdateProfileForm />
+        </div>
+        <div className="py-6 px-4 space-y-6 sm:p-6">
+          <AvatarUploadForm />
         </div>
       </div>
     </div>

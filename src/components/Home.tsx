@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initialUserState, User } from '../context/User.context';
 import { getUser, logOut } from '../services/AuthService';
+import useDocumentTitle from '../utils/useDocumentTitle';
 
 function Home(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
@@ -17,6 +18,7 @@ function Home(): JSX.Element {
       navigate(0);
     });
   };
+  useDocumentTitle('Dashboard');
 
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">

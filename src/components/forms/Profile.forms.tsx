@@ -845,9 +845,9 @@ export function AvatarUploadForm() {
                   className="sr-only"
                 />
               </label>
-              <p className="pl-1">or drag and drop</p>
+              <p className="pl-1 text-black dark:text-linen">or DRAG AND DROP</p>
             </div>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            <p className="text-xs text-gray-700 dark:text-gray-300">PNG, JPG, GIF, SVG up to 5MB</p>
           </div>
         </div>
       </div>

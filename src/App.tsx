@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import {
-  Routes, Route, useNavigate,
+  Routes, Route,
 } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { useQuery } from '@tanstack/react-query';
@@ -11,11 +11,11 @@ import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
-import Settings from './components/Settings';
+import { Settings, AccountProfile } from './components/Settings';
 import AppShell from './components/AppShell';
+import FourOFour from './components/404';
 
 function App() {
-  const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
@@ -27,10 +27,10 @@ function App() {
     (value) => value === undefined,
   );
   useEffect(() => {
-    if (window.location.pathname === '/signup' || window.location.pathname === '/signup/') {
-      window.history.replaceState({}, '', '/#/signup');
-      navigate(0);
-    }
+    // if (window.location.pathname === '/signup' || window.location.pathname === '/signup/') {
+    //   window.history.replaceState({}, '', '/#/signup');
+    //   navigate(0);
+    // }
     if (!undefinedUser) {
       setInterval(refreshToken, (1800 * 1000));
     }
@@ -44,15 +44,17 @@ function App() {
         {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching)) ? (
           <Routes>
             <Route path="*" element={<Login />} />
-            <Route path="/" element={<Login />} />
+            <Route index element={<Login />} />
             <Route path="signup" element={<Signup />} />
           </Routes>
         ) : (
           <AppShell>
             <Routes>
-              <Route path="*" element={<Home />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<FourOFour />} />
+              <Route index element={<Home />} />
+              <Route path="settings" element={<Settings />}>
+                <Route index element={<AccountProfile />} />
+              </Route>
             </Routes>
           </AppShell>
         )}

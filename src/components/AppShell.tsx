@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   HomeIcon, UsersIcon, FireIcon, FolderIcon, XMarkIcon,
@@ -52,13 +52,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
 
-  const title = useLocation().pathname.split('/').pop() || 'Dashboard';
+  // check if current path is 404
+
+  // find what component is being rendered
 
   if (Object.values(contextUser).every((value) => value === undefined)) {
     return (
       null
     );
   }
+
+  const pageTitle = (document.title).slice(10);
 
   return (
     <div className="h-full flex">
@@ -277,7 +281,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
-                {title}
+                {pageTitle}
               </h1>
               <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
             </div>
