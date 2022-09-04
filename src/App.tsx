@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { useQuery } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
 import { ThemeContext } from './context/Theme.context';
 import { User, initialUserState } from './utils/InterfacesStates.utils';
 import { getUser, refreshToken } from './services/auth.services';
@@ -17,6 +18,7 @@ import FourOFour from './components/404';
 import Social from './components/Social';
 import Projects from './components/Projects';
 import Hackathons from './components/Hackathons';
+import VerifyEmail from './components/VerifyEmail';
 
 function App() {
   const { darkMode } = useContext(ThemeContext);
@@ -44,11 +46,20 @@ function App() {
       <div
         className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white"
       >
+        <Toaster
+          position="top-right"
+          toastOptions={
+          {
+            duration: 3000,
+          }
+      }
+        />
         {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching)) ? (
           <Routes>
             <Route path="*" element={<Login />} />
             <Route index element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail />} />
           </Routes>
         ) : (
           <AppShell>

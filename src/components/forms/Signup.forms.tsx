@@ -3,7 +3,6 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { SignUp } from '../../services/auth.services';
 import { PrimaryButton } from '../../utils/Buttons.utils';
 import { NewUser } from '../../utils/InterfacesStates.utils';
@@ -300,29 +299,25 @@ export default function SignupForm(
                 </div>
               )
               : (
-                <Link to="/" className="w-full">
-                  <span
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
+                <span
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
                     text-sm font-medium text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
-                      </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Success 🎉!
-                        </span>
-                        {' '}
-                        <span>
-                          Click to login.
-                        </span>
-                      </div>
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
                     </div>
-                  </span>
-                </Link>
+                    <div className="ml-2 font-bold text-base">
+                      <span>
+                        Account Created.
+                      </span>
+                      { ' ' }
+                      <span>Check Email.</span>
+                    </div>
+                  </div>
+                </span>
               )}
           </div>
         </Form>

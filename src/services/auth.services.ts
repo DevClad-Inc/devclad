@@ -17,6 +17,18 @@ const qc = new QueryClient();
 const API_URL = import.meta.env.VITE_API_URL;
 // const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
 
+export const verifyEmail = async (key: string) => {
+  const url = `${API_URL}/auth/registration/verify-email/`;
+  const response = await axios.post(url, { key }, { headers });
+  return response.data;
+};
+
+// custom hook:
+export const useVerifyEmail = async (
+  key:string,
+  url: string,
+) => axios.post(url, { key }, { headers });
+
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
   const token = Cookies.get('token');
@@ -115,6 +127,14 @@ export async function SignUp(user: NewUser) {
       return resp;
     }).catch((err) => err);
 }
+
+// export const emailVerification = async (email:string) => axios(
+//   {
+//     method: 'POST',
+//     url: `${API_URL}/auth/account-confirm-email/`,
+//     headers,
+//   },
+// );
 
 export async function logIn(email: string, password: string) {
   const url = `${API_URL}/auth/login/`;

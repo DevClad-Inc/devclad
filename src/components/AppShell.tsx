@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { Toaster } from 'react-hot-toast';
 import { Link, NavLink } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -68,14 +67,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="h-full flex">
-      <Toaster
-        position="top-right"
-        toastOptions={
-          {
-            duration: 3000,
-          }
-      }
-      />
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>
           <Transition.Child
