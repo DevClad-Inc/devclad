@@ -12,7 +12,6 @@ export default function VerifyEmail(): JSX.Element {
   const { key } = useParams() as { key: string };
   useEffect(() => {
     const verification = async () => verifyEmail(key).then((res:any) => {
-      console.log(res);
       if (res.detail === 'ok') {
         setVerified(true);
         toast.success(
