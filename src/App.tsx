@@ -14,6 +14,9 @@ import Signup from './components/Signup';
 import { Settings, AccountProfile, SocialProfile } from './components/Settings';
 import AppShell from './components/AppShell';
 import FourOFour from './components/404';
+import Social from './components/Social';
+import Projects from './components/Projects';
+import Hackathons from './components/Hackathons';
 
 function App() {
   const { darkMode } = useContext(ThemeContext);
@@ -52,6 +55,9 @@ function App() {
             <Routes>
               <Route path="*" element={<FourOFour />} />
               <Route index element={<Home />} />
+              <Route path="social" element={<Social />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="hackathons" element={<Hackathons />} />
               <Route path="settings" element={<Settings />}>
                 <Route index element={<AccountProfile />} />
                 <Route path="/settings/social" element={<SocialProfile />} />
