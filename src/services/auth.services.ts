@@ -23,12 +23,6 @@ export const verifyEmail = async (key: string) => {
   return response.data;
 };
 
-// custom hook:
-export const useVerifyEmail = async (
-  key:string,
-  url: string,
-) => axios.post(url, { key }, { headers });
-
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
   const token = Cookies.get('token');
