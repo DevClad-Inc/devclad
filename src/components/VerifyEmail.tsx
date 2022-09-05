@@ -4,9 +4,11 @@ import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import DevCladLogo from '../assets/devclad.svg';
 import { verifyEmail } from '../services/auth.services';
-import { Error } from '../utils/Feedback.utils';
+import { Error, Success } from '../utils/Feedback.utils';
+import useDocumentTitle from '../utils/useDocumentTitle';
 
-export default function VerifyEmail(): JSX.Element {
+export default function VerifyEmail({ loggedIn } : { loggedIn : boolean }): JSX.Element {
+  useDocumentTitle('Verify Email');
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(false);
   const { key } = useParams() as { key: string };
@@ -14,9 +16,9 @@ export default function VerifyEmail(): JSX.Element {
     const verification = async () => verifyEmail(key).then((res:any) => {
       if (res.detail === 'ok') {
         setVerified(true);
-        toast.success(
-          'Email verified successfully!',
-          { id: 'successful-email-verification' },
+        toast.custom(
+          <Success success="Email verified successfully." />,
+          { id: 'success-email-verification', duration: 3000 },
         );
       } else {
         setError(true);
@@ -29,7 +31,7 @@ export default function VerifyEmail(): JSX.Element {
       setError(true);
       toast.custom(
         <Error error="Invalid verification key OR Email already verified." />,
-        { id: 'verify-email-error', duration: Infinity },
+        { id: 'verify-email-error', duration: 5000 },
       );
     });
     verification();
@@ -110,7 +112,7 @@ export default function VerifyEmail(): JSX.Element {
                         </div>
                         <div className="ml-2 font-bold text-base">
                           <span>
-                            Click to Login
+                            { loggedIn ? 'Go to Dashboard' : 'Click to Login' }
                           </span>
                         </div>
                       </div>

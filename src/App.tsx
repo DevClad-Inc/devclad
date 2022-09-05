@@ -59,7 +59,7 @@ function App() {
             <Route path="*" element={<Login />} />
             <Route index element={<Login />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail />} />
+            <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
           </Routes>
         ) : (
           <AppShell>
@@ -73,6 +73,7 @@ function App() {
                 <Route index element={<AccountProfile />} />
                 <Route path="/settings/social" element={<SocialProfile />} />
               </Route>
+              <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
             </Routes>
           </AppShell>
         )}
