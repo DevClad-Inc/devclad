@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { ArrowRightOnRectangleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
@@ -70,7 +70,7 @@ export default function VerifyEmail(): JSX.Element {
         <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           <Link
             className="font-medium text-orange-700 dark:text-fuchsia-300"
-            to="/login"
+            to="/"
           >
             Login
           </Link>
@@ -80,31 +80,44 @@ export default function VerifyEmail(): JSX.Element {
             {
               (verified && !error) ? (
                 <div className="text-center">
-                  <Link to="/" className="w-full">
-                    <span
-                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
-                    text-sm font-medium text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
+                  <span
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
+                    text-sm font-medium text-green-800 bg-green-50
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
+                  >
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                      </div>
+                      <div className="ml-2 font-bold text-base">
+                        <span>
+                          Email Verified successfully 🎉!
+                        </span>
+                      </div>
+                    </div>
+                  </span>
+
+                  <Link to="/" className="items-center">
+                    <span
+                      className="mt-5 border border-transparent bg-orange-700 text-white
+                dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+                inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
                     >
                       <div className="flex">
                         <div className="flex-shrink-0">
-                          <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                          <ArrowRightOnRectangleIcon className="h-5 w-5" aria-hidden="true" />
                         </div>
                         <div className="ml-2 font-bold text-base">
                           <span>
-                            Email Verified successfully 🎉!
-                          </span>
-                          {' '}
-                          <span>
-                            Click to login.
+                            Click to Login
                           </span>
                         </div>
                       </div>
                     </span>
                   </Link>
-
                 </div>
+
               ) : (
                 <div className="text-center">
                   <p className="text-gray-600 dark:text-gray-400 text-center">Please wait while we verify your email.</p>

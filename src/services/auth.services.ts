@@ -23,6 +23,12 @@ export const verifyEmail = async (key: string) => {
   return response.data;
 };
 
+export const resendEmail = async (email: string) => {
+  const url = `${API_URL}/auth/registration/resend-email/`;
+  const response = await axios.post(url, { email }, { headers });
+  return response.data;
+};
+
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
   const token = Cookies.get('token');
