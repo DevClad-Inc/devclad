@@ -20,6 +20,22 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const verifyEmail = async (key: string) => {
   const url = `${API_URL}/auth/registration/verify-email/`;
   const response = await axios.post(url, { key }, { headers });
+  return response;
+};
+
+export const passwordReset = async (
+  uid: string,
+  token: string,
+  password1: string,
+  password2: string,
+) => {
+  const url = `${API_URL}/auth/password/reset/confirm/`;
+  const response = await axios.post(url, {
+    new_password1: password1,
+    new_password2: password2,
+    uid,
+    token,
+  }, { headers });
   return response.data;
 };
 
