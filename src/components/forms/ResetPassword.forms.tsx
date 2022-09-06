@@ -21,9 +21,11 @@ interface PasswordReset {
 }
 
 export default function PasswordResetForm(): JSX.Element {
-  useDocumentTitle('Password Reset');
   const [resetDone, setresetDone] = useState(false);
   const { uid, token } = useParams() as { uid: string; token: string };
+  if (uid && token) {
+    useDocumentTitle('Password Reset');
+  }
   const validate = (values: PasswordReset) => {
     const errors: PasswordReset['errors'] = {};
     if (!values.password1) {
@@ -94,11 +96,11 @@ export default function PasswordResetForm(): JSX.Element {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-6" action="#" method="POST">
-          <Warning warning="This is a sensitive operation. Make sure you proceed carefully." />
+          <Warning warning="This is a sensitive operation. Recommended: Save this password in a Cloud Keychain/Password Manager." />
           <div>
             <label
               htmlFor="password1"
-              className="block text-sm text-left pl-1
+              className="block text-sm text-left ml-1
               font-medium text-gray-700 dark:text-gray-300"
             >
               New Password
@@ -131,7 +133,7 @@ export default function PasswordResetForm(): JSX.Element {
           <div>
             <label
               htmlFor="password2"
-              className="block text-sm text-left pl-1
+              className="block text-sm text-left ml-1
               font-medium text-gray-700 dark:text-gray-300"
             >
               Confirm New Password

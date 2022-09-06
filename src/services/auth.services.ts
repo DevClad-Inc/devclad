@@ -55,7 +55,7 @@ export const passwordChange = async (
       Accept: 'application/json',
     },
   });
-  return response.data;
+  return response;
 };
 
 export const changeEmail = async (email: string) => {
@@ -67,6 +67,25 @@ export const changeEmail = async (email: string) => {
         method: 'PATCH',
         url,
         data: { email },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
+};
+
+export const checkVerified = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/users/change-email/`;
+  if (token) {
+    return axios(
+      {
+        method: 'GET',
+        url,
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

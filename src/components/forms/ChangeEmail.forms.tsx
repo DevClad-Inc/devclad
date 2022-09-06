@@ -1,13 +1,18 @@
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import {
+  ShieldExclamationIcon, ShieldCheckIcon, InboxArrowDownIcon,
+} from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import { changeEmail } from '../../services/auth.services';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  changeEmail, checkVerified, getUser, resendEmail,
+} from '../../services/auth.services';
 import { Error, Success, Warning } from '../../utils/Feedback.utils';
-import useDocumentTitle from '../../utils/useDocumentTitle';
 import { PrimaryButton } from '../../utils/Buttons.utils';
+import { User, initialUserState } from '../../utils/InterfacesStates.utils';
 
 export interface InterfaceEmail {
   email: string;
@@ -17,7 +22,19 @@ export interface InterfaceEmail {
 }
 
 export default function ChangeEmailForm(): JSX.Element {
-  useDocumentTitle('Password Reset');
+  let loggedInUser: User = { ...initialUserState };
+  let verified = false;
+  const qc = useQueryClient();
+  const userQuery = useQuery(['user'], () => getUser());
+  if (userQuery.isSuccess && userQuery.data !== null) {
+    const { data } = userQuery;
+    loggedInUser = data.data;
+  }
+  const verifiedQuery = useQuery(['verified'], () => checkVerified());
+  if (verifiedQuery.isSuccess && verifiedQuery.data !== null) {
+    const { data } = verifiedQuery.data;
+    verified = data.verified;
+  }
   const [changedEmail, setchangedEmail] = useState(false);
   const validate = (values: InterfaceEmail) => {
     const errors: InterfaceEmail['errors'] = {};
@@ -36,19 +53,23 @@ export default function ChangeEmailForm(): JSX.Element {
       email,
     } = values;
     await changeEmail(email).then(() => {
+      qc.invalidateQueries(['user']);
       toast.custom(
         <Success success="Verification Email Sent." />,
         { id: 'verification-mail-sent', duration: 3000 },
       );
       setchangedEmail(true);
-    }).catch((err) => {
+    }).catch(() => {
       toast.custom(
-        <Error error={err} />,
+        <Error error="Email already exists." />,
         { id: 'error-email-change', duration: 5000 },
       );
     });
     setSubmitting(false);
   };
+  if (userQuery.isLoading || verifiedQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <Formik
       initialValues={{
@@ -60,72 +81,97 @@ export default function ChangeEmailForm(): JSX.Element {
       }}
     >
       {({ isSubmitting }) => (
-        <Form className="space-y-6" action="#" method="POST">
-          <Warning warning="Changing your email will require you to verify your new email address." />
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm text-left pl-1
-              font-medium text-gray-700 dark:text-gray-300"
-            >
-              Email
-              <div className="mt-1 relative">
-                <Field
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="cactus@jack.com"
-                  autoComplete="email"
-                  required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
-                />
-              </div>
+        <>
+          <Warning warning="Changing your email will require you to verify your new email address. Always check Spam/Junk folder." />
+          {
+            verified === true
+              ? (
+                <span className="p-2 dark:bg-phthaloGreen dark:text-honeyDew inline-flex rounded-md">
+                  {' '}
+                  <ShieldCheckIcon className="h-6 w-6 mr-2 text-green-500" />
+                  {' '}
+                  {loggedInUser.email}
+                  {' '}
+                  is
+                  {' '}
+                  verified.
+                </span>
+              )
+              : (
+                <span className="pl-1 inline-flex dark:bg-bloodRed/60 dark:text-mistyRose p-2 rounded-md">
+                  {' '}
+                  <ShieldExclamationIcon className="h-6 w-6 mr-2 dark:text-mistyRose text-bloodRed" />
+                  {' '}
+                  {loggedInUser.email}
+                  {' '}
+                  is
+                  {' '}
+                  not verified.
+                </span>
+              )
+            }
+          <Form className="mt-5 sm:flex sm:items-center" action="#" method="POST">
+            <div className="w-full sm:max-w-xs">
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                placeholder="cactus@jack.com"
+                autoComplete="email"
+                required
+                className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
+                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none
+                    focus:border-orange-500 focus:ring-orange-500"
+              />
               <ErrorMessage
                 name="email"
                 component="div"
                 className="text-sm text-bloodRed dark:text-mistyRose"
               />
-            </label>
-          </div>
-
-          <div>
-            {!changedEmail
+            </div>
+            {!verified && changedEmail
               ? (
                 <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => loggedInUser.email && resendEmail(loggedInUser.email)}
+                  >
+                    <span
+                      className="inline-flex w-full items-center justify-center
+                  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm bg-orange-700 text-white
+                  dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+                  text-sm dark:text-fuchsia-300"
+                    >
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
+                        </div>
+                        <div className="ml-2 font-bold text-base">
+                          <span>
+                            Resend Email.
+                          </span>
+                        </div>
+                      </div>
+                    </span>
+                  </button>
+                </div>
+
+              )
+              : (
+                <div className="mt-3 inline-flex w-full items-center justify-center
+                sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm px-4 py-2 border border-transparent"
+                >
                   <PrimaryButton
                     isSubmitting={isSubmitting}
                   >
                     <span className="font-bold text-md">
-                      {isSubmitting ? 'Changing Email...' : 'Change Email'}
-                      {' '}
-                      <span className="text-md">📧</span>
+                      {isSubmitting ? 'Updating Email...' : 'Update Email ✨'}
                     </span>
                   </PrimaryButton>
                 </div>
-              )
-              : (
-                <div className="flex justify-center">
-                  <span
-                    className="mt-5 border border-transparent bg-orange-700 text-white
-                    dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <CheckCircleIcon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Verification Email Sent.
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
               )}
-          </div>
-        </Form>
+          </Form>
+        </>
       )}
     </Formik>
   );

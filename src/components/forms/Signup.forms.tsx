@@ -300,7 +300,7 @@ export default function SignupForm(
                 </div>
               )
               : (
-                <button type="button" onClick={() => resendEmail(emailVal)}>
+                <>
                   <span
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
                     text-sm font-medium text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
@@ -320,23 +320,25 @@ export default function SignupForm(
                       </div>
                     </div>
                   </span>
-                  <span
-                    className="mt-5 border border-transparent bg-orange-700 text-white
+                  <button type="button" onClick={() => resendEmail(emailVal)}>
+                    <span
+                      className="mt-5 border border-transparent bg-orange-700 text-white
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
+                    >
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
+                        </div>
+                        <div className="ml-2 font-bold text-base">
+                          <span>
+                            Resend Email.
+                          </span>
+                        </div>
                       </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Resend Email.
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </button>
+                    </span>
+                  </button>
+                </>
               )}
           </div>
         </Form>

@@ -33,7 +33,7 @@ export function Warning({ warning }: { warning: string }): JSX.Element {
 
 export function Error({ error }: { error: string }): JSX.Element {
   return (
-    <div className="rounded-md bg-mistyRose dark:bg-bloodRed p-4 mb-4">
+    <div className="rounded-md bg-mistyRose dark:bg-bloodRed/60 p-4 mb-4">
       <div className="flex">
         <div className="flex-shrink-0">
           <XCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
