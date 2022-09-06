@@ -61,7 +61,7 @@ function App() {
             <Route index element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
-            <Route path="auth/password_reset_confirm/:uid/:token/" element={<PassReset />} />
+            <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
           </Routes>
         ) : (
           <AppShell>
