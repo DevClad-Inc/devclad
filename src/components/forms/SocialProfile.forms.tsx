@@ -53,15 +53,7 @@ export default function SocialProfileForm(): JSX.Element {
   const qc = useQueryClient();
   const validate = (values: SocialProfileFormValues) => {
     const errors: SocialProfileFormValues['errors'] = {};
-    if (!values.preferredTimezoneDeviation && !socialProfileData.preferred_timezone_deviation) {
-      errors.preferredTimezoneDeviation = 'Required';
-    }
-    if (!values.preferredDevType && !socialProfileData.preferred_dev_type) {
-      errors.preferredDevType = 'Required';
-    }
-    if (!values.ideaStatus && !socialProfileData.idea_status) {
-      errors.ideaStatus = 'Required';
-    }
+    // validation for other fields only is UserStatus is "Not Submitted"
     if ((values.calendly)
     && (!((values.calendly.startsWith('http'))
     || (values.calendly.startsWith('https')))
@@ -73,6 +65,7 @@ export default function SocialProfileForm(): JSX.Element {
   const handleSubmit = async (values: SocialProfileFormValues, { setSubmitting }: any) => {
     try {
       values.preferredDevType = selectedDevType?.name;
+      values.ideaStatus = selectedIdeaStatus?.name;
       values.preferredTimezoneDeviation = selectedTzDeviation?.name;
       setSubmitting(true);
       await updateSocialProfile(values, socialProfileData)

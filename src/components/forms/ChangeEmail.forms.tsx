@@ -86,9 +86,9 @@ export default function ChangeEmailForm(): JSX.Element {
           {
             verified === true
               ? (
-                <span className="p-2 dark:bg-phthaloGreen dark:text-honeyDew inline-flex rounded-md">
+                <span className="p-2 text-sm dark:bg-phthaloGreen dark:text-honeyDew inline-flex rounded-md">
                   {' '}
-                  <ShieldCheckIcon className="h-6 w-6 mr-2 text-green-500" />
+                  <ShieldCheckIcon className="h-6 w-5 mr-2 text-green-500" />
                   {' '}
                   {loggedInUser.email}
                   {' '}
@@ -98,9 +98,9 @@ export default function ChangeEmailForm(): JSX.Element {
                 </span>
               )
               : (
-                <span className="pl-1 inline-flex dark:bg-bloodRed/60 dark:text-mistyRose p-2 rounded-md">
+                <span className="text-sm inline-flex dark:bg-bloodRed/60 dark:text-mistyRose p-2 rounded-md">
                   {' '}
-                  <ShieldExclamationIcon className="h-6 w-6 mr-2 dark:text-mistyRose text-bloodRed" />
+                  <ShieldExclamationIcon className="h-6 w-5 mr-2 dark:text-mistyRose text-bloodRed" />
                   {' '}
                   {loggedInUser.email}
                   {' '}
