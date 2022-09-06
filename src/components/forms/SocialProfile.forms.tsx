@@ -123,7 +123,7 @@ export default function SocialProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="preferredDevType"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       Development Type
@@ -225,7 +225,7 @@ export default function SocialProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="preferredTimezoneDeviation"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       TimeZone Deviation (Hours)
@@ -324,7 +324,7 @@ export default function SocialProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="ideaStatus"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       Idea Status
@@ -417,7 +417,7 @@ export default function SocialProfileForm(): JSX.Element {
             <div className="mb-10 col-span-6 sm:col-span-3">
               <label
                 htmlFor="calendly"
-                className="block text-sm font-medium
+                className="block text-md font-medium
                text-gray-700 dark:text-gray-300"
               >
                 Calendly Link

@@ -96,15 +96,17 @@ export default function PasswordResetForm(): JSX.Element {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-6" action="#" method="POST">
-          <Warning warning="This is a sensitive operation. Recommended: Save this password in a Cloud Keychain/Password Manager." />
-          <div>
-            <label
-              htmlFor="password1"
-              className="block text-sm text-left ml-1
-              font-medium text-gray-700 dark:text-gray-300"
-            >
-              New Password
-              <div className="mt-1 relative">
+          <div className="w-fit">
+            <Warning warning="This is a sensitive operation. Recommended: Save this password in a Cloud Keychain/Password." />
+          </div>
+          <div className="grid grid-cols-6 gap-6">
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="password1"
+                className="block text-md text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                New Password
                 <Field
                   id="password1"
                   name="password1"
@@ -116,47 +118,42 @@ export default function PasswordResetForm(): JSX.Element {
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                     dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
-              </div>
-              <ErrorMessage
-                name="password1"
-                component="div"
-                className="text-sm text-bloodRed dark:text-mistyRose"
-              />
-            </label>
-            <p className="mt-2 pl-2 text-sm text-gray-600 dark:text-gray-400" id="password-description">
-              At least 8 characters.
-            </p>
-            <p className="mt-2 pl-2 text-xs text-gray-600 dark:text-gray-400" id="password-description">
-              Tip: Autogenerate a password.
-            </p>
-          </div>
-          <div>
-            <label
-              htmlFor="password2"
-              className="block text-sm text-left ml-1
-              font-medium text-gray-700 dark:text-gray-300"
-            >
-              Confirm New Password
-              <div className="mt-1 relative">
+                <ErrorMessage
+                  name="password1"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+                <p className="mt-2 text-sm text-gray-500">
+                  At least 8 characters. Tip: Autogenerate a password.
+                </p>
+              </label>
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="password2"
+                className="block text-md text-left pl-1
+          font-medium text-gray-700 dark:text-gray-300"
+              >
+                Confirm New Password
                 <Field
                   id="password2"
                   name="password2"
                   type="password"
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
+                  aria-describedby="password-description"
                   required
                   className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
                     dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
-              </div>
-              <ErrorMessage
-                name="password2"
-                component="div"
-                className="text-sm text-bloodRed dark:text-mistyRose"
-              />
-            </label>
+                <ErrorMessage
+                  name="password2"
+                  component="div"
+                  className="text-sm text-bloodRed dark:text-mistyRose"
+                />
+              </label>
+            </div>
           </div>
-
           <div>
             {!resetDone
               ? (
@@ -250,7 +247,7 @@ export function ForgotPasswordForm(): JSX.Element {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm text-left pl-1
+              className="block text-md text-left pl-1
               font-medium text-gray-700 dark:text-gray-300"
             >
               Email

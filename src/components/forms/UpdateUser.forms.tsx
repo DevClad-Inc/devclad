@@ -114,7 +114,7 @@ export default function UpdateUserForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="firstName"
-                className="block text-sm font-medium
+                className="block text-md font-medium
                  text-gray-700 dark:text-gray-300"
               >
                 First name
@@ -136,7 +136,7 @@ export default function UpdateUserForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="lastName"
-                className="block text-sm font-medium
+                className="block text-md font-medium
                  text-gray-700 dark:text-gray-300"
               >
                 Last name
@@ -159,7 +159,7 @@ export default function UpdateUserForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-4">
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-md font-medium text-gray-700 dark:text-gray-300"
               >
                 Username
                 <Field

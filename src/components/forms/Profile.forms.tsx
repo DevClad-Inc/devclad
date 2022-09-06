@@ -164,7 +164,7 @@ export default function UpdateProfileForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-6">
               <label
                 htmlFor="about"
-                className="block text-sm text-left pl-1
+                className="block text-md text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
                 About
@@ -191,7 +191,7 @@ export default function UpdateProfileForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="pronouns"
-                className="block text-sm text-left pl-1
+                className="block text-md text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
                 Pronouns
@@ -214,7 +214,7 @@ export default function UpdateProfileForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="linkedin"
-                className="block text-sm text-left pl-1
+                className="block text-md text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
                 LinkedIn
@@ -237,7 +237,7 @@ export default function UpdateProfileForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="website"
-                className="block text-sm text-left pl-1
+                className="block text-md text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
                 Website
@@ -263,7 +263,7 @@ export default function UpdateProfileForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="rawXP"
-                className="block text-sm text-left pl-1
+                className="block text-md text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
                 Raw Experience
@@ -309,7 +309,7 @@ export default function UpdateProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="devType"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       Type of Development
@@ -416,7 +416,7 @@ export default function UpdateProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="languages"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       Languages
@@ -522,7 +522,7 @@ export default function UpdateProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="purposes"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       What makes you want to use DevClad?
@@ -616,7 +616,7 @@ export default function UpdateProfileForm(): JSX.Element {
                   <>
                     <Listbox.Label
                       id="location"
-                      className="block text-sm font-medium
+                      className="block text-md font-medium
                     text-gray-700 dark:text-gray-300"
                     >
                       Location
@@ -700,7 +700,7 @@ export default function UpdateProfileForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-5">
               <label
                 htmlFor="timezone"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-md font-medium text-gray-700 dark:text-gray-300"
               >
                 TimeZone
                 <p className="mt-2 text-sm italic text-gray-600 dark:text-gray-400">
@@ -710,7 +710,7 @@ export default function UpdateProfileForm(): JSX.Element {
                   {' '}
                   <button
                     type="button"
-                    className="text-sm text-blue-500 dark:text-blue-300"
+                    className="text-md text-blue-500 dark:text-blue-300"
                     onClick={() => { setProfileTimezone(detected); setFieldValue('timezone', detected); }}
                   >
                     Refetch

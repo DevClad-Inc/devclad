@@ -82,8 +82,10 @@ export default function ChangeEmailForm(): JSX.Element {
     >
       {({ isSubmitting }) => (
         <>
-          <Warning warning="Changing your email will require you to verify your new email address. Always check Spam/Junk folder." />
-          {
+          <div className="w-fit">
+            <Warning warning="Make sure your email is verified. You will not be able to login with an unverified email." />
+
+            {
             verified === true
               ? (
                 <span className="p-2 text-sm dark:bg-phthaloGreen dark:text-honeyDew inline-flex rounded-md">
@@ -110,6 +112,7 @@ export default function ChangeEmailForm(): JSX.Element {
                 </span>
               )
             }
+          </div>
           <Form className="mt-5 sm:flex sm:items-center" action="#" method="POST">
             <div className="w-full sm:max-w-xs">
               <Field

@@ -27,6 +27,7 @@ import { PassReset, ForgotPassword } from './components/PasswordReset';
 function App() {
   const { darkMode } = useContext(ThemeContext);
   let loggedInUser: User = { ...initialUserState };
+  const a:number = 1;
   const userQuery = useQuery(['user'], () => getUser());
   if (userQuery.isSuccess && userQuery.data !== null) {
     const { data } = userQuery;
@@ -45,6 +46,16 @@ function App() {
     }
   }, [loggedInUser]);
   // todo: add splash screen
+  if (a === 3) {
+    // Signup completion would go here
+    // check UserStatus.approved is False
+    return (
+      <div className="App">
+        <Toaster />
+        Test 1
+      </div>
+    );
+  }
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
       <div

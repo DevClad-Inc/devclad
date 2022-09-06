@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   UserCircleIcon, KeyIcon,
   CreditCardIcon, UsersIcon,
+  EnvelopeIcon,
 } from '@heroicons/react/24/solid';
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
@@ -81,14 +82,14 @@ export function AccountProfile() {
       <div className="shadow sm:rounded-md sm:overflow-hidden">
         <div className="py-6 px-4 space-y-6 sm:p-6">
           <div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
+            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">Account</h2>
           </div>
           <UpdateUserForm />
           <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
         </div>
         <div className="py-6 px-4 space-y-6 sm:p-6">
           <div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
+            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
           </div>
           <UpdateProfileForm />
         </div>
@@ -106,7 +107,7 @@ export function SocialProfile() {
       <div className="shadow sm:rounded-md sm:overflow-hidden">
         <div className="py-6 px-4 space-y-6 sm:p-6">
           <div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Social Preferences</h2>
+            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">Social Preferences</h2>
             <p className="mt-2 text-xs italic text-gray-600 dark:text-gray-400">
               We use your preferences in our ML algorithms to
               generate the best possible match every week.
@@ -125,15 +126,22 @@ export function Password() {
     <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
       <div className="shadow sm:rounded-md sm:overflow-hidden">
         <div className="py-6 px-4 space-y-6 sm:p-6">
-          <div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Email</h2>
+          <div className="inline-flex">
+            <EnvelopeIcon className="mr-2 w-6 h-6" />
+            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">
+              Email
+              {' '}
+            </h2>
           </div>
           <ChangeEmailForm />
           <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
         </div>
         <div className="py-6 px-4 space-y-6 sm:p-6">
-          <div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Password</h2>
+          <div className="inline-flex">
+            <KeyIcon className="mr-2 w-6 h-6" />
+            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">
+              Password
+            </h2>
           </div>
           <PasswordResetForm />
           <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
