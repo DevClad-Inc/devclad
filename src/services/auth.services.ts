@@ -20,7 +20,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const verifyEmail = async (key: string) => {
   const url = `${API_URL}/auth/registration/verify-email/`;
   const response = await axios.post(url, { key }, { headers });
-  return response;
+  return response.data;
 };
 
 export const passwordReset = async (
@@ -56,6 +56,26 @@ export const passwordChange = async (
     },
   });
   return response.data;
+};
+
+export const changeEmail = async (email: string) => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/users/change-email/`;
+  if (token) {
+    return axios(
+      {
+        method: 'PATCH',
+        url,
+        data: { email },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
 };
 
 export const resendEmail = async (email: string) => {

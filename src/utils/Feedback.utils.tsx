@@ -1,4 +1,4 @@
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
+import { CheckCircleIcon, XCircleIcon, ShieldExclamationIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
 export function Success({ success }: { success: string }): JSX.Element {
@@ -10,6 +10,21 @@ export function Success({ success }: { success: string }): JSX.Element {
         </div>
         <div className="ml-3">
           <h3 className="text-sm font-medium text-green-800 dark:text-green-200">{success}</h3>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Warning({ warning }: { warning: string }): JSX.Element {
+  return (
+    <div className="rounded-md bg-gyCrayola dark:bg-blackChocolate p-4 mb-4">
+      <div className="flex">
+        <div className="flex-shrink-0">
+          <ShieldExclamationIcon className="h-5 w-5 text-bistreBrown dark:text-saffron" aria-hidden="true" />
+        </div>
+        <div className="ml-3">
+          <h3 className="text-sm font-medium text-bistreBrown dark:text-saffron">{warning}</h3>
         </div>
       </div>
     </div>

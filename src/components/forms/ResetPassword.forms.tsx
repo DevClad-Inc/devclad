@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { ShieldCheckIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
@@ -6,7 +6,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { passwordChange, passwordReset } from '../../services/auth.services';
-import { Error, Success } from '../../utils/Feedback.utils';
+import { Error, Success, Warning } from '../../utils/Feedback.utils';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import { PrimaryButton } from '../../utils/Buttons.utils';
 
@@ -93,6 +93,7 @@ export default function PasswordResetForm(): JSX.Element {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-6" action="#" method="POST">
+          <Warning warning="This is a sensitive operation. Make sure you proceed carefully." />
           <div>
             <label
               htmlFor="password1"
@@ -160,10 +161,10 @@ export default function PasswordResetForm(): JSX.Element {
                   <PrimaryButton
                     isSubmitting={isSubmitting}
                   >
-                    <span className="font-bold text-lg">
+                    <span className="font-bold text-md">
                       {isSubmitting ? 'Switching Password...' : 'Switch Password'}
                       {' '}
-                      <span className="text-xl">🔐</span>
+                      <span className="text-md">🔐</span>
                     </span>
                   </PrimaryButton>
                 </div>
@@ -177,7 +178,7 @@ export default function PasswordResetForm(): JSX.Element {
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <CheckCircleIcon className="h-5 w-5" aria-hidden="true" />
+                        <ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
                       </div>
                       <div className="ml-2 font-bold text-base">
                         <span>

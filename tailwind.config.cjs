@@ -35,7 +35,8 @@ module.exports = {
         beauBlue: '#D6EBFF',
         mistyRose: '#F3DDDD',
         honeyDew: '#DDF3E4',
-        gyCrayola: '#FEF2A4',
+        gyCrayola: '#FEF6C2',
+        bistreBrown: '#946800',
         black: '#000000',
         neon: '#FFF8E7',
         // dark palette
@@ -47,6 +48,7 @@ module.exports = {
         bloodRed: '#660C00',
         phthaloGreen: '#113123',
         saffron: '#F0C000',
+        blackChocolate: '#241B00',
       },
       fontFamily: {
         mono: ['IBM Plex Mono', 'monospace'],

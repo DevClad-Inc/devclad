@@ -1,4 +1,4 @@
-import { ArrowRightOnRectangleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
+import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
@@ -90,11 +90,11 @@ export default function VerifyEmail({ loggedIn } : { loggedIn : boolean }): JSX.
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                        <ShieldCheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
                       </div>
                       <div className="ml-2 font-bold text-base">
                         <span>
-                          Email Verified successfully 🎉!
+                          Email Verified successfully
                         </span>
                       </div>
                     </div>

@@ -10,6 +10,7 @@ import UpdateUserForm from './forms/UpdateUser.forms';
 import useDocumentTitle from '../utils/useDocumentTitle';
 import SocialProfileForm from './forms/SocialProfile.forms';
 import PasswordResetForm from './forms/ResetPassword.forms';
+import ChangeEmailForm from './forms/ChangeEmail.forms';
 
 const navigation = [
   {
@@ -125,7 +126,14 @@ export function Password() {
       <div className="shadow sm:rounded-md sm:overflow-hidden">
         <div className="py-6 px-4 space-y-6 sm:p-6">
           <div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Email and Password</h2>
+            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Email</h2>
+          </div>
+          <ChangeEmailForm />
+          <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        </div>
+        <div className="py-6 px-4 space-y-6 sm:p-6">
+          <div>
+            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Password</h2>
           </div>
           <PasswordResetForm />
           <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
