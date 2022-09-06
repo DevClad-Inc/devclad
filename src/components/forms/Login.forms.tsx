@@ -5,6 +5,7 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import { Link } from 'react-router-dom';
 import {
   getUser, logIn,
 } from '../../services/auth.services';
@@ -139,9 +140,9 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
 
           <div className="inline-flex items-center">
             <div className="text-sm">
-              <a href="/" className="font-medium text-orange-700 dark:text-fuchsia-300">
+              <Link to="forgot-password/" className="font-medium text-orange-700 dark:text-fuchsia-300">
                 Forgot your password?
-              </a>
+              </Link>
             </div>
 
           </div>

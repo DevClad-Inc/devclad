@@ -78,6 +78,12 @@ export const changeEmail = async (email: string) => {
   return null;
 };
 
+export const forgotPassword = async (email: string) => {
+  const url = `${API_URL}/auth/password/reset/`;
+  const response = await axios.post(url, { email }, { headers });
+  return response.data;
+};
+
 export const resendEmail = async (email: string) => {
   const url = `${API_URL}/auth/registration/resend-email/`;
   const response = await axios.post(url, { email }, { headers });

@@ -22,7 +22,7 @@ import Social from './components/Social';
 import Projects from './components/Projects';
 import Hackathons from './components/Hackathons';
 import VerifyEmail from './components/VerifyEmail';
-import PassReset from './components/PasswordReset';
+import { PassReset, ForgotPassword } from './components/PasswordReset';
 
 function App() {
   const { darkMode } = useContext(ThemeContext);
@@ -63,6 +63,7 @@ function App() {
             <Route path="*" element={<Login />} />
             <Route index element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="forgot-password/" element={<ForgotPassword />} />
             <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
             <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
           </Routes>

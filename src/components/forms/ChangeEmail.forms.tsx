@@ -9,7 +9,7 @@ import { Error, Success, Warning } from '../../utils/Feedback.utils';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import { PrimaryButton } from '../../utils/Buttons.utils';
 
-interface ChangeEmail {
+export interface InterfaceEmail {
   email: string;
   errors?: {
     email?: string;
@@ -19,8 +19,8 @@ interface ChangeEmail {
 export default function ChangeEmailForm(): JSX.Element {
   useDocumentTitle('Password Reset');
   const [changedEmail, setchangedEmail] = useState(false);
-  const validate = (values: ChangeEmail) => {
-    const errors: ChangeEmail['errors'] = {};
+  const validate = (values: InterfaceEmail) => {
+    const errors: InterfaceEmail['errors'] = {};
     if (!values.email) {
       errors.email = 'Required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
@@ -30,7 +30,7 @@ export default function ChangeEmailForm(): JSX.Element {
   };
 
   // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
-  const handlePassChange = async (values: ChangeEmail, { setSubmitting }: any) => {
+  const handlePassChange = async (values: InterfaceEmail, { setSubmitting }: any) => {
     setSubmitting(true);
     const {
       email,
