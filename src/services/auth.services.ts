@@ -109,6 +109,25 @@ export const resendEmail = async (email: string) => {
   return response.data;
 };
 
+export const getStatus = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/users/status/`;
+  if (token) {
+    return axios(
+      {
+        method: 'GET',
+        url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
+};
+
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
   const token = Cookies.get('token');
@@ -208,14 +227,6 @@ export async function SignUp(user: NewUser) {
     }).catch((err) => err);
 }
 
-// export const emailVerification = async (email:string) => axios(
-//   {
-//     method: 'POST',
-//     url: `${API_URL}/auth/account-confirm-email/`,
-//     headers,
-//   },
-// );
-
 export async function logIn(email: string, password: string) {
   const url = `${API_URL}/auth/login/`;
   const response = await axios
@@ -226,7 +237,6 @@ export async function logIn(email: string, password: string) {
       credentials: 'same-origin',
     })
     .then((resp) => {
-      // console.log(resp);
       Cookies.set('token', resp.data.access_token, {
         // expires: twoHour,
         sameSite: 'strict',
@@ -237,7 +247,6 @@ export async function logIn(email: string, password: string) {
         sameSite: 'strict',
         secure: true,
       });
-      // console.log(Cookies.get('token'));
     });
   return response;
 }
@@ -250,7 +259,6 @@ export async function logOut() {
       credentials: 'same-origin',
     })
     .then(() => {
-      // console.log('resp.data ->', resp.data);
       Cookies.remove('token');
       Cookies.remove('refresh');
       delMany(['loggedInUser', 'profile']);

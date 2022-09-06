@@ -79,3 +79,13 @@ export const initialSocialProfileState: SocialProfile = {
   preferred_dev_type: undefined,
   idea_status: undefined,
 };
+
+export interface UserStatus {
+  status?: string;
+  approved?: boolean;
+}
+
+export const initialUserStatus: UserStatus = {
+  status: undefined,
+  approved: undefined,
+};

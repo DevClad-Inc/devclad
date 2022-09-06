@@ -6,8 +6,10 @@ import { clsx } from 'clsx';
 import { useQuery } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { ThemeContext } from './context/Theme.context';
-import { User, initialUserState } from './utils/InterfacesStates.utils';
-import { getUser, refreshToken } from './services/auth.services';
+import {
+  User, initialUserState, UserStatus, initialUserStatus,
+} from './utils/InterfacesStates.utils';
+import { getStatus, getUser, refreshToken } from './services/auth.services';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
@@ -27,32 +29,34 @@ import { PassReset, ForgotPassword } from './components/PasswordReset';
 function App() {
   const { darkMode } = useContext(ThemeContext);
   let loggedInUser: User = { ...initialUserState };
-  const a:number = 1;
   const userQuery = useQuery(['user'], () => getUser());
   if (userQuery.isSuccess && userQuery.data !== null) {
     const { data } = userQuery;
     loggedInUser = data.data;
   }
+  let userStatus: UserStatus = { ...initialUserStatus };
+  const statusQuery = useQuery(['userStatus'], () => getStatus());
+  if ((statusQuery.isSuccess && statusQuery.data !== null)
+  && Object.values(userStatus).every((value) => value === undefined)) {
+    const { data } = statusQuery;
+    userStatus = data.data;
+  }
   const undefinedUser = Object.values(loggedInUser).every(
     (value) => value === undefined,
   );
   useEffect(() => {
-    // if (window.location.pathname === '/signup' || window.location.pathname === '/signup/') {
-    //   window.history.replaceState({}, '', '/#/signup');
-    //   navigate(0);
-    // }
     if (!undefinedUser) {
       setInterval(refreshToken, (1800 * 1000));
     }
   }, [loggedInUser]);
   // todo: add splash screen
-  if (a === 3) {
+  if (userStatus.approved === true) {
     // Signup completion would go here
     // check UserStatus.approved is False
     return (
       <div className="App">
         <Toaster />
-        Test 1
+        Not approved.
       </div>
     );
   }
@@ -69,7 +73,8 @@ function App() {
           }
       }
         />
-        {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching)) ? (
+        {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching
+        || !statusQuery.isLoading || !statusQuery.isFetching)) ? (
           <Routes>
             <Route path="*" element={<Login />} />
             <Route index element={<Login />} />
@@ -78,23 +83,23 @@ function App() {
             <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
             <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
           </Routes>
-        ) : (
-          <AppShell>
-            <Routes>
-              <Route path="*" element={<FourOFour />} />
-              <Route index element={<Home />} />
-              <Route path="social" element={<Social />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="hackathons" element={<Hackathons />} />
-              <Route path="settings" element={<Settings />}>
-                <Route index element={<AccountProfile />} />
-                <Route path="/settings/social" element={<SocialProfile />} />
-                <Route path="/settings/password" element={<Password />} />
-              </Route>
-              <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
-            </Routes>
-          </AppShell>
-        )}
+          ) : (
+            <AppShell>
+              <Routes>
+                <Route path="*" element={<FourOFour />} />
+                <Route index element={<Home />} />
+                <Route path="social" element={<Social />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="hackathons" element={<Hackathons />} />
+                <Route path="settings" element={<Settings />}>
+                  <Route index element={<AccountProfile />} />
+                  <Route path="/settings/social" element={<SocialProfile />} />
+                  <Route path="/settings/password" element={<Password />} />
+                </Route>
+                <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
+              </Routes>
+            </AppShell>
+          )}
       </div>
     </div>
   );
