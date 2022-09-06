@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import { passwordReset } from '../../services/auth.services';
+import { passwordChange, passwordReset } from '../../services/auth.services';
 import { Error, Success } from '../../utils/Feedback.utils';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import { PrimaryButton } from '../../utils/Buttons.utils';
@@ -52,18 +52,34 @@ export default function PasswordResetForm(): JSX.Element {
     const {
       password1, password2,
     } = values;
-    await passwordReset(uid, token, password1, password2).then(() => {
-      toast.custom(
-        <Success success="Password reset successful." />,
-        { id: 'success-password-reset', duration: 3000 },
-      );
-      setresetDone(true);
-    }).catch((err) => {
-      toast.custom(
-        <Error error={err} />,
-        { id: 'error-password', duration: 5000 },
-      );
-    });
+    if (uid && token) {
+      await passwordReset(password1, password2, uid, token).then(() => {
+        toast.custom(
+          <Success success="Password reset successful." />,
+          { id: 'success-password-reset', duration: 3000 },
+        );
+        setresetDone(true);
+      }).catch((err) => {
+        toast.custom(
+          <Error error={err} />,
+          { id: 'error-password-reset', duration: 5000 },
+        );
+      });
+    } else {
+      await passwordChange(password1, password2).then(() => {
+        toast.custom(
+          <Success success="Password change successful." />,
+          { id: 'success-password-change', duration: 3000 },
+        );
+        setresetDone(true);
+      }).catch((err) => {
+        toast.custom(
+          <Error error={err} />,
+          { id: 'error-password-change', duration: 5000 },
+        );
+      });
+    }
+    setSubmitting(false);
   };
   return (
     <Formik
@@ -83,7 +99,7 @@ export default function PasswordResetForm(): JSX.Element {
               className="block text-sm text-left pl-1
               font-medium text-gray-700 dark:text-gray-300"
             >
-              Password
+              New Password
               <div className="mt-1 relative">
                 <Field
                   id="password1"
@@ -116,7 +132,7 @@ export default function PasswordResetForm(): JSX.Element {
               className="block text-sm text-left pl-1
               font-medium text-gray-700 dark:text-gray-300"
             >
-              Confirm Password
+              Confirm New Password
               <div className="mt-1 relative">
                 <Field
                   id="password2"
@@ -143,18 +159,17 @@ export default function PasswordResetForm(): JSX.Element {
                 <div className="flex justify-center">
                   <PrimaryButton
                     isSubmitting={isSubmitting}
-                    wFull
                   >
                     <span className="font-bold text-lg">
-                      {isSubmitting ? 'Signing up...' : 'Sign Up'}
+                      {isSubmitting ? 'Switching Password...' : 'Switch Password'}
                       {' '}
-                      <span className="text-xs">✨</span>
+                      <span className="text-xl">🔐</span>
                     </span>
                   </PrimaryButton>
                 </div>
               )
               : (
-                <Link to="/">
+                <Link className="flex justify-center" to="/">
                   <span
                     className="mt-5 border border-transparent bg-orange-700 text-white
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
@@ -166,7 +181,7 @@ export default function PasswordResetForm(): JSX.Element {
                       </div>
                       <div className="ml-2 font-bold text-base">
                         <span>
-                          Password Reset Successful! Click here to login.
+                          Password Reset Successful
                         </span>
                       </div>
                     </div>

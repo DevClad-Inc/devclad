@@ -12,7 +12,10 @@ import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
-import { Settings, AccountProfile, SocialProfile } from './components/Settings';
+import {
+  Settings, AccountProfile,
+  SocialProfile, Password,
+} from './components/Settings';
 import AppShell from './components/AppShell';
 import FourOFour from './components/404';
 import Social from './components/Social';
@@ -74,6 +77,7 @@ function App() {
               <Route path="settings" element={<Settings />}>
                 <Route index element={<AccountProfile />} />
                 <Route path="/settings/social" element={<SocialProfile />} />
+                <Route path="/settings/password" element={<Password />} />
               </Route>
               <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
             </Routes>

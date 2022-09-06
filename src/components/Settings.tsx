@@ -9,6 +9,7 @@ import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
 import UpdateUserForm from './forms/UpdateUser.forms';
 import useDocumentTitle from '../utils/useDocumentTitle';
 import SocialProfileForm from './forms/SocialProfile.forms';
+import PasswordResetForm from './forms/ResetPassword.forms';
 
 const navigation = [
   {
@@ -18,7 +19,7 @@ const navigation = [
     name: 'Social Preferences', href: '/settings/social', icon: UsersIcon,
   },
   {
-    name: 'Password', href: '/password', icon: KeyIcon,
+    name: 'Email/Password', href: '/settings/password', icon: KeyIcon,
   },
   {
     name: 'Plan & Billing', href: '/billing', icon: CreditCardIcon,
@@ -111,6 +112,22 @@ export function SocialProfile() {
             </p>
           </div>
           <SocialProfileForm />
+          <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Password() {
+  return (
+    <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+      <div className="shadow sm:rounded-md sm:overflow-hidden">
+        <div className="py-6 px-4 space-y-6 sm:p-6">
+          <div>
+            <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Email and Password</h2>
+          </div>
+          <PasswordResetForm />
           <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
         </div>
       </div>

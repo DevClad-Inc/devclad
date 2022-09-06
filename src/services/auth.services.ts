@@ -24,10 +24,10 @@ export const verifyEmail = async (key: string) => {
 };
 
 export const passwordReset = async (
-  uid: string,
-  token: string,
   password1: string,
   password2: string,
+  uid?: string,
+  token?: string,
 ) => {
   const url = `${API_URL}/auth/password/reset/confirm/`;
   const response = await axios.post(url, {
@@ -36,6 +36,25 @@ export const passwordReset = async (
     uid,
     token,
   }, { headers });
+  return response.data;
+};
+
+export const passwordChange = async (
+  password1: string,
+  password2: string,
+) => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/auth/password/change/`;
+  const response = await axios.post(url, {
+    new_password1: password1,
+    new_password2: password2,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
   return response.data;
 };
 
