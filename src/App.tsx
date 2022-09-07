@@ -77,49 +77,51 @@ function App() {
       </div>
     );
   }
-  return (
-    <div className={clsx('h-screen', { dark: darkMode })}>
-      <div
-        className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white"
-      >
-        <Toaster
-          position="top-right"
-          toastOptions={
+  if (undefinedUser || (userQuery.isFetched && statusQuery.isFetched)) {
+    return (
+      <div className={clsx('h-screen', { dark: darkMode })}>
+        <div
+          className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white"
+        >
+          <Toaster
+            position="top-right"
+            toastOptions={
           {
             duration: 3000,
           }
       }
-        />
-        {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching
-        || (statusQuery.isLoading || statusQuery.isFetching))) ? (
-          <Routes>
-            <Route path="*" element={<Login />} />
-            <Route index element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="forgot-password/" element={<ForgotPassword />} />
-            <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
-            <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
-          </Routes>
-          ) : (
-            <AppShell>
-              <Routes>
-                <Route path="*" element={<FourOFour />} />
-                <Route index element={<Home />} />
-                <Route path="social" element={<Social />} />
-                <Route path="projects" element={<Projects />} />
-                <Route path="hackathons" element={<Hackathons />} />
-                <Route path="settings" element={<Settings />}>
-                  <Route index element={<AccountProfile />} />
-                  <Route path="/settings/social" element={<SocialProfile />} />
-                  <Route path="/settings/password" element={<Password />} />
-                </Route>
-                <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
-              </Routes>
-            </AppShell>
-          )}
+          />
+          {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching
+          )) ? (
+            <Routes>
+              <Route path="*" element={<Login />} />
+              <Route index element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="forgot-password/" element={<ForgotPassword />} />
+              <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
+              <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
+            </Routes>
+            ) : (
+              <AppShell>
+                <Routes>
+                  <Route path="*" element={<FourOFour />} />
+                  <Route index element={<Home />} />
+                  <Route path="social" element={<Social />} />
+                  <Route path="projects" element={<Projects />} />
+                  <Route path="hackathons" element={<Hackathons />} />
+                  <Route path="settings" element={<Settings />}>
+                    <Route index element={<AccountProfile />} />
+                    <Route path="/settings/social" element={<SocialProfile />} />
+                    <Route path="/settings/password" element={<Password />} />
+                  </Route>
+                  <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
+                </Routes>
+              </AppShell>
+            )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
