@@ -9,11 +9,6 @@ import { refreshToken } from './auth.services';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const headers = {
-  'Content-Type': 'multipart/form-data',
-  Authorization: `Bearer ${Cookies.get('token')}`,
-};
-
 export async function getProfile() {
   const url = `${API_URL}/users/profile/`;
   const token = Cookies.get('token');
@@ -50,7 +45,9 @@ export async function updateProfile(values: ProfileUpdate, profileData: Profile)
     return axios({
       method: 'PATCH',
       url: `${API_URL}/users/profile/`,
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       data: {
         timezone,
         dev_type: (devType === '') ? profileData.dev_type : devType,
@@ -78,7 +75,9 @@ export async function updateProfileAvatar(avatar: File) {
       method: 'PATCH',
       url,
       data: formData,
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
   return null;
@@ -91,7 +90,9 @@ export async function getSocialProfile() {
     return axios({
       method: 'GET',
       url,
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
   return null;
@@ -110,7 +111,9 @@ export async function updateSocialProfile(
     return axios({
       method: 'PATCH',
       url: `${API_URL}/social/profile/`,
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       data: {
         calendly: (calendly === '') ? socialProfileData.calendly : calendly,
         video_call_friendly: videoCallFriendly,
@@ -130,7 +133,9 @@ export async function checkProfileEmpty() {
     return axios({
       method: 'GET',
       url,
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
   return null;
@@ -143,7 +148,9 @@ export async function checkSocialProfileEmpty() {
     return axios({
       method: 'GET',
       url,
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
   return null;

@@ -1,14 +1,17 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
 import DevCladLogo from '../assets/devclad.svg';
 import {
   Error, Info, Success, Warning,
 } from '../utils/Feedback.utils';
 import SocialProfileForm from './forms/SocialProfile.forms';
-import { getStatus, getUser, setSubmittedStatus } from '../services/auth.services';
+import {
+  getStatus, getUser, logOut, setSubmittedStatus,
+} from '../services/auth.services';
 import {
   UserStatus, initialUserStatus, initialUserState, User,
 } from '../utils/InterfacesStates.utils';
@@ -16,6 +19,7 @@ import {
   checkProfileEmpty, checkSocialProfileEmpty, getSocialProfile,
 } from '../services/profile.services';
 import classNames from '../utils/ClassNames.utils';
+import useDocumentTitle from '../utils/useDocumentTitle';
 
 const linkClassesString = `bg-orange-700 text-white dark:bg-fuchsia-900/30 border border-transparent
 duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-fuchsia-200`;
@@ -135,24 +139,34 @@ export function StepTwo() {
 }
 
 export function Onboarding() {
-  let userStatus: UserStatus = { ...initialUserStatus };
-  const statusQuery = useQuery(['userStatus'], () => getStatus());
-  if ((statusQuery.isSuccess && statusQuery.data !== null)
-  && Object.values(userStatus).every((value) => value === undefined)) {
-    const { data } = statusQuery;
-    userStatus = data.data;
-  }
+  useDocumentTitle('Onboarding');
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
   if (userQuery.isSuccess && userQuery.data !== null) {
     const { data } = userQuery;
     loggedInUser = data.data;
   }
+  let userStatus: UserStatus = { ...initialUserStatus };
+  const statusQuery = useQuery(
+    ['userStatus'],
+    () => getStatus(),
+  );
+  if ((statusQuery.isSuccess && statusQuery.data !== null)
+  && Object.values(userStatus).every((value) => value === undefined)) {
+    const { data } = statusQuery;
+    userStatus = data.data;
+  }
   if (userQuery.isLoading || statusQuery.isLoading) {
     return (
       <div>Loading...</div>
     );
   }
+  const navigate = useNavigate();
+  const handlelogOut = async () => {
+    await logOut().then(() => {
+      navigate(0);
+    });
+  };
   return (
     <div>
       <div className="relative mt-5 sm:mt-10">
@@ -208,6 +222,17 @@ export function Onboarding() {
             Ask on our Discord.
 
           </a>
+          <div className="text-center text-sm text-gray-500">
+            <button
+              onClick={handlelogOut}
+              type="button"
+              className="mt-5 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium
+              rounded-md shadow-sm text-bloodRed bg-mistyRose dark:text-mistyRose dark:bg-bloodRed/60"
+            >
+              <ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              Sign Out
+            </button>
+          </div>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="w-fit-content mx-auto">

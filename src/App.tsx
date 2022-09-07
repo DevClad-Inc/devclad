@@ -35,13 +35,6 @@ function App() {
     const { data } = userQuery;
     loggedInUser = data.data;
   }
-  let userStatus: UserStatus = { ...initialUserStatus };
-  const statusQuery = useQuery(['userStatus'], () => getStatus());
-  if ((statusQuery.isSuccess && statusQuery.data !== null)
-  && Object.values(userStatus).every((value) => value === undefined)) {
-    const { data } = statusQuery;
-    userStatus = data.data;
-  }
   const undefinedUser = Object.values(loggedInUser).every(
     (value) => value === undefined,
   );
@@ -50,6 +43,18 @@ function App() {
       setInterval(refreshToken, (1800 * 1000));
     }
   }, [loggedInUser]);
+  let userStatus: UserStatus = { ...initialUserStatus };
+  const statusQuery = useQuery(
+    ['userStatus'],
+    () => getStatus(),
+    { enabled: loggedInUser.pk !== undefined },
+  );
+  if ((statusQuery.isSuccess && statusQuery.data !== null)
+  && Object.values(userStatus).every((value) => value === undefined)) {
+    const { data } = statusQuery;
+    userStatus = data.data;
+  }
+
   // todo: add splash screen
   if (userStatus && userStatus.approved === false) {
     // Signup completion would go here
@@ -86,7 +91,7 @@ function App() {
       }
         />
         {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching
-        || !statusQuery.isLoading || !statusQuery.isFetching)) ? (
+        || (statusQuery.isLoading || statusQuery.isFetching))) ? (
           <Routes>
             <Route path="*" element={<Login />} />
             <Route index element={<Login />} />
