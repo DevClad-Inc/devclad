@@ -109,7 +109,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                   </div>
                 </Transition.Child>
@@ -129,8 +129,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         onClick={() => setSidebarOpen(false)}
                         className={({ isActive }) => classNames(
                           isActive
-                            ? 'bg-indigo-800 text-white'
-                            : 'text-white hover:bg-indigo-600 hover:bg-opacity-75',
+                            ? 'bg-indigo-800'
+                            : 'hover:bg-indigo-600 hover:bg-opacity-75',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                         )}
                       >
@@ -166,7 +166,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         />
                       </div>
                       <div className="ml-3">
-                        <p className="text-base font-medium text-white">{loggedInUser && loggedInUser.first_name}</p>
+                        <p className="text-base font-medium">{loggedInUser && loggedInUser.first_name}</p>
                         <p className="text-sm font-medium text-indigo-200 group-hover:text-white">Settings</p>
                       </div>
                     </div>

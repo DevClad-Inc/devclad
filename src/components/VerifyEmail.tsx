@@ -102,7 +102,7 @@ export default function VerifyEmail({ loggedIn } : { loggedIn : boolean }): JSX.
 
                   <Link to="/" className="items-center">
                     <span
-                      className="mt-5 border border-transparent bg-orange-700 text-white
+                      className="mt-5 border border-transparent bg-orange-700
                 dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
                 inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
                     >

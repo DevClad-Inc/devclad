@@ -172,7 +172,7 @@ export default function PasswordResetForm(): JSX.Element {
               : (
                 <Link className="flex justify-center" to="/">
                   <span
-                    className="mt-5 border border-transparent bg-orange-700 text-white
+                    className="mt-5 border border-transparent bg-orange-700
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
                   >
@@ -289,7 +289,7 @@ export function ForgotPasswordForm(): JSX.Element {
               : (
                 <div className="flex justify-center">
                   <span
-                    className="mt-5 border border-transparent bg-orange-700 text-white
+                    className="mt-5 border border-transparent bg-orange-700
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
                   >

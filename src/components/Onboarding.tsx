@@ -21,7 +21,7 @@ import {
 import classNames from '../utils/ClassNames.utils';
 import useDocumentTitle from '../utils/useDocumentTitle';
 
-const linkClassesString = `bg-orange-700 text-white dark:bg-fuchsia-900/30 border border-transparent
+const linkClassesString = `bg-orange-700 dark:bg-fuchsia-900/30 border border-transparent
 duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-fuchsia-200`;
 
 export function StepOne() {
@@ -32,7 +32,7 @@ export function StepOne() {
       <AvatarUploadForm />
       <div className="p-2 mt-10 flex justify-center">
         <Link
-          className="mt-5 border border-transparent bg-orange-700 text-white
+          className="mt-5 border border-transparent bg-orange-700
         dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-md font-bold dark:text-fuchsia-200
         "

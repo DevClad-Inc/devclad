@@ -41,8 +41,8 @@ module.exports = {
         black: '#000000',
         neon: '#FFF8E7',
         // dark palette
-        darkBG: '#08090C',
-        darkBG2: '#030405',
+        darkBG: '#030405',
+        darkBG2: '#101218',
         raisinBlack: '#191B45',
         raisinBlack2: '#222435',
         oxfordBlue: '#002A52',

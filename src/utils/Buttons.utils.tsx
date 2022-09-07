@@ -7,7 +7,7 @@ interface ButtonProps {
   wFull?: boolean;
 }
 
-const primaryString = `border border-transparent bg-orange-700 text-white
+const primaryString = `border border-transparent bg-orange-700 text-whitewhite
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
 
@@ -56,11 +56,11 @@ export function LoadingButton({ children }: { children?: React.ReactNode }) {
     <button
       type="button"
       className="inline-flex items-center px-4 py-2 leading-6 text-sm shadow rounded-md
-      border border-transparent bg-orange-700 dark:bg-raisinBlack2
+      border border-transparent bg-orange-700 dark:bg-raisinBlack2 text-whitewhite
       justify-center font-black dark:text-fuchsia-300 transition infinite cursor-not-allowed"
       disabled
     >
-      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
         <path
           className="opacity-75"
