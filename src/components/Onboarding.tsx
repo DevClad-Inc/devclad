@@ -113,10 +113,10 @@ export function StepTwo() {
               if (checkEmpty.profile && checkEmpty.socialProfile) {
                 try {
                   setSubmittedStatus();
-                  qc.invalidateQueries(['user-status']);
                   toast.custom(
                     <Success success="Submitted request!" />,
                   );
+                  qc.invalidateQueries(['userStatus']);
                 } catch {
                   toast.custom(
                     <Error error="Something went wrong" />,
