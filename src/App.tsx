@@ -27,7 +27,7 @@ import VerifyEmail from './components/VerifyEmail';
 import { PassReset, ForgotPassword } from './components/PasswordReset';
 import { Onboarding, StepOne, StepTwo } from './components/Onboarding';
 
-function App() {
+function App(): JSX.Element {
   const { darkMode } = useContext(ThemeContext);
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
@@ -61,7 +61,7 @@ function App() {
     // check UserStatus.approved is False
     return (
       <div className={clsx('App', { dark: darkMode })}>
-        <div className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white">
+        <div className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-whitewhite dark:bg-darkBG dark:text-white">
           <Toaster />
           <Routes>
             <Route path="*" element={<FourOFour />} />
@@ -81,7 +81,7 @@ function App() {
     return (
       <div className={clsx('h-screen', { dark: darkMode })}>
         <div
-          className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white"
+          className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-whitewhite dark:bg-darkBG dark:text-white"
         >
           <Toaster
             position="top-right"
@@ -122,6 +122,13 @@ function App() {
       </div>
     );
   }
+  return (
+    <div className={clsx('App', { dark: darkMode })}>
+      <div className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-black dark:bg-dark dark:text-white">
+        <Toaster />
+      </div>
+    </div>
+  );
 }
 
 export default App;
