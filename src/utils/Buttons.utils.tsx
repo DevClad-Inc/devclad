@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 const primaryString = `border border-transparent bg-orange-700 text-white
-        dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
+        dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
 
 // meant for Formik forms

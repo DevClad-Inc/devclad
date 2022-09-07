@@ -129,7 +129,7 @@ export default function UpdateProfileForm(): JSX.Element {
       if (data.timezone) {
         toast.custom(<Error error={data.timezone} />, { id: 'profile-update-error' });
       } else {
-        toast.custom(<Error error={data.message} />, { id: 'profile-update-error-unknown' });
+        toast.custom(<Error error="Languages, Development Type, and What makes you want to use this should be filled." />, { id: 'profile-update-error-unknown' });
       }
       setSubmitting(false);
     }

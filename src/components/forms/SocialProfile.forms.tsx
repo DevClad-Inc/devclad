@@ -72,6 +72,7 @@ export default function SocialProfileForm(): JSX.Element {
         .then(async () => {
           setSubmitting(false);
           qc.invalidateQueries(['social-profile']);
+          qc.invalidateQueries(['userStatus']);
           toast.custom(
             <Success success="Preferences updated successfully" />,
             { id: 'social-update-success' },

@@ -114,7 +114,7 @@ export function StepTwo() {
               linkClassesString,
             )}
             onClick={() => {
-              if (checkEmpty.profile && checkEmpty.socialProfile) {
+              if (checkEmpty.profile && checkEmpty.socialProfile && userStatus.status !== 'Submitted') {
                 try {
                   setSubmittedStatus();
                   toast.custom(
