@@ -28,7 +28,7 @@ module.exports = {
     extend: {
       colors: {
         // light palette
-        white: '#FFFFFF',
+        white: '#ffffe3',
         snow: '#FFFCFA',
         linen: '#FFF1E5',
         almond: '#ffffe3',

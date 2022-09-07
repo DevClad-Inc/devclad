@@ -37,7 +37,7 @@ function Signup() {
             src={DevCladLogo}
             alt="DevClad"
           />
-          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-gray-100">DevClad</h1>
+          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-white">DevClad</h1>
         </div>
         <h2 className="text-center text-2xl mt-5 font-bold text-gray-700 dark:text-gray-300">Request to Join</h2>
         <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">

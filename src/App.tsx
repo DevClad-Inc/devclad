@@ -25,6 +25,7 @@ import Projects from './components/Projects';
 import Hackathons from './components/Hackathons';
 import VerifyEmail from './components/VerifyEmail';
 import { PassReset, ForgotPassword } from './components/PasswordReset';
+import { Onboarding, StepOne, StepTwo } from './components/Onboarding';
 
 function App() {
   const { darkMode } = useContext(ThemeContext);
@@ -50,13 +51,24 @@ function App() {
     }
   }, [loggedInUser]);
   // todo: add splash screen
-  if (userStatus.approved === true) {
+  if (userStatus && userStatus.approved === false) {
     // Signup completion would go here
     // check UserStatus.approved is False
     return (
-      <div className="App">
-        <Toaster />
-        Not approved.
+      <div className={clsx('App', { dark: darkMode })}>
+        <div className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-white dark:bg-darkBG dark:text-white">
+          <Toaster />
+          <Routes>
+            <Route path="*" element={<FourOFour />} />
+            <Route path="/" element={<Onboarding />}>
+              <Route path="/" element={<StepOne />} />
+              <Route path="step-two" element={<StepTwo />} />
+            </Route>
+            <Route path="forgot-password/" element={<ForgotPassword />} />
+            <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
+            <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
+          </Routes>
+        </div>
       </div>
     );
   }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
@@ -117,6 +118,32 @@ export async function updateSocialProfile(
         preferred_dev_type: (preferredDevType === '') ? socialProfileData.preferred_dev_type : preferredDevType,
         idea_status: (ideaStatus === '') ? socialProfileData.idea_status : ideaStatus,
       },
+    });
+  }
+  return null;
+}
+
+export async function checkProfileEmpty() {
+  const url = `${API_URL}/users/is-complete/`;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers,
+    });
+  }
+  return null;
+}
+
+export async function checkSocialProfileEmpty() {
+  const url = `${API_URL}/social/is-complete/`;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers,
     });
   }
   return null;
