@@ -3,13 +3,15 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   XCircleIcon, ChatBubbleBottomCenterIcon, ExclamationTriangleIcon, PlusCircleIcon,
+  VideoCameraIcon,
 } from '@heroicons/react/24/solid';
 import useDocumentTitle from '../utils/useDocumentTitle';
 import classNames from '../utils/ClassNames.utils';
 import { getProfile } from '../services/profile.services';
 import { Profile, initialProfileState } from '../utils/InterfacesStates.utils';
 import {
-  greenString, primaryString, redString, warningString,
+  altString,
+  greenString, redString, warningString,
 } from '../utils/Buttons.utils';
 
 const tabs = [
@@ -18,7 +20,7 @@ const tabs = [
 ];
 
 export default function Social(): JSX.Element {
-  useDocumentTitle('Social');
+  useDocumentTitle('Social Mode');
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());
   if (profileQuery.isSuccess && profileQuery.data !== null) {
@@ -79,29 +81,56 @@ export default function Social(): JSX.Element {
                 Hey, I&apos;m John Doe. I want a programmer friend to inspect my hole.
               </p>
             </div>
-            <div className="mt-5 justify-evenly flex">
+            <div className="justify-evenly mt-5 flex">
               <button
                 type="button"
-                className={redString}
+                className={altString}
               >
-                <XCircleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                <span className="text-xs">Never show again</span>
+                <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+                Chat with John
               </button>
               <button
                 type="button"
-                className={greenString}
+                className={altString}
               >
-                <PlusCircleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                <span>Add to circle</span>
-              </button>
-              <button
-                type="button"
-                className={warningString}
-              >
-                <ExclamationTriangleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                <span className="text-xs">Pass for 4 weeks.</span>
+                <VideoCameraIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+                Schedule Meeting
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+          <div className="w-full border-t border-gray-900" />
+        </div>
+        <div className="relative justify-evenly md:flex hidden sm:hidden md:visible">
+          <div className="flex -mt-5 justify-center">
+            <button
+              type="button"
+              className={warningString}
+            >
+              <ExclamationTriangleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+              <span className="text-xs">Pass For 4 Weeks</span>
+            </button>
+          </div>
+          <div className="flex -mt-5 justify-center">
+            <button
+              type="button"
+              className={greenString}
+            >
+              <PlusCircleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+              <span>Add To Circle</span>
+            </button>
+          </div>
+          <div className="flex -mt-5 justify-center">
+            <button
+              type="button"
+              className={redString}
+            >
+              <XCircleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+              <span className="text-xs">Never Show Again</span>
+            </button>
           </div>
         </div>
       </div>
@@ -121,7 +150,7 @@ export default function Social(): JSX.Element {
             <div className="mt-5">
               <button
                 type="button"
-                className={primaryString}
+                className={altString}
               >
                 <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
                 Chat with John
@@ -143,15 +172,6 @@ export default function Social(): JSX.Element {
                 Since you suck at making conversation and don&apos; get bitches,
                 here are some prompts to spark a conversation.
               </p>
-            </div>
-            <div className="mt-5">
-              <button
-                type="button"
-                className={primaryString}
-              >
-                <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                Chat with John
-              </button>
             </div>
           </div>
         </div>

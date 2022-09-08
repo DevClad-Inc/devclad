@@ -11,6 +11,10 @@ export const primaryString = `border border-transparent bg-orange-700 text-white
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
 
+export const altString = `border border-transparent bg-orange-700/30 text-orange-900
+dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
+inline-flex justify-center text-sm font-bold dark:text-fuchsia-300`;
+
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-medium
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
