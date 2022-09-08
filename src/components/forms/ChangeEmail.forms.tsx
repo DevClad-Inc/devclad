@@ -83,8 +83,6 @@ export default function ChangeEmailForm(): JSX.Element {
       {({ isSubmitting }) => (
         <>
           <div className="w-fit">
-            <Warning warning="Make sure your email is verified. You will not be able to login with an unverified email." />
-
             {
             verified === true
               ? (
@@ -100,16 +98,19 @@ export default function ChangeEmailForm(): JSX.Element {
                 </span>
               )
               : (
-                <span className="text-sm inline-flex dark:bg-bloodRed/60 dark:text-mistyRose p-2 rounded-md">
-                  {' '}
-                  <ShieldExclamationIcon className="h-6 w-5 mr-2 dark:text-mistyRose text-bloodRed" />
-                  {' '}
-                  {loggedInUser.email}
-                  {' '}
-                  is
-                  {' '}
-                  not verified.
-                </span>
+                <>
+                  <Warning warning="Please verify your email. You will not be able to login with an unverified email." />
+                  <span className="text-sm inline-flex dark:bg-bloodRed/60 dark:text-mistyRose p-2 rounded-md">
+                    {' '}
+                    <ShieldExclamationIcon className="h-6 w-5 mr-2 dark:text-mistyRose text-bloodRed" />
+                    {' '}
+                    {loggedInUser.email}
+                    {' '}
+                    is
+                    {' '}
+                    not verified.
+                  </span>
+                </>
               )
             }
           </div>
@@ -119,7 +120,7 @@ export default function ChangeEmailForm(): JSX.Element {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="cactus@jack.com"
+                placeholder={loggedInUser.email ? loggedInUser.email : 'cactus@jack.com'}
                 autoComplete="email"
                 required
                 className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300

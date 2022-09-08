@@ -43,7 +43,7 @@ export function Settings() {
   return (
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
       <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
-        <nav className="space-y-1 dark:bg-darkBG2 rounded-xl p-4">
+        <nav className="space-y-1 dark:bg-darkBG2 bg-snow rounded-xl p-4">
           {navigation.map((item) => (
             <NavLink
               key={item.name}
@@ -86,19 +86,19 @@ export function AccountProfile() {
           </div>
           <UpdateUserForm />
         </div>
-        <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
         <div className="py-6 px-4 space-y-6 sm:p-6 dark:bg-darkBG2 rounded-xl">
           <div>
             <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">Profile</h2>
           </div>
           <UpdateProfileForm />
         </div>
-        <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
         <div className="py-6 px-4 space-y-6 sm:p-6 dark:bg-darkBG2 rounded-xl">
           <AvatarUploadForm />
         </div>
       </div>
-      <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+      <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
     </div>
   );
 }
@@ -117,7 +117,7 @@ export function SocialProfile() {
           </div>
           <SocialProfileForm />
         </div>
-        <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
       </div>
     </div>
   );
@@ -137,7 +137,7 @@ export function Password() {
           </div>
           <ChangeEmailForm />
         </div>
-        <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
         <div className="py-6 px-4 space-y-6 sm:p-6 dark:bg-darkBG2 rounded-xl">
           <div className="inline-flex">
             <KeyIcon className="mr-2 w-6 h-6" />
@@ -147,7 +147,7 @@ export function Password() {
           </div>
           <PasswordResetForm />
         </div>
-        <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+        <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
       </div>
     </div>
   );

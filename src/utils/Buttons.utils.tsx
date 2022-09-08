@@ -7,9 +7,28 @@ interface ButtonProps {
   wFull?: boolean;
 }
 
-const primaryString = `border border-transparent bg-orange-700 text-whitewhite
+export const primaryString = `border border-transparent bg-orange-700 text-whitewhite
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
+
+export const warningString = `mt-5 inline-flex items-center px-4 py-2
+border border-transparent text-sm font-medium
+rounded-md shadow-sm text-bistreBrown bg-gyCrayola
+dark:text-saffron dark:bg-blackChocolate`;
+
+export const primaryString2 = `border border-transparent bg-orange-700 text-whitewhite
+        dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+        inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
+
+export const redString = `mt-5 inline-flex items-center px-4 py-2
+border border-transparent text-sm font-medium
+rounded-md shadow-sm text-bloodRed bg-mistyRose
+dark:text-mistyRose dark:bg-bloodRed/60`;
+
+export const greenString = `mt-5 inline-flex items-center px-4 py-2
+border border-transparent text-sm font-medium
+rounded-md shadow-sm text-phthaloGreen bg-honeyDew
+dark:bg-phthaloGreen dark:text-honeyDew`;
 
 // meant for Formik forms
 export function PrimaryButton({
@@ -22,7 +41,7 @@ export function PrimaryButton({
       disabled={isSubmitting}
       className={classNames(
         wFull ? 'w-full' : 'w-auto',
-        primaryString,
+        primaryString2,
       )}
     >
       {children}

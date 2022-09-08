@@ -276,7 +276,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
                 {pageTitle}
               </h1>
-              <hr className="my-6 border-t border-gray-200 dark:border-gray-800" />
+              <hr className="my-6 border-1 border-gray-200 dark:border-gray-800" />
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               <div className="py-4">

@@ -1,4 +1,4 @@
-import { InboxArrowDownIcon, ExclamationCircleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
+import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
@@ -137,7 +137,7 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
@@ -169,7 +169,7 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
@@ -201,7 +201,7 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
@@ -234,7 +234,7 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                    <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -271,7 +271,7 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                    <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUser, logOut } from '../services/auth.services';
+import { redString } from '../utils/Buttons.utils';
 import { User, initialUserState } from '../utils/InterfacesStates.utils';
 import useDocumentTitle from '../utils/useDocumentTitle';
 
@@ -34,7 +35,7 @@ function Home(): JSX.Element {
           <button
             onClick={handlelogOut}
             type="button"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-bloodRed bg-mistyRose dark:text-mistyRose dark:bg-bloodRed/60"
+            className={redString}
           >
             <ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             Sign Out

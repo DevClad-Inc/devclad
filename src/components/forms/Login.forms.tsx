@@ -4,7 +4,7 @@ import {
 } from 'formik';
 import { useQueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import {
   getUser, logIn,
@@ -94,7 +94,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                 />
                 {loginError && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                    <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -126,7 +126,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                 />
                 {loginError && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
                 </div>
                 )}
               </div>
