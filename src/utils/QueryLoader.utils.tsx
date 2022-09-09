@@ -8,17 +8,14 @@ export default function QueryLoader() {
   const isFetching = useIsFetching();
   const { slowMode, toggle } = useSlowContext();
   const [time, setTime] = React.useState(0);
-  const [active, setActive] = React.useState(false);
   React.useEffect(() => {
     let interval:ReturnType<typeof setTimeout> = (null as unknown) as ReturnType<typeof setTimeout>;
     if (isFetching) {
-      setActive(true);
       setTime((t) => t + 1);
       interval = setInterval(() => {
         setTime((t) => t + 1);
       }, 1000);
     } else {
-      setActive(false);
       setTime(0);
       clearInterval(interval);
     }
@@ -26,10 +23,10 @@ export default function QueryLoader() {
       clearInterval(interval);
     };
   }, [isFetching]);
-  if ((time > 4 && active)) {
+  if ((time > 5 && isFetching)) {
     toggle(true);
   }
-  if ((slowMode && active)) {
+  if ((slowMode && isFetching)) {
     // works considering users are not constantly switching
     // back and forth between slow and fast connections
     // jic: I've added sessionstorage to persist the slowMode state if we want to later
@@ -37,7 +34,6 @@ export default function QueryLoader() {
       <LoadingButton />,
       {
         id: 'slow-connection',
-
       },
     );
   }

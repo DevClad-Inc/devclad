@@ -78,9 +78,7 @@ export function LoadingButton({ children }: { children?: React.ReactNode }) {
   return (
     <button
       type="button"
-      className="inline-flex items-center px-4 py-2 leading-6 text-sm shadow rounded-md
-      border border-transparent bg-orange-700 dark:bg-raisinBlack2 text-whitewhite
-      justify-center font-black dark:text-fuchsia-300 transition infinite cursor-not-allowed"
+      className={altString}
       disabled
     >
       <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

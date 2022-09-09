@@ -100,9 +100,9 @@ export default function Social(): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="relative">
+      <div className="relative p-8">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
-          <div className="w-full border-t border-gray-900" />
+          <div className="w-full border-t border-gray-100 dark:border-gray-900" />
         </div>
         <div className="relative justify-evenly md:flex hidden sm:hidden md:visible">
           <div className="flex -mt-5 justify-center">

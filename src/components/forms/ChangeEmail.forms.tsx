@@ -11,7 +11,7 @@ import {
   changeEmail, checkVerified, getUser, resendEmail,
 } from '../../services/auth.services';
 import { Error, Success, Warning } from '../../utils/Feedback.utils';
-import { PrimaryButton } from '../../utils/Buttons.utils';
+import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
 import { User, initialUserState } from '../../utils/InterfacesStates.utils';
 
 export interface InterfaceEmail {
@@ -68,7 +68,11 @@ export default function ChangeEmailForm(): JSX.Element {
     setSubmitting(false);
   };
   if (userQuery.isLoading || verifiedQuery.isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <LoadingButton />
+      </div>
+    );
   }
   return (
     <Formik

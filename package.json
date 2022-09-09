@@ -1,5 +1,6 @@
 {
   "name": "devclad-client",
+  "homepage": "https://app.devclad.com",
   "private": true,
   "version": "0.0.0",
   "type": "module",
