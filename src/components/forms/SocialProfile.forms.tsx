@@ -25,7 +25,6 @@ interface SocialProfileFormValues extends SocialProfileUpdate {
     location?: string;
     videoCallFriendly?: boolean;
     timezone?: string;
-    preferredTimezoneDeviation?: string;
     devType?: string;
     preferredDevType?: string;
     ideaStatus?: string;
@@ -48,14 +47,14 @@ const purposes = Purposes.map((purpose) => ({ purpose })) as { purpose: {
   id: number;
 } }[];
 
-const tzDeviation = [
-  { name: '+/- 0', id: 0 },
-  { name: '+/- 2', id: 1 },
-  { name: '+/- 4', id: 2 },
-  { name: '+/- 6', id: 3 },
-  { name: '+/- 8', id: 4 },
-  { name: 'Any', id: 5 },
-];
+// const tzDeviation = [
+//   { name: '+/- 0', id: 0 },
+//   { name: '+/- 2', id: 1 },
+//   { name: '+/- 4', id: 2 },
+//   { name: '+/- 6', id: 3 },
+//   { name: '+/- 8', id: 4 },
+//   { name: 'Any', id: 5 },
+// ];
 
 const ideaStatus = [
   { name: 'Open to exploring ideas.', id: 0 },
@@ -81,8 +80,8 @@ export default function SocialProfileForm(): JSX.Element {
     const { data } = socialProfileQuery;
     socialProfileData = data.data;
   }
-  const [selectedTzDeviation,
-    setselectedTzDeviation] = useState<{ name:string, id:number }>();
+  // const [selectedTzDeviation,
+  //   setselectedTzDeviation] = useState<{ name:string, id:number }>();
   const [selectedIdeaStatus, setselectedIdeaStatus] = useState<{ name:string, id:number }>();
   const [selectedDevType,
     setselectedDevType] = useState<Array<{
@@ -117,7 +116,6 @@ export default function SocialProfileForm(): JSX.Element {
     try {
       values.preferredDevType = selectedPrefDevType?.name;
       values.ideaStatus = selectedIdeaStatus?.name;
-      values.preferredTimezoneDeviation = selectedTzDeviation?.name;
       values.location = selectedCountry?.name;
       values.devType = selectedDevType.map((type: { name:string, id:number }) => type.name).sort().join(', ');
       values.languages = selectedLanguages.map((language: { name:string, id:number }) => language.name).sort().join(', ');
@@ -126,8 +124,7 @@ export default function SocialProfileForm(): JSX.Element {
       await updateSocialProfile(values, socialProfileData)
         .then(async () => {
           setSubmitting(false);
-          qc.invalidateQueries(['social-profile']);
-          qc.invalidateQueries(['userStatus']);
+          qc.invalidateQueries();
           toast.custom(
             <Success success="Preferences updated successfully" />,
             { id: 'social-update-success' },
@@ -158,7 +155,6 @@ export default function SocialProfileForm(): JSX.Element {
       initialValues={{
         videoCallFriendly: socialProfileData.video_call_friendly,
         timezone: detected,
-        preferredTimezoneDeviation: socialProfileData.preferred_timezone_deviation,
         preferredDevType: socialProfileData.preferred_dev_type,
         ideaStatus: socialProfileData.idea_status,
         rawXP: socialProfileData.raw_xp,
@@ -620,102 +616,6 @@ export default function SocialProfileForm(): JSX.Element {
             </div>
             <div className="col-span-6 sm:col-span-3">
               <Listbox
-                value={selectedTzDeviation}
-                onChange={(e: { name:string, id: number }) => {
-                  setselectedTzDeviation(e);
-                }}
-              >
-                {({ open }) => (
-                  <>
-                    <Listbox.Label
-                      id="preferredTimezoneDeviation"
-                      className="block text-md font-medium
-                    text-gray-700 dark:text-gray-300"
-                    >
-                      TimeZone Deviation (Hours)
-
-                    </Listbox.Label>
-                    <div className="relative mt-1">
-                      <Listbox.Button className="relative w-full cursor-default rounded-md
-                      dark:bg-raisinBlack2 py-2 pl-3 pr-10 text-left border border-gray-300
-                      dark:border-gray-700 px-3 focus:outline-none shadow-sm sm:text-sm"
-                      >
-                        <span className="block truncate">
-                          {
-                        selectedTzDeviation ? (selectedTzDeviation.name) : 'Select'
-                        }
-
-                        </span>
-                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                          <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                        </span>
-                      </Listbox.Button>
-
-                      <Transition
-                        show={open}
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                      >
-                        <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-raisinBlack2 py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
-                        >
-                          {tzDeviation.map((deviation) => (
-                            <Listbox.Option
-                              key={deviation.id}
-                              className={({ active }) => classNames(
-                                active
-                                  ? 'text-black bg-orange-300 dark:bg-fuchsia-300'
-                                  : 'text-gray-900 dark:text-gray-100 bg-snow dark:bg-raisinBlack2',
-                                'relative cursor-default select-none py-2 pl-3 pr-9',
-                              )}
-                              value={deviation}
-                            >
-                              {({ active, selected }) => (
-                                <>
-                                  <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                    {deviation.name}
-                                  </span>
-
-                                  {selected ? (
-                                    <span
-                                      className={classNames(
-                                        active ? 'text-linen dark:text-raisinBlack2' : 'text-gray-900 dark:text-gray-100',
-                                        'absolute inset-y-0 right-0 flex items-center pr-4',
-                                      )}
-                                    >
-                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                    </span>
-                                  ) : null}
-                                </>
-                              )}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
-                    </div>
-                  </>
-                )}
-              </Listbox>
-              {(socialProfileData.preferred_timezone_deviation
-                    && socialProfileData.preferred_timezone_deviation.length > 0) && (
-                    <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
-                      Currently set to
-                      {' '}
-                      &#34;
-                      {socialProfileData.preferred_timezone_deviation}
-                      &#34;.
-                    </p>
-              )}
-              <p className="mt-2 text-sm text-gray-500">
-                Timezone devation between you and your 1-on-1 match.
-              </p>
-            </div>
-            <div className="col-span-6 sm:col-span-3">
-              <Listbox
                 value={selectedPurposes}
                 onChange={
                   (e: Array<{ name:string, id:number }>) => {
@@ -912,7 +812,7 @@ export default function SocialProfileForm(): JSX.Element {
               </p>
               )}
               <p className="mt-2 text-sm text-gray-500">
-                Optional.
+                Optional but results in better algorithm performance.
               </p>
 
             </div>

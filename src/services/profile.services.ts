@@ -98,7 +98,7 @@ export async function updateSocialProfile(
 ) {
   const {
     videoCallFriendly, preferredDevType,
-    preferredTimezoneDeviation, ideaStatus,
+    ideaStatus,
     devType, rawXP, languages, purpose, location, timezone,
   } = values;
   const token = Cookies.get('token');
@@ -115,7 +115,6 @@ export async function updateSocialProfile(
         purpose: (purpose === '') ? socialProfileData.purpose : purpose,
         video_call_friendly: videoCallFriendly,
         timezone,
-        preferred_timezone_deviation: (preferredTimezoneDeviation === '') ? socialProfileData.preferred_timezone_deviation : preferredTimezoneDeviation,
         dev_type: (devType === '') ? socialProfileData.dev_type : devType,
         preferred_dev_type: (preferredDevType === '') ? socialProfileData.preferred_dev_type : preferredDevType,
         idea_status: (ideaStatus === '') ? socialProfileData.idea_status : ideaStatus,

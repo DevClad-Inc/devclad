@@ -49,7 +49,6 @@ export interface SocialProfile {
   location?: string;
   video_call_friendly?: boolean;
   timezone?: string;
-  preferred_timezone_deviation?: string;
   dev_type?: string;
   preferred_dev_type?: string;
   idea_status?: string;
@@ -58,7 +57,6 @@ export interface SocialProfile {
 export interface SocialProfileUpdate extends SocialProfile {
   videoCallFriendly?: boolean;
   rawXP?: number;
-  preferredTimezoneDeviation?: string;
   devType?: string;
   preferredDevType?: string;
   ideaStatus?: string;
@@ -71,7 +69,6 @@ export const initialSocialProfileState: SocialProfile = {
   location: undefined,
   video_call_friendly: undefined,
   timezone: undefined,
-  preferred_timezone_deviation: undefined,
   dev_type: undefined,
   preferred_dev_type: undefined,
   idea_status: undefined,
