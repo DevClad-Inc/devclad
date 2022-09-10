@@ -31,7 +31,7 @@ export default function Social(): JSX.Element {
   return (
     <>
       <div className="justify-center flex">
-        <div className="p-4 dark:bg-darkBG2 bg-orange-50 rounded-xl">
+        <div className="p-3 text-sm dark:bg-darkBG2 bg-orange-50 rounded-xl">
           <nav className="flex space-x-4" aria-label="Tabs">
             {tabs.map((tab) => (
               <NavLink
@@ -41,7 +41,7 @@ export default function Social(): JSX.Element {
                   (tab.href === pathname) || (`${tab.href}/` === pathname)
                     ? 'dark:bg-fuchsia-900/30 dark:text-fuchsia-300 bg-orange-700/30 text-orange-900'
                     : 'dark:text-gray-400 dark:hover:text-gray-100 text-gray-600 hover:text-gray-900',
-                  'px-3 py-2 font-medium text-md rounded-md',
+                  'px-3 py-2 font-medium rounded-md',
                 )}
                 aria-current={tab.href ? 'page' : undefined}
               >

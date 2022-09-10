@@ -24,58 +24,55 @@ export const initialUserState: User = {
 
 export interface Profile {
   uid?: string;
-  timezone?: string;
   avatar?: string;
   pronouns?: string;
   about?: string;
   website?: string;
   linkedin?: string;
-  languages?: string;
-  dev_type?: string;
-  raw_xp?: number;
-  purpose?: string;
-  location?: string;
-}
-
-export interface ProfileUpdate extends Profile {
-  devType?: string;
-  rawXP?: number;
+  calendly?: string;
 }
 
 export const initialProfileState : Profile = {
   uid: undefined,
-  timezone: undefined,
   avatar: undefined,
   pronouns: undefined,
   about: undefined,
   website: undefined,
   linkedin: undefined,
-  languages: undefined,
-  dev_type: undefined,
-  raw_xp: undefined,
-  purpose: undefined,
-  location: undefined,
+  calendly: undefined,
 };
 
 export interface SocialProfile {
-  calendly?: string;
+  languages?: string;
+  raw_xp?: number;
+  purpose?: string;
+  location?: string;
   video_call_friendly?: boolean;
+  timezone?: string;
   preferred_timezone_deviation?: string;
+  dev_type?: string;
   preferred_dev_type?: string;
   idea_status?: string;
 }
 
 export interface SocialProfileUpdate extends SocialProfile {
   videoCallFriendly?: boolean;
+  rawXP?: number;
   preferredTimezoneDeviation?: string;
+  devType?: string;
   preferredDevType?: string;
   ideaStatus?: string;
 }
 
 export const initialSocialProfileState: SocialProfile = {
-  calendly: undefined,
+  languages: undefined,
+  raw_xp: undefined,
+  purpose: undefined,
+  location: undefined,
   video_call_friendly: undefined,
+  timezone: undefined,
   preferred_timezone_deviation: undefined,
+  dev_type: undefined,
   preferred_dev_type: undefined,
   idea_status: undefined,
 };

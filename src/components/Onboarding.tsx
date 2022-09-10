@@ -27,7 +27,7 @@ duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold d
 export function StepOne() {
   const qc = useQueryClient();
   return (
-    <div>
+    <div className="max-w-prose">
       <UpdateProfileForm />
       <AvatarUploadForm />
       <div className="p-2 mt-10 flex justify-center">
@@ -88,7 +88,7 @@ export function StepTwo() {
   }
 
   return (
-    <div>
+    <div className="max-w-5xl">
       <SocialProfileForm />
       <div className="p-2 mt-10 justify-between flex">
         <div className="inline-flex justify-start">

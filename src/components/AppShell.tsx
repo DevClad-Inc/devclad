@@ -36,7 +36,7 @@ const navigation = [
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
   const contextUser = useUserContext();
-  // why not context for displaying purposes?
+  // why not context for the user?
   // context doesn't sync changes across different browser tabs
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
@@ -53,10 +53,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpand, setSidebarExpand] = useState(true);
 
-  // check if current path is 404
-
-  // find what component is being rendered
-
+  // why context here?
+  // because it still tells us if the user is not undefined when we lose tab focus
   if (Object.values(contextUser).every((value) => value === undefined)) {
     return (
       null
@@ -129,8 +127,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         onClick={() => setSidebarOpen(false)}
                         className={({ isActive }) => classNames(
                           isActive
-                            ? 'bg-indigo-800'
-                            : 'hover:bg-indigo-600 hover:bg-opacity-75',
+                            ? 'bg-fuchsia-800'
+                            : 'hover:bg-fuchsia-600 hover:bg-opacity-75',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                         )}
                       >
@@ -280,10 +278,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               <div className="py-4">
-                {/* <div className="border-2 border-dashed border-gray-200 rounded-lg h-96"> */}
                 <QueryLoader />
                 {children}
-                {/* </div> */}
               </div>
             </div>
           </div>

@@ -18,7 +18,7 @@ const navigation = [
     name: 'Account/Profile', href: '/settings', icon: UserCircleIcon,
   },
   {
-    name: 'Social Preferences', href: '/settings/social', icon: UsersIcon,
+    name: 'Social/Preferences', href: '/settings/social', icon: UsersIcon,
   },
   {
     name: 'Email/Password', href: '/settings/password', icon: KeyIcon,

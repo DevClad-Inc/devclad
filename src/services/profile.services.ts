@@ -3,7 +3,7 @@ import axios from 'axios';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import {
-  ProfileUpdate, Profile, SocialProfileUpdate, SocialProfile,
+  Profile, SocialProfileUpdate, SocialProfile,
 } from '../utils/InterfacesStates.utils';
 import { refreshToken } from './auth.services';
 
@@ -34,11 +34,10 @@ export async function getProfile() {
   return null;
 }
 
-export async function updateProfile(values: ProfileUpdate, profileData: Profile) {
+export async function updateProfile(values: Profile, profileData: Profile) {
   const {
-    timezone, pronouns, location,
-    about, website, linkedin, devType, languages,
-    rawXP, purpose,
+    pronouns,
+    about, website, linkedin, calendly,
   } = values;
   const token = Cookies.get('token');
   if (token && profileData) {
@@ -49,16 +48,11 @@ export async function updateProfile(values: ProfileUpdate, profileData: Profile)
         Authorization: `Bearer ${token}`,
       },
       data: {
-        timezone,
-        dev_type: (devType === '') ? profileData.dev_type : devType,
-        languages: (languages === '') ? profileData.languages : languages,
-        location: (location === '') ? profileData.location : location,
-        purpose: (purpose === '') ? profileData.purpose : purpose,
         pronouns,
         about,
         website,
         linkedin,
-        raw_xp: rawXP,
+        calendly,
       },
     });
   }
@@ -103,8 +97,9 @@ export async function updateSocialProfile(
   socialProfileData: SocialProfile,
 ) {
   const {
-    calendly, videoCallFriendly, preferredDevType,
+    videoCallFriendly, preferredDevType,
     preferredTimezoneDeviation, ideaStatus,
+    devType, rawXP, languages, purpose, location, timezone,
   } = values;
   const token = Cookies.get('token');
   if (token && socialProfileData) {
@@ -115,11 +110,16 @@ export async function updateSocialProfile(
         Authorization: `Bearer ${token}`,
       },
       data: {
-        calendly: (calendly === '') ? socialProfileData.calendly : calendly,
+        languages: (languages === '') ? socialProfileData.languages : languages,
+        location: (location === '') ? socialProfileData.location : location,
+        purpose: (purpose === '') ? socialProfileData.purpose : purpose,
         video_call_friendly: videoCallFriendly,
+        timezone,
         preferred_timezone_deviation: (preferredTimezoneDeviation === '') ? socialProfileData.preferred_timezone_deviation : preferredTimezoneDeviation,
+        dev_type: (devType === '') ? socialProfileData.dev_type : devType,
         preferred_dev_type: (preferredDevType === '') ? socialProfileData.preferred_dev_type : preferredDevType,
         idea_status: (ideaStatus === '') ? socialProfileData.idea_status : ideaStatus,
+        raw_xp: rawXP,
       },
     });
   }
