@@ -64,6 +64,11 @@ But, for now, we'll use these hooks to build our own solution.
 
 Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint.
 
+## Absolute Imports
+
+*Usage*: Use `@` for absolute imports.
+*Exception*: `./` imports in `main.tsx` and `App.tsx`.
+
 ## TypeScript?
 
 We will migrate our codebase to TypeScript possibly after we've launched and have a stable release.
