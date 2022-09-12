@@ -8,8 +8,8 @@ import { Toaster } from 'react-hot-toast';
 import { ThemeContext } from './context/Theme.context';
 import {
   User, initialUserState, UserStatus, initialUserStatus,
-} from './utils/InterfacesStates.utils';
-import { getStatus, getUser, refreshToken } from './services/auth.services';
+} from './lib/InterfacesStates.lib';
+import { getStatus, getUser, refreshToken } from '@/services/auth.services';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';
@@ -40,7 +40,10 @@ function App(): JSX.Element {
   );
   useEffect(() => {
     if (!undefinedUser) {
-      setInterval(refreshToken, (1800 * 1000));
+      setInterval(
+        () => { refreshToken(); },
+        1000 * 60 * 60,
+      );
     }
   }, [loggedInUser]);
   let userStatus: UserStatus = { ...initialUserStatus };

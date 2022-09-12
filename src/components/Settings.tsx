@@ -8,7 +8,7 @@ import {
 import ToggleTheme from './ToggleTheme';
 import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
 import UpdateUserForm from './forms/UpdateUser.forms';
-import useDocumentTitle from '../utils/useDocumentTitle';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import SocialProfileForm from './forms/SocialProfile.forms';
 import PasswordResetForm from './forms/ResetPassword.forms';
 import ChangeEmailForm from './forms/ChangeEmail.forms';

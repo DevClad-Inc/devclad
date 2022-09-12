@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import DevCladLogo from '../assets/devclad.svg';
-import LoginForm from './forms/Login.forms';
-import { Error } from '../utils/Feedback.utils';
-import { PrimaryButton } from '../utils/Buttons.utils';
+import DevCladLogo from '@/assets/devclad.svg';
+import LoginForm from '@/components/forms/Login.forms';
+import { Error } from '@/lib/Feedback.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
 
 function Login() {
   const [loginError, setLoginError] = useState(false);

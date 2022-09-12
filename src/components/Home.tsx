@@ -1,11 +1,11 @@
+import React from 'react';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUser, logOut } from '../services/auth.services';
-import { redString } from '../utils/Buttons.utils';
-import { User, initialUserState } from '../utils/InterfacesStates.utils';
-import useDocumentTitle from '../utils/useDocumentTitle';
+import { getUser, logOut } from '@/services/auth.services';
+import { redString } from '@/lib/Buttons.lib';
+import { User, initialUserState } from '@/lib/InterfacesStates.lib';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 
 function Home(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };

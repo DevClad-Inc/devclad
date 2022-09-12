@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Switch } from '@headlessui/react';
-import { ThemeContext } from '../context/Theme.context';
+import { ThemeContext } from '@/context/Theme.context';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');

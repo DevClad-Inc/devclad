@@ -8,20 +8,12 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import {
   getUser, logIn,
-} from '../../services/auth.services';
+} from '@/services/auth.services';
 import {
   setIndexDBStore,
-} from '../../context/User.context';
-import { PrimaryButton } from '../../utils/Buttons.utils';
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-  errors?: {
-    email?: string;
-    password?: string;
-  }
-}
+} from '@/context/User.context';
+import { PrimaryButton } from '@/lib/Buttons.lib';
+import { LoginFormValues } from '@/lib/InterfacesStates.lib';
 
 interface LoginFormProps {
   loginError: boolean;

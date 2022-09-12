@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Link, NavLink } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -7,16 +7,16 @@ import {
   Bars3Icon,
 } from '@heroicons/react/24/solid';
 
-import DevCladLogo from '../assets/devclad.svg';
-import { useUserContext } from '../context/User.context';
-import classNames from '../utils/ClassNames.utils';
-import { getUser } from '../services/auth.services';
-import { getProfile } from '../services/profile.services';
+import DevCladLogo from '@/assets/devclad.svg';
+import { useUserContext } from '@/context/User.context';
+import classNames from '@/lib/ClassNames.lib';
+import { getUser } from '@/services/auth.services';
+import { getProfile } from '@/services/profile.services';
 import {
   Profile, initialProfileState,
   User, initialUserState,
-} from '../utils/InterfacesStates.utils';
-import QueryLoader from '../utils/QueryLoader.utils';
+} from '@/lib/InterfacesStates.lib';
+import QueryLoader from '@/lib/QueryLoader.lib';
 
 const navigation = [
   {
@@ -50,8 +50,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     const { data } = profileQuery;
     profileData = data.data;
   }
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarExpand, setSidebarExpand] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [sidebarExpand, setSidebarExpand] = React.useState(true);
 
   // why context here?
   // because it still tells us if the user is not undefined when we lose tab focus

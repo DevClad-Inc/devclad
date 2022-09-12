@@ -5,20 +5,11 @@ import { Link, useParams } from 'react-router-dom';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import { forgotPassword, passwordChange, passwordReset } from '../../services/auth.services';
-import { Error, Success, Warning } from '../../utils/Feedback.utils';
-import useDocumentTitle from '../../utils/useDocumentTitle';
-import { PrimaryButton } from '../../utils/Buttons.utils';
-import { InterfaceEmail } from './ChangeEmail.forms';
-
-interface PasswordReset {
-  password1: string;
-  password2: string;
-  errors?: {
-    password1?: string;
-    password2?: string;
-  }
-}
+import { forgotPassword, passwordChange, passwordReset } from '@/services/auth.services';
+import { Error, Success, Warning } from '@/lib/Feedback.lib';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
+import { InterfaceEmail, PasswordReset } from '@/lib/InterfacesStates.lib';
 
 export default function PasswordResetForm(): JSX.Element {
   const [resetDone, setresetDone] = useState(false);

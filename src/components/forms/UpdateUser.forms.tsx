@@ -5,28 +5,11 @@ import {
 } from 'formik';
 import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
-import { setIndexDBStore } from '../../context/User.context';
-import { getUser, updateUser } from '../../services/auth.services';
-import { User, initialUserState } from '../../utils/InterfacesStates.utils';
-import { PrimaryButton } from '../../utils/Buttons.utils';
-import { Success, Error } from '../../utils/Feedback.utils';
-
-interface UpdateUserFormValues {
-  /* why are some of these values optional?
-    when logged out, useUserContext is set to undefined for values of user.
-    Hence, User has optional values.
-    UpdateUserValues accomodates loggedInUser for optional values.
-    Hence, UpdateUserValues has optional values too.
-    */
-  firstName?: string;
-  lastName?: string;
-  username?: string;
-  errors?: {
-    firstName?: string;
-    lastName?: string;
-    username?: string;
-  };
-}
+import { setIndexDBStore } from '@/context/User.context';
+import { getUser, updateUser } from '@/services/auth.services';
+import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
+import { Success, Error } from '@/lib/Feedback.lib';
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {

@@ -6,22 +6,12 @@ import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import { toast } from 'react-hot-toast';
-import { getProfile, updateProfile, updateProfileAvatar } from '../../services/profile.services';
-import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
-import { Profile, initialProfileState } from '../../utils/InterfacesStates.utils';
-import { Error, Success } from '../../utils/Feedback.utils';
-import QueryLoader from '../../utils/QueryLoader.utils';
-import { ThemeContext } from '../../context/Theme.context';
-
-interface UpdateProfileFormValues extends Profile {
-  errors?: {
-    pronouns?: string;
-    about?: string;
-    website?: string;
-    linkedin?: string;
-    calendly?: string;
-  }
-}
+import { getProfile, updateProfile, updateProfileAvatar } from '@/services/profile.services';
+import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
+import { Profile, initialProfileState, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
+import { Error, Success } from '@/lib/Feedback.lib';
+import QueryLoader from '@/lib/QueryLoader.lib';
+import { ThemeContext } from '@/context/Theme.context';
 
 export default function UpdateProfileForm(): JSX.Element {
   let profileData: Profile = { ...initialProfileState };

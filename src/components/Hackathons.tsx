@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getUser } from '../services/auth.services';
-import { User, initialUserState } from '../utils/InterfacesStates.utils';
-import useDocumentTitle from '../utils/useDocumentTitle';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/services/auth.services';
+import { User, initialUserState } from '@/lib/InterfacesStates.lib';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 
 export default function Hackathons() : JSX.Element {
   useDocumentTitle('Hackathons');

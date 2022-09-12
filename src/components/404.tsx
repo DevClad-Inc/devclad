@@ -1,5 +1,5 @@
 import React from 'react';
-import useDocumentTitle from '../utils/useDocumentTitle';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 
 export default function FourOFour() : JSX.Element {
   useDocumentTitle('Oops! 404');

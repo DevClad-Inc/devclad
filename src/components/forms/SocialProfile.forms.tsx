@@ -7,29 +7,15 @@ import { toast } from 'react-hot-toast';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
-import { initialSocialProfileState, SocialProfile, SocialProfileUpdate } from '../../utils/InterfacesStates.utils';
-import { getSocialProfile, updateSocialProfile } from '../../services/profile.services';
-import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
-import { Success, Error } from '../../utils/Feedback.utils';
-import Countries from '../../utils/list/Countries.list.json';
-import Languages from '../../utils/list/Languages.list.json';
-import Purposes from '../../utils/list/Purpose.list.json';
+import { initialSocialProfileState, SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
+import { getSocialProfile, updateSocialProfile } from '@/services/profile.services';
+import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
+import { Success, Error } from '@/lib/Feedback.lib';
+import Countries from '@/lib/list/Countries.list.json';
+import Languages from '@/lib/list/Languages.list.json';
+import Purposes from '@/lib/list/Purpose.list.json';
 
-import classNames from '../../utils/ClassNames.utils';
-
-interface SocialProfileFormValues extends SocialProfileUpdate {
-  errors?: {
-    languages?: string;
-    rawXP?: string;
-    purpose?: string;
-    location?: string;
-    videoCallFriendly?: boolean;
-    timezone?: string;
-    devType?: string;
-    preferredDevType?: string;
-    ideaStatus?: string;
-  }
-}
+import classNames from '@/lib/ClassNames.lib';
 
 export const devType = [
   { name: 'AI', id: 0 },

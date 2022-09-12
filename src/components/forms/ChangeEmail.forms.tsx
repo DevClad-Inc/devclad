@@ -9,17 +9,10 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   changeEmail, checkVerified, getUser, resendEmail,
-} from '../../services/auth.services';
-import { Error, Success, Warning } from '../../utils/Feedback.utils';
-import { LoadingButton, PrimaryButton } from '../../utils/Buttons.utils';
-import { User, initialUserState } from '../../utils/InterfacesStates.utils';
-
-export interface InterfaceEmail {
-  email: string;
-  errors?: {
-    email?: string;
-  }
-}
+} from '@/services/auth.services';
+import { Error, Success, Warning } from '@/lib/Feedback.lib';
+import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
+import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
 
 export default function ChangeEmailForm(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };

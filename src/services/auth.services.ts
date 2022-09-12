@@ -2,7 +2,7 @@ import axios from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
-import { NewUser } from '../utils/InterfacesStates.utils';
+import { NewUser } from '@/lib/InterfacesStates.lib';
 
 /*
 Bug in Axios: method signature does not work with PATCH/PUT. Returning an axios call.

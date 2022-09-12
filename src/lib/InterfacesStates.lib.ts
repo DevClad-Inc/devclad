@@ -83,3 +83,75 @@ export const initialUserStatus: UserStatus = {
   status: undefined,
   approved: undefined,
 };
+
+// FORMS
+
+export interface SignupFormValues extends NewUser {
+  errors?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    password1?: string;
+    password2?: string;
+  }
+}
+
+export interface InterfaceEmail {
+  email: string;
+  errors?: {
+    email?: string;
+  }
+}
+
+export interface LoginFormValues {
+  email: string;
+  password: string;
+  errors?: {
+    email?: string;
+    password?: string;
+  }
+}
+
+export interface UpdateUserFormValues {
+  firstName?: string;
+  lastName?: string;
+  username?: string;
+  errors?: {
+    firstName?: string;
+    lastName?: string;
+    username?: string;
+  };
+}
+
+export interface UpdateProfileFormValues extends Profile {
+  errors?: {
+    pronouns?: string;
+    about?: string;
+    website?: string;
+    linkedin?: string;
+    calendly?: string;
+  }
+}
+
+export interface SocialProfileFormValues extends SocialProfileUpdate {
+  errors?: {
+    languages?: string;
+    rawXP?: string;
+    purpose?: string;
+    location?: string;
+    videoCallFriendly?: boolean;
+    timezone?: string;
+    devType?: string;
+    preferredDevType?: string;
+    ideaStatus?: string;
+  }
+}
+
+export interface PasswordReset {
+  password1: string;
+  password2: string;
+  errors?: {
+    password1?: string;
+    password2?: string;
+  }
+}

@@ -4,8 +4,8 @@ import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import {
   Profile, SocialProfileUpdate, SocialProfile,
-} from '../utils/InterfacesStates.utils';
-import { refreshToken } from './auth.services';
+} from '@/lib/InterfacesStates.lib';
+import { refreshToken } from '@/services/auth.services';
 
 const API_URL = import.meta.env.VITE_API_URL;
 

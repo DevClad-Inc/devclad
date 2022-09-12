@@ -3,19 +3,9 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import React, { useState } from 'react';
-import { resendEmail, SignUp } from '../../services/auth.services';
-import { PrimaryButton } from '../../utils/Buttons.utils';
-import { NewUser } from '../../utils/InterfacesStates.utils';
-
-interface SignupFormValues extends NewUser {
-  errors?: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    password1?: string;
-    password2?: string;
-  }
-}
+import { resendEmail, SignUp } from '@/services/auth.services';
+import { PrimaryButton } from '@/lib/Buttons.lib';
+import { SignupFormValues } from '@/lib/InterfacesStates.lib';
 
 interface SignupFormProps {
   signupErrorState: string;

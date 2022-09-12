@@ -5,14 +5,14 @@ import {
   XCircleIcon, ChatBubbleBottomCenterIcon, ExclamationTriangleIcon, PlusCircleIcon,
   VideoCameraIcon,
 } from '@heroicons/react/24/solid';
-import useDocumentTitle from '../utils/useDocumentTitle';
-import classNames from '../utils/ClassNames.utils';
-import { getProfile } from '../services/profile.services';
-import { Profile, initialProfileState } from '../utils/InterfacesStates.utils';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import classNames from '@/lib/ClassNames.lib';
+import { getProfile } from '@/services/profile.services';
+import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import {
   altString,
   greenString, redString, warningString,
-} from '../utils/Buttons.utils';
+} from '@/lib/Buttons.lib';
 
 const tabs = [
   { name: '1-on-1', href: '/social' },

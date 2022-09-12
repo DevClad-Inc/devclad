@@ -2,10 +2,10 @@ import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
-import DevCladLogo from '../assets/devclad.svg';
-import { verifyEmail } from '../services/auth.services';
-import { Error, Success } from '../utils/Feedback.utils';
-import useDocumentTitle from '../utils/useDocumentTitle';
+import DevCladLogo from '@/assets/devclad.svg';
+import { verifyEmail } from '@/services/auth.services';
+import { Error, Success } from '@/lib/Feedback.lib';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 
 export default function VerifyEmail({ loggedIn } : { loggedIn : boolean }): JSX.Element {
   useDocumentTitle('Verify Email');

@@ -3,23 +3,23 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
-import UpdateProfileForm, { AvatarUploadForm } from './forms/Profile.forms';
-import DevCladLogo from '../assets/devclad.svg';
+import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
+import DevCladLogo from '@/assets/devclad.svg';
 import {
   Error, Info, Success, Warning,
-} from '../utils/Feedback.utils';
-import SocialProfileForm from './forms/SocialProfile.forms';
+} from '@/lib/Feedback.lib';
+import SocialProfileForm from '@/components/forms/SocialProfile.forms';
 import {
   getStatus, getUser, logOut, setSubmittedStatus,
-} from '../services/auth.services';
+} from '@/services/auth.services';
 import {
   UserStatus, initialUserStatus, initialUserState, User,
-} from '../utils/InterfacesStates.utils';
+} from '@/lib/InterfacesStates.lib';
 import {
   checkProfileEmpty, checkSocialProfileEmpty, getSocialProfile,
-} from '../services/profile.services';
-import classNames from '../utils/ClassNames.utils';
-import useDocumentTitle from '../utils/useDocumentTitle';
+} from '@/services/profile.services';
+import classNames from '@/lib/ClassNames.lib';
+import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 
 const linkClassesString = `bg-orange-700 dark:bg-fuchsia-900/30 border border-transparent
 duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-fuchsia-200`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DevCladLogo from '../assets/devclad.svg';
-import PasswordResetForm, { ForgotPasswordForm } from './forms/ResetPassword.forms';
+import DevCladLogo from '@/assets/devclad.svg';
+import PasswordResetForm, { ForgotPasswordForm } from '@/components/forms/ResetPassword.forms';
 
 export function PassReset() {
   return (
