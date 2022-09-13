@@ -9,7 +9,8 @@ import { ThemeContext } from './context/Theme.context';
 import {
   User, initialUserState, UserStatus, initialUserStatus,
 } from './lib/InterfacesStates.lib';
-import { getStatus, getUser, refreshToken } from '@/services/auth.services';
+import { getUser, refreshToken } from '@/services/auth.services';
+import { getStatus } from '@/services/profile.services';
 import './App.css';
 import Login from './components/Login';
 import Home from './components/Home';

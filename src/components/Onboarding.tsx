@@ -10,13 +10,14 @@ import {
 } from '@/lib/Feedback.lib';
 import SocialProfileForm from '@/components/forms/SocialProfile.forms';
 import {
-  getStatus, getUser, logOut, setSubmittedStatus,
+  getUser, logOut,
 } from '@/services/auth.services';
 import {
   UserStatus, initialUserStatus, initialUserState, User,
 } from '@/lib/InterfacesStates.lib';
 import {
-  checkProfileEmpty, checkSocialProfileEmpty, getSocialProfile,
+  checkProfileEmpty, checkSocialProfileEmpty,
+  getSocialProfile, getStatus, setSubmittedStatus,
 } from '@/services/profile.services';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';

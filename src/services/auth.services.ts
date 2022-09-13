@@ -109,41 +109,6 @@ export const resendEmail = async (email: string) => {
   return response.data;
 };
 
-export const getStatus = async () => {
-  const token = Cookies.get('token');
-  const url = `${API_URL}/users/status/`;
-  if (token) {
-    return axios(
-      {
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      },
-    );
-  }
-  return null;
-};
-
-export const setSubmittedStatus = async () => {
-  const token = Cookies.get('token');
-  const url = `${API_URL}/users/status/`;
-  if (token) {
-    return axios(
-      {
-        method: 'PATCH',
-        url,
-        data: { status: 'Submitted' },
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
-  }
-  return null;
-};
-
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
   const token = Cookies.get('token');

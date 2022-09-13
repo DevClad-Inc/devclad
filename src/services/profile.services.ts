@@ -154,3 +154,43 @@ export async function checkSocialProfileEmpty() {
   }
   return null;
 }
+
+/*
+This deals with UserStatus Model.
+getStatus() - This is to check "approved" field.
+setSubmittedStatus() - This is to set the "status" field to "Submitted".
+*/
+export const getStatus = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/users/status/`;
+  if (token) {
+    return axios(
+      {
+        method: 'GET',
+        url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
+};
+
+export const setSubmittedStatus = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/users/status/`;
+  if (token) {
+    return axios(
+      {
+        method: 'PATCH',
+        url,
+        data: { status: 'Submitted' },
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+  }
+  return null;
+};
