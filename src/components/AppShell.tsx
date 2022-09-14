@@ -131,6 +131,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                             : 'hover:bg-fuchsia-600 hover:bg-opacity-75',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                         )}
+                        end
                       >
                         <item.icon
                           className="mr-4 flex-shrink-0 h-6 w-6 text-fuchsia-300"
@@ -210,6 +211,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     sidebarExpand ? 'rounded-md duration-500' : 'rounded-2xl duration-700',
                     'uppercase font-black flex items-center text-sm px-4 py-2',
                   )}
+                  end
                 >
                   <item.icon
                     className={classNames(

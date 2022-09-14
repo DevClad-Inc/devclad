@@ -3,13 +3,13 @@ import {
   Routes, Route,
 } from 'react-router-dom';
 import { clsx } from 'clsx';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { ThemeContext } from './context/Theme.context';
 import {
-  User, initialUserState, UserStatus, initialUserStatus,
+  UserStatus, initialUserStatus,
 } from './lib/InterfacesStates.lib';
-import { getUser, refreshToken } from '@/services/auth.services';
+import { refreshToken } from '@/services/auth.services';
 import { getStatus } from '@/services/profile.services';
 import './App.css';
 import Login from './components/Login';
@@ -27,42 +27,35 @@ import Hackathons from './components/Hackathons';
 import VerifyEmail from './components/VerifyEmail';
 import { PassReset, ForgotPassword } from './components/PasswordReset';
 import { Onboarding, StepOne, StepTwo } from './components/Onboarding';
+import useAuth from '@/services/useAuth.services';
 
 function App(): JSX.Element {
   const { darkMode } = useContext(ThemeContext);
-  let loggedInUser: User = { ...initialUserState };
-  const userQuery = useQuery(['user'], () => getUser());
-  if (userQuery.isSuccess && userQuery.data !== null) {
-    const { data } = userQuery;
-    loggedInUser = data.data;
-  }
-  const undefinedUser = Object.values(loggedInUser).every(
-    (value) => value === undefined,
-  );
+  const { authed, loggedInUser } = useAuth();
+  const qc = useQueryClient();
+  // AUTH CHECK AND REFRESH TOKEN
   useEffect(() => {
-    if (!undefinedUser) {
+    if (authed) {
       setInterval(
         () => { refreshToken(); },
         1000 * 60 * 60,
       );
     }
   }, [loggedInUser]);
+  // USER STATUS
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(
     ['userStatus'],
     () => getStatus(),
     { enabled: loggedInUser.pk !== undefined },
   );
-  if ((statusQuery.isSuccess && statusQuery.data !== null)
-  && Object.values(userStatus).every((value) => value === undefined)) {
+  if ((statusQuery.isSuccess && statusQuery.data !== null)) {
     const { data } = statusQuery;
     userStatus = data.data;
   }
 
   // todo: add splash screen
   if (userStatus && userStatus.approved === false) {
-    // Signup completion would go here
-    // check UserStatus.approved is False
     return (
       <div className={clsx('App', { dark: darkMode })}>
         <div className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-whitewhite dark:bg-darkBG dark:text-white">
@@ -81,7 +74,7 @@ function App(): JSX.Element {
       </div>
     );
   }
-  if (undefinedUser || (userQuery.isFetched && statusQuery.isFetched)) {
+  if ((!authed || (statusQuery.isFetched))) {
     return (
       <div className={clsx('h-screen', { dark: darkMode })}>
         <div
@@ -95,8 +88,7 @@ function App(): JSX.Element {
           }
       }
           />
-          {(undefinedUser && (!userQuery.isLoading || !userQuery.isFetching
-          )) ? (
+          {(!authed && qc.getQueryData(['user']) === null) ? (
             <Routes>
               <Route path="*" element={<Login />} />
               <Route index element={<Login />} />
@@ -105,23 +97,23 @@ function App(): JSX.Element {
               <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
               <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
             </Routes>
-            ) : (
-              <AppShell>
-                <Routes>
-                  <Route path="*" element={<FourOFour />} />
-                  <Route index element={<Home />} />
-                  <Route path="social" element={<Social />} />
-                  <Route path="projects" element={<Projects />} />
-                  <Route path="hackathons" element={<Hackathons />} />
-                  <Route path="settings" element={<Settings />}>
-                    <Route index element={<AccountProfile />} />
-                    <Route path="/settings/social" element={<SocialProfile />} />
-                    <Route path="/settings/password" element={<Password />} />
-                  </Route>
-                  <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
-                </Routes>
-              </AppShell>
-            )}
+          ) : (
+            <AppShell>
+              <Routes>
+                <Route path="*" element={<FourOFour />} />
+                <Route index element={<Home />} />
+                <Route path="social" element={<Social />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="hackathons" element={<Hackathons />} />
+                <Route path="settings" element={<Settings />}>
+                  <Route index element={<AccountProfile />} />
+                  <Route path="/settings/social" element={<SocialProfile />} />
+                  <Route path="/settings/password" element={<Password />} />
+                </Route>
+                <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn />} />
+              </Routes>
+            </AppShell>
+          )}
         </div>
       </div>
     );
