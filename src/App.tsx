@@ -30,9 +30,12 @@ import { Onboarding, StepOne, StepTwo } from './components/Onboarding';
 import useAuth from '@/services/useAuth.services';
 
 function App(): JSX.Element {
+  // todo: add splash screen
+
   const { darkMode } = useContext(ThemeContext);
   const { authed, loggedInUser } = useAuth();
   const qc = useQueryClient();
+
   // AUTH CHECK AND REFRESH TOKEN
   useEffect(() => {
     if (authed) {
@@ -43,6 +46,7 @@ function App(): JSX.Element {
     }
   }, [loggedInUser]);
   // USER STATUS
+
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(
     ['userStatus'],
@@ -54,7 +58,6 @@ function App(): JSX.Element {
     userStatus = data.data;
   }
 
-  // todo: add splash screen
   if (userStatus && userStatus.approved === false) {
     return (
       <div className={clsx('App', { dark: darkMode })}>

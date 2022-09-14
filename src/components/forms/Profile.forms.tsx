@@ -55,7 +55,7 @@ export default function UpdateProfileForm(): JSX.Element {
       await updateProfile(values, profileData)
         .then(async () => {
           setSubmitting(false);
-          qc.invalidateQueries(['profile']);
+          await qc.invalidateQueries(['profile']);
           toast.custom(
             <Success success="Profile updated successfully" />,
             { id: 'profile-update-success' },
@@ -263,8 +263,8 @@ export function AvatarUploadForm() {
           color: darkMode ? '#f0abfc' : '#1f2937',
         },
       });
-      updateProfileAvatar(file).then(() => {
-        qc.invalidateQueries(['profile']);
+      updateProfileAvatar(file).then(async () => {
+        await qc.invalidateQueries(['profile']);
         toast.custom(
           <Success success="Profile avatar updated successfully!" />,
         );
@@ -278,8 +278,8 @@ export function AvatarUploadForm() {
   const handleonChange = (e: ChangeEvent<HTMLInputElement>) => {
     const avatar = e.target.files && e.target.files[0];
     if (avatar) {
-      updateProfileAvatar(avatar).then(() => {
-        qc.invalidateQueries(['profile']);
+      updateProfileAvatar(avatar).then(async () => {
+        await qc.invalidateQueries(['profile']);
         toast.custom(
           <Success success="Profile avatar updated successfully!" />,
         );

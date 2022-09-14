@@ -120,12 +120,12 @@ export async function refreshToken() {
       },
       credentials: 'same-origin',
     })
-    .then((resp) => {
+    .then(async (resp) => {
       Cookies.set('token', resp.data.access, {
         sameSite: 'strict',
         secure: true,
       });
-      qc.invalidateQueries();
+      await qc.invalidateQueries();
       // window.location.reload();
     })
     .catch(() => null);

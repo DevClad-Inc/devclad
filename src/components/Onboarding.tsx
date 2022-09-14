@@ -114,14 +114,14 @@ export function StepTwo() {
                 : '',
               linkClassesString,
             )}
-            onClick={() => {
+            onClick={async () => {
               if (checkEmpty.profile && checkEmpty.socialProfile && userStatus.status !== 'Submitted') {
                 try {
                   setSubmittedStatus();
                   toast.custom(
                     <Success success="Submitted request!" />,
                   );
-                  qc.invalidateQueries(['userStatus']);
+                  await qc.invalidateQueries(['userStatus']);
                 } catch {
                   toast.custom(
                     <Error error="Something went wrong" />,

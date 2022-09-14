@@ -45,9 +45,9 @@ export default function ChangeEmailForm(): JSX.Element {
     const {
       email,
     } = values;
-    await changeEmail(email).then(() => {
-      qc.invalidateQueries(['user']);
-      qc.invalidateQueries(['verified']);
+    await changeEmail(email).then(async () => {
+      await qc.invalidateQueries(['user']);
+      await qc.invalidateQueries(['verified']);
       toast.custom(
         <Success success="Verification Email Sent." />,
         { id: 'verification-mail-sent', duration: 3000 },
