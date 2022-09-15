@@ -13,7 +13,7 @@ import {
 import { Error, Success, Warning } from '@/lib/Feedback.lib';
 import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
 import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
-import { userQuery } from '@/services/useAuth.services';
+import { userQuery } from '@/lib/queriesAndLoaders';
 
 export default function ChangeEmailForm(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };

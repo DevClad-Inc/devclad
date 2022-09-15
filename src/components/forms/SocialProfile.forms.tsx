@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { initialSocialProfileState, SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
-import { getSocialProfile, updateSocialProfile } from '@/services/profile.services';
+import { updateSocialProfile } from '@/services/profile.services';
 import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
 import Countries from '@/lib/list/Countries.list.json';
@@ -16,6 +16,7 @@ import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
 
 import classNames from '@/lib/ClassNames.lib';
+import { socialProfileQuery } from '@/lib/queriesAndLoaders';
 
 export const devType = [
   { name: 'AI', id: 0 },
@@ -61,10 +62,13 @@ const languages = Languages.map((language) => ({ language })) as { language: {
 
 export default function SocialProfileForm(): JSX.Element {
   let socialProfileData: SocialProfile = { ...initialSocialProfileState };
-  const socialProfileQuery = useQuery(['social-profile'], () => getSocialProfile());
-  if (socialProfileQuery.isSuccess && socialProfileQuery.data !== null) {
-    const { data } = socialProfileQuery;
-    socialProfileData = data.data;
+  const {
+    data: socialProfileQueryData,
+    isSuccess: socialProfileQuerySuccess,
+    isLoading: socialProfileQueryLoading,
+  } = useQuery(socialProfileQuery());
+  if (socialProfileQuerySuccess && socialProfileQueryData !== null) {
+    socialProfileData = socialProfileQueryData.data;
   }
   // const [selectedTzDeviation,
   //   setselectedTzDeviation] = useState<{ name:string, id:number }>();
@@ -129,7 +133,7 @@ export default function SocialProfileForm(): JSX.Element {
       setSubmitting(false);
     }
   };
-  if (socialProfileQuery.isLoading) {
+  if (socialProfileQueryLoading) {
     return (
       <div className="flex justify-center items-center">
         <LoadingButton />

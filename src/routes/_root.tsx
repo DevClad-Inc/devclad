@@ -89,7 +89,10 @@ function Routing(): JSX.Element {
           <Route path="social" element={<Social />} />
           <Route path="projects" element={<Projects />} />
           <Route path="hackathons" element={<Hackathons />} />
-          <Route path="settings" element={<Settings />}>
+          <Route
+            path="settings"
+            element={<Settings />}
+          >
             <Route index element={<AccountProfile />} />
             <Route path="/settings/social" element={<SocialProfile />} />
             <Route path="/settings/password" element={<Password />} />

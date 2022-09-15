@@ -9,6 +9,7 @@ export default function QueryLoader() {
   const { slowMode, toggle } = useSlowContext();
   const [time, setTime] = React.useState(0);
   React.useEffect(() => {
+    // sloppy way for TypeSafety; couldn't think of a better way yet
     let interval:ReturnType<typeof setInterval> = (
       null) as unknown as ReturnType<typeof setInterval>;
     if (isFetching) {

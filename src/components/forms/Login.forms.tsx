@@ -10,7 +10,7 @@ import {
   getUser, logIn,
 } from '@/services/auth.services';
 import {
-  setIndexDBStore,
+  invalidateAndStoreIDB,
 } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { LoginFormValues } from '@/lib/InterfacesStates.lib';
@@ -46,7 +46,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
       }
       await getUser()
         .then(() => {
-          setIndexDBStore(qc, 'user');
+          invalidateAndStoreIDB(qc, 'user');
         })
         .catch(() => {
           delMany(['loggedInUser', 'profile']);

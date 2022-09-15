@@ -6,7 +6,7 @@ import { logOut } from '@/services/auth.services';
 import { redString } from '@/lib/Buttons.lib';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { userQuery } from '@/services/useAuth.services';
+import { userQuery } from '@/lib/queriesAndLoaders';
 
 function Home(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };

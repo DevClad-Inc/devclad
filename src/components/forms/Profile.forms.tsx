@@ -6,19 +6,23 @@ import {
   Formik, Form, ErrorMessage, Field,
 } from 'formik';
 import { toast } from 'react-hot-toast';
-import { getProfile, updateProfile, updateProfileAvatar } from '@/services/profile.services';
+import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
 import { Profile, initialProfileState, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { Error, Success } from '@/lib/Feedback.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { ThemeContext } from '@/context/Theme.context';
+import { invalidateAndStoreIDB } from '@/context/User.context';
+import { profileQuery } from '@/lib/queriesAndLoaders';
 
 export default function UpdateProfileForm(): JSX.Element {
   let profileData: Profile = { ...initialProfileState };
-  const profileQuery = useQuery(['profile'], () => getProfile());
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery;
-    profileData = data.data;
+  const {
+    data: profileQueryData,
+    isSuccess: profileQuerySuccess,
+  } = useQuery(profileQuery());
+  if (profileQuerySuccess && profileQueryData !== null) {
+    profileData = profileQueryData.data;
   }
   const qc = useQueryClient();
   const validate = (values: UpdateProfileFormValues) => {
@@ -55,7 +59,7 @@ export default function UpdateProfileForm(): JSX.Element {
       await updateProfile(values, profileData)
         .then(async () => {
           setSubmitting(false);
-          await qc.invalidateQueries(['profile']);
+          invalidateAndStoreIDB(qc, 'profile');
           toast.custom(
             <Success success="Profile updated successfully" />,
             { id: 'profile-update-success' },
@@ -72,7 +76,7 @@ export default function UpdateProfileForm(): JSX.Element {
     }
   };
 
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
+  if (profileQuerySuccess && profileQueryData !== null) {
     return (
       <Formik
         initialValues={{
@@ -241,16 +245,16 @@ export function AvatarUploadForm() {
   const { darkMode } = useContext(ThemeContext);
   const qc = useQueryClient();
   let profileData: Profile = { ...initialProfileState };
-  const profileQuery = useQuery(['profile'], () => getProfile());
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery;
-    profileData = data.data;
+  const {
+    data: profileQueryData,
+    isSuccess: profileQuerySuccess,
+    isLoading: profileQueryLoading,
+  } = useQuery(profileQuery());
+  if (profileQuerySuccess && profileQueryData !== null) {
+    profileData = profileQueryData.data;
   }
-  if (profileQuery.isLoading) {
+  if (profileQueryLoading) {
     return <QueryLoader />;
-  }
-  if (profileQuery.isLoading) {
-    return <div>Loading...</div>;
   }
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -264,7 +268,7 @@ export function AvatarUploadForm() {
         },
       });
       updateProfileAvatar(file).then(async () => {
-        await qc.invalidateQueries(['profile']);
+        invalidateAndStoreIDB(qc, 'profile');
         toast.custom(
           <Success success="Profile avatar updated successfully!" />,
         );
@@ -279,7 +283,7 @@ export function AvatarUploadForm() {
     const avatar = e.target.files && e.target.files[0];
     if (avatar) {
       updateProfileAvatar(avatar).then(async () => {
-        await qc.invalidateQueries(['profile']);
+        invalidateAndStoreIDB(qc, 'profile');
         toast.custom(
           <Success success="Profile avatar updated successfully!" />,
         );

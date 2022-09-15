@@ -9,13 +9,12 @@ import {
 
 import DevCladLogo from '@/assets/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
-import { getProfile } from '@/services/profile.services';
 import {
   Profile, initialProfileState,
   User, initialUserState,
 } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
-import { userQuery } from '@/services/useAuth.services';
+import { profileQuery, userQuery } from '@/lib/queriesAndLoaders';
 
 const navigation = [
   {
@@ -43,10 +42,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     loggedInUser = userQueryData.data;
   }
   let profileData: Profile = { ...initialProfileState };
-  const profileQuery = useQuery(['profile'], () => getProfile());
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery;
-    profileData = data.data;
+  const {
+    data: profileQueryData,
+    isSuccess: profileQuerySuccess,
+  } = useQuery(profileQuery());
+  if (profileQuerySuccess && profileQueryData !== null) {
+    profileData = profileQueryData.data;
   }
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [sidebarExpand, setSidebarExpand] = React.useState(true);

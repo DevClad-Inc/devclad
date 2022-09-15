@@ -7,12 +7,12 @@ import {
 } from '@heroicons/react/24/solid';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import classNames from '@/lib/ClassNames.lib';
-import { getProfile } from '@/services/profile.services';
 import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import {
   altString,
   greenString, redString, warningString,
 } from '@/lib/Buttons.lib';
+import { profileQuery } from '@/lib/queriesAndLoaders';
 
 const tabs = [
   { name: '1-on-1', href: '/social' },
@@ -22,10 +22,12 @@ const tabs = [
 export default function Social(): JSX.Element {
   useDocumentTitle('Social Mode');
   let profileData: Profile = { ...initialProfileState };
-  const profileQuery = useQuery(['profile'], () => getProfile());
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery;
-    profileData = data.data;
+  const {
+    data: profileQueryData,
+    isSuccess: profileQuerySuccess,
+  } = useQuery(profileQuery());
+  if (profileQuerySuccess && profileQueryData !== null) {
+    profileData = profileQueryData.data;
   }
   const { pathname } = useLocation();
   return (

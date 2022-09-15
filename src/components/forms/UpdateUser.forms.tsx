@@ -5,12 +5,12 @@ import {
 } from 'formik';
 import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
-import { setIndexDBStore } from '@/context/User.context';
+import { invalidateAndStoreIDB } from '@/context/User.context';
 import { updateUser } from '@/services/auth.services';
 import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
-import { userQuery } from '@/services/useAuth.services';
+import { userQuery } from '@/lib/queriesAndLoaders';
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {
@@ -52,7 +52,7 @@ export default function UpdateUserForm(): JSX.Element {
             username = loggedInUser.username;
           }
           setSubmitting(false);
-          setIndexDBStore(qc, 'user');
+          invalidateAndStoreIDB(qc, 'user');
           toast.custom(
             <Success success="User updated successfully" />,
             {

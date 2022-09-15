@@ -21,7 +21,7 @@ import {
 } from '@/services/profile.services';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { userQuery } from '@/services/useAuth.services';
+import { userQuery } from '@/lib/queriesAndLoaders';
 
 const linkClassesString = `bg-orange-700 dark:bg-fuchsia-900/30 border border-transparent
 duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-fuchsia-200`;
@@ -60,8 +60,7 @@ export function StepTwo() {
   const socialEmptyQuery = useQuery(['social-profile-empty'], () => checkSocialProfileEmpty());
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(['userStatus'], () => getStatus());
-  if ((statusQuery.isSuccess && statusQuery.data !== null)
-  && Object.values(userStatus).every((value) => value === undefined)) {
+  if ((statusQuery.isSuccess && statusQuery.data !== null)) {
     const { data } = statusQuery;
     userStatus = data.data;
   }
