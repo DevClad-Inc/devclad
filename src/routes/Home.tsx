@@ -2,17 +2,20 @@ import React from 'react';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { getUser, logOut } from '@/services/auth.services';
+import { logOut } from '@/services/auth.services';
 import { redString } from '@/lib/Buttons.lib';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { userQuery } from '@/services/useAuth.services';
 
 function Home(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
-  const userQuery = useQuery(['user'], () => getUser());
-  if (userQuery.isSuccess && userQuery.data !== null) {
-    const { data } = userQuery;
-    loggedInUser = data.data;
+  const {
+    data: userQueryData,
+    isSuccess: userQuerySuccess,
+  } = useQuery(userQuery());
+  if (userQuerySuccess && userQueryData !== null) {
+    loggedInUser = userQueryData.data;
   }
   const navigate = useNavigate();
   const handlelogOut = async () => {

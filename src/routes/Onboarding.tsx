@@ -10,7 +10,7 @@ import {
 } from '@/lib/Feedback.lib';
 import SocialProfileForm from '@/components/forms/SocialProfile.forms';
 import {
-  getUser, logOut,
+  logOut,
 } from '@/services/auth.services';
 import {
   UserStatus, initialUserStatus, initialUserState, User,
@@ -21,6 +21,7 @@ import {
 } from '@/services/profile.services';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { userQuery } from '@/services/useAuth.services';
 
 const linkClassesString = `bg-orange-700 dark:bg-fuchsia-900/30 border border-transparent
 duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-fuchsia-200`;
@@ -142,10 +143,13 @@ export function StepTwo() {
 export function Onboarding() {
   useDocumentTitle('Onboarding');
   let loggedInUser: User = { ...initialUserState };
-  const userQuery = useQuery(['user'], () => getUser());
-  if (userQuery.isSuccess && userQuery.data !== null) {
-    const { data } = userQuery;
-    loggedInUser = data.data;
+  const {
+    data: userQueryData,
+    isSuccess: userQuerySuccess,
+    isLoading: userQueryLoading,
+  } = useQuery(userQuery());
+  if (userQuerySuccess && userQueryData !== null) {
+    loggedInUser = userQueryData.data;
   }
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(
@@ -157,7 +161,7 @@ export function Onboarding() {
     const { data } = statusQuery;
     userStatus = data.data;
   }
-  if (userQuery.isLoading || statusQuery.isLoading) {
+  if (userQueryLoading || statusQuery.isLoading) {
     return (
       <div>Loading...</div>
     );

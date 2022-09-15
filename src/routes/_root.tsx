@@ -36,6 +36,7 @@ function Routing(): JSX.Element {
       );
     }
   }, [loggedInUser]);
+
   // USER STATUS
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(
@@ -48,8 +49,22 @@ function Routing(): JSX.Element {
     userStatus = data.data;
   }
 
-  // CASE 1: UNAPPROVED USER
-  if (userStatus && userStatus.approved === false) {
+  // CASE 1: UNAUTHED USER
+  if (!authed && qc.getQueryData(['user']) === null) {
+    return (
+      <Routes>
+        <Route path="*" element={<Login />} />
+        <Route index element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="forgot-password/" element={<ForgotPassword />} />
+        <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
+        <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
+      </Routes>
+    );
+  }
+
+  // CASE 2: AUTHED+UNAPPROVED USER
+  if (userStatus && !userStatus.approved) {
     return (
       <Routes>
         <Route path="*" element={<FourOFour />} />
@@ -63,20 +78,8 @@ function Routing(): JSX.Element {
       </Routes>
     );
   }
-  // CASE 2: UNAUTHED USER
-  if (!authed && qc.getQueryData(['user']) === null) {
-    return (
-      <Routes>
-        <Route path="*" element={<Login />} />
-        <Route index element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="forgot-password/" element={<ForgotPassword />} />
-        <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail loggedIn={false} />} />
-        <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
-      </Routes>
-    );
-  }
-  // CASE 3: AUTHED USER
+
+  // CASE 3: AUTHED+APPROVED USER
   if (authed && userStatus.approved) {
     return (
       <AppShell>
@@ -96,6 +99,7 @@ function Routing(): JSX.Element {
       </AppShell>
     );
   }
+
   return (
     <>
     </>

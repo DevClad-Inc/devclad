@@ -9,13 +9,13 @@ import {
 
 import DevCladLogo from '@/assets/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
-import { getUser } from '@/services/auth.services';
 import { getProfile } from '@/services/profile.services';
 import {
   Profile, initialProfileState,
   User, initialUserState,
 } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
+import { userQuery } from '@/services/useAuth.services';
 
 const navigation = [
   {
@@ -35,10 +35,12 @@ const navigation = [
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
   let loggedInUser: User = { ...initialUserState };
-  const userQuery = useQuery(['user'], () => getUser());
-  if (userQuery.isSuccess && userQuery.data !== null) {
-    const { data } = userQuery;
-    loggedInUser = data.data;
+  const {
+    data: userQueryData,
+    isSuccess: userQuerySuccess,
+  } = useQuery(userQuery());
+  if (userQuerySuccess && userQueryData !== null) {
+    loggedInUser = userQueryData.data;
   }
   let profileData: Profile = { ...initialProfileState };
   const profileQuery = useQuery(['profile'], () => getProfile());

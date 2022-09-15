@@ -5,13 +5,17 @@ import {
 } from '@/lib/InterfacesStates.lib';
 import { getUser } from '@/services/auth.services';
 
+export const userQuery = () => ({
+  queryKey: ['user'],
+  queryFn: async () => getUser(),
+});
+
 export default function useAuth() {
   const [authed, setAuthed] = React.useState(false);
   let loggedInUser: User = { ...initialUserState };
-  const userQuery = useQuery(['user'], () => getUser());
+  const { isSuccess, data } = useQuery(userQuery());
   // ASSIGNING
-  if (userQuery.isSuccess && userQuery.data) {
-    const { data } = userQuery;
+  if (isSuccess && data) {
     loggedInUser = data.data;
     const undefinedUser = Object.values(loggedInUser).every(
       (value) => value === undefined,

@@ -8,20 +8,24 @@ import {
 } from 'formik';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  changeEmail, checkVerified, getUser, resendEmail,
+  changeEmail, checkVerified, resendEmail,
 } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/lib/Feedback.lib';
 import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
 import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
+import { userQuery } from '@/services/useAuth.services';
 
 export default function ChangeEmailForm(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
   let verified = false;
   const qc = useQueryClient();
-  const userQuery = useQuery(['user'], () => getUser());
-  if (userQuery.isSuccess && userQuery.data !== null) {
-    const { data } = userQuery;
-    loggedInUser = data.data;
+  const {
+    data: userQueryData,
+    isSuccess: userQuerySuccess,
+    isLoading: userQueryLoading,
+  } = useQuery(userQuery());
+  if (userQuerySuccess && userQueryData !== null) {
+    loggedInUser = userQueryData.data;
   }
   const verifiedQuery = useQuery(['verified'], () => checkVerified());
   if (verifiedQuery.isSuccess && verifiedQuery.data !== null) {
@@ -61,7 +65,7 @@ export default function ChangeEmailForm(): JSX.Element {
     });
     setSubmitting(false);
   };
-  if (userQuery.isLoading || verifiedQuery.isLoading) {
+  if (userQueryLoading || verifiedQuery.isLoading) {
     return (
       <div className="flex justify-center items-center">
         <LoadingButton />

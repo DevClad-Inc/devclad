@@ -13,7 +13,7 @@ import '@/clash-display.css';
 import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
 import { SpeedProvider } from '@/context/Speed.context';
-import Root from '@/routes/root';
+import Root from '@/routes/_root';
 
 axios.defaults.headers.common.withCredentials = true;
 

@@ -6,18 +6,22 @@ import {
 import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
 import { setIndexDBStore } from '@/context/User.context';
-import { getUser, updateUser } from '@/services/auth.services';
+import { updateUser } from '@/services/auth.services';
 import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
+import { userQuery } from '@/services/useAuth.services';
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
-  const userQuery = useQuery(['user'], () => getUser());
-  if (userQuery.isSuccess && userQuery.data !== null) {
-    const { data } = userQuery;
-    loggedInUser = data.data;
+  const {
+    data: userQueryData,
+    isSuccess: userQuerySuccess,
+    isLoading: userQueryLoading,
+  } = useQuery(userQuery());
+  if (userQuerySuccess && userQueryData !== null) {
+    loggedInUser = userQueryData.data;
   }
   const qc = useQueryClient();
   const validate = (values: UpdateUserFormValues) => {
@@ -76,7 +80,7 @@ export default function UpdateUserForm(): JSX.Element {
       setSubmitting(false);
     }
   };
-  if (userQuery.isLoading) {
+  if (userQueryLoading) {
     return <div>Loading...</div>;
   }
   return (
