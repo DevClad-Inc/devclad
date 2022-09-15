@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router-dom';
@@ -28,7 +28,7 @@ function Routing(): JSX.Element {
   const qc = useQueryClient();
 
   // AUTH CHECK AND REFRESH TOKEN
-  useEffect(() => {
+  React.useEffect(() => {
     if (authed) {
       setInterval(
         () => { refreshToken(); },
@@ -105,7 +105,7 @@ function Routing(): JSX.Element {
 export default function Root(): JSX.Element {
   // todo: add splash screen
 
-  const { darkMode } = useContext(ThemeContext);
+  const { darkMode } = React.useContext(ThemeContext);
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
       <div
