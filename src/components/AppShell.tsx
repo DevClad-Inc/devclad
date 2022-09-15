@@ -8,7 +8,6 @@ import {
 } from '@heroicons/react/24/solid';
 
 import DevCladLogo from '@/assets/devclad.svg';
-import { useUserContext } from '@/context/User.context';
 import classNames from '@/lib/ClassNames.lib';
 import { getUser } from '@/services/auth.services';
 import { getProfile } from '@/services/profile.services';
@@ -35,9 +34,6 @@ const navigation = [
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const qc = useQueryClient();
-  const contextUser = useUserContext();
-  // why not context for the user?
-  // context doesn't sync changes across different browser tabs
   let loggedInUser: User = { ...initialUserState };
   const userQuery = useQuery(['user'], () => getUser());
   if (userQuery.isSuccess && userQuery.data !== null) {
@@ -52,14 +48,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [sidebarExpand, setSidebarExpand] = React.useState(true);
-
-  // why context here?
-  // because it still tells us if the user is not undefined when we lose tab focus
-  if (Object.values(contextUser).every((value) => value === undefined)) {
-    return (
-      null
-    );
-  }
 
   const pageTitle = (document.title).slice(10);
 

@@ -87,7 +87,7 @@ export default function PasswordResetForm(): JSX.Element {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-6" action="#" method="POST">
-          <div className="w-fit">
+          <div className="w-full">
             <Warning warning="This is a sensitive operation. Recommended: Save this password in a Cloud Keychain/Password." />
           </div>
           <div className="grid grid-cols-6 gap-6">
@@ -125,7 +125,7 @@ export default function PasswordResetForm(): JSX.Element {
                 className="block text-md text-left pl-1
           font-medium text-gray-700 dark:text-gray-300"
               >
-                Confirm New Password
+                Confirm Password
                 <Field
                   id="password2"
                   name="password2"

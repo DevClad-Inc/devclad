@@ -92,7 +92,7 @@ export function ForgotPassword() : JSX.Element {
           <Link className="font-medium text-orange-700 dark:text-fuchsia-300" to="/signup">Join DevClad</Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="sm:mx-auto sm:w-full sm:max-w-lg">
             <div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <ForgotPasswordForm />
             </div>
