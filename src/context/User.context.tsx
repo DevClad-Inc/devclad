@@ -2,9 +2,9 @@ import React, { useReducer, createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany, set } from 'idb-keyval';
-import getsetIndexedDB from '../lib/getsetIndexedDB.lib';
-import { getUser } from '../services/auth.services';
-import { initialUserState, Profile, User } from '../lib/InterfacesStates.lib';
+import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
+import { getUser } from '@/services/auth.services';
+import { initialUserState, Profile, User } from '@/lib/InterfacesStates.lib';
 
 export enum UserReducerActionTypes {
   SET_USER_DATA = 'SET_USER_DATA',

@@ -5,13 +5,13 @@ import {
   CreditCardIcon, UsersIcon,
   EnvelopeIcon,
 } from '@heroicons/react/24/solid';
-import ToggleTheme from '../components/ToggleTheme';
-import UpdateProfileForm, { AvatarUploadForm } from '../components/forms/Profile.forms';
-import UpdateUserForm from '../components/forms/UpdateUser.forms';
+import ToggleTheme from '@/components/ToggleTheme';
+import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
+import UpdateUserForm from '@/components/forms/UpdateUser.forms';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import SocialProfileForm from '../components/forms/SocialProfile.forms';
-import PasswordResetForm from '../components/forms/ResetPassword.forms';
-import ChangeEmailForm from '../components/forms/ChangeEmail.forms';
+import SocialProfileForm from '@/components/forms/SocialProfile.forms';
+import PasswordResetForm from '@/components/forms/ResetPassword.forms';
+import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';
 
 const navigation = [
   {

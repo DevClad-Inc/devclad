@@ -1,35 +1,29 @@
+import clsx from 'clsx';
 import React, { useContext, useEffect } from 'react';
-import {
-  Routes, Route,
-} from 'react-router-dom';
-import { clsx } from 'clsx';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import { ThemeContext } from './context/Theme.context';
-import {
-  UserStatus, initialUserStatus,
-} from './lib/InterfacesStates.lib';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { Routes, Route } from 'react-router-dom';
+import { ThemeContext } from '@/context/Theme.context';
+import AppShell from '@/components/AppShell';
+import Hackathons from '@/components/Hackathons';
+import Projects from '@/components/Projects';
+import { UserStatus, initialUserStatus } from '@/lib/InterfacesStates.lib';
 import { refreshToken } from '@/services/auth.services';
-import useAuth from '@/services/useAuth.services';
 import { getStatus } from '@/services/profile.services';
-import './App.css';
-import Login from './routes/Login';
-import Home from './routes/Home';
-import Signup from './routes/Signup';
+import useAuth from '@/services/useAuth.services';
+import FourOFour from '@/routes/404';
+import Home from '@/routes/Home';
+import Login from '@/routes/Login';
+import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
+import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
 import {
-  Settings, AccountProfile,
-  SocialProfile, Password,
-} from './routes/Settings';
-import AppShell from './components/AppShell';
-import FourOFour from './routes/404';
-import Social from './routes/Social';
-import Projects from './components/Projects';
-import Hackathons from './components/Hackathons';
-import VerifyEmail from './routes/VerifyEmail';
-import { PassReset, ForgotPassword } from './routes/PasswordReset';
-import { Onboarding, StepOne, StepTwo } from './routes/Onboarding';
+  Settings, AccountProfile, SocialProfile, Password,
+} from '@/routes/Settings';
+import Signup from '@/routes/Signup';
+import Social from '@/routes/Social';
+import VerifyEmail from '@/routes/VerifyEmail';
 
-function Routing():JSX.Element {
+function Routing(): JSX.Element {
   const { authed, loggedInUser } = useAuth();
   const qc = useQueryClient();
 
@@ -43,7 +37,6 @@ function Routing():JSX.Element {
     }
   }, [loggedInUser]);
   // USER STATUS
-
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(
     ['userStatus'],
@@ -109,27 +102,25 @@ function Routing():JSX.Element {
   );
 }
 
-function App(): JSX.Element {
+export default function Root(): JSX.Element {
   // todo: add splash screen
 
   const { darkMode } = useContext(ThemeContext);
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
       <div
-        className="App h-screen overflow-y-auto overflow-x-hidden scrollbar bg-whitewhite dark:bg-darkBG dark:text-white"
+        className="h-screen overflow-y-auto overflow-x-hidden scrollbar bg-whitewhite dark:bg-darkBG dark:text-white"
       >
         <Toaster
           position="top-right"
           toastOptions={
-          {
-            duration: 3000,
-          }
-      }
+            {
+              duration: 3000,
+            }
+        }
         />
         <Routing />
       </div>
     </div>
   );
 }
-
-export default App;
