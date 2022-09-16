@@ -1,5 +1,5 @@
 import React, { useReducer, createContext, useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany } from 'idb-keyval';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
@@ -80,7 +80,7 @@ export function useUserContext() {
   return useContext(UserContext);
 }
 
-export async function invalidateAndStoreIDB(qc: any, key: string) {
+export async function invalidateAndStoreIDB(qc: QueryClient, key: string) {
   await qc.refetchQueries([key]);
   if (key === 'user') {
     const cacheUserData = qc.getQueryData([key]) as { data: User };

@@ -1,5 +1,7 @@
 import React from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import {
+  NavLink, Outlet, useLoaderData, useLocation,
+} from 'react-router-dom';
 import {
   UserCircleIcon, KeyIcon,
   CreditCardIcon, UsersIcon,
@@ -12,6 +14,7 @@ import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import SocialProfileForm from '@/components/forms/SocialProfile.forms';
 import PasswordResetForm from '@/components/forms/ResetPassword.forms';
 import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';
+import { socialProfileLoader } from '@/lib/queriesAndLoaders';
 
 const navigation = [
   {
@@ -104,6 +107,9 @@ export function AccountProfile() {
 }
 
 export function SocialProfile() {
+  const initialSocialData = useLoaderData() as Awaited<
+  ReturnType<ReturnType<typeof socialProfileLoader>>
+  >;
   return (
     <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
       <div className="shadow sm:rounded-md sm:overflow-hidden">
@@ -115,7 +121,7 @@ export function SocialProfile() {
               generate the best possible match every week.
             </p>
           </div>
-          <SocialProfileForm />
+          <SocialProfileForm initialSocialData={initialSocialData} />
         </div>
         <hr className="my-6 border-t border-gray-100 dark:border-gray-900" />
       </div>

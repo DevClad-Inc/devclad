@@ -6,9 +6,11 @@ import DevCladLogo from '@/assets/devclad.svg';
 import { verifyEmail } from '@/services/auth.services';
 import { Error, Success } from '@/lib/Feedback.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import useAuth from '@/services/useAuth.services';
 
-export default function VerifyEmail({ loggedIn } : { loggedIn : boolean }): JSX.Element {
+export default function VerifyEmail(): JSX.Element {
   useDocumentTitle('Verify Email');
+  const { authed } = useAuth();
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(false);
   const { key } = useParams() as { key: string };
@@ -112,7 +114,7 @@ export default function VerifyEmail({ loggedIn } : { loggedIn : boolean }): JSX.
                         </div>
                         <div className="ml-2 font-bold text-base">
                           <span>
-                            { loggedIn ? 'Go to Dashboard' : 'Click to Login' }
+                            { authed ? 'Go to Dashboard' : 'Click to Login' }
                           </span>
                         </div>
                       </div>

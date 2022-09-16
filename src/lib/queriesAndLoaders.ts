@@ -1,3 +1,5 @@
+// import { QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import { getProfile, getSocialProfile, getStatus } from '@/services/profile.services';
 
@@ -27,16 +29,26 @@ export const statusQuery = () => ({
 // verified query is only used in ChangeEmail
 // so not making a reusable query for them
 
-export async function userLoader(qc:any) {
-  return (
-    qc.getQueryData(userQuery().queryKey)
+export const userLoader = (qc: QueryClient) => async () => (
+  qc.getQueryData(userQuery().queryKey)
       ?? (await qc.fetchQuery(userQuery()))
-  );
-}
+);
 
-export async function profileLoader(qc:any) {
+export const profileLoader = (qc:QueryClient) => async () => {
+  const query = profileQuery();
+  return qc.getQueryData(query.queryKey)
+    ?? (await qc.fetchQuery(query));
+};
+
+export const socialProfileLoader = (qc: QueryClient) => async () => {
+  const query = socialProfileQuery();
   return (
-    qc.getQueryData(profileQuery().queryKey)
-        ?? (await qc.fetchQuery(profileQuery()))
+    qc.getQueryData(query.queryKey)
+      ?? (await qc.fetchQuery(query))
   );
-}
+};
+
+export const statusLoader = (qc: QueryClient) => async () => (
+  qc.getQueryData(statusQuery().queryKey)
+  ?? (await qc.fetchQuery(statusQuery()))
+);

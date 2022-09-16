@@ -8,7 +8,7 @@ import { del } from 'idb-keyval';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { updateUser } from '@/services/auth.services';
 import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
-import { PrimaryButton } from '@/lib/Buttons.lib';
+import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
 
@@ -81,7 +81,7 @@ export default function UpdateUserForm(): JSX.Element {
     }
   };
   if (userQueryLoading) {
-    return <div>Loading...</div>;
+    return <LoadingButton />;
   }
   return (
     <Formik

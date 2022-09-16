@@ -14,23 +14,101 @@ import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
 import { SpeedProvider } from '@/context/Speed.context';
 import Root from '@/routes/_root';
+// import FourOFour from './routes/404';
+import { PassReset } from './routes/PasswordReset';
+import VerifyEmail from './routes/VerifyEmail';
+import { Onboarding, StepOne, StepTwo } from './routes/Onboarding';
+import Social from './routes/Social';
+import Hackathons from './components/Hackathons';
+import Projects from './components/Projects';
+import {
+  Settings, AccountProfile, SocialProfile, Password,
+} from './routes/Settings';
+import Home from './routes/Home';
+import { LoadingButton } from './lib/Buttons.lib';
+import { socialProfileLoader } from './lib/queriesAndLoaders';
 
 axios.defaults.headers.common.withCredentials = true;
 
+const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
-    path: '*',
+    path: '/',
     element: <Root />,
+    children: [
+      // COMMON FOR ALL AUTHED USERS
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: 'auth/registration/account-confirm-email/:key',
+        element: <VerifyEmail />,
+      },
+      {
+        path: 'auth/password/reset/confirm/:uid/:token',
+        element: <PassReset />,
+      },
+      // AUTHED AND UNAPPROVED
+      {
+        path: 'onboarding',
+        element: <Onboarding />,
+        children: [
+          {
+            index: true,
+            element: <StepOne />,
+          },
+          {
+            path: '/onboarding/step-two',
+            element: <StepTwo />,
+            loader: socialProfileLoader(queryClient),
+          },
+        ],
+      },
+      // AUTHED AND APPROVED
+      {
+        path: 'social',
+        element: <Social />,
+      },
+      {
+        path: 'projects',
+        element: <Projects />,
+      },
+      {
+        path: 'hackathons',
+        element: <Hackathons />,
+      },
+      {
+        path: 'settings',
+        element: <Settings />,
+        children: [
+          {
+            index: true,
+            element: <AccountProfile />,
+          },
+          {
+            path: '/settings/social',
+            element: <SocialProfile />,
+            loader: socialProfileLoader(queryClient),
+          },
+          {
+            path: '/settings/password',
+            element: <Password />,
+          },
+        ],
+      },
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
       <UserProvider>
         <SpeedProvider>
           <ThemeProvider>
-            <RouterProvider router={router} />
+            <RouterProvider router={router} fallbackElement={<LoadingButton />} />
           </ThemeProvider>
         </SpeedProvider>
       </UserProvider>

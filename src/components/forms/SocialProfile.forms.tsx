@@ -60,15 +60,27 @@ const languages = Languages.map((language) => ({ language })) as { language: {
   id: number;
 } }[];
 
-export default function SocialProfileForm(): JSX.Element {
+interface InitialSocialDataProps {
+  initialSocialData: {} | null;
+}
+
+export default function SocialProfileForm(
+  { initialSocialData }: InitialSocialDataProps,
+): JSX.Element {
   let socialProfileData: SocialProfile = { ...initialSocialProfileState };
   const {
     data: socialProfileQueryData,
     isSuccess: socialProfileQuerySuccess,
     isLoading: socialProfileQueryLoading,
-  } = useQuery(socialProfileQuery());
+  } = useQuery(
+    {
+      ...socialProfileQuery(),
+      initialData: initialSocialData,
+    },
+  );
   if (socialProfileQuerySuccess && socialProfileQueryData !== null) {
-    socialProfileData = socialProfileQueryData.data;
+    const { data } = socialProfileQueryData as { data: SocialProfile };
+    socialProfileData = data;
   }
   // const [selectedTzDeviation,
   //   setselectedTzDeviation] = useState<{ name:string, id:number }>();
