@@ -3,7 +3,7 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import {
-  Routes, Route, Outlet, useNavigate, useLocation,
+  Routes, Route, Outlet, useNavigate, useLocation, ScrollRestoration,
 } from 'react-router-dom';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
@@ -98,6 +98,7 @@ export default function Root(): JSX.Element {
             }
         }
         />
+        <ScrollRestoration />
         <Routing />
       </div>
     </div>
