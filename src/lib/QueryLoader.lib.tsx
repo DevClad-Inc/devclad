@@ -25,7 +25,7 @@ export default function QueryLoader() {
       clearInterval(interval);
     };
   }, [isFetching]);
-  if ((time > 5 && isFetching)) {
+  if ((time > 10 && isFetching)) {
     toggle(true);
   }
   if ((slowMode && isFetching)) {
