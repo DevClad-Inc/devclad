@@ -27,7 +27,7 @@ export default function ChangeEmailForm(): JSX.Element {
   if (userQuerySuccess && userQueryData !== null) {
     loggedInUser = userQueryData.data;
   }
-  const verifiedQuery = useQuery(['verified'], () => checkVerified());
+  const verifiedQuery = useQuery(['verified'], async () => checkVerified());
   if (verifiedQuery.isSuccess && verifiedQuery.data !== null) {
     const { data } = verifiedQuery.data;
     verified = data.verified;
