@@ -15,7 +15,7 @@ import { ThemeProvider } from '@/context/Theme.context';
 import { SpeedProvider } from '@/context/Speed.context';
 import Root from '@/routes/_root';
 // import FourOFour from './routes/404';
-import { PassReset } from './routes/PasswordReset';
+import { ForgotPassword, PassReset } from './routes/PasswordReset';
 import VerifyEmail from './routes/VerifyEmail';
 import { Onboarding, StepOne, StepTwo } from './routes/Onboarding';
 import Social from './routes/Social';
@@ -27,6 +27,9 @@ import {
 import Home from './routes/Home';
 import { LoadingButton } from './lib/Buttons.lib';
 import { socialProfileLoader } from './lib/queriesAndLoaders';
+import Login from './routes/Login';
+import Signup from './routes/Signup';
+import FourOFour from './routes/404';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -36,11 +39,20 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <FourOFour />,
     children: [
       // COMMON FOR ALL AUTHED USERS
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'signup',
+        element: <Signup />,
       },
       {
         path: 'auth/registration/account-confirm-email/:key',
@@ -49,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: 'auth/password/reset/confirm/:uid/:token',
         element: <PassReset />,
+      },
+      {
+        path: 'forgot-password',
+        element: <ForgotPassword />,
       },
       // AUTHED AND UNAPPROVED
       {

@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
-  Routes, Route, Outlet, useNavigate, useLocation, ScrollRestoration,
+  Outlet, useNavigate, useLocation, ScrollRestoration,
 } from 'react-router-dom';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
@@ -11,16 +11,11 @@ import { UserStatus, initialUserStatus } from '@/lib/InterfacesStates.lib';
 import { refreshToken } from '@/services/auth.services';
 import { getStatus } from '@/services/profile.services';
 import useAuth from '@/services/useAuth.services';
-import Login from '@/routes/Login';
-import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
-import Signup from '@/routes/Signup';
-import VerifyEmail from '@/routes/VerifyEmail';
 
 function Routing(): JSX.Element {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { authed, loggedInUser } = useAuth();
-  const qc = useQueryClient();
   // AUTH CHECK AND REFRESH TOKEN
   React.useEffect(() => {
     if (authed) {
@@ -45,17 +40,10 @@ function Routing(): JSX.Element {
     userStatus = data.data;
   }
 
-  // CASE 1: UNAUTHED USER
-  if (!authed && qc.getQueryData(['user']) === null) {
+  // CASE 1: UNAUTHED
+  if (!authed) {
     return (
-      <Routes>
-        <Route path="*" element={<Login />} />
-        <Route index element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="forgot-password/" element={<ForgotPassword />} />
-        <Route path="auth/registration/account-confirm-email/:key" element={<VerifyEmail />} />
-        <Route path="auth/password/reset/confirm/:uid/:token/" element={<PassReset />} />
-      </Routes>
+      <Outlet />
     );
   }
 

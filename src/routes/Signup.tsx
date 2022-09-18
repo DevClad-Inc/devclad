@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
 import { Error } from '@/lib/Feedback.lib';
 import SignupForm from '@/components/forms/Signup.forms';
+import useAuth from '@/services/useAuth.services';
 
 function Signup() {
   const [signupError, setSignupError] = useState('');
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { authed } = useAuth();
+
+  if (authed) {
+    if (pathname.includes('signup')) {
+      navigate('/');
+    } else {
+      navigate(pathname);
+    }
+  }
 
   return (
     <>

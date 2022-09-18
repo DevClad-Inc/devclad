@@ -7,9 +7,11 @@ import { redString } from '@/lib/Buttons.lib';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
+import useAuth from '@/services/useAuth.services';
 
 function Home(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
+  const { authed } = useAuth();
   const {
     data: userQueryData,
     isSuccess: userQuerySuccess,
@@ -23,8 +25,12 @@ function Home(): JSX.Element {
       navigate(0);
     });
   };
+  React.useEffect(() => {
+    if (!authed) {
+      navigate('/login');
+    }
+  }, [authed, navigate]);
   useDocumentTitle('Dashboard');
-
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">

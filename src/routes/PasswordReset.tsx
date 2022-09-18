@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
 import PasswordResetForm, { ForgotPasswordForm } from '@/components/forms/ResetPassword.forms';
+import useAuth from '@/services/useAuth.services';
 
 export function PassReset() {
   return (
@@ -53,6 +54,14 @@ export function PassReset() {
 }
 
 export function ForgotPassword() : JSX.Element {
+  const navigate = useNavigate();
+  const { authed } = useAuth();
+
+  React.useEffect(() => {
+    if (authed) {
+      navigate('/settings/password');
+    }
+  }, [authed, navigate]);
   return (
     <>
       <div className="relative mt-5 sm:mt-10">
