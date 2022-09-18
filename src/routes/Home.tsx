@@ -27,6 +27,7 @@ function Home(): JSX.Element {
   };
   React.useEffect(() => {
     if (!authed) {
+      // JUST render the login page here
       navigate('/login');
     }
   }, [authed, navigate]);

@@ -226,3 +226,43 @@ export const setSubmittedStatus = async () => {
   }
   return null;
 };
+
+// =================== ONE-ONE ML ===================
+
+export const getOneOne = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/one-one/`;
+  if (token) {
+    return axios(
+      {
+        method: 'GET',
+        url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
+};
+
+export const getCircle = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/circle/`;
+  if (token) {
+    return axios(
+      {
+        method: 'GET',
+        url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
+};

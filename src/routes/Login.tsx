@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '@/assets/devclad.svg';
 import LoginForm from '@/components/forms/Login.forms';
 import { Error } from '@/lib/Feedback.lib';
@@ -7,18 +8,15 @@ import { PrimaryButton } from '@/lib/Buttons.lib';
 import useAuth from '@/services/useAuth.services';
 
 function Login() {
-  const [loginError, setLoginError] = useState(false);
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const qc = useQueryClient();
+  const [loginError, setLoginError] = useState(false);
   const { authed } = useAuth();
-
-  if (authed) {
-    if (pathname.includes('login')) {
+  React.useEffect(() => {
+    if (authed && qc.getQueryData(['user'])) {
       navigate('/');
-    } else {
-      navigate(pathname);
     }
-  }
+  }, [authed, qc, navigate]);
   return (
     <div>
       <div className="relative mt-5 sm:mt-10">
