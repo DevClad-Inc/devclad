@@ -4,13 +4,18 @@ import {
   XCircleIcon, ChatBubbleBottomCenterIcon, ExclamationTriangleIcon, PlusCircleIcon,
   VideoCameraIcon,
 } from '@heroicons/react/24/solid';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import classNames from '@/lib/ClassNames.lib';
 import {
   altString,
-  greenString, redString, warningString,
+  greenString, LoadingButton, redString, warningString,
 } from '@/lib/Buttons.lib';
 import { useOneOneProfile, useOneOneUsernames } from '@/services/socialHooks.services';
+import {
+  initialUserState, MatchProfile, User,
+} from '@/lib/InterfacesStates.lib';
+import { userQuery } from '@/lib/queriesAndLoaders';
 
 const tabs = [
   { name: '1-on-1', href: '/social' },
@@ -18,7 +23,16 @@ const tabs = [
 ];
 
 function MatchCard({ username }:{ username:string }): JSX.Element {
-  const profile = useOneOneProfile(username);
+  const profile = useOneOneProfile(username) as MatchProfile;
+  const qc = useQueryClient();
+  const state = qc.getQueryState(['profile', username]);
+  if (state && (state.status === 'loading')) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <LoadingButton />
+      </div>
+    );
+  }
   if (profile) {
     return (
       <div>
@@ -114,6 +128,14 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
 export default function Social(): JSX.Element {
   useDocumentTitle('Social Mode');
   const { usernames } = useOneOneUsernames();
+  let loggedInUser: User = { ...initialUserState };
+  const {
+    data: userQueryData,
+    isSuccess: userQuerySuccess,
+  } = useQuery(userQuery());
+  if (userQuerySuccess && userQueryData !== null) {
+    loggedInUser = userQueryData.data;
+  }
   const { pathname } = useLocation();
   return (
     <>
@@ -139,6 +161,19 @@ export default function Social(): JSX.Element {
         </div>
       </div>
 
+      <div className="justify-center flex p-4">
+        <div className="dark:bg-darkBG2 shadow rounded-xl md:w-3/4 sm:w-full">
+          <div className="px-4 py-5 sm:p-6">
+            <div className="inline-flex">
+              <div className="flex flex-col">
+                Matches for
+                {' '}
+                {loggedInUser.username}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {
         usernames?.map((username) => (
           <MatchCard key={username} username={username} />

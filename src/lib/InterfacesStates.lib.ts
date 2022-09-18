@@ -155,3 +155,10 @@ export interface PasswordReset {
     password2?: string;
   }
 }
+
+// use decorators to make MatchProfile extending Profile AND User
+
+export interface MatchProfile extends Profile, SocialProfile {
+  first_name?: string;
+  last_name?: string;
+}
