@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '@/services/auth.services';
 import { redString } from '@/lib/Buttons.lib';
@@ -10,6 +10,7 @@ import { userQuery } from '@/lib/queriesAndLoaders';
 import useAuth from '@/services/useAuth.services';
 
 function Home(): JSX.Element {
+  const qc = useQueryClient();
   let loggedInUser: User = { ...initialUserState };
   const { authed } = useAuth();
   const {
@@ -25,13 +26,10 @@ function Home(): JSX.Element {
       navigate(0);
     });
   };
-  React.useEffect(() => {
-    if (!authed) {
-      // JUST render the login page here
-      navigate('/login');
-    }
-  }, [authed, navigate]);
   useDocumentTitle('Dashboard');
+  if (!authed && qc.getQueryData(['user']) === null) {
+    navigate('/login');
+  }
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
