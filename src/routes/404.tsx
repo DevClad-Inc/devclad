@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import useAuth from '@/services/useAuth.services';
 import AppShell from '@/components/AppShell';
@@ -7,10 +8,11 @@ import AppShell from '@/components/AppShell';
 export default function FourOFour() : JSX.Element {
   useDocumentTitle('Oops! 404');
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const { authed } = useAuth();
 
   React.useEffect(() => {
-    if (!authed) {
+    if (!authed && qc.getQueryData(['user']) === null) {
       navigate('/login');
     }
   }, [authed, navigate]);

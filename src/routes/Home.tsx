@@ -27,9 +27,11 @@ function Home(): JSX.Element {
     });
   };
   useDocumentTitle('Dashboard');
-  if (!authed && qc.getQueryData(['user']) === null) {
-    navigate('/login');
-  }
+  React.useEffect(() => {
+    if (!authed && qc.getQueryData(['user']) === null) {
+      navigate('/login');
+    }
+  }, [authed]);
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
