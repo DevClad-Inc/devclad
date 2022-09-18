@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     children: [
       // COMMON FOR ALL AUTHED USERS
       {
-        path: '/',
+        index: true,
         element: <Home />,
       },
       {

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Outlet, useNavigate, useLocation, ScrollRestoration,
 } from 'react-router-dom';
@@ -14,6 +14,7 @@ import useAuth from '@/services/useAuth.services';
 
 function Routing(): JSX.Element {
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const { pathname } = useLocation();
   const { authed, loggedInUser } = useAuth();
   // AUTH CHECK AND REFRESH TOKEN
@@ -41,7 +42,7 @@ function Routing(): JSX.Element {
   }
 
   // CASE 1: UNAUTHED
-  if (!authed) {
+  if (!authed && qc.getQueryData(['user']) === null) {
     return (
       <Outlet />
     );

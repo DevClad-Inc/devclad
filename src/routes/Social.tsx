@@ -28,7 +28,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
   const state = qc.getQueryState(['profile', username]);
   if (state && (state.status === 'loading')) {
     return (
-      <div className="flex flex-col items-center justify-center w-full h-full">
+      <div className="flex p-4 flex-col items-center justify-center w-full h-full">
         <LoadingButton />
       </div>
     );
