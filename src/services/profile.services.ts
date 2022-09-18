@@ -23,6 +23,7 @@ export async function getProfile() {
       .catch(() => null);
   }
   if (token === undefined && Cookies.get('refresh')) {
+    // implementing this in Base functions (functions that execute on every page)
     await refreshToken().catch(
       () => {
         Cookies.remove('token');
@@ -30,6 +31,22 @@ export async function getProfile() {
         delMany(['loggedInUser', 'profile']);
       },
     );
+  }
+  return null;
+}
+
+export async function getUsernameProfile(username: string) {
+  const url = `${API_URL}/users/profile/${username}/`;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => resp)
+      .catch(() => null);
   }
   return null;
 }
@@ -79,6 +96,21 @@ export async function updateProfileAvatar(avatar: File) {
 
 export async function getSocialProfile() {
   const url = `${API_URL}/social/profile/`;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  return null;
+}
+
+export async function getUsernameSocialProfile(username: string) {
+  const url = `${API_URL}/social/profile/${username}/`;
   const token = Cookies.get('token');
   if (token) {
     return axios({

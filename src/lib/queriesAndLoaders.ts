@@ -1,7 +1,9 @@
 // import { QueryClient } from '@tanstack/react-query';
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
-import { getProfile, getSocialProfile, getStatus } from '@/services/profile.services';
+import {
+  getProfile, getSocialProfile, getStatus, getUsernameProfile, getUsernameSocialProfile,
+} from '@/services/profile.services';
 
 // ! not using loaders yet
 
@@ -23,6 +25,16 @@ export const socialProfileQuery = () => ({
 export const statusQuery = () => ({
   queryKey: ['userStatus'],
   queryFn: async () => getStatus(),
+});
+
+export const profileUsernameQuery = (username: string) => ({
+  queryKey: ['profile', username],
+  queryFn: async () => getUsernameProfile(username),
+});
+
+export const socialProfileUsernameQuery = (username: string) => ({
+  queryKey: ['social-profile', username],
+  queryFn: async () => getUsernameSocialProfile(username),
 });
 
 // profileempty and socialempty query are only used in Onboarding
