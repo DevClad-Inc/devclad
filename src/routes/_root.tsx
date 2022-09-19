@@ -77,7 +77,8 @@ export default function Root(): JSX.Element {
   return (
     <div className={clsx('h-screen', { dark: darkMode })}>
       <div
-        className="h-screen overflow-y-auto overflow-x-hidden scrollbar bg-whitewhite dark:bg-darkBG dark:text-white"
+        className="h-screen overflow-y-auto overflow-x-hidden scrollbar font-system subpixel-antialiased
+         bg-whitewhite dark:bg-darkBG dark:text-white"
       >
         <Toaster
           position="top-right"

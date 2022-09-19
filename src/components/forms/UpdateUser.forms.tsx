@@ -104,7 +104,7 @@ export default function UpdateUserForm(): JSX.Element {
                 className="block text-md font-medium
                  text-gray-700 dark:text-gray-300"
               >
-                First name
+                First Name
                 <Field
                   type="text"
                   name="firstName"
@@ -126,7 +126,7 @@ export default function UpdateUserForm(): JSX.Element {
                 className="block text-md font-medium
                  text-gray-700 dark:text-gray-300"
               >
-                Last name
+                Last Name
                 <Field
                   type="text"
                   name="lastName"

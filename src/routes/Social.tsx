@@ -150,7 +150,7 @@ export default function Social(): JSX.Element {
                   (tab.href === pathname) || (`${tab.href}/` === pathname)
                     ? 'dark:bg-fuchsia-900/30 dark:text-fuchsia-300 bg-orange-700/30 text-orange-900'
                     : 'dark:text-gray-400 dark:hover:text-gray-100 text-gray-600 hover:text-gray-900',
-                  'px-3 py-2 font-medium rounded-md',
+                  'px-2 py-2 font-bold text-base rounded-md',
                 )}
                 aria-current={tab.href ? 'page' : undefined}
               >

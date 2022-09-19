@@ -9,28 +9,28 @@ interface ButtonProps {
 
 export const primaryString = `border border-transparent bg-orange-700 text-whitewhite
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
+        inline-flex justify-center text-sm font-semibold dark:text-fuchsia-200`;
 
 export const altString = `border border-transparent bg-orange-700/30 text-orange-900
 dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
-inline-flex justify-center text-sm font-bold dark:text-fuchsia-300`;
+inline-flex justify-center text-sm font-semibold dark:text-fuchsia-300`;
 
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
-border border-transparent text-sm font-medium
+border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
 dark:text-saffron dark:bg-blackChocolate`;
 
 export const primaryString2 = `border border-transparent bg-orange-700 text-whitewhite
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-sm font-bold dark:text-fuchsia-200`;
+        inline-flex justify-center text-sm font-semibold dark:text-fuchsia-200`;
 
 export const redString = `mt-5 inline-flex items-center px-4 py-2
-border border-transparent text-sm font-medium
+border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bloodRed bg-mistyRose
 dark:text-mistyRose dark:bg-bloodRed/60`;
 
 export const greenString = `mt-5 inline-flex items-center px-4 py-2
-border border-transparent text-sm font-medium
+border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-phthaloGreen bg-honeyDew
 dark:bg-phthaloGreen dark:text-honeyDew`;
 

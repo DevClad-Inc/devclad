@@ -52,32 +52,71 @@ module.exports = {
         blackChocolate: '#241B00',
       },
       fontFamily: {
-        mono: ['IBM Plex Mono', 'monospace'],
-        system: ['system-ui', 'sans-serif'],
+        system: ['"JetBrainsMono-Variable"', '"JetBrainsMono-VariableItalic"'],
         sans: [...defaultTheme.fontFamily.sans],
         display: ['"ClashDisplay-Variable"'],
       },
       keyframes: {
+        // gradient text animation from #F0C000 to #660C00
+        gradient: {
+          '0%, 100%': { color: '#fab296', backgroundPosition: '0% 50%' },
+          '25%': { color: '#45caff', backgroundPosition: '100% 25%' },
+          '75%': { color: '#aafa96', backgroundPosition: '0% 50%' },
+        },
         darkglow: {
+          '0%': {
+            boxShadow: '0 0 0 3px #3a015c',
+          },
+          '25%': {
+            boxShadow: '0 0 0 3px #280000',
+          },
+          '50%': {
+            boxShadow: '0 0 0 3px #290025',
+          },
+          '75%': {
+            boxShadow: '0 0 0 3px #35012c',
+          },
+          '100%': { boxShadow: '0 0 0 3px #3a015c' },
+        },
+        darkglowbutton: {
           '0%': {
             boxShadow: '0 0 0 1px #3a015c',
           },
           '25%': {
-            boxShadow: '0 0 0 1px #35012c',
+            boxShadow: '0 0 0 1px #280000',
           },
           '50%': {
-            boxShadow: '0 0 0 1px #290025',
+            boxShadow: '0 0 0 1px #651673',
           },
           '75%': {
-            boxShadow: '0 0 0 1px #280000',
+            boxShadow: '0 0 0 1px #35012c',
           },
           '100%': { boxShadow: '0 0 0 1px #3a015c' },
         },
+        dropdarkglow: {
+          '0%': {
+            boxShadow: '0 10px 20px 5px #3a015c',
+          },
+          '25%': {
+            boxShadow: '0 10px 20px 5px #35012c',
+          },
+          '50%': {
+            boxShadow: '0 10px 20px 5px #651673',
+          },
+          '75%': {
+            boxShadow: '0 10px 20px 5px #280000',
+          },
+          '100%': { boxShadow: '0 10px 20px 5px #3a015c' },
+        },
       },
       animation: {
+        gradient: 'gradient 10s ease-out infinite',
+        'gradient-reverse': 'gradient 10s ease infinite reverse',
         'spin-slow': 'spin 10s linear',
         'pulse-slow': 'pulse 10s linear infinite',
         darkglow: 'darkglow 5s ease-out infinite',
+        dropdarkglow: 'dropdarkglow 10s ease-out infinite',
+        darkglowbtn: 'darkglowbutton 20s ease-out infinite',
       },
     },
   },

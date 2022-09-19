@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  font-family: JetBrains Mono, monospace;
   font-size: 16px;
   font-weight: 400;
   scroll-behavior: smooth;

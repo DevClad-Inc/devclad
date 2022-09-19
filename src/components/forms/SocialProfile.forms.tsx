@@ -284,7 +284,7 @@ export default function SocialProfileForm(
               />
               {(socialProfileData.idea_status
                     && socialProfileData.idea_status.length > 0) && (
-                    <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                       Currently set to
                       {' '}
                       &#34;
@@ -387,7 +387,7 @@ export default function SocialProfileForm(
               />
               {(socialProfileData.preferred_dev_type
                     && socialProfileData.preferred_dev_type.length > 0) && (
-                    <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                       Currently set to
                       {' '}
                       &#34;
@@ -496,7 +496,7 @@ export default function SocialProfileForm(
                 )}
               </Listbox>
               {(socialProfileData.dev_type && socialProfileData.dev_type.length > 0) && (
-              <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-sm  text-gray-600 dark:text-gray-400">
                 Currently set to
                 {' '}
                 &#34;
@@ -709,7 +709,7 @@ export default function SocialProfileForm(
                 )}
               </Listbox>
               {(socialProfileData.purpose && socialProfileData.purpose.length > 0) && (
-              <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-sm  text-gray-600 dark:text-gray-400">
                 Currently set to
                 {' '}
                 &#34;
@@ -805,7 +805,7 @@ export default function SocialProfileForm(
                 )}
               </Listbox>
               {(socialProfileData.location && socialProfileData.location.length > 0) && (
-              <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-sm  text-gray-600 dark:text-gray-400">
                 Currently set to
                 {' '}
                 &#34;
@@ -824,7 +824,7 @@ export default function SocialProfileForm(
                 className="block text-md font-medium text-gray-700 dark:text-gray-300"
               >
                 TimeZone
-                <p className="mt-2 text-sm font-mono text-gray-600 dark:text-gray-400">
+                <p className="mt-2 text-sm  text-gray-600 dark:text-gray-400">
                   {profileTimezone}
                   {' '}
                   timezone detected.

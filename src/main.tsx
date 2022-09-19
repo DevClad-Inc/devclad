@@ -10,6 +10,7 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import '@/root.css';
 import '@/clash-display.css';
+import '@/jet-brains-mono.css';
 import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
 import { SpeedProvider } from '@/context/Speed.context';
