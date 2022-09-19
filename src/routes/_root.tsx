@@ -43,6 +43,9 @@ function Routing(): JSX.Element {
 
   // CASE 1: UNAUTHED
   if (!authed && qc.getQueryData(['user']) === null) {
+    if (pathname !== '/login' && pathname !== '/signup') {
+      navigate('/login');
+    }
     return (
       <Outlet />
     );
