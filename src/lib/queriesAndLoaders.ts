@@ -5,7 +5,7 @@ import {
   getProfile, getSocialProfile, getStatus, getUsernameProfile, getUsernameSocialProfile,
 } from '@/services/profile.services';
 
-// ! not using loaders yet
+// ! only using social profile loader rn
 
 export const userQuery = () => ({
   queryKey: ['user'],
@@ -64,3 +64,19 @@ export const statusLoader = (qc: QueryClient) => async () => (
   qc.getQueryData(statusQuery().queryKey)
   ?? (await qc.fetchQuery(statusQuery()))
 );
+
+export const profileUsernameLoader = (
+  qc: QueryClient,
+) => async (username: string) => {
+  const query = profileUsernameQuery(username);
+  return qc.getQueryData(query.queryKey)
+    ?? (await qc.fetchQuery(query));
+};
+
+export const socialProfileUsernameLoader = (
+  qc: QueryClient,
+) => async (username: string) => {
+  const query = socialProfileUsernameQuery(username);
+  return qc.getQueryData(query.queryKey)
+    ?? (await qc.fetchQuery(query));
+};

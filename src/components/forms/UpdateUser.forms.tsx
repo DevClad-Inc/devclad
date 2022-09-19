@@ -8,9 +8,10 @@ import { del } from 'idb-keyval';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { updateUser } from '@/services/auth.services';
 import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
-import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
+import LoadingCard from '../LoadingCard';
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {
@@ -81,7 +82,7 @@ export default function UpdateUserForm(): JSX.Element {
     }
   };
   if (userQueryLoading) {
-    return <LoadingButton />;
+    return <LoadingCard />;
   }
   return (
     <Formik

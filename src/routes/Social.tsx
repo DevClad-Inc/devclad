@@ -9,13 +9,14 @@ import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import classNames from '@/lib/ClassNames.lib';
 import {
   altString,
-  greenString, LoadingButton, redString, warningString,
+  greenString, redString, warningString,
 } from '@/lib/Buttons.lib';
 import { useOneOneProfile, useOneOneUsernames } from '@/services/socialHooks.services';
 import {
   initialUserState, MatchProfile, User,
 } from '@/lib/InterfacesStates.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
+import LoadingCard from '@/components/LoadingCard';
 
 const tabs = [
   { name: '1-on-1', href: '/social' },
@@ -26,11 +27,9 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
   const profile = useOneOneProfile(username) as MatchProfile;
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', username]);
-  if (state && (state.status === 'loading')) {
+  if ((state?.status === 'loading' || state?.status !== 'success') || profile === null) {
     return (
-      <div className="flex p-4 flex-col items-center justify-center w-full h-full">
-        <LoadingButton />
-      </div>
+      <LoadingCard />
     );
   }
   if (profile) {
@@ -127,6 +126,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
 
 export default function Social(): JSX.Element {
   useDocumentTitle('Social Mode');
+  const qc = useQueryClient();
   const { usernames } = useOneOneUsernames();
   let loggedInUser: User = { ...initialUserState };
   const {
@@ -137,6 +137,7 @@ export default function Social(): JSX.Element {
     loggedInUser = userQueryData.data;
   }
   const { pathname } = useLocation();
+  const state = qc.getQueryState(['matches']);
   return (
     <>
       <div className="justify-center flex">
@@ -174,6 +175,11 @@ export default function Social(): JSX.Element {
           </div>
         </div>
       </div>
+      {
+       ((state?.status === 'loading' || state?.status !== 'success') || usernames === null) && (
+       <LoadingCard />
+       )
+       }
       {
         usernames?.map((username) => (
           <MatchCard key={username} username={username} />

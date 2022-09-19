@@ -7,13 +7,14 @@ import {
 } from 'formik';
 import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
-import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Profile, initialProfileState, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { Error, Success } from '@/lib/Feedback.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { profileQuery } from '@/lib/queriesAndLoaders';
+import LoadingCard from '../LoadingCard';
 
 export default function UpdateProfileForm(): JSX.Element {
   let profileData: Profile = { ...initialProfileState };
@@ -233,7 +234,7 @@ export default function UpdateProfileForm(): JSX.Element {
   }
   return (
     <div className="flex justify-center items-center">
-      <LoadingButton />
+      <LoadingCard />
     </div>
   );
 }

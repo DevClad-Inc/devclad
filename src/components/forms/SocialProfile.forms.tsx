@@ -9,7 +9,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { initialSocialProfileState, SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { updateSocialProfile } from '@/services/profile.services';
-import { LoadingButton, PrimaryButton } from '@/lib/Buttons.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
 import Countries from '@/lib/list/Countries.list.json';
 import Languages from '@/lib/list/Languages.list.json';
@@ -17,6 +17,7 @@ import Purposes from '@/lib/list/Purpose.list.json';
 
 import classNames from '@/lib/ClassNames.lib';
 import { socialProfileQuery } from '@/lib/queriesAndLoaders';
+import LoadingCard from '../LoadingCard';
 
 export const devType = [
   { name: 'AI', id: 0 },
@@ -148,7 +149,7 @@ export default function SocialProfileForm(
   if (socialProfileQueryLoading) {
     return (
       <div className="flex justify-center items-center">
-        <LoadingButton />
+        <LoadingCard />
       </div>
     );
   }
