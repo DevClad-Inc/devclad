@@ -15,22 +15,21 @@ import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
 import { SpeedProvider } from '@/context/Speed.context';
 import Root from '@/routes/_root';
-// import FourOFour from './routes/404';
-import { ForgotPassword, PassReset } from './routes/PasswordReset';
-import VerifyEmail from './routes/VerifyEmail';
-import { Onboarding, StepOne, StepTwo } from './routes/Onboarding';
-import Social from './routes/Social';
-import Hackathons from './components/Hackathons';
-import Projects from './components/Projects';
+import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
+import VerifyEmail from '@/routes/VerifyEmail';
+import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
+import Social from '@/routes/Social';
+import Hackathons from '@/components/Hackathons';
+import Projects from '@/components/Projects';
 import {
   Settings, AccountProfile, SocialProfile, Password,
-} from './routes/Settings';
-import Home from './routes/Home';
-import { LoadingButton } from './lib/Buttons.lib';
-import { socialProfileLoader } from './lib/queriesAndLoaders';
-import Login from './routes/Login';
-import Signup from './routes/Signup';
-import FourOFour from './routes/404';
+} from '@/routes/Settings';
+import Home from '@/routes/Home';
+import { socialProfileLoader } from '@/lib/queriesAndLoaders';
+import Login from '@/routes/Login';
+import Signup from '@/routes/Signup';
+import FourOFour from '@/routes/404';
+import LoadingCard from '@/components/LoadingCard';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -125,7 +124,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <UserProvider>
         <SpeedProvider>
           <ThemeProvider>
-            <RouterProvider router={router} fallbackElement={<LoadingButton />} />
+            <RouterProvider router={router} fallbackElement={<LoadingCard />} />
           </ThemeProvider>
         </SpeedProvider>
       </UserProvider>
