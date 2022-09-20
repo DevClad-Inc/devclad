@@ -7,7 +7,6 @@ import {
 import {
   QueryClient, QueryClientProvider,
 } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import '@/root.css';
 import '@/clash-display.css';
 import '@/jet-brains-mono.css';
@@ -128,7 +127,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </ThemeProvider>
         </SpeedProvider>
       </UserProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
 );

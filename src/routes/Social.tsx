@@ -63,23 +63,25 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                   {profile.about}
                 </p>
               </div>
-              <div className="justify-evenly mt-5 flex">
-                <button
-                  type="button"
-                  className={altString}
-                >
-                  <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                  Chat with
-                  {' '}
-                  {profile.first_name}
-                </button>
-                <button
-                  type="button"
-                  className={altString}
-                >
-                  <VideoCameraIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                  Schedule Meeting
-                </button>
+              <div className="justify-center lg:justify-end mt-5 flex">
+                <div className="flex flex-col mr-2">
+                  <button
+                    type="button"
+                    className={altString}
+                  >
+                    <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+                    Chat
+                  </button>
+                </div>
+                <div className="flex flex-col">
+                  <button
+                    type="button"
+                    className={altString}
+                  >
+                    <VideoCameraIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+                    Schedule Meeting
+                  </button>
+                </div>
               </div>
             </div>
           </div>

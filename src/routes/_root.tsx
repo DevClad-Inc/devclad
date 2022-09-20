@@ -77,10 +77,18 @@ function Routing(): JSX.Element {
 export default function Root(): JSX.Element {
   // todo: add splash screen
   const { darkMode } = React.useContext(ThemeContext);
+  React.useEffect(() => {
+    if (!darkMode) {
+      document.getElementById('body')?.classList.remove('bg-darkBG');
+      console.log(document.getElementById('body'));
+    } else {
+      document.getElementById('body')?.classList.add('bg-darkBG');
+    }
+  }, [darkMode]);
   return (
-    <div className={clsx('h-screen', { dark: darkMode })}>
+    <div className={clsx('h-full', { dark: darkMode })}>
       <div
-        className="h-screen overflow-y-auto overflow-x-hidden scrollbar font-system subpixel-antialiased
+        className="overflow-y-auto font-system subpixel-antialiased
          bg-whitewhite dark:bg-darkBG dark:text-white"
       >
         <Toaster
