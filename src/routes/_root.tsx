@@ -80,7 +80,6 @@ export default function Root(): JSX.Element {
   React.useEffect(() => {
     if (!darkMode) {
       document.getElementById('body')?.classList.remove('bg-darkBG');
-      console.log(document.getElementById('body'));
     } else {
       document.getElementById('body')?.classList.add('bg-darkBG');
     }
@@ -88,7 +87,7 @@ export default function Root(): JSX.Element {
   return (
     <div className={clsx('h-full', { dark: darkMode })}>
       <div
-        className="overflow-y-auto font-system subpixel-antialiased
+        className="font-system subpixel-antialiased
          bg-whitewhite dark:bg-darkBG dark:text-white"
       >
         <Toaster

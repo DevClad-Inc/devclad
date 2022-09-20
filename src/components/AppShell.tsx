@@ -1,10 +1,8 @@
-import React, { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
-  HomeIcon, UsersIcon, FireIcon, FolderIcon, XMarkIcon,
-  Bars3Icon,
+  HomeIcon, UsersIcon, FireIcon, FolderIcon,
 } from '@heroicons/react/24/solid';
 
 import DevCladLogo from '@/assets/devclad.svg';
@@ -32,7 +30,6 @@ const navigation = [
 ];
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
-  const qc = useQueryClient();
   let loggedInUser: User = { ...initialUserState };
   const {
     data: userQueryData,
@@ -49,129 +46,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   if (profileQuerySuccess && profileQueryData !== null) {
     profileData = profileQueryData.data;
   }
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [sidebarExpand, setSidebarExpand] = React.useState(true);
 
   const pageTitle = (document.title).slice(10);
 
   return (
     <div className="h-full flex">
-      <Transition.Root show={sidebarOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-opacity ease-linear duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-transparent backdrop-blur-sm" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 flex z-40">
-            <Transition.Child
-              as={Fragment}
-              enter="transition ease-in-out duration-300 transform"
-              enterFrom="-translate-x-full"
-              enterTo="translate-x-0"
-              leave="transition ease-in-out duration-300 transform"
-              leaveFrom="translate-x-0"
-              leaveTo="-translate-x-full"
-            >
-              <Dialog.Panel className="relative flex-1 flex flex-col max-w-xs w-full bg-indigo-700">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-in-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in-out duration-300"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <div className="absolute top-0 right-0 -mr-12 pt-2">
-                    <button
-                      type="button"
-                      className="ml-1 flex items-center justify-center h-10 w-10
-                      rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                      onClick={() => setSidebarOpen(false)}
-                    >
-                      <span className="sr-only">Close sidebar</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-                </Transition.Child>
-                <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto scrollbar">
-                  <div className="flex-shrink-0 flex items-center px-4">
-                    <img
-                      className="mx-auto h-24 w-auto"
-                      src={DevCladLogo}
-                      alt="DevClad"
-                    />
-                  </div>
-                  <nav className="mt-5 px-2 space-y-1">
-                    {navigation.map((item) => (
-                      <NavLink
-                        key={item.name}
-                        to={item.href}
-                        onClick={() => setSidebarOpen(false)}
-                        className={({ isActive }) => classNames(
-                          isActive
-                            ? 'bg-fuchsia-800'
-                            : 'hover:bg-fuchsia-600 hover:bg-opacity-75',
-                          'group flex items-center px-2 py-2 text-base font-medium rounded-md',
-                        )}
-                        end
-                      >
-                        <item.icon
-                          className="mr-4 flex-shrink-0 h-6 w-6 text-fuchsia-300"
-                          aria-hidden="true"
-                        />
-
-                        {item.name}
-                      </NavLink>
-                    ))}
-                  </nav>
-                </div>
-                <div
-                  onMouseEnter={() => { qc.prefetchQuery(['profile']); }}
-                  className="flex-shrink-0 flex border-t border-fuchsia-800 p-4"
-                >
-                  <Link
-                    to="/settings"
-                    onClick={() => setSidebarOpen(false)}
-                    className="flex-shrink-0 group block"
-                  >
-                    <div className="flex items-center">
-                      <div>
-                        <img
-                          className="inline-block h-10 w-10 rounded-full bg-white"
-                          src={
-                            import.meta.env.VITE_DEVELOPMENT
-                              ? (import.meta.env.VITE_API_URL + profileData.avatar)
-                              : profileData.avatar
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-base font-medium">{loggedInUser && loggedInUser.first_name}</p>
-                        <p className="text-sm font-medium text-indigo-200 group-hover:text-white">Settings</p>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-            <div className="flex-shrink-0 w-14" aria-hidden="true">
-              {/* Force sidebar to shrink to fit close icon */}
-            </div>
-          </div>
-        </Dialog>
-      </Transition.Root>
-
-      {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
         <div className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2">
           <div className="flex-1 flex flex-col pt-5 overflow-y-hidden">
@@ -251,15 +131,37 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         'flex flex-col flex-1',
       )}
       >
-        <div className="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-transparent backdrop-blur-sm">
-          <button
-            type="button"
-            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-transparent"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <span className="sr-only">Open sidebar</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-          </button>
+        <div className="md:hidden">
+          <div className="fixed inset-x-0 bottom-0 z-10 flex-shrink flex">
+            <div className="w-full">
+              <nav
+                className="flex backdrop-blur-lg bg-gradient-to-tr dark:from-darkBG dark:to-darkBG2
+               border-t dark:border-fuchsia-300/30 rounded-tl-xl shadow-lg
+              "
+                aria-label="Tabs"
+              >
+                {navigation.map((tab) => (
+                  <NavLink
+                    key={tab.name}
+                    to={tab.href}
+                    className={({ isActive }) => classNames(
+                      isActive
+                        ? 'dark:text-fuchsia-300 text-orange-600'
+                        : 'dark:text-gray-300 dark:hover:bg-gray-900 hover:bg-linen dark:focus:bg-gray-500',
+                      'w-1/4 flex justify-evenly py-3 mb-1 rounded-xl border-t-2 border-transparent',
+                    )}
+                    end
+                  >
+                    <tab.icon
+                      className="flex-shrink-0 h-8 w-8"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">{tab.name}</span>
+                  </NavLink>
+                ))}
+              </nav>
+            </div>
+          </div>
         </div>
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
