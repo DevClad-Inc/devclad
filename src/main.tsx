@@ -10,6 +10,7 @@ import {
 import '@/root.css';
 import '@/clash-display.css';
 import '@/jet-brains-mono.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
 import { SpeedProvider } from '@/context/Speed.context';
@@ -32,7 +33,13 @@ import LoadingCard from '@/components/LoadingCard';
 
 axios.defaults.headers.common.withCredentials = true;
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      networkMode: 'online',
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -127,6 +134,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </ThemeProvider>
         </SpeedProvider>
       </UserProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
 );

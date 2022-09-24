@@ -42,7 +42,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const {
     data: profileQueryData,
     isSuccess: profileQuerySuccess,
-  } = useQuery(profileQuery());
+  } = useQuery({
+    ...profileQuery(),
+  });
   if (profileQuerySuccess && profileQueryData !== null) {
     profileData = profileQueryData.data;
   }
@@ -172,7 +174,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               <hr className="my-6 border-1 border-gray-200 dark:border-gray-800" />
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <div className="py-4">
+              <div className="py-4 mb-12">
                 <QueryLoader />
                 {children}
               </div>

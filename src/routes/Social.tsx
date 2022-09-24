@@ -37,7 +37,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
       <div>
         <div className="justify-center flex p-4">
 
-          <div className="dark:bg-darkBG2 shadow rounded-xl md:w-3/4 sm:w-full">
+          <div className="dark:bg-darkBG2 shadow rounded-xl lg:w-3/4 w-full">
             <div className="px-4 py-5 sm:p-6">
               <div className="inline-flex">
                 <div className="flex flex-col">
@@ -165,14 +165,12 @@ export default function Social(): JSX.Element {
       </div>
 
       <div className="justify-center flex p-4">
-        <div className="dark:bg-darkBG2 shadow rounded-xl md:w-3/4 sm:w-full">
-          <div className="px-4 py-5 sm:p-6">
+        <div className="dark:bg-gradient-to-tr from-darkBG2 to-raisinBlack2 shadow rounded-xl">
+          <div className="px-4 py-4">
             <div className="inline-flex">
-              <div className="flex flex-col">
-                Matches for
-                {' '}
-                {loggedInUser.username}
-              </div>
+              Matches for
+              {' '}
+              {loggedInUser.username}
             </div>
           </div>
         </div>
