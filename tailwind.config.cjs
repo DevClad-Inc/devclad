@@ -52,9 +52,10 @@ module.exports = {
         blackChocolate: '#241B00',
       },
       fontFamily: {
-        system: ['"JetBrainsMono-Variable"', '"JetBrainsMono-VariableItalic"'],
+        system: ['"JetBrainsMono-Variable"'],
+        systemItalic: ['"JetBrainsMono-VariableItalic"'],
         sans: [...defaultTheme.fontFamily.sans],
-        display: ['"ClashDisplay-Variable"'],
+        display: ['"Quilon-Variable"'],
       },
       keyframes: {
         // gradient text animation from #F0C000 to #660C00

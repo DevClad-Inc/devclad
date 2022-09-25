@@ -9,7 +9,7 @@ export default function useAuth() {
   const [authed, setAuthed] = React.useState(false);
   let loggedInUser: User = { ...initialUserState };
   const { isSuccess, data } = useQuery(userQuery());
-  // ASSIGNING
+
   if (isSuccess && data) {
     loggedInUser = data.data;
     const undefinedUser = Object.values(loggedInUser).every(

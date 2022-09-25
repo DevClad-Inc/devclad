@@ -85,7 +85,7 @@ export default function Root(): JSX.Element {
     }
   }, [darkMode]);
   return (
-    <div className={clsx('h-full', { dark: darkMode })}>
+    <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
       <div
         className="font-system subpixel-antialiased
          bg-whitewhite dark:bg-darkBG dark:text-white"
