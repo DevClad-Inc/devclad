@@ -21,9 +21,7 @@
 
 @font-face {
   font-family: 'Quilon-Variable';
-  src: url('./fonts/Quilon-Variable.woff2') format('woff2'),
-       url('./fonts/Quilon-Variable.woff') format('woff'),
-       url('./fonts/Quilon-Variable.ttf') format('truetype');
+  src: url('./fonts/Quilon-Variable.ttf') format('truetype');
        font-weight: 400 800;
        font-display: swap;
        font-style: normal;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   HomeIcon, UsersIcon, FireIcon, FolderIcon,
@@ -53,6 +53,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   const pageTitle = (document.title).slice(10);
 
+  const { pathname } = useLocation();
+  const pathArray = pathname.split('/');
+  pathArray.shift();
   return (
     <div className="h-full flex">
       <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
@@ -82,10 +85,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   to={item.href}
                   className={({ isActive }) => classNames(
                     isActive
-                      ? 'dark:bg-white dark:text-darkBG bg-orange-700/30 text-orange-900'
-                      : 'dark:text-neutral-300 dark:hover:text-neutral-100 text-neutral-700 hover:text-neutral-900',
-                    sidebarExpand ? 'rounded-none' : 'rounded-lg duration-300',
-                    'flex items-center px-5 py-3',
+                      ? 'dark:text-white text-orange-900'
+                      : 'dark:text-neutral-700 dark:hover:text-neutral-100',
+                    sidebarExpand ? 'rounded-none' : 'rounded-lg',
+                    'flex items-center px-5 py-3 duration-300',
                   )}
                   end
                 >
@@ -170,14 +173,57 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
-            {(pageTitle !== 'Social Mode') && (pageTitle !== 'Hackathons') && (pageTitle !== 'Projects') ? (
-              <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
+            <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
+              {(pageTitle !== 'Dashboard') && (
+              <nav className="flex mb-5" aria-label="Breadcrumb">
+                <ol className="flex border-[1px] rounded-md p-2
+                  shadow-2xl shadow-white/20
+                 border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+                >
+                  <li>
+                    <div>
+                      <Link to="/" className="text-white hover:text-orange-300 duration-300">
+                        <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                        <span className="sr-only">Home</span>
+                      </Link>
+                    </div>
+                  </li>
+                  {pathArray.map((page) => (
+                    <li key={page}>
+                      <div className="flex items-center">
+                        <svg
+                          className="h-5 w-5 flex-shrink-0 text-gray-300"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          aria-hidden="true"
+                        >
+                          <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                        </svg>
+                        <NavLink
+                          to={page === '' ? '/' : `/${page}`}
+                          className="ml-2 text-sm font-mono font-medium text-orange-300
+                          hover:text-white duration-300"
+                          aria-current={(pathname === page) ? 'page' : undefined}
+                          end
+                        >
+                          {page}
+                        </NavLink>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+              )}
+              {(pageTitle === 'Dashboard' || pageTitle === 'Settings') && (
+              <>
                 <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
                   {pageTitle}
                 </h1>
                 <hr className="my-6 border-1 border-neutral-200 dark:border-neutral-800" />
-              </div>
-            ) : null}
+              </>
+              )}
+            </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               <div className="py-4 mb-12">
                 <QueryLoader />

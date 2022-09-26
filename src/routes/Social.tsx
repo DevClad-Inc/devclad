@@ -25,8 +25,6 @@ const tabs = [
   { name: 'Circle', href: '/social/circle' },
 ];
 
-// function to map out comm-separated interests
-
 const genExp = (rawXP: number) => {
   if (rawXP === 1) {
     return 'about a year';
@@ -347,7 +345,9 @@ export default function Social(): JSX.Element {
   return (
     <>
       <div className="justify-center flex mb-4">
-        <div className="p-3 text-sm shadow-2xl rounded-md shadow-white/20">
+        <div className="p-3 text-sm shadow-2xl rounded-md shadow-white/10 border-[1px]
+        border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+        >
           <nav className="flex space-x-4" aria-label="Tabs">
             {tabs.map((tab) => (
               <NavLink
@@ -355,9 +355,9 @@ export default function Social(): JSX.Element {
                 to={tab.href}
                 className={classNames(
                   (tab.href === pathname) || (`${tab.href}/` === pathname)
-                    ? 'dark:bg-white dark:text-black bg-orange-700/30 text-orange-900'
-                    : 'dark:text-neutral-400 dark:hover:text-neutral-100 text-neutral-600 hover:text-neutral-900',
-                  'px-2 py-2 font-sans font-bold uppercase text-base rounded-md',
+                    ? ' dark:text-orange-300 hover:text-white'
+                    : 'dark:text-neutral-600 dark:hover:text-neutral-100 text-neutral-600 hover:text-neutral-900',
+                  'px-4 uppercase py-1 font-sans font-bold text-lg rounded-md duration-300',
                 )}
                 aria-current={tab.href ? 'page' : undefined}
               >
