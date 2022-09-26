@@ -175,7 +175,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               {(pageTitle !== 'Dashboard') && (
-              <nav className="flex mb-5" aria-label="Breadcrumb">
+              <nav className="flex mb-5 space-x-2" aria-label="Breadcrumb">
                 <ol className="flex border-[1px] rounded-md p-2
                   shadow-2xl shadow-white/20
                  border-neutral-200 dark:border-neutral-900 items-center space-x-4"
@@ -213,6 +213,26 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     </li>
                   ))}
                 </ol>
+                <span
+                  className="md:flex border-[1px] rounded-md p-2 hidden md:visible
+                shadow-2xl shadow-white/20 text-xs font-mono font-medium text-orange-300
+                hover:text-white duration-300
+                border-neutral-200 dark:border-neutral-900 items-center"
+                >
+                  <kbd className={classNames(
+                    'mx-1 flex h-5 w-8 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
+                  )}
+                  >
+                    Cmd
+                  </kbd>
+                  +
+                  <kbd className={classNames(
+                    'mx-1 flex h-5 w-5 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
+                  )}
+                  >
+                    K
+                  </kbd>
+                </span>
               </nav>
               )}
               {(pageTitle === 'Dashboard' || pageTitle === 'Settings') && (

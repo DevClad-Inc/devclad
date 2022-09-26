@@ -127,8 +127,7 @@ export default function CommandPalette() {
                             (e.currentTarget.parentElement
                               ?.firstElementChild as HTMLElement).focus();
                           }
-                        }
-                        if (e.key === 'ArrowUp') {
+                        } else if (e.key === 'ArrowUp') {
                           e.preventDefault();
                           const prev = e.currentTarget.previousElementSibling;
                           if (prev !== null) {
@@ -137,6 +136,8 @@ export default function CommandPalette() {
                             (e.currentTarget.parentElement
                               ?.lastElementChild as HTMLElement).focus();
                           }
+                        } else if (e.key === 'Enter') {
+                          setOpen(false);
                         }
                       }}
                       className={classNames(
