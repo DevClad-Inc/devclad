@@ -11,6 +11,7 @@ import { UserStatus, initialUserStatus } from '@/lib/InterfacesStates.lib';
 import { refreshToken } from '@/services/auth.services';
 import { getStatus } from '@/services/profile.services';
 import useAuth from '@/services/useAuth.services';
+import CommandPalette from '@/components/CommandPalette';
 
 function Routing(): JSX.Element {
   const navigate = useNavigate();
@@ -102,6 +103,7 @@ export default function Root(): JSX.Element {
           }
           />
           <ScrollRestoration />
+          <CommandPalette />
           <Routing />
         </div>
       </div>

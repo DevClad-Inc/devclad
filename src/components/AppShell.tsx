@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   HomeIcon, UsersIcon, FireIcon, FolderIcon,
-} from '@heroicons/react/24/solid';
+} from '@heroicons/react/24/outline';
 
 import DevCladLogo from '@/assets/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
@@ -95,7 +95,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   <item.icon
                     className={classNames(
                       sidebarExpand ? 'mr-3 h-8 w-8' : 'm-auto h-8 w-8',
-                      'flex-shrink-1',
+                      'flex-shrink-1 stroke-2',
                     )}
                     aria-hidden="true"
                   />
