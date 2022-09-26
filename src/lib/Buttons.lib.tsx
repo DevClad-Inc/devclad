@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 export const primaryString = `border border-transparent bg-orange-700 text-white
-        dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+        dark:bg-darkBG2 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
 
 export const altString = `border border-transparent bg-orange-700/30 text-orange-900
@@ -19,18 +19,14 @@ export const invertString = `border border-transparent bg-black text-white
 dark:bg-white duration-500 rounded-md py-2 px-4
 inline-flex justify-center text-sm font-semibold dark:text-black`;
 
-export const monoString = `border border-transparent bg-orange-700/40 text-orange-900
-dark:bg-orange-900/10 duration-500 rounded-md py-2 px-4
-inline-flex justify-center text-sm font-semibold dark:text-orange-300`;
-
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
 dark:text-saffron dark:bg-blackChocolate`;
 
-export const primaryString2 = `border border-transparent bg-orange-700 text-white
-        dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
+export const primaryString2 = `border dark:border-neutral-900 bg-orange-700 text-white
+        dark:bg-darkBG duration-500 rounded-md py-2 px-4
+        inline-flex justify-center font-semibold dark:text-white`;
 
 export const redString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
@@ -52,8 +48,8 @@ export function PrimaryButton({
       // check if onclick is defined, if not, use handleClick
       disabled={isSubmitting}
       className={classNames(
-        wFull ? 'w-full' : 'w-auto',
-        primaryString2,
+        wFull ? 'w-full' : 'w-auto px-6',
+        altString,
       )}
     >
       {children}
@@ -102,6 +98,21 @@ export function LoadingButton({ children }: { children?: React.ReactNode }) {
     </button>
   );
 }
+
+export const badge = (interests: string, classes: string) => {
+  const interestsArray = interests.split(',');
+  return interestsArray.map((interest) => (
+    <span
+      className={classNames(
+        'inline-flex items-center rounded-md px-3 py-0.5',
+        classes,
+      )}
+      key={interest}
+    >
+      {interest}
+    </span>
+  ));
+};
 PrimaryButton.defaultProps = {
   isSubmitting: false,
   wFull: false,

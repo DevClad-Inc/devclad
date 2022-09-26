@@ -48,7 +48,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   if (profileQuerySuccess && profileQueryData !== null) {
     profileData = profileQueryData.data;
   }
-  const [sidebarExpand, setSidebarExpand] = React.useState(true);
+
+  const [sidebarExpand, setSidebarExpand] = React.useState(false);
 
   const pageTitle = (document.title).slice(10);
 
@@ -56,7 +57,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     <div className="h-full flex">
       <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
         <div className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2
-         border-r-2 border-neutral-900/30"
+         border-l-0 border-r-2 border-white/5 "
         >
           <div className="flex-1 flex flex-col pt-5 overflow-y-hidden">
             <div className="flex items-center flex-shrink-0 px-2">
@@ -83,19 +84,19 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     isActive
                       ? 'dark:bg-white dark:text-darkBG bg-orange-700/30 text-orange-900'
                       : 'dark:text-neutral-300 dark:hover:text-neutral-100 text-neutral-700 hover:text-neutral-900',
-                    sidebarExpand ? 'rounded-md' : 'rounded-xl',
+                    sidebarExpand ? 'rounded-none' : 'rounded-lg duration-300',
                     'flex items-center px-5 py-3',
                   )}
                   end
                 >
                   <item.icon
                     className={classNames(
-                      sidebarExpand ? 'mr-3 h-6 w-6' : 'm-auto h-8 w-8',
+                      sidebarExpand ? 'mr-3 h-8 w-8' : 'm-auto h-8 w-8',
                       'flex-shrink-1',
                     )}
                     aria-hidden="true"
                   />
-                  <span className=" font-bold text-md">{sidebarExpand && item.name}</span>
+                  <span className="text-md font-mono font-bold">{sidebarExpand && item.name}</span>
                 </NavLink>
               ))}
             </nav>
@@ -115,9 +116,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   />
                 </div>
                 {sidebarExpand && (
-                  <div className="ml-3">
-                    <p className="text-sm font-medium">{loggedInUser.first_name}</p>
-                    <p className="text-xs font-medium text-neutral-600 dark:text-orange-300 hover:text-black
+                  <div className="ml-3 font-mono">
+                    <p className="text-sm">{loggedInUser.first_name}</p>
+                    <p className="text-xs text-neutral-600 dark:text-orange-300 hover:text-black
                   dark:group-hover:text-orange-400 duration-300"
                     >
                       Settings
@@ -174,7 +175,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
                   {pageTitle}
                 </h1>
-                <hr className="my-6 border-1 border-gray-200 dark:border-gray-800" />
+                <hr className="my-6 border-1 border-neutral-200 dark:border-neutral-800" />
               </div>
             ) : null}
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">

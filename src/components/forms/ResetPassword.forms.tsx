@@ -95,7 +95,7 @@ export default function PasswordResetForm(): JSX.Element {
               <label
                 htmlFor="password1"
                 className="block text-md text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
               >
                 New Password
                 <Field
@@ -106,8 +106,8 @@ export default function PasswordResetForm(): JSX.Element {
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 <ErrorMessage
                   name="password1"
@@ -123,7 +123,7 @@ export default function PasswordResetForm(): JSX.Element {
               <label
                 htmlFor="password2"
                 className="block text-md text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
               >
                 Confirm Password
                 <Field
@@ -134,8 +134,8 @@ export default function PasswordResetForm(): JSX.Element {
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 <ErrorMessage
                   name="password2"
@@ -148,14 +148,14 @@ export default function PasswordResetForm(): JSX.Element {
           <div>
             {!resetDone
               ? (
-                <div className="flex justify-center">
+                <div className="flex text-sm justify-center">
                   <PrimaryButton
                     isSubmitting={isSubmitting}
                   >
-                    <span className="font-bold text-md">
+                    <span>
                       {isSubmitting ? 'Switching Password...' : 'Switch Password'}
                       {' '}
-                      <span className="text-md">🔐</span>
+                      <span>🔐</span>
                     </span>
                   </PrimaryButton>
                 </div>
@@ -164,8 +164,8 @@ export default function PasswordResetForm(): JSX.Element {
                 <Link className="flex justify-center" to="/">
                   <span
                     className="mt-5 border border-transparent bg-orange-700
-                    dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-orange-300"
+                    dark:bg-darkBG duration-500 rounded-md py-2 px-4
+                    inline-flex justify-center text-sm dark:text-orange-300"
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">
@@ -239,7 +239,7 @@ export function ForgotPasswordForm(): JSX.Element {
             <label
               htmlFor="email"
               className="block text-md text-left pl-1
-              font-medium text-neutral-700 dark:text-neutral-300"
+               text-neutral-700 dark:text-neutral-300"
             >
               Email
               <div className="mt-1 relative">
@@ -250,8 +250,8 @@ export function ForgotPasswordForm(): JSX.Element {
                   placeholder="cactus@jack.com"
                   autoComplete="email"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
               </div>
               <ErrorMessage
@@ -281,7 +281,7 @@ export function ForgotPasswordForm(): JSX.Element {
                 <div className="flex justify-center">
                   <span
                     className="mt-5 border border-transparent bg-orange-700
-                    dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+                    dark:bg-darkBG duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-orange-300"
                   >
                     <div className="flex">

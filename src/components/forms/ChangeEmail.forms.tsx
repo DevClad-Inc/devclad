@@ -126,8 +126,8 @@ export default function ChangeEmailForm(): JSX.Element {
                 placeholder={loggedInUser.email ? loggedInUser.email : 'cactus@jack.com'}
                 autoComplete="email"
                 required
-                className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none
+                className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none
                     focus:border-orange-500 focus:ring-orange-500"
               />
               <ErrorMessage
@@ -146,7 +146,7 @@ export default function ChangeEmailForm(): JSX.Element {
                     <span
                       className="inline-flex w-full items-center justify-center
                   sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm bg-orange-700 text-white
-                  dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+                  dark:bg-darkBG duration-500 rounded-md py-2 px-4
                   text-sm dark:text-orange-300"
                     >
                       <div className="flex">
@@ -171,7 +171,7 @@ export default function ChangeEmailForm(): JSX.Element {
                   <PrimaryButton
                     isSubmitting={isSubmitting}
                   >
-                    <span className="font-bold text-md">
+                    <span>
                       {isSubmitting ? 'Updating Email...' : 'Update Email ✨'}
                     </span>
                   </PrimaryButton>

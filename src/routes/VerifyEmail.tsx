@@ -49,7 +49,7 @@ export default function VerifyEmail(): JSX.Element {
           width="1090"
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-        stroke-gray-300/30
+        stroke-neutral-300/30
         dark:stroke-orange-800/30 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
@@ -73,7 +73,7 @@ export default function VerifyEmail(): JSX.Element {
         <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Verification</h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
           <Link
-            className="font-medium text-orange-700 dark:text-orange-300"
+            className=" text-orange-700 dark:text-orange-300"
             to="/"
           >
             Login
@@ -86,7 +86,7 @@ export default function VerifyEmail(): JSX.Element {
                 <div className="text-center">
                   <span
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
-                    text-sm font-medium text-green-800 bg-green-50
+                    text-sm  text-green-800 bg-green-50
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
                   >
@@ -105,7 +105,7 @@ export default function VerifyEmail(): JSX.Element {
                   <Link to="/" className="items-center">
                     <span
                       className="mt-5 border border-transparent bg-orange-700
-                dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+                dark:bg-darkBG duration-500 rounded-md py-2 px-4
                 inline-flex justify-center text-sm font-bold dark:text-orange-300"
                     >
                       <div className="flex">

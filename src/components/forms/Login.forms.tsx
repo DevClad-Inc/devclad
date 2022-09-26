@@ -70,7 +70,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
             <label
               htmlFor="email"
               className="block text-sm text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
             >
               Email
               <div className="mt-1 relative">
@@ -81,8 +81,8 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                   placeholder="work@devclad.com"
                   autoComplete="email"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {loginError && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -102,7 +102,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
             <label
               htmlFor="password"
               className="block text-sm text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
             >
               Password
               <div className="mt-1 relative">
@@ -113,8 +113,8 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {loginError && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -132,7 +132,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
 
           <div className="inline-flex items-center">
             <div className="text-sm">
-              <Link to="/forgot-password" className="font-medium text-orange-700 dark:text-orange-300">
+              <Link to="/forgot-password" className=" text-orange-700 dark:text-orange-300">
                 Forgot your password?
               </Link>
             </div>

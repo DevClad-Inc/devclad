@@ -28,7 +28,7 @@ function Login() {
           width="1090"
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-gray-300/30
+          stroke-neutral-300/30
           dark:stroke-orange-800/30 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
@@ -54,7 +54,7 @@ function Login() {
           Not a member?
           {' '}
           <Link
-            className="font-medium text-orange-700 dark:text-orange-300"
+            className=" text-orange-700 dark:text-orange-300"
             to="/signup"
           >
             Join DevClad
@@ -71,7 +71,7 @@ function Login() {
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
+                    <div className="w-full border-t border-neutral-300" />
                   </div>
                   <div className="relative flex justify-center text-sm">
                     <span className="px-2 bg-white dark:bg-darkBG

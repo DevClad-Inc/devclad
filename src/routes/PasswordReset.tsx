@@ -16,7 +16,7 @@ export function PassReset() {
           width="1090"
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-gray-300/30
+          stroke-neutral-300/30
           dark:stroke-orange-800/20 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
@@ -39,7 +39,7 @@ export function PassReset() {
         </div>
         <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Reset Password</h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-          <Link className="font-medium text-orange-700 dark:text-orange-300" to="/">Sign in to DevClad</Link>
+          <Link className=" text-orange-700 dark:text-orange-300" to="/">Sign in to DevClad</Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -73,7 +73,7 @@ export function ForgotPassword() : JSX.Element {
           width="1090"
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-gray-300/30
+          stroke-neutral-300/30
           dark:stroke-orange-800/20 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
@@ -98,7 +98,7 @@ export function ForgotPassword() : JSX.Element {
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
           Not a member?
           {' '}
-          <Link className="font-medium text-orange-700 dark:text-orange-300" to="/signup">Join DevClad</Link>
+          <Link className=" text-orange-700 dark:text-orange-300" to="/signup">Join DevClad</Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-lg">

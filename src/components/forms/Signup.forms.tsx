@@ -111,7 +111,7 @@ export default function SignupForm(
             <label
               htmlFor="firstName"
               className="block text-sm text-left pl-1
-            font-medium text-neutral-700 dark:text-neutral-300"
+             text-neutral-700 dark:text-neutral-300"
             >
               First Name
               <div className="mt-1 relative">
@@ -122,8 +122,8 @@ export default function SignupForm(
                   placeholder="Ye"
                   autoComplete="First Name"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -143,7 +143,7 @@ export default function SignupForm(
             <label
               htmlFor="lastName"
               className="block text-sm text-left pl-1
-              font-medium text-neutral-700 dark:text-neutral-300"
+               text-neutral-700 dark:text-neutral-300"
             >
               Last Name
               <div className="mt-1 relative">
@@ -154,8 +154,8 @@ export default function SignupForm(
                   placeholder="West"
                   autoComplete="Last Name"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -175,7 +175,7 @@ export default function SignupForm(
             <label
               htmlFor="email"
               className="block text-sm text-left pl-1
-              font-medium text-neutral-700 dark:text-neutral-300"
+               text-neutral-700 dark:text-neutral-300"
             >
               Email
               <div className="mt-1 relative">
@@ -186,8 +186,8 @@ export default function SignupForm(
                   placeholder="cactus@jack.com"
                   autoComplete="email"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -207,7 +207,7 @@ export default function SignupForm(
             <label
               htmlFor="password1"
               className="block text-sm text-left pl-1
-              font-medium text-neutral-700 dark:text-neutral-300"
+               text-neutral-700 dark:text-neutral-300"
             >
               Password
               <div className="mt-1 relative">
@@ -219,8 +219,8 @@ export default function SignupForm(
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -245,7 +245,7 @@ export default function SignupForm(
             <label
               htmlFor="password2"
               className="block text-sm text-left pl-1
-              font-medium text-neutral-700 dark:text-neutral-300"
+               text-neutral-700 dark:text-neutral-300"
             >
               Confirm Password
               <div className="mt-1 relative">
@@ -256,8 +256,8 @@ export default function SignupForm(
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
                   required
-                  className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                    dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -293,7 +293,7 @@ export default function SignupForm(
                 <button type="button" onClick={() => resendEmail(emailVal)}>
                   <span
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
-                    text-sm font-medium text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
+                    text-sm  text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
                   >
@@ -312,7 +312,7 @@ export default function SignupForm(
                   </span>
                   <span
                     className="mt-5 border border-transparent bg-orange-700
-                    dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
+                    dark:bg-darkBG duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-orange-300"
                   >
                     <div className="flex">

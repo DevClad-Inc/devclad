@@ -4,13 +4,14 @@ import {
   XCircleIcon, ChatBubbleBottomCenterIcon, ExclamationTriangleIcon, PlusCircleIcon,
   VideoCameraIcon,
   CalendarIcon,
+  ArrowUpRightIcon,
 } from '@heroicons/react/24/solid';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import classNames from '@/lib/ClassNames.lib';
 import {
-  monoString,
-  greenString, redString, warningString,
+  altString,
+  greenString, redString, warningString, badge, primaryString2,
 } from '@/lib/Buttons.lib';
 import { useOneOneProfile, useOneOneUsernames } from '@/services/socialHooks.services';
 import {
@@ -23,6 +24,22 @@ const tabs = [
   { name: '1-on-1', href: '/social' },
   { name: 'Circle', href: '/social/circle' },
 ];
+
+// function to map out comm-separated interests
+
+const genExp = (rawXP: number) => {
+  if (rawXP === 1) {
+    return 'about a year';
+  }
+  return `${rawXP} years`;
+};
+
+const genIdea = (idea: string) => {
+  if (idea.includes('need')) {
+    return 'I';
+  }
+  return 'I am';
+};
 
 function MatchCard({ username }:{ username:string }): JSX.Element {
   const profile = useOneOneProfile(username) as MatchProfile;
@@ -38,8 +55,8 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
       <div>
         <div className="justify-center flex p-0 lg:p-4">
 
-          <div className="dark:bg-darkBG shadow rounded-lg lg:w-3/4 w-full">
-            <div className="px-4 py-5 sm:p-6">
+          <div className="border-[1px] dark:border-neutral-900 bg-darkBG2 border-neutral-400 shadow rounded-md lg:w-3/4 w-full">
+            <div className="px-4 py-5 sm:p-6 space-y-2">
               <div className="sm:inline-flex">
                 <div className="flex flex-col">
                   <div className="flex-shrink-0">
@@ -54,7 +71,9 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                     />
                   </div>
                 </div>
-                <h2 className="ml-4 mt-8 font-display text-3xl leading-6 font-medium text-neutral-900 dark:text-neutral-100">
+                <h2 className="sm:ml-4 mt-4 font-sans text-2xl sm:text-3xl leading-6 font-black
+                 text-neutral-900 dark:text-neutral-100"
+                >
                   {profile.first_name}
                   {' '}
                   {profile.last_name}
@@ -62,10 +81,23 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                   <div className="inline-flex ml-1 text-neutral-600 dark:text-neutral-400 text-base">
                     {profile.pronouns ? `(${profile.pronouns})` : ''}
                   </div>
+                  {profile.video_call_friendly && (
+                  <span className="sm:mt-0 sm:mb-0 mt-5 mb-5 block">
+                    <div className="-mt-4 flex-shrink-0">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-md
+                        text-xs font-medium bg-phthaloGreen text-honeyDew"
+                      >
+                        👋 Video Call Friendly
+                      </span>
+                    </div>
+                  </span>
+                  )}
                 </h2>
+
               </div>
-              <div className="sm:ml-24 mt-4 sm:mt-0 text-lg rounded-lg dark:bg-black/50
-               p-4 text-neutral-800 dark:text-neutral-200"
+              <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+               p-4 text-neutral-800 dark:text-neutral-200
+               border-[1px] border-neutral-200 dark:border-neutral-900"
               >
                 <div className="font-monoItalic">
                   <p>
@@ -75,34 +107,17 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                   </p>
                 </div>
               </div>
-              <div className="sm:ml-20 -ml-4 space-y-4 rounded-md p-4 flex flex-col">
-                {/* TODO: add GITHUB */}
-                <div className="flex flex-row space-x-2 text-sm sm:text-lg">
-                  {(profile.location && profile.location !== 'Other')
-                      && (
-                      <div className="flex bg-black/50 text-amber-200 p-2 rounded-md">
-                        🌎
-                        {' '}
-                        {profile.location}
-                      </div>
-                      )}
-                  <div className="flex bg-black/50 text-amber-200 p-2 rounded-md">
-                    🕛
-                    {' '}
-                    {profile.timezone}
-                  </div>
-                </div>
-
-                <div className="flex flex-row space-x-2 text-lg">
+              <div className="sm:ml-20 -ml-4 space-y-4 rounded-md pt-4 pl-4 flex flex-col">
+                <div className="flex flex-row space-x-2 text-sm">
                   {profile.calendly && (
                   <div className="flex bg-blue-800/20 text-blue-400 p-2 rounded-md">
                     <button
                       type="button"
-                      className="flex flex-row space-x-2"
+                      className="flex flex-row space-x-1"
                       onClick={() => window.open(profile.calendly, '_blank')}
                     >
-                      <CalendarIcon className="h-8 w-6" aria-hidden="true" />
-                      <span className="font-medium">Calendly</span>
+                      <CalendarIcon className="h-6 w-5" aria-hidden="true" />
+                      <span className="">Calendly</span>
                     </button>
                   </div>
                   )}
@@ -113,7 +128,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                       className="flex flex-row"
                       onClick={() => window.open(profile.linkedin, '_blank')}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 24">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 24">
                         <path
                           className="fill-blue-400"
                           d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762
@@ -123,46 +138,151 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                           7-2.777 7 2.476v6.759z"
                         />
                       </svg>
-                      <span className="font-medium">LinkedIn</span>
+                      <span className="">LinkedIn</span>
                     </button>
                   </div>
                   )}
                 </div>
               </div>
-              <div className="sm:ml-24 text-lg rounded-lg dark:bg-black/50
-               p-4 text-neutral-800 dark:text-neutral-200"
-              >
-                <div>
-                  <div className="flex flex-col">
-                    {/* TODO: add GITHUB */}
+              <div className="sm:ml-20 -ml-4 space-y-2 pb-4 rounded-md pl-4 flex flex-col">
+                <div className="flex flex-row space-x-2 text-sm sm:text-md font-mono">
+                  {profile.languages && badge(
+                    profile.languages,
+                    'bg-darkBG font-medium text-amber-200',
+                  )}
+                </div>
 
-                    <div className=" ">{profile.dev_type}</div>
-                    <div className=" ">{profile.preferred_dev_type}</div>
-                    <div className=" ">{profile.idea_status}</div>
-                    <div className="">{profile.video_call_friendly === true ? 'Video Call Friendly' : 'Not Video Call Friendly'}</div>
-                    <div className="">{profile.languages}</div>
-                    <div className="">{profile.raw_xp}</div>
-                    <div className="">{profile.website}</div>
-                    <div className="">{profile.purpose}</div>
+                {/* TODO: add GITHUB */}
+                <div className="flex flex-row space-x-2 text-sm sm:text-md">
+                  {(profile.location && profile.location !== 'Other')
+                      && (
+                      <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
+                        🌎
+                        {' '}
+                        {profile.location}
+                      </div>
+                      )}
+                  <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
+                    🕛
+                    {' '}
+                    {profile.timezone}
+                    {' '}
+                    Time
+                  </div>
+                </div>
+
+              </div>
+              <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+               p-4 text-neutral-800 dark:text-neutral-200
+               border-[1px] border-neutral-200 dark:border-neutral-900"
+              >
+                <div className="flex flex-col">
+                  {/* TODO: add GITHUB */}
+                  <div className="space-y-2 bg-darkBG">
+                    {!profile.website && (
+                    <button
+                      type="button"
+                      className="flex bg-black
+                      p-2 text-sm rounded-sm"
+                    >
+                      <ArrowUpRightIcon className="h-6 w-4 mr-1" aria-hidden="true" />
+                      <a href={profile.website} target="_blank" rel="noreferrer">
+                        Link by
+                        {' '}
+                        {profile.first_name}
+                        {' '}
+                      </a>
+                    </button>
+                    )}
+                    <span className="block">
+                      ⚡
+                      {' '}
+                      {profile.first_name}
+                      {' '}
+                      is good at
+                      {' '}
+                      {profile.dev_type && badge(
+                        profile.dev_type,
+                        'lg:ml-1 bg-darkBG2 text-sm font-mono font-medium text-amber-200',
+                      )}
+                      {' '}
+                    </span>
+                    <span className="block">
+                      🧲 Interested in working with
+                      {' '}
+                      {profile.preferred_dev_type}
+                      {' '}
+                      developers.
+                    </span>
+                    <span className="block">
+                      ⚒️ Hacking stuff together for
+                      {' '}
+                      {profile.raw_xp && genExp(profile.raw_xp)}
+                      {' '}
+                      now.
+                    </span>
+
                   </div>
                 </div>
               </div>
-              <div className="lg:ml-24 justify-start mt-5 flex">
-                <div className="flex flex-col mr-2">
+              <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+               p-4 text-neutral-800 dark:text-neutral-200
+               border-[1px] border-neutral-200 dark:border-neutral-900"
+              >
+                <div className="flex flex-col">
+                  <div className="space-y-2 font-monoItalic bg-darkBG">
+                    <span className="block">
+                      &quot;
+                      {profile.idea_status && genIdea(profile.idea_status)}
+                      {' '}
+                      <span className="lowercase">
+                        {profile.idea_status}
+                      </span>
+                      &quot;
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+               p-4 text-neutral-800 dark:text-neutral-200
+               border-[1px] border-neutral-200 dark:border-neutral-900"
+              >
+                <div className="flex flex-col">
+                  <div className="space-y-2 bg-darkBG">
+                    {profile.purpose && (
+                    <span className="block space-y-2">
+                      <span className="flex">
+                        Why is
+                        {' '}
+                        {profile.first_name}
+                        {' '}
+                        here?
+                      </span>
+                      <span className="flex space-x-2">
+                        {badge(profile.purpose, 'bg-darkBG2 text-sm font-mono font-medium text-amber-200')}
+                      </span>
+                    </span>
+                    )}
+                  </div>
+
+                </div>
+              </div>
+              <div className="sm:ml-24 text-md pt-4 space-x-2 justify-start flex">
+                <div className="flex flex-col">
                   <button
                     type="button"
-                    className={monoString}
+                    className={primaryString2}
                   >
-                    <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+                    <ChatBubbleBottomCenterIcon className="h-8 w-6 mr-2" aria-hidden="true" />
                     Chat
                   </button>
                 </div>
                 <div className="flex flex-col">
                   <button
                     type="button"
-                    className={monoString}
+                    className={primaryString2}
                   >
-                    <VideoCameraIcon className="h-6 w-5 mr-2" aria-hidden="true" />
+                    <VideoCameraIcon className="h-8 w-6 mr-2" aria-hidden="true" />
                     Schedule Meeting
                   </button>
                 </div>
@@ -172,7 +292,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
         </div>
         <div className="relative p-8">
           <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-gray-100 dark:border-gray-900" />
+            <div className="w-full border-t border-neutral-100 dark:border-neutral-900" />
           </div>
           <div className="relative justify-evenly md:flex hidden sm:hidden md:visible">
             <div className="flex -mt-5 justify-center">
@@ -227,7 +347,7 @@ export default function Social(): JSX.Element {
   return (
     <>
       <div className="justify-center flex mb-4">
-        <div className="p-3 text-sm dark:bg-darkBG bg-orange-50 rounded-lg">
+        <div className="p-3 text-sm shadow-2xl rounded-md shadow-white/20">
           <nav className="flex space-x-4" aria-label="Tabs">
             {tabs.map((tab) => (
               <NavLink
@@ -235,9 +355,9 @@ export default function Social(): JSX.Element {
                 to={tab.href}
                 className={classNames(
                   (tab.href === pathname) || (`${tab.href}/` === pathname)
-                    ? 'dark:bg-orange-900/20 dark:text-orange-300 bg-orange-700/30 text-orange-900'
+                    ? 'dark:bg-white dark:text-black bg-orange-700/30 text-orange-900'
                     : 'dark:text-neutral-400 dark:hover:text-neutral-100 text-neutral-600 hover:text-neutral-900',
-                  'px-2 py-2 font-bold text-base rounded-md',
+                  'px-2 py-2 font-sans font-bold uppercase text-base rounded-md',
                 )}
                 aria-current={tab.href ? 'page' : undefined}
               >
@@ -247,7 +367,6 @@ export default function Social(): JSX.Element {
           </nav>
         </div>
       </div>
-
       <span className=" hidden">
         {' '}
         {loggedInUser.username}
@@ -268,7 +387,7 @@ export default function Social(): JSX.Element {
 
         <div className="dark:bg-darkBG shadow rounded-lg md:w-3/4 sm:w-full">
           <div className="px-4 py-5 sm:p-6">
-            <h2 className="font-display text-2xl leading-6 font-medium text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-2xl leading-6 font-black text-neutral-900 dark:text-neutral-100">
               Prompts for Conversation/Tips
             </h2>
             <div className="pt-5 text-md text-neutral-800 dark:text-neutral-200">
@@ -280,7 +399,7 @@ export default function Social(): JSX.Element {
             <div className="mt-5">
               <button
                 type="button"
-                className={monoString}
+                className={altString}
               >
                 <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
                 Chat with John
@@ -290,22 +409,6 @@ export default function Social(): JSX.Element {
         </div>
       </div>
 
-      <div className="justify-center flex p-4">
-
-        <div className="dark:bg-darkBG shadow rounded-lg md:w-3/4 sm:w-full">
-          <div className="px-4 py-5 sm:p-6">
-            <h2 className="font-display text-2xl leading-6 font-medium text-neutral-900 dark:text-neutral-100">
-              Things to know
-            </h2>
-            <div className="pt-5 text-md text-neutral-800 dark:text-neutral-200">
-              <p>
-                Since you suck at making conversation and don&apos; get bitches,
-                here are some prompts to spark a conversation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 }

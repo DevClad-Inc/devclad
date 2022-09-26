@@ -85,21 +85,25 @@ export default function Root(): JSX.Element {
     }
   }, [darkMode]);
   return (
-    <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
-      <div
-        className="font-mono subpixel-antialiased
-         bg-white dark:bg-black dark:text-white"
-      >
-        <Toaster
-          position="top-right"
-          toastOptions={
-            {
-              duration: 3000,
-            }
-        }
-        />
-        <ScrollRestoration />
-        <Routing />
+    <div className="bg-[url('./assets/graph-paper.svg')]">
+      <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
+        <div
+          className="font-sans font-medium subpixel-antialiased
+          text-sm sm:text-md lg:text-lg
+          dark:bg-gradient-to-t from-black/50 via-darkBG2 to-black/50
+          bg-white dark:bg-black/80 dark:text-white"
+        >
+          <Toaster
+            position="top-right"
+            toastOptions={
+              {
+                duration: 3000,
+              }
+          }
+          />
+          <ScrollRestoration />
+          <Routing />
+        </div>
       </div>
     </div>
   );

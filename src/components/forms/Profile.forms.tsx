@@ -98,7 +98,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="about"
                   className="block text-md text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
                 >
                   About
                   <Field
@@ -107,8 +107,8 @@ export default function UpdateProfileForm(): JSX.Element {
                     id="about"
                     name="about"
                     rows={3}
-                    className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                    className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                     placeholder="Currently, I'm ..."
                   />
                   <ErrorMessage
@@ -125,7 +125,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="pronouns"
                   className="block text-md text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
                 >
                   Pronouns
                   <Field
@@ -133,8 +133,8 @@ export default function UpdateProfileForm(): JSX.Element {
                     id="pronouns"
                     name="pronouns"
                     rows={3}
-                    className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                    className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                     placeholder=""
                   />
                   <ErrorMessage
@@ -148,7 +148,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="linkedin"
                   className="block text-md text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
                 >
                   LinkedIn
                   <Field
@@ -156,8 +156,8 @@ export default function UpdateProfileForm(): JSX.Element {
                     id="linkedin"
                     name="linkedin"
                     rows={3}
-                    className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                    className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                     placeholder="https://linkedin.com/..."
                   />
                   <ErrorMessage
@@ -171,7 +171,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="website"
                   className="block text-md text-left pl-1
-          font-medium text-neutral-700 dark:text-neutral-300"
+           text-neutral-700 dark:text-neutral-300"
                 >
                   Website
                   <Field
@@ -179,8 +179,8 @@ export default function UpdateProfileForm(): JSX.Element {
                     id="website"
                     name="website"
                     rows={3}
-                    className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                    className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                     placeholder="https://"
                   />
                   <ErrorMessage
@@ -196,7 +196,7 @@ export default function UpdateProfileForm(): JSX.Element {
               <div className="mb-10 col-span-6 sm:col-span-3">
                 <label
                   htmlFor="calendly"
-                  className="block text-md font-medium
+                  className="block text-md
                text-neutral-700 dark:text-neutral-300"
                 >
                   Calendly Link
@@ -205,8 +205,8 @@ export default function UpdateProfileForm(): JSX.Element {
                     name="calendly"
                     id="calendly"
                     placeholder="https://calendly.com/..."
-                    className="mt-1 block w-full dark:bg-raisinBlack2 border border-gray-300
-                  dark:border-gray-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                    className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
+                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                   />
                   <ErrorMessage
                     name="calendly"
@@ -224,7 +224,9 @@ export default function UpdateProfileForm(): JSX.Element {
               <PrimaryButton
                 isSubmitting={isSubmitting}
               >
-                Save
+                <span className="text-sm">
+                  Save
+                </span>
               </PrimaryButton>
             </div>
           </Form>
@@ -308,7 +310,7 @@ export function AvatarUploadForm() {
         </div>
       </div>
       <div className="col-span-3">
-        <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center" onDragOver={enableDropping} onDrop={handleDrop}>
+        <div className="mt-1 border-2 border-neutral-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center" onDragOver={enableDropping} onDrop={handleDrop}>
           <div className="space-y-1 text-center">
             <svg
               className="mx-auto h-12 w-12 text-neutral-400"
@@ -327,7 +329,7 @@ export function AvatarUploadForm() {
             <div className="flex text-sm text-neutral-600">
               <label
                 htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md font-medium
+                className="relative cursor-pointer rounded-md
                 dark:text-orange-300 dark:hover:text-orange-400 text-orange-700 hover:text-orange-600
                 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-orange-500"
               >

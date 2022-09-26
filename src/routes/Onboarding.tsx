@@ -193,7 +193,7 @@ export function Onboarding() {
             width="1090"
             height="1090"
             className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-gray-300/30
+          stroke-neutral-300/30
           dark:stroke-orange-800/20 sm:h-auto"
           >
             <circle cx="545" cy="545" r="544.5" />
@@ -229,7 +229,7 @@ export function Onboarding() {
             Questions?
             {' '}
             <a
-              className="font-medium text-orange-700 dark:text-orange-300"
+              className=" text-orange-700 dark:text-orange-300"
               href="https://discord.devclad.com"
               target="_blank"
               rel="noreferrer"
@@ -241,7 +241,7 @@ export function Onboarding() {
             <button
               onClick={handlelogOut}
               type="button"
-              className="mt-5 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium
+              className="mt-5 inline-flex items-center px-4 py-2 border border-transparent text-sm
               rounded-md shadow-sm text-bloodRed bg-mistyRose dark:text-mistyRose dark:bg-bloodRed/60"
             >
               <ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
