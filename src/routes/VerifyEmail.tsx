@@ -50,7 +50,7 @@ export default function VerifyEmail(): JSX.Element {
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
         stroke-gray-300/30
-        dark:stroke-fuchsia-800/30 sm:h-auto"
+        dark:stroke-orange-800/30 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -68,12 +68,12 @@ export default function VerifyEmail(): JSX.Element {
             src={DevCladLogo}
             alt="DevClad"
           />
-          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-gray-100">DevClad</h1>
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">DevClad</h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-gray-700 dark:text-gray-300">Verification</h2>
-        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Verification</h2>
+        <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
           <Link
-            className="font-medium text-orange-700 dark:text-fuchsia-300"
+            className="font-medium text-orange-700 dark:text-orange-300"
             to="/"
           >
             Login
@@ -106,7 +106,7 @@ export default function VerifyEmail(): JSX.Element {
                     <span
                       className="mt-5 border border-transparent bg-orange-700
                 dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-                inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
+                inline-flex justify-center text-sm font-bold dark:text-orange-300"
                     >
                       <div className="flex">
                         <div className="flex-shrink-0">
@@ -124,7 +124,7 @@ export default function VerifyEmail(): JSX.Element {
 
               ) : (
                 <div className="text-center">
-                  <p className="text-gray-600 dark:text-gray-400 text-center">Please wait while we verify your email.</p>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-center">Please wait while we verify your email.</p>
                 </div>
               )
 }

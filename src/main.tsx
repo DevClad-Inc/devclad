@@ -8,8 +8,8 @@ import {
   QueryClient, QueryClientProvider,
 } from '@tanstack/react-query';
 import '@/root.css';
-import '@/quilon.css';
-import '@/jet-brains-mono.css';
+import '@/fonts.css';
+import '@/inter.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';

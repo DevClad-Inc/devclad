@@ -17,7 +17,7 @@ export function PassReset() {
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
           stroke-gray-300/30
-          dark:stroke-fuchsia-800/20 sm:h-auto"
+          dark:stroke-orange-800/20 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -35,11 +35,11 @@ export function PassReset() {
             src={DevCladLogo}
             alt="DevClad"
           />
-          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-gray-100">DevClad</h1>
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">DevClad</h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-gray-700 dark:text-gray-300">Reset Password</h2>
-        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-          <Link className="font-medium text-orange-700 dark:text-fuchsia-300" to="/">Sign in to DevClad</Link>
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Reset Password</h2>
+        <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
+          <Link className="font-medium text-orange-700 dark:text-orange-300" to="/">Sign in to DevClad</Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -74,7 +74,7 @@ export function ForgotPassword() : JSX.Element {
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
           stroke-gray-300/30
-          dark:stroke-fuchsia-800/20 sm:h-auto"
+          dark:stroke-orange-800/20 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -92,13 +92,13 @@ export function ForgotPassword() : JSX.Element {
             src={DevCladLogo}
             alt="DevClad"
           />
-          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-gray-100">DevClad</h1>
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">DevClad</h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-gray-700 dark:text-gray-300">Reset Password</h2>
-        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Reset Password</h2>
+        <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
           Not a member?
           {' '}
-          <Link className="font-medium text-orange-700 dark:text-fuchsia-300" to="/signup">Join DevClad</Link>
+          <Link className="font-medium text-orange-700 dark:text-orange-300" to="/signup">Join DevClad</Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-lg">

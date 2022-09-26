@@ -41,7 +41,7 @@ function Home(): JSX.Element {
       </div>
       <br />
       <div className="mx-auto w-3/4 max-w-lg">
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-neutral-500">
           <button
             onClick={handlelogOut}
             type="button"

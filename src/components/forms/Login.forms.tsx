@@ -70,7 +70,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
             <label
               htmlFor="email"
               className="block text-sm text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
             >
               Email
               <div className="mt-1 relative">
@@ -102,7 +102,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
             <label
               htmlFor="password"
               className="block text-sm text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
             >
               Password
               <div className="mt-1 relative">
@@ -132,7 +132,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
 
           <div className="inline-flex items-center">
             <div className="text-sm">
-              <Link to="/forgot-password" className="font-medium text-orange-700 dark:text-fuchsia-300">
+              <Link to="/forgot-password" className="font-medium text-orange-700 dark:text-orange-300">
                 Forgot your password?
               </Link>
             </div>

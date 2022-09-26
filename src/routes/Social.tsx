@@ -9,7 +9,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import classNames from '@/lib/ClassNames.lib';
 import {
-  altString,
+  monoString,
   greenString, redString, warningString,
 } from '@/lib/Buttons.lib';
 import { useOneOneProfile, useOneOneUsernames } from '@/services/socialHooks.services';
@@ -38,7 +38,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
       <div>
         <div className="justify-center flex p-0 lg:p-4">
 
-          <div className="dark:bg-darkBG2 shadow rounded-xl lg:w-3/4 w-full">
+          <div className="dark:bg-darkBG shadow rounded-lg lg:w-3/4 w-full">
             <div className="px-4 py-5 sm:p-6">
               <div className="sm:inline-flex">
                 <div className="flex flex-col">
@@ -54,20 +54,20 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                     />
                   </div>
                 </div>
-                <h2 className="ml-4 mt-8 font-display text-3xl leading-6 font-medium text-gray-900 dark:text-gray-100">
+                <h2 className="ml-4 mt-8 font-display text-3xl leading-6 font-medium text-neutral-900 dark:text-neutral-100">
                   {profile.first_name}
                   {' '}
                   {profile.last_name}
                   {' '}
-                  <div className="inline-flex ml-1 text-gray-600 dark:text-gray-400 text-base">
+                  <div className="inline-flex ml-1 text-neutral-600 dark:text-neutral-400 text-base">
                     {profile.pronouns ? `(${profile.pronouns})` : ''}
                   </div>
                 </h2>
               </div>
-              <div className="sm:ml-24 mt-4 sm:mt-0 text-lg rounded-xl dark:bg-black/50
-               p-4 text-gray-700 dark:text-gray-300"
+              <div className="sm:ml-24 mt-4 sm:mt-0 text-lg rounded-lg dark:bg-black/50
+               p-4 text-neutral-800 dark:text-neutral-200"
               >
-                <div className="font-systemItalic">
+                <div className="font-monoItalic">
                   <p>
                     &quot;
                     {profile.about}
@@ -75,9 +75,9 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                   </p>
                 </div>
               </div>
-              <div className="sm:ml-20 rounded-md p-4 flex flex-col">
+              <div className="sm:ml-20 -ml-4 space-y-4 rounded-md p-4 flex flex-col">
                 {/* TODO: add GITHUB */}
-                <div className="flex flex-row space-x-2 mb-4 text-sm sm:text-lg">
+                <div className="flex flex-row space-x-2 text-sm sm:text-lg">
                   {(profile.location && profile.location !== 'Other')
                       && (
                       <div className="flex bg-black/50 text-amber-200 p-2 rounded-md">
@@ -96,33 +96,41 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                 <div className="flex flex-row space-x-2 text-lg">
                   {profile.calendly && (
                   <div className="flex bg-blue-800/20 text-blue-400 p-2 rounded-md">
-                    <CalendarIcon className="h-8 w-8 p-1" aria-hidden="true" />
-                    <a href={profile.calendly} target="_blank" rel="noreferrer">
-                      Calendly
-                    </a>
+                    <button
+                      type="button"
+                      className="flex flex-row space-x-2"
+                      onClick={() => window.open(profile.calendly, '_blank')}
+                    >
+                      <CalendarIcon className="h-8 w-6" aria-hidden="true" />
+                      <span className="font-medium">Calendly</span>
+                    </button>
                   </div>
                   )}
                   {profile.linkedin && (
                   <div className="flex bg-blue-800/20 text-blue-400 p-2 rounded-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 24">
-                      <path
-                        className="fill-blue-400"
-                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762
+                    <button
+                      type="button"
+                      className="flex flex-row"
+                      onClick={() => window.open(profile.linkedin, '_blank')}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 24">
+                        <path
+                          className="fill-blue-400"
+                          d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762
                           0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966
                           0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75
                           1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586
                           7-2.777 7 2.476v6.759z"
-                      />
-                    </svg>
-                    <a href={profile.linkedin} target="_blank" rel="noreferrer">
-                      LinkedIn
-                    </a>
+                        />
+                      </svg>
+                      <span className="font-medium">LinkedIn</span>
+                    </button>
                   </div>
                   )}
                 </div>
               </div>
-              <div className="sm:ml-24 text-lg rounded-xl dark:bg-black/50
-               p-4 text-gray-700 dark:text-gray-300"
+              <div className="sm:ml-24 text-lg rounded-lg dark:bg-black/50
+               p-4 text-neutral-800 dark:text-neutral-200"
               >
                 <div>
                   <div className="flex flex-col">
@@ -139,11 +147,11 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                   </div>
                 </div>
               </div>
-              <div className="justify-center lg:justify-end mt-5 flex">
+              <div className="lg:ml-24 justify-start mt-5 flex">
                 <div className="flex flex-col mr-2">
                   <button
                     type="button"
-                    className={altString}
+                    className={monoString}
                   >
                     <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
                     Chat
@@ -152,7 +160,7 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                 <div className="flex flex-col">
                   <button
                     type="button"
-                    className={altString}
+                    className={monoString}
                   >
                     <VideoCameraIcon className="h-6 w-5 mr-2" aria-hidden="true" />
                     Schedule Meeting
@@ -218,8 +226,8 @@ export default function Social(): JSX.Element {
   const state = qc.getQueryState(['matches']);
   return (
     <>
-      <div className="justify-center flex">
-        <div className="p-3 text-sm dark:bg-darkBG2 bg-orange-50 rounded-xl">
+      <div className="justify-center flex mb-4">
+        <div className="p-3 text-sm dark:bg-darkBG bg-orange-50 rounded-lg">
           <nav className="flex space-x-4" aria-label="Tabs">
             {tabs.map((tab) => (
               <NavLink
@@ -227,8 +235,8 @@ export default function Social(): JSX.Element {
                 to={tab.href}
                 className={classNames(
                   (tab.href === pathname) || (`${tab.href}/` === pathname)
-                    ? 'dark:bg-fuchsia-900/30 dark:text-fuchsia-300 bg-orange-700/30 text-orange-900'
-                    : 'dark:text-gray-400 dark:hover:text-gray-100 text-gray-600 hover:text-gray-900',
+                    ? 'dark:bg-orange-900/20 dark:text-orange-300 bg-orange-700/30 text-orange-900'
+                    : 'dark:text-neutral-400 dark:hover:text-neutral-100 text-neutral-600 hover:text-neutral-900',
                   'px-2 py-2 font-bold text-base rounded-md',
                 )}
                 aria-current={tab.href ? 'page' : undefined}
@@ -240,17 +248,12 @@ export default function Social(): JSX.Element {
         </div>
       </div>
 
-      <div className="justify-center flex p-4">
-        <div className="dark:bg-gradient-to-tr dark:from-darkBG2 dark:to-raisinBlack2 shadow rounded-xl">
-          <div className="px-4 py-4">
-            <div className="inline-flex">
-              Matches for
-              {' '}
-              {loggedInUser.username}
-            </div>
-          </div>
-        </div>
-      </div>
+      <span className=" hidden">
+        {' '}
+        {loggedInUser.username}
+        {' '}
+      </span>
+
       {
        ((state?.status === 'loading' || state?.status !== 'success') || usernames === null) && (
        <LoadingCard />
@@ -263,12 +266,12 @@ export default function Social(): JSX.Element {
       }
       <div className="justify-center flex p-4">
 
-        <div className="dark:bg-darkBG2 shadow rounded-xl md:w-3/4 sm:w-full">
+        <div className="dark:bg-darkBG shadow rounded-lg md:w-3/4 sm:w-full">
           <div className="px-4 py-5 sm:p-6">
-            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">
+            <h2 className="font-display text-2xl leading-6 font-medium text-neutral-900 dark:text-neutral-100">
               Prompts for Conversation/Tips
             </h2>
-            <div className="pt-5 text-md text-gray-700 dark:text-gray-300">
+            <div className="pt-5 text-md text-neutral-800 dark:text-neutral-200">
               <p>
                 Since you suck at making conversation and don&apos; get bitches,
                 here are some prompts to spark a conversation.
@@ -277,7 +280,7 @@ export default function Social(): JSX.Element {
             <div className="mt-5">
               <button
                 type="button"
-                className={altString}
+                className={monoString}
               >
                 <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
                 Chat with John
@@ -289,12 +292,12 @@ export default function Social(): JSX.Element {
 
       <div className="justify-center flex p-4">
 
-        <div className="dark:bg-darkBG2 shadow rounded-xl md:w-3/4 sm:w-full">
+        <div className="dark:bg-darkBG shadow rounded-lg md:w-3/4 sm:w-full">
           <div className="px-4 py-5 sm:p-6">
-            <h2 className="font-display text-2xl leading-6 font-medium text-gray-900 dark:text-gray-100">
+            <h2 className="font-display text-2xl leading-6 font-medium text-neutral-900 dark:text-neutral-100">
               Things to know
             </h2>
-            <div className="pt-5 text-md text-gray-700 dark:text-gray-300">
+            <div className="pt-5 text-md text-neutral-800 dark:text-neutral-200">
               <p>
                 Since you suck at making conversation and don&apos; get bitches,
                 here are some prompts to spark a conversation.

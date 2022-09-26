@@ -98,7 +98,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="about"
                   className="block text-md text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   About
                   <Field
@@ -116,7 +116,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     component="div"
                     className="text-sm text-bloodRed dark:text-mistyRose"
                   />
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-neutral-500">
                     Tip: Talk about what you like to build and what you are currently working on.
                   </p>
                 </label>
@@ -125,7 +125,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="pronouns"
                   className="block text-md text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   Pronouns
                   <Field
@@ -148,7 +148,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="linkedin"
                   className="block text-md text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   LinkedIn
                   <Field
@@ -171,7 +171,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="website"
                   className="block text-md text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   Website
                   <Field
@@ -188,7 +188,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     component="div"
                     className="text-sm text-bloodRed dark:text-mistyRose"
                   />
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-neutral-500">
                     Tip: Showcase your best build yet if you do not have a website.
                   </p>
                 </label>
@@ -197,7 +197,7 @@ export default function UpdateProfileForm(): JSX.Element {
                 <label
                   htmlFor="calendly"
                   className="block text-md font-medium
-               text-gray-700 dark:text-gray-300"
+               text-neutral-700 dark:text-neutral-300"
                 >
                   Calendly Link
                   <Field
@@ -213,7 +213,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     component="div"
                     className="text-sm text-bloodRed dark:text-mistyRose"
                   />
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-neutral-500">
                     Add a Calendly link for convenience if you need to.
                   </p>
                 </label>
@@ -311,7 +311,7 @@ export function AvatarUploadForm() {
         <div className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center" onDragOver={enableDropping} onDrop={handleDrop}>
           <div className="space-y-1 text-center">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-neutral-400"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
@@ -324,12 +324,12 @@ export function AvatarUploadForm() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div className="flex text-sm text-gray-600">
+            <div className="flex text-sm text-neutral-600">
               <label
                 htmlFor="file-upload"
                 className="relative cursor-pointer rounded-md font-medium
-                dark:text-fuchsia-300 dark:hover:text-fuchsia-400 text-orange-700 hover:text-orange-600
-                focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-fuchsia-500"
+                dark:text-orange-300 dark:hover:text-orange-400 text-orange-700 hover:text-orange-600
+                focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-orange-500"
               >
                 <span>Upload a file</span>
                 <input
@@ -344,7 +344,7 @@ export function AvatarUploadForm() {
               </label>
               <p className="pl-1 text-black dark:text-linen">or DRAG AND DROP</p>
             </div>
-            <p className="text-xs text-gray-700 dark:text-gray-300">PNG, JPG, GIF, SVG up to 5MB</p>
+            <p className="text-xs text-neutral-700 dark:text-neutral-300">PNG, JPG, GIF, SVG up to 5MB</p>
           </div>
         </div>
       </div>

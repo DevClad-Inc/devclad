@@ -7,22 +7,30 @@ interface ButtonProps {
   wFull?: boolean;
 }
 
-export const primaryString = `border border-transparent bg-orange-700 text-whitewhite
+export const primaryString = `border border-transparent bg-orange-700 text-white
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-sm font-semibold dark:text-fuchsia-200`;
+        inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
 
 export const altString = `border border-transparent bg-orange-700/30 text-orange-900
-dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
-inline-flex justify-center text-sm font-semibold dark:text-fuchsia-300`;
+dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
+inline-flex justify-center text-sm font-semibold dark:text-orange-300`;
+
+export const invertString = `border border-transparent bg-black text-white
+dark:bg-white duration-500 rounded-md py-2 px-4
+inline-flex justify-center text-sm font-semibold dark:text-black`;
+
+export const monoString = `border border-transparent bg-orange-700/40 text-orange-900
+dark:bg-orange-900/10 duration-500 rounded-md py-2 px-4
+inline-flex justify-center text-sm font-semibold dark:text-orange-300`;
 
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
 dark:text-saffron dark:bg-blackChocolate`;
 
-export const primaryString2 = `border border-transparent bg-orange-700 text-whitewhite
+export const primaryString2 = `border border-transparent bg-orange-700 text-white
         dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-sm font-semibold dark:text-fuchsia-200`;
+        inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
 
 export const redString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
@@ -60,7 +68,7 @@ export function AlertButton({ children, isSubmitting }:
       type="submit"
       disabled={isSubmitting}
       className="border border-transparent bg-orange-700 dark:bg-raisinBlack2 duration-500
-      rounded-md py-2 px-4 inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
+      rounded-md py-2 px-4 inline-flex justify-center text-sm font-bold dark:text-orange-300"
     >
       {children}
     </button>

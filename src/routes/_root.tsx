@@ -79,16 +79,16 @@ export default function Root(): JSX.Element {
   const { darkMode } = React.useContext(ThemeContext);
   React.useEffect(() => {
     if (!darkMode) {
-      document.getElementById('body')?.classList.remove('bg-darkBG');
+      document.getElementById('body')?.classList.remove('bg-black');
     } else {
-      document.getElementById('body')?.classList.add('bg-darkBG');
+      document.getElementById('body')?.classList.add('bg-black');
     }
   }, [darkMode]);
   return (
     <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
       <div
-        className="font-system subpixel-antialiased
-         bg-whitewhite dark:bg-darkBG dark:text-white"
+        className="font-mono subpixel-antialiased
+         bg-white dark:bg-black dark:text-white"
       >
         <Toaster
           position="top-right"

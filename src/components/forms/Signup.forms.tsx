@@ -111,7 +111,7 @@ export default function SignupForm(
             <label
               htmlFor="firstName"
               className="block text-sm text-left pl-1
-            font-medium text-gray-700 dark:text-gray-300"
+            font-medium text-neutral-700 dark:text-neutral-300"
             >
               First Name
               <div className="mt-1 relative">
@@ -143,7 +143,7 @@ export default function SignupForm(
             <label
               htmlFor="lastName"
               className="block text-sm text-left pl-1
-              font-medium text-gray-700 dark:text-gray-300"
+              font-medium text-neutral-700 dark:text-neutral-300"
             >
               Last Name
               <div className="mt-1 relative">
@@ -175,7 +175,7 @@ export default function SignupForm(
             <label
               htmlFor="email"
               className="block text-sm text-left pl-1
-              font-medium text-gray-700 dark:text-gray-300"
+              font-medium text-neutral-700 dark:text-neutral-300"
             >
               Email
               <div className="mt-1 relative">
@@ -207,7 +207,7 @@ export default function SignupForm(
             <label
               htmlFor="password1"
               className="block text-sm text-left pl-1
-              font-medium text-gray-700 dark:text-gray-300"
+              font-medium text-neutral-700 dark:text-neutral-300"
             >
               Password
               <div className="mt-1 relative">
@@ -234,10 +234,10 @@ export default function SignupForm(
                 className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
-            <p className="mt-2 pl-2 text-sm text-gray-600 dark:text-gray-400" id="password-description">
+            <p className="mt-2 pl-2 text-sm text-neutral-600 dark:text-neutral-400" id="password-description">
               At least 8 characters.
             </p>
-            <p className="mt-2 pl-2 text-xs text-gray-600 dark:text-gray-400" id="password-description">
+            <p className="mt-2 pl-2 text-xs text-neutral-600 dark:text-neutral-400" id="password-description">
               Tip: Autogenerate a password.
             </p>
           </div>
@@ -245,7 +245,7 @@ export default function SignupForm(
             <label
               htmlFor="password2"
               className="block text-sm text-left pl-1
-              font-medium text-gray-700 dark:text-gray-300"
+              font-medium text-neutral-700 dark:text-neutral-300"
             >
               Confirm Password
               <div className="mt-1 relative">
@@ -313,7 +313,7 @@ export default function SignupForm(
                   <span
                     className="mt-5 border border-transparent bg-orange-700
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
+                    inline-flex justify-center text-sm font-bold dark:text-orange-300"
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">

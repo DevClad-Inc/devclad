@@ -29,7 +29,7 @@ function Login() {
           height="1090"
           className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
           stroke-gray-300/30
-          dark:stroke-fuchsia-800/30 sm:h-auto"
+          dark:stroke-orange-800/30 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -47,14 +47,14 @@ function Login() {
             src={DevCladLogo}
             alt="DevClad"
           />
-          <h1 className="text-center text-5xl font-black text-gray-900 dark:text-white">DevClad</h1>
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">DevClad</h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-gray-700 dark:text-gray-300">Sign In</h2>
-        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Sign In</h2>
+        <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
           Not a member?
           {' '}
           <Link
-            className="font-medium text-orange-700 dark:text-fuchsia-300"
+            className="font-medium text-orange-700 dark:text-orange-300"
             to="/signup"
           >
             Join DevClad
@@ -75,7 +75,7 @@ function Login() {
                   </div>
                   <div className="relative flex justify-center text-sm">
                     <span className="px-2 bg-white dark:bg-darkBG
-                text-gray-700 dark:text-gray-300"
+                text-neutral-700 dark:text-neutral-300"
                     >
                       Or continue with
                     </span>

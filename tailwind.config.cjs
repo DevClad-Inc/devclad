@@ -28,8 +28,7 @@ module.exports = {
     extend: {
       colors: {
         // light palette
-        whitewhite: '#ffffff',
-        white: '#ffffe3',
+        white: '#ffffff',
         snow: '#FFFCFA',
         linen: '#FFF1E5',
         almond: '#ffffe3',
@@ -41,10 +40,10 @@ module.exports = {
         black: '#000000',
         neon: '#FFF8E7',
         // dark palette
-        darkBG: '#030405',
-        darkBG2: '#101218',
-        raisinBlack: '#191B45',
-        raisinBlack2: '#222435',
+        darkBG: '#0d0d0d',
+        darkBG2: '#010203',
+        raisinBlack: '#161618',
+        raisinBlack2: '#27272a',
         oxfordBlue: '#002A52',
         bloodRed: '#660C00',
         phthaloGreen: '#113123',
@@ -52,9 +51,9 @@ module.exports = {
         blackChocolate: '#241B00',
       },
       fontFamily: {
-        system: ['"JetBrainsMono-Variable"'],
-        systemItalic: ['"JetBrainsMono-VariableItalic"'],
-        sans: [...defaultTheme.fontFamily.sans],
+        mono: ['"JetBrainsMono-Variable"'],
+        monoItalic: ['"JetBrainsMono-VariableItalic"'],
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
         display: ['"Quilon-Variable"'],
       },
       keyframes: {
@@ -135,7 +134,7 @@ module.exports = {
           width: '6px',
         },
         '.scrollbar::-webkit-scrollbar-thumb': {
-          backgroundColor: theme('colors.fuchsia.900'),
+          backgroundColor: theme('colors.white'),
         },
       });
     }),

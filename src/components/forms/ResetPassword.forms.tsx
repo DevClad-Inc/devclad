@@ -95,7 +95,7 @@ export default function PasswordResetForm(): JSX.Element {
               <label
                 htmlFor="password1"
                 className="block text-md text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
               >
                 New Password
                 <Field
@@ -114,7 +114,7 @@ export default function PasswordResetForm(): JSX.Element {
                   component="div"
                   className="text-sm text-bloodRed dark:text-mistyRose"
                 />
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-neutral-500">
                   At least 8 characters. Tip: Autogenerate a password.
                 </p>
               </label>
@@ -123,7 +123,7 @@ export default function PasswordResetForm(): JSX.Element {
               <label
                 htmlFor="password2"
                 className="block text-md text-left pl-1
-          font-medium text-gray-700 dark:text-gray-300"
+          font-medium text-neutral-700 dark:text-neutral-300"
               >
                 Confirm Password
                 <Field
@@ -165,7 +165,7 @@ export default function PasswordResetForm(): JSX.Element {
                   <span
                     className="mt-5 border border-transparent bg-orange-700
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
+                    inline-flex justify-center text-sm font-bold dark:text-orange-300"
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">
@@ -239,7 +239,7 @@ export function ForgotPasswordForm(): JSX.Element {
             <label
               htmlFor="email"
               className="block text-md text-left pl-1
-              font-medium text-gray-700 dark:text-gray-300"
+              font-medium text-neutral-700 dark:text-neutral-300"
             >
               Email
               <div className="mt-1 relative">
@@ -282,7 +282,7 @@ export function ForgotPasswordForm(): JSX.Element {
                   <span
                     className="mt-5 border border-transparent bg-orange-700
                     dark:bg-raisinBlack2 duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-fuchsia-300"
+                    inline-flex justify-center text-sm font-bold dark:text-orange-300"
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">

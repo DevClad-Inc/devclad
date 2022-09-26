@@ -27,8 +27,8 @@ import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { socialProfileLoader, userQuery } from '@/lib/queriesAndLoaders';
 import LoadingCard from '@/components/LoadingCard';
 
-const linkClassesString = `bg-orange-700 dark:bg-fuchsia-900/30 border border-transparent
-duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-fuchsia-200`;
+const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
+duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-orange-200`;
 
 export function StepOne() {
   const qc = useQueryClient();
@@ -39,8 +39,8 @@ export function StepOne() {
       <div className="p-2 mt-10 flex justify-center">
         <Link
           className="mt-5 border border-transparent bg-orange-700
-        dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-md font-bold dark:text-fuchsia-200
+        dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
+        inline-flex justify-center text-md font-bold dark:text-orange-200
         "
           to="/onboarding/step-two"
           onMouseEnter={() => {
@@ -102,8 +102,8 @@ export function StepTwo() {
         <div className="inline-flex justify-start">
           <Link
             className="border border-transparent bg-orange-700 text-white
-        dark:bg-fuchsia-900/30 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-md font-bold dark:text-fuchsia-200
+        dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
+        inline-flex justify-center text-md font-bold dark:text-orange-200
         "
             to="/onboarding/"
           >
@@ -194,7 +194,7 @@ export function Onboarding() {
             height="1090"
             className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
           stroke-gray-300/30
-          dark:stroke-fuchsia-800/20 sm:h-auto"
+          dark:stroke-orange-800/20 sm:h-auto"
           >
             <circle cx="545" cy="545" r="544.5" />
             <circle cx="545" cy="545" r="512.5" />
@@ -212,10 +212,10 @@ export function Onboarding() {
               src={DevCladLogo}
               alt="DevClad"
             />
-            <h1 className="text-center text-5xl font-black text-gray-900 dark:text-white">DevClad</h1>
+            <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">DevClad</h1>
           </div>
-          <h2 className="font-display text-center text-3xl mt-5 font-bold text-gray-700 dark:text-gray-300">Onboarding</h2>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          <h2 className="font-display text-center text-3xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Onboarding</h2>
+          <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
             Hey,
             {' '}
             {loggedInUser.first_name}
@@ -225,11 +225,11 @@ export function Onboarding() {
             {' '}
             is your associated email address.
           </p>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
             Questions?
             {' '}
             <a
-              className="font-medium text-orange-700 dark:text-fuchsia-300"
+              className="font-medium text-orange-700 dark:text-orange-300"
               href="https://discord.devclad.com"
               target="_blank"
               rel="noreferrer"
@@ -237,7 +237,7 @@ export function Onboarding() {
               Ask on our Discord.
             </a>
           </p>
-          <div className="text-center text-sm text-gray-500">
+          <div className="text-center text-sm text-neutral-500">
             <button
               onClick={handlelogOut}
               type="button"

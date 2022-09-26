@@ -16,7 +16,7 @@ function ToggleTheme() {
         toggle(darkMode);
       }}
       className={classNames(
-        darkMode ? 'bg-gray-600' : 'bg-gray-200',
+        darkMode ? 'bg-neutral-600' : 'bg-neutral-200',
         'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-3xl cursor-pointer transition-colors ease-in-out duration-200',
       )}
     >
@@ -34,7 +34,7 @@ function ToggleTheme() {
           )}
           aria-hidden="true"
         >
-          <svg className="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+          <svg className="h-3 w-3 text-neutral-400" fill="none" viewBox="0 0 12 12">
             <path
               d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
               stroke="currentColor"

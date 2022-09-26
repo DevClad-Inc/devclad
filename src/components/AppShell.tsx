@@ -55,7 +55,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-full flex">
       <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
-        <div className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2">
+        <div className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2
+         border-r-2 border-neutral-900/30"
+        >
           <div className="flex-1 flex flex-col pt-5 overflow-y-hidden">
             <div className="flex items-center flex-shrink-0 px-2">
               <button type="button" onClick={() => setSidebarExpand(!sidebarExpand)} className="m-auto">
@@ -79,10 +81,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   to={item.href}
                   className={({ isActive }) => classNames(
                     isActive
-                      ? 'dark:bg-fuchsia-900/30 dark:text-fuchsia-300 bg-orange-700/30 text-orange-900'
-                      : 'dark:text-gray-300 dark:hover:text-gray-100 text-gray-700 hover:text-gray-900',
-                    sidebarExpand ? 'rounded-lg' : 'rounded-2xl',
-                    'font-bold flex items-center text-md px-5 py-3',
+                      ? 'dark:bg-white dark:text-darkBG bg-orange-700/30 text-orange-900'
+                      : 'dark:text-neutral-300 dark:hover:text-neutral-100 text-neutral-700 hover:text-neutral-900',
+                    sidebarExpand ? 'rounded-md' : 'rounded-xl',
+                    'flex items-center px-5 py-3',
                   )}
                   end
                 >
@@ -93,12 +95,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     )}
                     aria-hidden="true"
                   />
-                  {sidebarExpand && item.name}
+                  <span className=" font-bold text-md">{sidebarExpand && item.name}</span>
                 </NavLink>
               ))}
             </nav>
           </div>
-          <div className="flex-shrink-0 flex border-t border-fuchsia-400/50 rounded-tl-3xl dark:bg-darkBG p-4">
+          <div className="flex-shrink-0 flex border-t border-orange-400/50 rounded-tl-3xl dark:bg-black p-4">
             <Link to="/settings" className="flex-shrink-0 w-full group block">
               <div className="flex items-center">
                 <div>
@@ -115,8 +117,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {sidebarExpand && (
                   <div className="ml-3">
                     <p className="text-sm font-medium">{loggedInUser.first_name}</p>
-                    <p className="text-xs font-medium text-gray-600 dark:text-fuchsia-300 hover:text-black
-                  dark:group-hover:text-fuchsia-400 duration-300"
+                    <p className="text-xs font-medium text-neutral-600 dark:text-orange-300 hover:text-black
+                  dark:group-hover:text-orange-400 duration-300"
                     >
                       Settings
                     </p>
@@ -137,8 +139,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <div className="fixed inset-x-0 bottom-0 z-10 flex-shrink flex">
             <div className="w-full">
               <nav
-                className="flex backdrop-blur-lg bg-gradient-to-tr dark:from-darkBG dark:to-darkBG2
-               border-t dark:border-fuchsia-300/30 rounded-tl-xl shadow-lg
+                className="flex backdrop-blur-lg bg-black
+               border-t dark:border-orange-300/30 rounded-tl-xl shadow-lg
               "
                 aria-label="Tabs"
               >
@@ -148,8 +150,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     to={tab.href}
                     className={({ isActive }) => classNames(
                       isActive
-                        ? 'dark:text-fuchsia-300 text-orange-600'
-                        : 'dark:text-gray-300 dark:hover:bg-gray-900 hover:bg-linen dark:focus:bg-gray-500',
+                        ? 'dark:text-orange-300 text-orange-600'
+                        : 'dark:text-neutral-300 dark:hover:bg-neutral-900 hover:bg-linen dark:focus:bg-neutral-500',
                       'w-1/4 flex justify-evenly py-3 mb-1 rounded-xl border-t-2 border-transparent',
                     )}
                     end
@@ -167,12 +169,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
-            <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
-                {pageTitle}
-              </h1>
-              <hr className="my-6 border-1 border-gray-200 dark:border-gray-800" />
-            </div>
+            {(pageTitle !== 'Social Mode') && (pageTitle !== 'Hackathons') && (pageTitle !== 'Projects') ? (
+              <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
+                <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
+                  {pageTitle}
+                </h1>
+                <hr className="my-6 border-1 border-gray-200 dark:border-gray-800" />
+              </div>
+            ) : null}
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
               <div className="py-4 mb-12">
                 <QueryLoader />
