@@ -13,6 +13,8 @@ import {
 } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { profileQuery, userQuery } from '@/lib/queriesAndLoaders';
+import CheckChild from '@/lib/CheckChild.lib';
+import { checkIOS, checkMacOS } from '@/lib/CheckDevice.lib';
 
 const navigation = [
   {
@@ -84,7 +86,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   key={item.name}
                   to={item.href}
                   className={({ isActive }) => classNames(
-                    isActive
+                    isActive || CheckChild(pathname, item.href)
                       ? 'dark:text-white text-orange-900'
                       : 'dark:text-neutral-700 dark:hover:text-neutral-100',
                     sidebarExpand ? 'rounded-none' : 'rounded-lg',
@@ -220,14 +222,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 border-neutral-200 dark:border-neutral-900 items-center"
                 >
                   <kbd className={classNames(
-                    'mx-1 flex h-5 w-8 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
+                    'mx-1 flex h-6 w-8 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
                   )}
                   >
-                    Cmd
+                    {checkMacOS()
+                      ? <span className="text-lg">⌘</span>
+                      : <span className="text-xs">Ctrl</span>}
                   </kbd>
                   +
                   <kbd className={classNames(
-                    'mx-1 flex h-5 w-5 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
+                    'mx-1 flex h-6 w-6 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
                   )}
                   >
                     K
@@ -235,12 +239,15 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 </span>
               </nav>
               )}
-              {(pageTitle === 'Dashboard' || pageTitle === 'Settings') && (
+              {(pageTitle === 'Settings') && (
               <>
-                <h1 className="text-2xl font-display font-bold tracking-wider uppercase">
-                  {pageTitle}
+                <h1 className="text-3xl font-bold">
+                  {(checkIOS() || checkMacOS()) ? '⚙' : ''}
+                  {' '}
+                  {loggedInUser.first_name}
+                  &apos;s Settings
                 </h1>
-                <hr className="my-6 border-1 border-neutral-200 dark:border-neutral-800" />
+                <hr className="my-8 border-1 border-neutral-200 dark:border-neutral-900" />
               </>
               )}
             </div>

@@ -1,29 +1,21 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 import {
   XCircleIcon, ChatBubbleBottomCenterIcon, ExclamationTriangleIcon, PlusCircleIcon,
   VideoCameraIcon,
   CalendarIcon,
   ArrowUpRightIcon,
 } from '@heroicons/react/24/solid';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import classNames from '@/lib/ClassNames.lib';
 import {
   altString,
   greenString, redString, warningString, badge, primaryString2,
 } from '@/lib/Buttons.lib';
 import { useOneOneProfile, useOneOneUsernames } from '@/services/socialHooks.services';
 import {
-  initialUserState, MatchProfile, User,
+  MatchProfile,
 } from '@/lib/InterfacesStates.lib';
-import { userQuery } from '@/lib/queriesAndLoaders';
 import LoadingCard from '@/components/LoadingCard';
-
-const tabs = [
-  { name: '1-on-1', href: '/social' },
-  { name: 'Circle', href: '/social/circle' },
-];
 
 const genExp = (rawXP: number) => {
   if (rawXP === 1) {
@@ -328,51 +320,14 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
   return <div />;
 }
 
-export default function Social(): JSX.Element {
+export default function OneOne(): JSX.Element {
   useDocumentTitle('Social Mode');
   const qc = useQueryClient();
   const { usernames } = useOneOneUsernames();
-  let loggedInUser: User = { ...initialUserState };
-  const {
-    data: userQueryData,
-    isSuccess: userQuerySuccess,
-  } = useQuery(userQuery());
-  if (userQuerySuccess && userQueryData !== null) {
-    loggedInUser = userQueryData.data;
-  }
-  const { pathname } = useLocation();
+
   const state = qc.getQueryState(['matches']);
   return (
     <>
-      <div className="justify-center flex mb-4">
-        <div className="p-3 text-sm shadow-2xl rounded-md shadow-white/10 border-[1px]
-        border-neutral-200 dark:border-neutral-900 items-center space-x-4"
-        >
-          <nav className="flex space-x-4" aria-label="Tabs">
-            {tabs.map((tab) => (
-              <NavLink
-                key={tab.name}
-                to={tab.href}
-                className={classNames(
-                  (tab.href === pathname) || (`${tab.href}/` === pathname)
-                    ? ' dark:text-orange-300 hover:text-white'
-                    : 'dark:text-neutral-600 dark:hover:text-neutral-100 text-neutral-600 hover:text-neutral-900',
-                  'px-6 font-sans font-light text-lg rounded-md duration-300',
-                )}
-                aria-current={tab.href ? 'page' : undefined}
-              >
-                {tab.name}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
-      </div>
-      <span className=" hidden">
-        {' '}
-        {loggedInUser.username}
-        {' '}
-      </span>
-
       {
        ((state?.status === 'loading' || state?.status !== 'success') || usernames === null) && (
        <LoadingCard />

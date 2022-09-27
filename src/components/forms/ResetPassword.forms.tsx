@@ -88,7 +88,7 @@ export default function PasswordResetForm(): JSX.Element {
       {({ isSubmitting }) => (
         <Form className="space-y-6" action="#" method="POST">
           <div className="w-full">
-            <Warning warning="This is a sensitive operation. Recommended: Save this password in a Cloud Keychain/Password." />
+            <Warning warning="This is a sensitive operation. Recommended: Save this password in a Cloud Keychain." />
           </div>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6 sm:col-span-3">

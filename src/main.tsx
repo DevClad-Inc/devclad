@@ -18,7 +18,6 @@ import Root from '@/routes/_root';
 import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
 import VerifyEmail from '@/routes/VerifyEmail';
 import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
-import Social from '@/routes/Social';
 import Hackathons from '@/components/Hackathons';
 import Projects from '@/components/Projects';
 import {
@@ -30,6 +29,10 @@ import Login from '@/routes/Login';
 import Signup from '@/routes/Signup';
 import FourOFour from '@/routes/404';
 import LoadingCard from '@/components/LoadingCard';
+// SOCIAL
+import Social from '@/routes/social/Social';
+import OneOne from '@/routes/social/OneOne';
+import Circle from '@/routes/social/Circle';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -92,6 +95,16 @@ const router = createBrowserRouter([
       {
         path: 'social',
         element: <Social />,
+        children: [
+          {
+            index: true,
+            element: <OneOne />,
+          },
+          {
+            path: '/social/circle',
+            element: <Circle />,
+          },
+        ],
       },
       {
         path: 'projects',
