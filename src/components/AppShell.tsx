@@ -176,8 +176,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              {(pageTitle !== 'Dashboard') && (
               <nav className="flex mb-5 space-x-2" aria-label="Breadcrumb">
+                {(pageTitle !== 'Dashboard') && (
                 <ol className="flex border-[1px] rounded-md p-2
                   shadow-2xl shadow-white/20
                  border-neutral-200 dark:border-neutral-900 items-center space-x-4"
@@ -215,6 +215,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     </li>
                   ))}
                 </ol>
+                )}
                 <span
                   className="md:flex border-[1px] rounded-md p-2 hidden md:visible
                 shadow-2xl shadow-white/20 text-xs font-mono font-medium text-orange-300
@@ -238,7 +239,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   </kbd>
                 </span>
               </nav>
-              )}
               {(pageTitle === 'Settings') && (
               <>
                 <h1 className="text-3xl font-bold">

@@ -7,7 +7,7 @@ export default function Tabs({ tabs } : { tabs: { name: string, href: string }[]
   return (
     <div className="justify-center flex mb-4">
       <div className="p-3 text-sm shadow-2xl rounded-md shadow-white/10 border-[1px]
-    border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+    bg-darkBG2 border-neutral-200 dark:border-neutral-900 items-center space-x-4"
       >
         <nav className="flex space-x-4" aria-label="Tabs">
           {tabs.map((tab) => (

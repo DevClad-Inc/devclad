@@ -24,7 +24,7 @@ export default function Social(): JSX.Element {
   return (
     <>
       <Tab tabs={tabs} />
-      <span className=" hidden">
+      <span className="hidden">
         {' '}
         {loggedInUser.username}
         {' '}
