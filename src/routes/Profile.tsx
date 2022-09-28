@@ -1,24 +1,60 @@
 import React from 'react';
 import {
-  XCircleIcon, ChatBubbleBottomCenterIcon, ExclamationTriangleIcon, PlusCircleIcon,
+  XCircleIcon, ChatBubbleBottomCenterIcon,
   VideoCameraIcon,
   CalendarIcon,
   ArrowUpRightIcon,
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import { NoSymbolIcon } from '@heroicons/react/24/outline';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import {
-  altString,
-  greenString, redString, warningString, badge, primaryString2,
-} from '@/lib/Buttons.lib';
-import { useOneOneProfile, useOneOneUsernames } from '@/services/socialHooks.services';
+import { badge, primaryString2 } from '@/lib/Buttons.lib';
+import { useOneOneProfile } from '@/services/socialHooks.services';
 import {
   MatchProfile,
 } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';
-import { genExp, genIdea } from '@/routes/Profile';
+import ActionDropdown from '@/components/ActionDropdown';
 
-function MatchCard({ username }:{ username:string }): JSX.Element {
+export const genExp = (rawXP: number) => {
+  if (rawXP === 1) {
+    return 'about a year';
+  }
+  return `${rawXP} years`;
+};
+
+export const genIdea = (idea: string) => {
+  if (idea.toLowerCase().includes('need')) {
+    return 'I';
+  }
+  return 'I am';
+};
+
+const dropdownItems = [
+  {
+    name: 'Block',
+    icon: NoSymbolIcon,
+    alt: 'Disconnect',
+    onClick: () => {
+      console.log('block');
+    },
+  },
+];
+
+const connectedOnlyItems = [
+  {
+    name: 'Disconnect',
+    icon: XCircleIcon,
+    alt: 'Block',
+    onClick: () => {
+      console.log('disconnect');
+    },
+  },
+];
+
+function ProfileCard({ username }:{ username:string }): JSX.Element {
+  // const { connected } = useConnected(username);
   const profile = useOneOneProfile(username) as MatchProfile;
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', username]);
@@ -260,6 +296,9 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
                   Schedule Meeting
                 </button>
               </div>
+              <div className="flex flex-col">
+                <ActionDropdown items={dropdownItems.concat(connectedOnlyItems)} />
+              </div>
             </div>
           </div>
         </div>
@@ -269,87 +308,10 @@ function MatchCard({ username }:{ username:string }): JSX.Element {
   return <div />;
 }
 
-export default function OneOne(): JSX.Element {
-  useDocumentTitle('Social Mode');
-  const qc = useQueryClient();
-  const { usernames } = useOneOneUsernames();
-
-  const state = qc.getQueryState(['matches']);
+export default function Profile(): JSX.Element {
+  const { username } = useParams<{ username: string }>() as { username: string };
+  useDocumentTitle(`Profile | ${username}`);
   return (
-    <>
-      {
-       ((state?.status === 'loading' || state?.status !== 'success') || usernames === null) && (
-       <LoadingCard />
-       )
-       }
-      {
-        usernames?.map((username) => (
-          <>
-            <MatchCard key={username} username={username} />
-            <div key="actions" className="relative p-8">
-              <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                <div className="w-full border-t border-neutral-100 dark:border-neutral-900" />
-              </div>
-              <div className="relative justify-evenly md:flex hidden sm:hidden md:visible">
-                <div className="flex -mt-5 justify-center">
-                  <button
-                    type="button"
-                    className={warningString}
-                  >
-                    <ExclamationTriangleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                    <span className="text-xs">Pass For 4 Weeks</span>
-                  </button>
-                </div>
-                <div className="flex -mt-5 justify-center">
-                  <button
-                    type="button"
-                    className={greenString}
-                  >
-                    <PlusCircleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                    <span>Add To Circle</span>
-                  </button>
-                </div>
-                <div className="flex -mt-5 justify-center">
-                  <button
-                    type="button"
-                    className={redString}
-                  >
-                    <XCircleIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                    <span className="text-xs">Never Show Again</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </>
-        ))
-      }
-      <div key="tips" className="justify-center flex p-4">
-
-        <div className="dark:bg-darkBG shadow rounded-lg md:w-3/4 sm:w-full">
-          <div className="px-4 py-5 sm:p-6">
-            <h2 className="font-sans text-2xl leading-6 font-black text-neutral-900 dark:text-neutral-100">
-              Prompts for Conversation/Tips
-            </h2>
-            <div className="pt-5 text-md text-neutral-800 dark:text-neutral-200">
-              <p>
-                Since you suck at making conversation and don&apos; get bitches,
-                here are some prompts to spark a conversation.
-              </p>
-            </div>
-            <div className="mt-5">
-              <button
-                type="button"
-                className={altString}
-              >
-                <ChatBubbleBottomCenterIcon className="h-6 w-5 mr-2" aria-hidden="true" />
-                Chat with John
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </>
+    <ProfileCard key={username} username={username} />
   );
 }

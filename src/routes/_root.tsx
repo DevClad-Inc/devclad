@@ -13,6 +13,9 @@ import { getStatus } from '@/services/profile.services';
 import useAuth from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 
+const allowedPaths = ['/login', '/signup', '/forgot-password', '/auth/registration/account-confirm-email',
+  '/auth/password/reset/confirm'];
+
 function Routing(): JSX.Element {
   const navigate = useNavigate();
   const qc = useQueryClient();
@@ -44,7 +47,7 @@ function Routing(): JSX.Element {
 
   // CASE 1: UNAUTHED
   if (!authed && qc.getQueryData(['user']) === null) {
-    if (pathname !== '/login' && pathname !== '/signup') {
+    if (!allowedPaths.includes(pathname)) {
       navigate('/login');
     }
     return (

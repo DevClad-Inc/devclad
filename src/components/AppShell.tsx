@@ -1,20 +1,23 @@
 import React from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import {
+  Link, NavLink, useLocation,
+} from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   HomeIcon, UsersIcon, FireIcon, FolderIcon,
+  ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
 
 import DevCladLogo from '@/assets/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
 import {
   Profile, initialProfileState,
-  User, initialUserState,
 } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
-import { profileQuery, userQuery } from '@/lib/queriesAndLoaders';
+import { profileQuery } from '@/lib/queriesAndLoaders';
 import CheckChild from '@/lib/CheckChild.lib';
 import { checkIOS, checkMacOS } from '@/lib/CheckDevice.lib';
+import useAuth from '@/services/useAuth.services';
 
 const navigation = [
   {
@@ -31,15 +34,17 @@ const navigation = [
   },
 ];
 
+const noBreadCrumbRoutes = ['profile', ''];
+
 export default function AppShell({ children }: { children: React.ReactNode }) {
-  let loggedInUser: User = { ...initialUserState };
-  const {
-    data: userQueryData,
-    isSuccess: userQuerySuccess,
-  } = useQuery(userQuery());
-  if (userQuerySuccess && userQueryData !== null) {
-    loggedInUser = userQueryData.data;
-  }
+  const { pathname } = useLocation();
+  const pathArray = pathname.split('/');
+  pathArray.shift();
+  const pageTitle = (document.title).slice(10);
+
+  // user logic
+  const { loggedInUser } = useAuth();
+
   let profileData: Profile = { ...initialProfileState };
   const {
     data: profileQueryData,
@@ -51,13 +56,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     profileData = profileQueryData.data;
   }
 
+  // sidebar logic
   const [sidebarExpand, setSidebarExpand] = React.useState(false);
 
-  const pageTitle = (document.title).slice(10);
-
-  const { pathname } = useLocation();
-  const pathArray = pathname.split('/');
-  pathArray.shift();
   return (
     <div className="h-full flex">
       <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
@@ -176,8 +177,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
+
               <nav className="flex mb-5 space-x-2" aria-label="Breadcrumb">
-                {(pageTitle !== 'Dashboard') && (
+                {!noBreadCrumbRoutes.includes(pathArray[0]) && (
                 <ol className="flex border-[1px] rounded-md p-2
                   shadow-2xl shadow-white/20
                  border-neutral-200 dark:border-neutral-900 items-center space-x-4"
@@ -216,6 +218,24 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   ))}
                 </ol>
                 )}
+                <ol className="flex border-[1px] rounded-md p-2
+                  shadow-2xl shadow-white/20
+                 border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+                >
+                  <li>
+                    <div className="flex items-center">
+                      <ArrowLeftIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden />
+                      <NavLink
+                        to="/social"
+                        className="ml-2 text-sm font-mono font-medium text-orange-300
+                          hover:text-white duration-300"
+                        end
+                      >
+                        Social
+                      </NavLink>
+                    </div>
+                  </li>
+                </ol>
                 <span
                   className="md:flex border-[1px] rounded-md p-2 hidden md:visible
                 shadow-2xl shadow-white/20 text-xs font-mono font-medium text-orange-300

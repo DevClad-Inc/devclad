@@ -7,8 +7,14 @@ import { primaryString2 } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { useCircleUsernames, useOneOneProfile } from '@/services/socialHooks.services';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import useAuth from '@/services/useAuth.services';
+import useConnected from '@/services/useConnected.services';
 
-function ConnectionCard({ username }:{ username:string }) {
+function ConnectionCard(
+  { username, currentUser } :{ username:string, currentUser:string },
+) : JSX.Element {
+  const connected = useConnected(currentUser, username);
+
   const profile = useOneOneProfile(username) as MatchProfile;
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', username]);
@@ -17,7 +23,7 @@ function ConnectionCard({ username }:{ username:string }) {
       <LoadingCard />
     );
   }
-  if (profile) {
+  if (profile && connected) {
     return (
       <div className="justify-center flex p-0 lg:p-4">
         <div className="border-[1px] dark:border-neutral-900 bg-darkBG2 border-neutral-400 shadow rounded-md
@@ -105,9 +111,10 @@ function ConnectionCard({ username }:{ username:string }) {
 export default function Circle(): JSX.Element {
   useDocumentTitle('Circle');
   const qc = useQueryClient();
-  const { usernames } = useCircleUsernames();
-
-  const state = qc.getQueryState(['circle']);
+  const { loggedInUser } = useAuth();
+  const loggedInUserUserName = loggedInUser?.username;
+  const { usernames } = useCircleUsernames(loggedInUserUserName as string);
+  const state = qc.getQueryState(['circle', loggedInUserUserName as string]);
   return (
     <>
       {
@@ -117,7 +124,11 @@ export default function Circle(): JSX.Element {
        }
       {
         usernames?.map((username) => (
-          <ConnectionCard key={username} username={username} />
+          <ConnectionCard
+            key={username}
+            username={username}
+            currentUser={loggedInUserUserName as string}
+          />
         ))
         }
     </>

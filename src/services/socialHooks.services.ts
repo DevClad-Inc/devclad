@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import {
-  getOneOne, getCircle,
+  getOneOne,
   getUsernameProfile, getUsernameSocialProfile,
 } from '@/services/profile.services';
+import { userCircleQuery } from '@/lib/queriesAndLoaders';
 
 export function useOneOneUsernames() {
   const usernames = [];
@@ -16,9 +17,9 @@ export function useOneOneUsernames() {
   return { usernames };
 }
 
-export function useCircleUsernames() {
+export function useCircleUsernames(username:string) {
   const usernames = [];
-  const circleQuery = useQuery(['circle'], () => getCircle());
+  const circleQuery = useQuery(userCircleQuery(username));
   if (circleQuery.isSuccess && circleQuery.data !== null) {
     const { data } = circleQuery.data;
     for (let i = 0; i < data.circle.length; i += 1) {

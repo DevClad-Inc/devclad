@@ -46,14 +46,18 @@ export default function ActionDropdown({ items } : ActionDropdownProps) : JSX.El
                   {({ active }) => (
                     <button
                       type="button"
+                      onClick={item.onClick}
                       className={classNames(
                         active ? 'text-neutral-100' : 'text-neutral-400',
                         'block px-4 py-2 text-sm',
                       )}
                     >
                       <span className="flex items-center">
+                        <span className="mr-2">
+                          {' '}
+                          <item.icon className="flex-shrink-0 h-6 w-6" aria-hidden="true" />
+                        </span>
                         {item.name}
-                        <item.icon className="flex-shrink-0 -ml-1 mr-3 h-6 w-6" aria-hidden="true" />
                       </span>
                     </button>
                   )}

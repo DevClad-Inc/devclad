@@ -28,6 +28,9 @@ export default function QueryLoader() {
   if ((time > 10 && isFetching)) {
     toggle(true);
   }
+  if (!isFetching) {
+    toggle(false);
+  }
   if ((slowMode && isFetching)) {
     // works considering users are not constantly switching
     // back and forth between slow and fast connections
@@ -35,6 +38,7 @@ export default function QueryLoader() {
     toast.custom(
       <LoadingButton />,
       {
+        duration: 3000,
         id: 'slow-connection',
       },
     );

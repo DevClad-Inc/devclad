@@ -248,14 +248,34 @@ export const getOneOne = async () => {
   return null;
 };
 
-export const getCircle = async () => {
+export const getCircle = async (username: string) => {
   const token = Cookies.get('token');
-  const url = `${API_URL}/social/circle/`;
+  const url = `${API_URL}/social/circle/${username}/`;
   if (token) {
     return axios(
       {
         method: 'GET',
         url,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+  }
+  return null;
+};
+
+export const disconnectCircle = async (username: string) => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/circle/${username}/`;
+  if (token) {
+    return axios(
+      {
+        method: 'PATCH',
+        url,
+        data: { username },
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

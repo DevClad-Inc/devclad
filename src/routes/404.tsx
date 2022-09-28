@@ -1,21 +1,29 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import useAuth from '@/services/useAuth.services';
 import AppShell from '@/components/AppShell';
+import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
+import { initialUserState, User } from '@/lib/InterfacesStates.lib';
 
 export default function FourOFour() : JSX.Element {
+  const { authed } = useAuth();
   useDocumentTitle('Oops! 404');
   const navigate = useNavigate();
-  const qc = useQueryClient();
-  const { authed } = useAuth();
+  let idbUser: User = { ...initialUserState };
 
   React.useEffect(() => {
-    if (!authed && qc.getQueryData(['user']) === null) {
+    if (Object.values(idbUser).every((v) => v === undefined)) {
+      getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
+        if (localUser) {
+          idbUser = localUser;
+        }
+      });
+    }
+    if (!authed && idbUser.pk === undefined) {
       navigate('/login');
     }
-  }, [authed, navigate]);
+  }, [authed, idbUser]);
 
   return (
     // todo: CHANGE THIS!!

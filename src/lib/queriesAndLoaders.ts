@@ -2,6 +2,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import {
+  getCircle,
   getProfile, getSocialProfile, getStatus, getUsernameProfile, getUsernameSocialProfile,
 } from '@/services/profile.services';
 
@@ -35,6 +36,11 @@ export const profileUsernameQuery = (username: string) => ({
 export const socialProfileUsernameQuery = (username: string) => ({
   queryKey: ['social-profile', username],
   queryFn: async () => getUsernameSocialProfile(username),
+});
+
+export const userCircleQuery = (username: string) => ({
+  queryKey: ['circle', username],
+  queryFn: async () => getCircle(username),
 });
 
 // profileempty and socialempty query are only used in Onboarding

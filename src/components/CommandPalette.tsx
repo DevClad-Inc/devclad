@@ -63,6 +63,10 @@ const items = [
 export default function CommandPalette() {
   const [open, setOpen] = useState(false);
   const handleKeyPress = React.useCallback((event: React.KeyboardEvent) => {
+    const target = event.target as HTMLInputElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      return;
+    }
     if ((event.key === 'Command' || 'Control') && (event.key === 'K' || event.key === 'k')) {
       setOpen(true);
     }
@@ -72,6 +76,7 @@ export default function CommandPalette() {
   // todo: fix ANYs; it's dirty
   React.useEffect(() => {
     // attach the event listener
+    // check if the user is on a form field
     document.addEventListener('keydown', handleKeyPress as any);
     // remove the event listener
     return () => {

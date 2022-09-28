@@ -33,6 +33,7 @@ import LoadingCard from '@/components/LoadingCard';
 import Social from '@/routes/social/Social';
 import OneOne from '@/routes/social/OneOne';
 import Circle from '@/routes/social/Circle';
+import Profile from './routes/Profile';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -48,7 +49,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    errorElement: <FourOFour />,
     children: [
       // COMMON FOR ALL AUTHED USERS
       {
@@ -93,6 +93,10 @@ const router = createBrowserRouter([
       },
       // AUTHED AND APPROVED
       {
+        path: 'profile/:username',
+        element: <Profile />,
+      },
+      {
         path: 'social',
         element: <Social />,
         children: [
@@ -134,6 +138,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: <FourOFour />,
   },
 ]);
 
