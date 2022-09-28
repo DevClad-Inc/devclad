@@ -291,7 +291,7 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                   className={primaryString2}
                 >
                   <VideoCameraIcon className="lg:h-8 h-6 w-6 mr-2" aria-hidden="true" />
-                  Schedule Meeting
+                  Schedule
                 </button>
               </div>
               <div className="flex flex-col">
