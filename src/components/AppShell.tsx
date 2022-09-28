@@ -218,24 +218,26 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   ))}
                 </ol>
                 )}
-                <ol className="flex border-[1px] rounded-md p-2
-                  shadow-2xl shadow-white/20
-                 border-neutral-200 dark:border-neutral-900 items-center space-x-4"
-                >
-                  <li>
-                    <div className="flex items-center">
-                      <ArrowLeftIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden />
-                      <NavLink
-                        to="/social"
-                        className="ml-2 text-sm font-mono font-medium text-orange-300
-                          hover:text-white duration-300"
-                        end
-                      >
-                        Social
-                      </NavLink>
-                    </div>
-                  </li>
-                </ol>
+                {pathname.includes('profile') && (
+                  <ol className="flex border-[1px] rounded-md p-2
+                    shadow-2xl shadow-white/20
+                  border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+                  >
+                    <li>
+                      <div className="flex items-center">
+                        <ArrowLeftIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden />
+                        <NavLink
+                          to="/social"
+                          className="ml-2 text-sm font-mono font-medium text-orange-300
+                            hover:text-white duration-300"
+                          end
+                        >
+                          Social
+                        </NavLink>
+                      </div>
+                    </li>
+                  </ol>
+                )}
                 <span
                   className="md:flex border-[1px] rounded-md p-2 hidden md:visible
                 shadow-2xl shadow-white/20 text-xs font-mono font-medium text-orange-300
