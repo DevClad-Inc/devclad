@@ -37,7 +37,6 @@ const dropdownItems = [
     icon: NoSymbolIcon,
     alt: 'Disconnect',
     onClick: () => {
-      console.log('block');
     },
   },
 ];
@@ -48,7 +47,6 @@ const connectedOnlyItems = [
     icon: XCircleIcon,
     alt: 'Block',
     onClick: () => {
-      console.log('disconnect');
     },
   },
 ];

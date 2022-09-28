@@ -11,13 +11,13 @@ import useAuth from '@/services/useAuth.services';
 import useConnected from '@/services/useConnected.services';
 
 function ConnectionCard(
-  { username, currentUser } :{ username:string, currentUser:string },
+  { username, otherUser } :{ username:string, otherUser:string },
 ) : JSX.Element {
-  const connected = useConnected(currentUser, username);
+  const connected = useConnected(username, otherUser);
 
-  const profile = useOneOneProfile(username) as MatchProfile;
+  const profile = useOneOneProfile(otherUser) as MatchProfile;
   const qc = useQueryClient();
-  const state = qc.getQueryState(['profile', username]);
+  const state = qc.getQueryState(['profile', otherUser]);
   if ((state?.status === 'loading' || state?.status !== 'success') || profile === null) {
     return (
       <LoadingCard />
@@ -90,7 +90,7 @@ function ConnectionCard(
               <div className="flex flex-col">
                 <Link
                   type="button"
-                  to={`/profile/${username}`}
+                  to={`/profile/${otherUser}`}
                   className="flex rounded-lg dark:bg-black
                   p-2 text-neutral-800 dark:text-neutral-200
                   border-[1px] border-neutral-200 dark:border-neutral-900"
@@ -126,8 +126,8 @@ export default function Circle(): JSX.Element {
         usernames?.map((username) => (
           <ConnectionCard
             key={username}
-            username={username}
-            currentUser={loggedInUserUserName as string}
+            username={loggedInUserUserName as string}
+            otherUser={username}
           />
         ))
         }
