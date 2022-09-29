@@ -10,20 +10,21 @@ export default function FourOFour(): JSX.Element {
   const { authed } = useAuth();
   useDocumentTitle('Oops! 404');
   const navigate = useNavigate();
-  let idbUser: User = { ...initialUserState };
+  // USEref
+  const userRef = React.useRef<User>(initialUserState);
 
   React.useEffect(() => {
-    if (Object.values(idbUser).every((v) => v === undefined)) {
+    if (Object.values(userRef).every((v) => v === undefined)) {
       getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
         if (localUser) {
-          idbUser = localUser;
+          userRef.current = localUser;
         }
       });
     }
-    if (!authed && idbUser.pk === undefined) {
+    if (!authed && userRef.current.pk === undefined) {
       navigate('/login');
     }
-  }, [authed, idbUser]);
+  }, [authed, userRef, navigate]);
 
   return (
     // todo: CHANGE THIS!!

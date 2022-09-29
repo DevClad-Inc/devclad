@@ -17,7 +17,7 @@ export default function VerifyEmail(): JSX.Element {
   useEffect(() => {
     const verification = async () =>
       verifyEmail(key)
-        .then((res: any) => {
+        .then((res) => {
           if (res.detail === 'ok') {
             setVerified(true);
             toast.custom(<Success success="Email verified successfully." />, {
@@ -37,7 +37,7 @@ export default function VerifyEmail(): JSX.Element {
           });
         });
     verification();
-  }, []);
+  }, [key]);
   return (
     <div>
       <div className="relative mt-5 sm:mt-10">

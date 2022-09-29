@@ -28,7 +28,7 @@ function Home(): JSX.Element {
     if (!authed && qc.getQueryData(['user']) === null) {
       navigate('/login');
     }
-  }, [authed]);
+  }, [authed, qc, navigate]);
   return (
     <div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
