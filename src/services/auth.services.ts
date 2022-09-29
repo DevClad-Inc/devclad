@@ -27,34 +27,39 @@ export const passwordReset = async (
   password1: string,
   password2: string,
   uid?: string,
-  token?: string,
+  token?: string
 ) => {
   const url = `${API_URL}/auth/password/reset/confirm/`;
-  const response = await axios.post(url, {
-    new_password1: password1,
-    new_password2: password2,
-    uid,
-    token,
-  }, { headers });
+  const response = await axios.post(
+    url,
+    {
+      new_password1: password1,
+      new_password2: password2,
+      uid,
+      token,
+    },
+    { headers }
+  );
   return response.data;
 };
 
-export const passwordChange = async (
-  password1: string,
-  password2: string,
-) => {
+export const passwordChange = async (password1: string, password2: string) => {
   const token = Cookies.get('token');
   const url = `${API_URL}/auth/password/change/`;
-  const response = await axios.post(url, {
-    new_password1: password1,
-    new_password2: password2,
-  }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+  const response = await axios.post(
+    url,
+    {
+      new_password1: password1,
+      new_password2: password2,
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  );
   return response;
 };
 
@@ -62,18 +67,16 @@ export const changeEmail = async (email: string) => {
   const token = Cookies.get('token');
   const url = `${API_URL}/users/change-email/`;
   if (token) {
-    return axios(
-      {
-        method: 'PATCH',
-        url,
-        data: { email },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+    return axios({
+      method: 'PATCH',
+      url,
+      data: { email },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-    );
+    });
   }
   return null;
 };
@@ -82,17 +85,15 @@ export const checkVerified = async () => {
   const token = Cookies.get('token');
   const url = `${API_URL}/users/change-email/`;
   if (token) {
-    return axios(
-      {
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-    );
+    });
   }
   return null;
 };
@@ -147,13 +148,11 @@ export async function getUser() {
       .catch(() => null);
   }
   if (token === undefined && Cookies.get('refresh')) {
-    await refreshToken().catch(
-      () => {
-        Cookies.remove('token');
-        Cookies.remove('refresh');
-        delMany(['loggedInUser', 'profile']);
-      },
-    );
+    await refreshToken().catch(() => {
+      Cookies.remove('token');
+      Cookies.remove('refresh');
+      delMany(['loggedInUser', 'profile']);
+    });
   }
   return null;
 }
@@ -181,17 +180,14 @@ export async function updateUser(first_name?: string, last_name?: string, userna
 
 export async function SignUp(user: NewUser) {
   return axios
-    .post(
-      `${API_URL}/auth/registration/`,
-      {
-        first_name: user.firstName,
-        last_name: user.lastName,
-        email: user.email,
-        password1: user.password1,
-        password2: user.password2,
-        headers,
-      },
-    )
+    .post(`${API_URL}/auth/registration/`, {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      email: user.email,
+      password1: user.password1,
+      password2: user.password2,
+      headers,
+    })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
         // expires: twoHour,
@@ -205,7 +201,8 @@ export async function SignUp(user: NewUser) {
         secure: true,
       });
       return resp;
-    }).catch((err) => err);
+    })
+    .catch((err) => err);
 }
 
 export async function logIn(email: string, password: string) {

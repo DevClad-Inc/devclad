@@ -1,13 +1,13 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.2.0
+    rev: v4.3.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v8.21.0
+    rev: v8.24.0
     hooks:
       - id: eslint
         files: \.[jt]sx?$ # match all .js, .ts, .jsx and .tsx files
@@ -18,11 +18,37 @@ repos:
         language: node
         additional_dependencies:
           - eslint
+          - prettier
           - eslint-config-airbnb
           - eslint-config-airbnb-typescript
           - eslint-plugin-import
           - eslint-plugin-jsx-a11y
           - eslint-plugin-react
           - eslint-plugin-react-hooks
+          - eslint-config-prettier
+          - eslint-plugin-prettier
+          - "@typescript-eslint/eslint-plugin"
+          - "@typescript-eslint/parser"
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.5.0
+    hooks:
+      - id: prettier
+        files: \.[jt]sx?$ # match all
+        types: [file]
+        args:
+          - --write
+        entry: prettier
+        language: node
+        additional_dependencies:
+          - eslint
+          - prettier
+          - eslint-config-airbnb
+          - eslint-config-airbnb-typescript
+          - eslint-plugin-import
+          - eslint-plugin-jsx-a11y
+          - eslint-plugin-react
+          - eslint-plugin-react-hooks
+          - eslint-config-prettier
+          - eslint-plugin-prettier
           - "@typescript-eslint/eslint-plugin"
           - "@typescript-eslint/parser"

@@ -1,18 +1,17 @@
 import React from 'react';
-import {
-  Link, NavLink, useLocation,
-} from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
-  HomeIcon, UsersIcon, FireIcon, FolderIcon,
+  HomeIcon,
+  UsersIcon,
+  FireIcon,
+  FolderIcon,
   ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
 
 import DevCladLogo from '@/assets/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
-import {
-  Profile, initialProfileState,
-} from '@/lib/InterfacesStates.lib';
+import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { profileQuery } from '@/lib/queriesAndLoaders';
 import CheckChild from '@/lib/CheckChild.lib';
@@ -21,16 +20,28 @@ import useAuth from '@/services/useAuth.services';
 
 const navigation = [
   {
-    name: 'Dashboard', href: '/', icon: HomeIcon, alt: 'Home',
+    name: 'Dashboard',
+    href: '/',
+    icon: HomeIcon,
+    alt: 'Home',
   },
   {
-    name: 'Social', href: '/social', icon: UsersIcon, alt: 'Social',
+    name: 'Social',
+    href: '/social',
+    icon: UsersIcon,
+    alt: 'Social',
   },
   {
-    name: 'Hackathons', href: '/hackathons', icon: FireIcon, alt: 'Hackathons',
+    name: 'Hackathons',
+    href: '/hackathons',
+    icon: FireIcon,
+    alt: 'Hackathons',
   },
   {
-    name: 'Projects', href: '/projects', icon: FolderIcon, alt: 'Projects',
+    name: 'Projects',
+    href: '/projects',
+    icon: FolderIcon,
+    alt: 'Projects',
   },
 ];
 
@@ -40,16 +51,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const pathArray = pathname.split('/');
   pathArray.shift();
-  const pageTitle = (document.title).slice(10);
+  const pageTitle = document.title.slice(10);
 
   // user logic
   const { loggedInUser } = useAuth();
 
   let profileData: Profile = { ...initialProfileState };
-  const {
-    data: profileQueryData,
-    isSuccess: profileQuerySuccess,
-  } = useQuery({
+  const { data: profileQueryData, isSuccess: profileQuerySuccess } = useQuery({
     ...profileQuery(),
   });
   if (profileQuerySuccess && profileQueryData !== null) {
@@ -62,43 +70,45 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-full flex">
       <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
-        <div className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2
+        <div
+          className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2
          border-l-0 border-r-2 border-white/5 "
         >
           <div className="flex-1 flex flex-col pt-5 overflow-y-hidden">
             <div className="flex items-center flex-shrink-0 px-2">
-              <button type="button" onClick={() => setSidebarExpand(!sidebarExpand)} className="m-auto">
-                <img
-                  className="h-24 m-auto w-auto rounded-full"
-                  src={DevCladLogo}
-                  alt="DevClad"
-                />
+              <button
+                type="button"
+                onClick={() => setSidebarExpand(!sidebarExpand)}
+                className="m-auto"
+              >
+                <img className="h-24 m-auto w-auto rounded-full" src={DevCladLogo} alt="DevClad" />
               </button>
             </div>
-            <nav className={classNames(
-              sidebarExpand
-                ? 'space-y-4'
-                : 'space-y-24',
-              'mt-10 flex-1 px-2 overflow-auto scrollbar',
-            )}
+            <nav
+              className={classNames(
+                sidebarExpand ? 'space-y-4' : 'space-y-24',
+                'mt-10 flex-1 px-2 overflow-auto scrollbar'
+              )}
             >
               {navigation.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  className={({ isActive }) => classNames(
-                    isActive || CheckChild(pathname, item.href)
-                      ? 'dark:text-white text-orange-900'
-                      : 'dark:text-neutral-700 dark:hover:text-neutral-100',
-                    sidebarExpand ? 'rounded-none' : 'rounded-lg',
-                    'flex items-center px-5 py-3 duration-300',
-                  )}
+                  className={({ isActive }) =>
+                    classNames(
+                      isActive || CheckChild(pathname, item.href)
+                        ? 'dark:text-white text-orange-900'
+                        : 'dark:text-neutral-700 dark:hover:text-neutral-100',
+                      sidebarExpand ? 'rounded-none' : 'rounded-lg',
+                      'flex items-center px-5 py-3 duration-300'
+                    )
+                  }
                   end
                 >
                   <item.icon
                     className={classNames(
                       sidebarExpand ? 'mr-3 h-8 w-8' : 'm-auto h-8 w-8',
-                      'flex-shrink-1 stroke-2',
+                      'flex-shrink-1 stroke-2'
                     )}
                     aria-hidden="true"
                   />
@@ -115,7 +125,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     className="inline-block object-cover h-12 w-12 rounded-full bg-linen"
                     src={
                       import.meta.env.VITE_DEVELOPMENT
-                        ? (import.meta.env.VITE_API_URL + profileData.avatar)
+                        ? import.meta.env.VITE_API_URL + profileData.avatar
                         : profileData.avatar
                     }
                     alt=""
@@ -124,7 +134,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {sidebarExpand && (
                   <div className="ml-3 font-mono">
                     <p className="text-sm">{loggedInUser.first_name}</p>
-                    <p className="text-xs text-neutral-600 dark:text-orange-300 hover:text-black
+                    <p
+                      className="text-xs text-neutral-600 dark:text-orange-300 hover:text-black
                   dark:group-hover:text-orange-400 duration-300"
                     >
                       Settings
@@ -137,11 +148,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       {/* Main content */}
-      <div className={classNames(
-        sidebarExpand ? 'md:pl-48' : 'md:pl-24',
-        'flex flex-col flex-1',
-      )}
-      >
+      <div className={classNames(sidebarExpand ? 'md:pl-48' : 'md:pl-24', 'flex flex-col flex-1')}>
         <div className="md:hidden">
           <div className="fixed inset-x-0 bottom-0 z-10 flex-shrink flex">
             <div className="w-full">
@@ -155,18 +162,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   <NavLink
                     key={tab.name}
                     to={tab.href}
-                    className={({ isActive }) => classNames(
-                      isActive
-                        ? 'dark:text-orange-300 text-orange-600'
-                        : 'dark:text-neutral-300 dark:hover:bg-neutral-900 hover:bg-linen dark:focus:bg-neutral-500',
-                      'w-1/4 flex justify-evenly py-3 mb-1 rounded-xl border-t-2 border-transparent',
-                    )}
+                    className={({ isActive }) =>
+                      classNames(
+                        isActive
+                          ? 'dark:text-orange-300 text-orange-600'
+                          : 'dark:text-neutral-300 dark:hover:bg-neutral-900 hover:bg-linen dark:focus:bg-neutral-500',
+                        'w-1/4 flex justify-evenly py-3 mb-1 rounded-xl border-t-2 border-transparent'
+                      )
+                    }
                     end
                   >
-                    <tab.icon
-                      className="flex-shrink-0 h-8 w-8"
-                      aria-hidden="true"
-                    />
+                    <tab.icon className="flex-shrink-0 h-8 w-8" aria-hidden="true" />
                     <span className="sr-only">{tab.name}</span>
                   </NavLink>
                 ))}
@@ -177,55 +183,59 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto scrollbar">
           <div className="py-6">
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-
               <nav className="flex mb-5 space-x-2" aria-label="Breadcrumb">
                 {!noBreadCrumbRoutes.includes(pathArray[0]) && (
-                <ol className="flex border-[1px] rounded-md p-2
+                  <ol
+                    className="flex border-[1px] rounded-md p-2
                   shadow-2xl shadow-white/20
                  border-neutral-200 dark:border-neutral-900 items-center space-x-4"
-                >
-                  <li>
-                    <div>
-                      <Link to="/" className="text-white hover:text-orange-300 duration-300">
-                        <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                        <span className="sr-only">Home</span>
-                      </Link>
-                    </div>
-                  </li>
-                  {pathArray.map((page) => (
-                    <li key={page}>
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 flex-shrink-0 text-gray-300"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          aria-hidden="true"
-                        >
-                          <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                        </svg>
-                        <NavLink
-                          to={page === '' ? '/' : `/${page}`}
-                          className="ml-2 text-sm font-mono font-medium text-orange-300
-                          hover:text-white duration-300"
-                          aria-current={(pathname === page) ? 'page' : undefined}
-                          end
-                        >
-                          {page}
-                        </NavLink>
+                  >
+                    <li>
+                      <div>
+                        <Link to="/" className="text-white hover:text-orange-300 duration-300">
+                          <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                          <span className="sr-only">Home</span>
+                        </Link>
                       </div>
                     </li>
-                  ))}
-                </ol>
+                    {pathArray.map((page) => (
+                      <li key={page}>
+                        <div className="flex items-center">
+                          <svg
+                            className="h-5 w-5 flex-shrink-0 text-gray-300"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            aria-hidden="true"
+                          >
+                            <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                          </svg>
+                          <NavLink
+                            to={page === '' ? '/' : `/${page}`}
+                            className="ml-2 text-sm font-mono font-medium text-orange-300
+                          hover:text-white duration-300"
+                            aria-current={pathname === page ? 'page' : undefined}
+                            end
+                          >
+                            {page}
+                          </NavLink>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
                 )}
                 {pathname.includes('profile') && (
-                  <ol className="flex border-[1px] rounded-md p-2
+                  <ol
+                    className="flex border-[1px] rounded-md p-2
                     shadow-2xl shadow-white/20
                   border-neutral-200 dark:border-neutral-900 items-center space-x-4"
                   >
                     <li>
                       <div className="flex items-center">
-                        <ArrowLeftIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden />
+                        <ArrowLeftIcon
+                          className="h-5 w-5 flex-shrink-0 text-gray-300"
+                          aria-hidden
+                        />
                         <NavLink
                           to="/social"
                           className="ml-2 text-sm font-mono font-medium text-orange-300
@@ -244,33 +254,35 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 hover:text-white duration-300
                 border-neutral-200 dark:border-neutral-900 items-center"
                 >
-                  <kbd className={classNames(
-                    'mx-1 flex h-6 w-8 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
-                  )}
+                  <kbd
+                    className={classNames(
+                      'mx-1 flex h-6 w-8 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2'
+                    )}
                   >
-                    {checkMacOS()
-                      ? <span className="text-lg">⌘</span>
-                      : <span className="text-xs">Ctrl</span>}
+                    {checkMacOS() ? (
+                      <span className="text-lg">⌘</span>
+                    ) : (
+                      <span className="text-xs">Ctrl</span>
+                    )}
                   </kbd>
                   +
-                  <kbd className={classNames(
-                    'mx-1 flex h-6 w-6 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2',
-                  )}
+                  <kbd
+                    className={classNames(
+                      'mx-1 flex h-6 w-6 items-center justify-center rounded border border-neutral-500 bg-darkBG font-semibold sm:mx-2'
+                    )}
                   >
                     K
                   </kbd>
                 </span>
               </nav>
-              {(pageTitle === 'Settings') && (
-              <>
-                <h1 className="text-3xl font-bold">
-                  {(checkIOS() || checkMacOS()) ? '⚙' : ''}
-                  {' '}
-                  {loggedInUser.first_name}
-                  &apos;s Settings
-                </h1>
-                <hr className="my-8 border-1 border-neutral-200 dark:border-neutral-900" />
-              </>
+              {pageTitle === 'Settings' && (
+                <>
+                  <h1 className="text-3xl font-bold">
+                    {checkIOS() || checkMacOS() ? '⚙' : ''} {loggedInUser.first_name}
+                    &apos;s Settings
+                  </h1>
+                  <hr className="my-8 border-1 border-neutral-200 dark:border-neutral-900" />
+                </>
               )}
             </div>
             <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">

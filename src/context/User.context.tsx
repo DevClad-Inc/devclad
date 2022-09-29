@@ -18,7 +18,7 @@ interface UserReducerAction {
 export const UserContext = createContext({} as User);
 export const UserDispatch = createContext({} as React.Dispatch<UserReducerAction>);
 
-function userReducer(state:User, action: UserReducerAction): User {
+function userReducer(state: User, action: UserReducerAction): User {
   const { type, payload } = action;
   switch (type) {
     case UserReducerActionTypes.SET_USER_DATA:
