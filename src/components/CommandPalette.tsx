@@ -112,11 +112,11 @@ export default function CommandPalette() {
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel
-              className="space-y-1 text-white bg-gradient-to-br backdrop-blur-sm
-            bg-black
-            from-black to-orange-900/5
-            border-neutral-900 border-[1px]
-            mx-auto max-w-xl overflow-hidden rounded-md shadow-2xl shadow-white/20
+              className="mx-auto max-w-xl space-y-1 overflow-hidden
+            rounded-md
+            border-[1px] border-neutral-900
+            bg-black bg-gradient-to-br
+            from-black to-orange-900/5 text-white shadow-2xl shadow-white/20 backdrop-blur-sm
             transition-all"
             >
               <div className="rounded-md p-4">
@@ -154,18 +154,18 @@ export default function CommandPalette() {
                         item.url === pathname || `${item.url}/` === pathname
                           ? 'animate-gradient'
                           : 'hover:animate-gradient-reverse hover:text-black',
-                        'group rounded-md px-4 py-4 flex items-center text-sm',
-                        'border-neutral-800 border-dashed border-[1px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral'
+                        'group flex items-center rounded-md px-4 py-4 text-sm',
+                        'focus:ring-offset-neutral border-[1px] border-dashed border-neutral-800 focus:outline-none focus:ring-2 focus:ring-offset-2'
                       )}
                       end
                     >
-                      <item.icon className="flex-shrink-0 -ml-1 mr-3 h-6 w-6" aria-hidden="true" />
+                      <item.icon className="-ml-1 mr-3 h-6 w-6 flex-shrink-0" aria-hidden="true" />
                       <span className="font-light">{item.name}</span>
                     </NavLink>
                   ))}
                 </nav>
               </div>
-              <div className="flex flex-wrap items-center py-2.5 px-4 text-xs bg-darkBG2 text-neutral-300">
+              <div className="flex flex-wrap items-center bg-darkBG2 py-2.5 px-4 text-xs text-neutral-300">
                 Press{' '}
                 <kbd
                   className={classNames(
@@ -192,7 +192,7 @@ export default function CommandPalette() {
                 </kbd>{' '}
                 to teleport.
               </div>
-              <div className="flex flex-wrap items-center justify-end py-2.5 px-4 text-xs bg-darkBG text-neutral-300">
+              <div className="flex flex-wrap items-center justify-end bg-darkBG py-2.5 px-4 text-xs text-neutral-300">
                 <span className="hidden sm:inline">Press</span>
                 <kbd
                   className={classNames(

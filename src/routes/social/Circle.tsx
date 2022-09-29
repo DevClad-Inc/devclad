@@ -31,17 +31,17 @@ function ConnectionCard({
   }
   if (profile && connected) {
     return (
-      <div className="justify-center flex p-0 lg:p-4">
+      <div className="flex justify-center p-0 lg:p-4">
         <div
-          className="border-[1px] dark:border-neutral-900 bg-darkBG2 border-neutral-400 shadow rounded-md
-         xl:w-3/4 w-full"
+          className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow
+         dark:border-neutral-900 xl:w-3/4"
         >
-          <div className="px-4 py-5 sm:p-6 space-y-2">
+          <div className="space-y-2 px-4 py-5 sm:p-6">
             <div className="sm:inline-flex">
               <div className="flex flex-col">
                 <div className="flex-shrink-0">
                   <img
-                    className="object-cover h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-linen"
+                    className="h-16 w-16 rounded-full bg-linen object-cover sm:h-24 sm:w-24"
                     src={
                       import.meta.env.VITE_DEVELOPMENT
                         ? import.meta.env.VITE_API_URL + profile.avatar
@@ -52,19 +52,19 @@ function ConnectionCard({
                 </div>
               </div>
               <h2
-                className="sm:ml-4 mt-4 font-sans text-2xl sm:text-3xl leading-6 font-black
-                 text-neutral-900 dark:text-neutral-100"
+                className="mt-4 font-sans text-2xl font-black leading-6 text-neutral-900 dark:text-neutral-100
+                 sm:ml-4 sm:text-3xl"
               >
                 {profile.first_name} {profile.last_name}{' '}
-                <div className="inline-flex ml-1 text-neutral-600 dark:text-neutral-400 text-base">
+                <div className="ml-1 inline-flex text-base text-neutral-600 dark:text-neutral-400">
                   {profile.pronouns ? `(${profile.pronouns})` : ''}
                 </div>
                 {profile.video_call_friendly && (
-                  <span className="sm:mt-0 sm:mb-0 mt-5 mb-5 block">
+                  <span className="mt-5 mb-5 block sm:mt-0 sm:mb-0">
                     <div className="-mt-4 flex-shrink-0">
                       <span
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-md
-                        text-xs font-medium bg-phthaloGreen text-honeyDew"
+                        className="inline-flex items-center rounded-md bg-phthaloGreen px-2.5
+                        py-0.5 text-xs font-medium text-honeyDew"
                       >
                         👋 Video Call Friendly
                       </span>
@@ -73,16 +73,16 @@ function ConnectionCard({
                 )}
               </h2>
             </div>
-            <div className="sm:ml-24 sm:text-lg text-sm space-x-2 flex">
+            <div className="flex space-x-2 text-sm sm:ml-24 sm:text-lg">
               <div className="flex flex-col">
                 <button type="button" className={primaryString2}>
-                  <ChatBubbleBottomCenterIcon className="sm:h-8 h-6 w-6 mr-2" aria-hidden="true" />
+                  <ChatBubbleBottomCenterIcon className="mr-2 h-6 w-6 sm:h-8" aria-hidden="true" />
                   <span>Chat</span>
                 </button>
               </div>
               <div className="flex flex-col">
                 <button type="button" className={primaryString2}>
-                  <VideoCameraIcon className="sm:h-8 h-6 w-6 mr-2" aria-hidden="true" />
+                  <VideoCameraIcon className="mr-2 h-6 w-6 sm:h-8" aria-hidden="true" />
                   <span>Schedule</span>
                 </button>
               </div>
@@ -90,11 +90,11 @@ function ConnectionCard({
                 <Link
                   type="button"
                   to={`/profile/${otherUser}`}
-                  className="flex rounded-lg dark:bg-black
-                  p-2 text-neutral-800 dark:text-neutral-200
-                  border-[1px] border-neutral-200 dark:border-neutral-900"
+                  className="flex rounded-lg border-[1px]
+                  border-neutral-200 p-2 text-neutral-800
+                  dark:border-neutral-900 dark:bg-black dark:text-neutral-200"
                 >
-                  <ArrowUpRightIcon className="sm:h-8 h-6 w-5 mr-2" aria-hidden="true" />
+                  <ArrowUpRightIcon className="mr-2 h-6 w-5 sm:h-8" aria-hidden="true" />
                   Profile
                 </Link>
               </div>

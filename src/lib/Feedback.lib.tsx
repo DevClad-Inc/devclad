@@ -8,7 +8,7 @@ import React from 'react';
 
 export function Success({ success }: { success: string }): JSX.Element {
   return (
-    <div className="rounded-md bg-green-50 dark:bg-phthaloGreen p-4 mb-4">
+    <div className="mb-4 rounded-md bg-green-50 p-4 dark:bg-phthaloGreen">
       <div className="flex">
         <div className="flex-shrink-0">
           <CheckCircleIcon
@@ -26,7 +26,7 @@ export function Success({ success }: { success: string }): JSX.Element {
 
 export function Warning({ warning }: { warning: string }): JSX.Element {
   return (
-    <div className="rounded-md bg-gyCrayola dark:bg-blackChocolate p-4 mb-4">
+    <div className="mb-4 rounded-md bg-gyCrayola p-4 dark:bg-blackChocolate">
       <div className="flex">
         <div className="flex-shrink-0">
           <ShieldExclamationIcon
@@ -44,7 +44,7 @@ export function Warning({ warning }: { warning: string }): JSX.Element {
 
 export function Info({ info }: { info: string }): JSX.Element {
   return (
-    <div className="rounded-md bg-beauBlue dark:bg-oxfordBlue p-4 mb-4">
+    <div className="mb-4 rounded-md bg-beauBlue p-4 dark:bg-oxfordBlue">
       <div className="flex">
         <div className="flex-shrink-0">
           <InformationCircleIcon
@@ -62,7 +62,7 @@ export function Info({ info }: { info: string }): JSX.Element {
 
 export function Error({ error }: { error: string }): JSX.Element {
   return (
-    <div className="rounded-md bg-mistyRose dark:bg-bloodRed/60 p-4 mb-4">
+    <div className="mb-4 rounded-md bg-mistyRose p-4 dark:bg-bloodRed/60">
       <div className="flex">
         <div className="flex-shrink-0">
           <XCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />

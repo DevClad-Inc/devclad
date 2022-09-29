@@ -122,11 +122,11 @@ export default function SignupForm({
           <div>
             <label
               htmlFor="firstName"
-              className="block text-sm text-left pl-1
+              className="block pl-1 text-left text-sm
              text-neutral-700 dark:text-neutral-300"
             >
               First Name
-              <div className="mt-1 relative">
+              <div className="relative mt-1">
                 <Field
                   id="firstName"
                   name="firstName"
@@ -134,11 +134,11 @@ export default function SignupForm({
                   placeholder="Ye"
                   autoComplete="First Name"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <ExclamationTriangleIcon
                       className="h-5 w-5 text-bloodRed dark:text-mistyRose"
                       aria-hidden="true"
@@ -156,11 +156,11 @@ export default function SignupForm({
           <div>
             <label
               htmlFor="lastName"
-              className="block text-sm text-left pl-1
+              className="block pl-1 text-left text-sm
                text-neutral-700 dark:text-neutral-300"
             >
               Last Name
-              <div className="mt-1 relative">
+              <div className="relative mt-1">
                 <Field
                   id="lastName"
                   name="lastName"
@@ -168,11 +168,11 @@ export default function SignupForm({
                   placeholder="West"
                   autoComplete="Last Name"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <ExclamationTriangleIcon
                       className="h-5 w-5 text-bloodRed dark:text-mistyRose"
                       aria-hidden="true"
@@ -183,18 +183,18 @@ export default function SignupForm({
               <ErrorMessage
                 name="lastName"
                 component="div"
-                className="text-sm text-bloodRed dark:text-mistyRose0"
+                className="dark:text-mistyRose0 text-sm text-bloodRed"
               />
             </label>
           </div>
           <div>
             <label
               htmlFor="email"
-              className="block text-sm text-left pl-1
+              className="block pl-1 text-left text-sm
                text-neutral-700 dark:text-neutral-300"
             >
               Email
-              <div className="mt-1 relative">
+              <div className="relative mt-1">
                 <Field
                   id="email"
                   name="email"
@@ -202,11 +202,11 @@ export default function SignupForm({
                   placeholder="cactus@jack.com"
                   autoComplete="email"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <ExclamationTriangleIcon
                       className="h-5 w-5 text-bloodRed dark:text-mistyRose"
                       aria-hidden="true"
@@ -224,11 +224,11 @@ export default function SignupForm({
           <div>
             <label
               htmlFor="password1"
-              className="block text-sm text-left pl-1
+              className="block pl-1 text-left text-sm
                text-neutral-700 dark:text-neutral-300"
             >
               Password
-              <div className="mt-1 relative">
+              <div className="relative mt-1">
                 <Field
                   id="password1"
                   name="password1"
@@ -237,11 +237,11 @@ export default function SignupForm({
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <ExclamationTriangleIcon
                       className="h-5 w-5 text-bloodRed dark:text-mistyRose"
                       aria-hidden="true"
@@ -271,11 +271,11 @@ export default function SignupForm({
           <div>
             <label
               htmlFor="password2"
-              className="block text-sm text-left pl-1
+              className="block pl-1 text-left text-sm
                text-neutral-700 dark:text-neutral-300"
             >
               Confirm Password
-              <div className="mt-1 relative">
+              <div className="relative mt-1">
                 <Field
                   id="password2"
                   name="password2"
@@ -283,11 +283,11 @@ export default function SignupForm({
                   placeholder="••••••••••••••••"
                   autoComplete="current-password"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <ExclamationTriangleIcon
                       className="h-5 w-5 text-bloodRed dark:text-mistyRose"
                       aria-hidden="true"
@@ -307,7 +307,7 @@ export default function SignupForm({
             {!signedUp ? (
               <div className="flex justify-center">
                 <PrimaryButton isSubmitting={isSubmitting} wFull>
-                  <span className="font-bold text-lg">
+                  <span className="text-lg font-bold">
                     {isSubmitting ? 'Signing up...' : 'Sign Up'} <span className="text-xs">✨</span>
                   </span>
                 </PrimaryButton>
@@ -315,30 +315,30 @@ export default function SignupForm({
             ) : (
               <button type="button" onClick={() => resendEmail(emailVal)}>
                 <span
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
-                    text-sm  text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
+                  className="flex w-full justify-center rounded-md border border-transparent bg-green-50 py-2 px-4
+                    text-sm  text-green-800 shadow-md hover:shadow-lg hover:shadow-green-300
                     focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
+                    focus:ring-2 focus:ring-green-200 focus:ring-offset-2"
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
                     </div>
-                    <div className="ml-2 font-bold text-base">
+                    <div className="ml-2 text-base font-bold">
                       <span>Account Created.</span> <span>Check Email.</span>
                     </div>
                   </div>
                 </span>
                 <span
-                  className="mt-5 border border-transparent bg-orange-700
-                    dark:bg-darkBG duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-orange-300"
+                  className="mt-5 inline-flex justify-center rounded-md
+                    border border-transparent bg-orange-700 py-2 px-4
+                    text-sm font-bold duration-500 dark:bg-darkBG dark:text-orange-300"
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                    <div className="ml-2 font-bold text-base">
+                    <div className="ml-2 text-base font-bold">
                       <span>Resend Email.</span>
                     </div>
                   </div>

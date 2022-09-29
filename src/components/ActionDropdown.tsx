@@ -19,12 +19,12 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button
-            className="flex items-center rounded-lg dark:bg-black
-        p-2 text-neutral-800 dark:text-neutral-200
-        border-[1px] border-neutral-200 dark:border-neutral-900"
+            className="flex items-center rounded-lg border-[1px]
+        border-neutral-200 p-2 text-neutral-800
+        dark:border-neutral-900 dark:bg-black dark:text-neutral-200"
           >
             <span className="sr-only">Open options</span>
-            <EllipsisVerticalIcon className="sm:h-8 h-6 w-6" aria-hidden="true" />
+            <EllipsisVerticalIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />
           </Menu.Button>
         </div>
 
@@ -39,8 +39,8 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
         >
           <Menu.Items
             className="absolute right-0 z-10 mt-2 w-auto origin-top-right
-            rounded-md border-[1px] bg-black border-neutral-200 dark:border-neutral-900
-            shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            rounded-md border-[1px] border-neutral-200 bg-black shadow-lg
+            ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-neutral-900"
           >
             <div className="py-1 font-light">
               {items.map((item) => (
@@ -57,7 +57,7 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
                       <span className="flex items-center">
                         <span className="mr-2">
                           {' '}
-                          <item.icon className="flex-shrink-0 h-6 w-6" aria-hidden="true" />
+                          <item.icon className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
                         </span>
                         {item.name}
                       </span>

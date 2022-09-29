@@ -68,26 +68,26 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarExpand, setSidebarExpand] = React.useState(false);
 
   return (
-    <div className="h-full flex">
-      <div className="hidden md:flex md:w-min md:flex-col md:fixed md:inset-y-0">
+    <div className="flex h-full">
+      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-min md:flex-col">
         <div
-          className="flex-1 flex flex-col min-h-0 bg-orange-50 dark:bg-darkBG2
-         border-l-0 border-r-2 border-white/5 "
+          className="flex min-h-0 flex-1 flex-col border-l-0 border-r-2
+         border-white/5 bg-orange-50 dark:bg-darkBG2 "
         >
-          <div className="flex-1 flex flex-col pt-5 overflow-y-hidden">
-            <div className="flex items-center flex-shrink-0 px-2">
+          <div className="flex flex-1 flex-col overflow-y-hidden pt-5">
+            <div className="flex flex-shrink-0 items-center px-2">
               <button
                 type="button"
                 onClick={() => setSidebarExpand(!sidebarExpand)}
                 className="m-auto"
               >
-                <img className="h-24 m-auto w-auto rounded-full" src={DevCladLogo} alt="DevClad" />
+                <img className="m-auto h-24 w-auto rounded-full" src={DevCladLogo} alt="DevClad" />
               </button>
             </div>
             <nav
               className={classNames(
                 sidebarExpand ? 'space-y-4' : 'space-y-24',
-                'mt-10 flex-1 px-2 overflow-auto scrollbar'
+                'scrollbar mt-10 flex-1 overflow-auto px-2'
               )}
             >
               {navigation.map((item) => (
@@ -97,7 +97,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   className={({ isActive }) =>
                     classNames(
                       isActive || CheckChild(pathname, item.href)
-                        ? 'dark:text-white text-orange-900'
+                        ? 'text-orange-900 dark:text-white'
                         : 'dark:text-neutral-700 dark:hover:text-neutral-100',
                       sidebarExpand ? 'rounded-none' : 'rounded-lg',
                       'flex items-center px-5 py-3 duration-300'
@@ -117,12 +117,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
           </div>
-          <div className="flex-shrink-0 flex border-t border-orange-400/50 rounded-tl-3xl dark:bg-black p-4">
-            <Link to="/settings" className="flex-shrink-0 w-full group block">
+          <div className="flex flex-shrink-0 rounded-tl-3xl border-t border-orange-400/50 p-4 dark:bg-black">
+            <Link to="/settings" className="group block w-full flex-shrink-0">
               <div className="flex items-center">
                 <div>
                   <img
-                    className="inline-block object-cover h-12 w-12 rounded-full bg-linen"
+                    className="inline-block h-12 w-12 rounded-full bg-linen object-cover"
                     src={
                       import.meta.env.VITE_DEVELOPMENT
                         ? import.meta.env.VITE_API_URL + profileData.avatar
@@ -135,8 +135,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   <div className="ml-3 font-mono">
                     <p className="text-sm">{loggedInUser.first_name}</p>
                     <p
-                      className="text-xs text-neutral-600 dark:text-orange-300 hover:text-black
-                  dark:group-hover:text-orange-400 duration-300"
+                      className="text-xs text-neutral-600 duration-300 hover:text-black
+                  dark:text-orange-300 dark:group-hover:text-orange-400"
                     >
                       Settings
                     </p>
@@ -148,13 +148,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       {/* Main content */}
-      <div className={classNames(sidebarExpand ? 'md:pl-48' : 'md:pl-24', 'flex flex-col flex-1')}>
+      <div className={classNames(sidebarExpand ? 'md:pl-48' : 'md:pl-24', 'flex flex-1 flex-col')}>
         <div className="md:hidden">
-          <div className="fixed inset-x-0 bottom-0 z-10 flex-shrink flex">
+          <div className="fixed inset-x-0 bottom-0 z-10 flex flex-shrink">
             <div className="w-full">
               <nav
-                className="flex backdrop-blur-lg bg-black
-               border-t dark:border-orange-300/30 rounded-tl-xl shadow-lg
+                className="flex rounded-tl-xl border-t
+               bg-black shadow-lg backdrop-blur-lg dark:border-orange-300/30
               "
                 aria-label="Tabs"
               >
@@ -165,14 +165,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     className={({ isActive }) =>
                       classNames(
                         isActive
-                          ? 'dark:text-orange-300 text-orange-600'
-                          : 'dark:text-neutral-300 dark:hover:bg-neutral-900 hover:bg-linen dark:focus:bg-neutral-500',
-                        'w-1/4 flex justify-evenly py-3 mb-1 rounded-xl border-t-2 border-transparent'
+                          ? 'text-orange-600 dark:text-orange-300'
+                          : 'hover:bg-linen dark:text-neutral-300 dark:hover:bg-neutral-900 dark:focus:bg-neutral-500',
+                        'mb-1 flex w-1/4 justify-evenly rounded-xl border-t-2 border-transparent py-3'
                       )
                     }
                     end
                   >
-                    <tab.icon className="flex-shrink-0 h-8 w-8" aria-hidden="true" />
+                    <tab.icon className="h-8 w-8 flex-shrink-0" aria-hidden="true" />
                     <span className="sr-only">{tab.name}</span>
                   </NavLink>
                 ))}
@@ -180,19 +180,19 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
-        <main className="flex-1 overflow-auto scrollbar">
+        <main className="scrollbar flex-1 overflow-auto">
           <div className="py-6">
-            <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <nav className="flex mb-5 space-x-2" aria-label="Breadcrumb">
+            <div className="mx-auto w-auto px-4 sm:px-6 md:px-8">
+              <nav className="mb-5 flex space-x-2" aria-label="Breadcrumb">
                 {!noBreadCrumbRoutes.includes(pathArray[0]) && (
                   <ol
-                    className="flex border-[1px] rounded-md p-2
-                  shadow-2xl shadow-white/20
-                 border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+                    className="flex items-center space-x-4 rounded-md
+                  border-[1px] border-neutral-200
+                 p-2 shadow-2xl shadow-white/20 dark:border-neutral-900"
                   >
                     <li>
                       <div>
-                        <Link to="/" className="text-white hover:text-orange-300 duration-300">
+                        <Link to="/" className="text-white duration-300 hover:text-orange-300">
                           <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
                           <span className="sr-only">Home</span>
                         </Link>
@@ -212,8 +212,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                           </svg>
                           <NavLink
                             to={page === '' ? '/' : `/${page}`}
-                            className="ml-2 text-sm font-mono font-medium text-orange-300
-                          hover:text-white duration-300"
+                            className="ml-2 font-mono text-sm font-medium text-orange-300
+                          duration-300 hover:text-white"
                             aria-current={pathname === page ? 'page' : undefined}
                             end
                           >
@@ -226,9 +226,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 )}
                 {pathname.includes('profile') && (
                   <ol
-                    className="flex border-[1px] rounded-md p-2
-                    shadow-2xl shadow-white/20
-                  border-neutral-200 dark:border-neutral-900 items-center space-x-4"
+                    className="flex items-center space-x-4 rounded-md
+                    border-[1px] border-neutral-200
+                  p-2 shadow-2xl shadow-white/20 dark:border-neutral-900"
                   >
                     <li>
                       <div className="flex items-center">
@@ -238,8 +238,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         />
                         <NavLink
                           to="/social"
-                          className="ml-2 text-sm font-mono font-medium text-orange-300
-                            hover:text-white duration-300"
+                          className="ml-2 font-mono text-sm font-medium text-orange-300
+                            duration-300 hover:text-white"
                           end
                         >
                           Social
@@ -249,10 +249,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   </ol>
                 )}
                 <span
-                  className="md:flex border-[1px] rounded-md p-2 hidden md:visible
-                shadow-2xl shadow-white/20 text-xs font-mono font-medium text-orange-300
-                hover:text-white duration-300
-                border-neutral-200 dark:border-neutral-900 items-center"
+                  className="hidden items-center rounded-md border-[1px] border-neutral-200 p-2
+                font-mono text-xs font-medium text-orange-300 shadow-2xl shadow-white/20
+                duration-300 hover:text-white
+                dark:border-neutral-900 md:visible md:flex"
                 >
                   <kbd
                     className={classNames(
@@ -281,12 +281,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     {checkIOS() || checkMacOS() ? '⚙' : ''} {loggedInUser.first_name}
                     &apos;s Settings
                   </h1>
-                  <hr className="my-8 border-1 border-neutral-200 dark:border-neutral-900" />
+                  <hr className="border-1 my-8 border-neutral-200 dark:border-neutral-900" />
                 </>
               )}
             </div>
-            <div className="w-auto mx-auto px-4 sm:px-6 md:px-8">
-              <div className="py-4 mb-12">
+            <div className="mx-auto w-auto px-4 sm:px-6 md:px-8">
+              <div className="mb-12 py-4">
                 <QueryLoader />
                 {children}
               </div>

@@ -27,9 +27,9 @@ function Login() {
           preserveAspectRatio="none"
           width="1090"
           height="1090"
-          className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-neutral-300/30
-          dark:stroke-orange-800/30 sm:h-auto"
+          className="-z-11 absolute left-1/2 h-[788px] -translate-x-1/2 stroke-neutral-300/30
+          dark:stroke-orange-800/30
+          sm:-top-24 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -47,7 +47,7 @@ function Login() {
             DevClad
           </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+        <h2 className="mt-5 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
           Sign In
         </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
@@ -56,7 +56,7 @@ function Login() {
             Join DevClad
           </Link>
         </p>
-        <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             {loginError && <Error error="Invalid email/password." />}
             <div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -68,8 +68,8 @@ function Login() {
                   </div>
                   <div className="relative flex justify-center text-sm">
                     <span
-                      className="px-2 bg-white dark:bg-darkBG
-                text-neutral-700 dark:text-neutral-300"
+                      className="bg-white px-2 text-neutral-700
+                dark:bg-darkBG dark:text-neutral-300"
                     >
                       Or continue with
                     </span>
@@ -79,7 +79,7 @@ function Login() {
                 <div className="mt-6">
                   <PrimaryButton wFull>
                     <svg
-                      className="w-5 h-5 mr-2"
+                      className="mr-2 h-5 w-5"
                       aria-hidden="true"
                       fill="currentColor"
                       viewBox="0 0 20 20"

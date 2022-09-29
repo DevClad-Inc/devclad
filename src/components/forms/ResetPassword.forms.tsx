@@ -88,7 +88,7 @@ export default function PasswordResetForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="password1"
-                className="block text-md text-left pl-1
+                className="text-md block pl-1 text-left
            text-neutral-700 dark:text-neutral-300"
               >
                 New Password
@@ -100,8 +100,8 @@ export default function PasswordResetForm(): JSX.Element {
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="password1"
@@ -116,7 +116,7 @@ export default function PasswordResetForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="password2"
-                className="block text-md text-left pl-1
+                className="text-md block pl-1 text-left
            text-neutral-700 dark:text-neutral-300"
               >
                 Confirm Password
@@ -128,8 +128,8 @@ export default function PasswordResetForm(): JSX.Element {
                   autoComplete="current-password"
                   aria-describedby="password-description"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="password2"
@@ -141,7 +141,7 @@ export default function PasswordResetForm(): JSX.Element {
           </div>
           <div>
             {!resetDone ? (
-              <div className="flex text-sm justify-center">
+              <div className="flex justify-center text-sm">
                 <PrimaryButton isSubmitting={isSubmitting}>
                   <span>
                     {isSubmitting ? 'Switching Password...' : 'Switch Password'} <span>🔐</span>
@@ -151,15 +151,15 @@ export default function PasswordResetForm(): JSX.Element {
             ) : (
               <Link className="flex justify-center" to="/">
                 <span
-                  className="mt-5 border border-transparent bg-orange-700
-                    dark:bg-darkBG duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm dark:text-orange-300"
+                  className="mt-5 inline-flex justify-center rounded-md
+                    border border-transparent bg-orange-700 py-2 px-4
+                    text-sm duration-500 dark:bg-darkBG dark:text-orange-300"
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                    <div className="ml-2 font-bold text-base">
+                    <div className="ml-2 text-base font-bold">
                       <span>Password Reset Successful</span>
                     </div>
                   </div>
@@ -221,11 +221,11 @@ export function ForgotPasswordForm(): JSX.Element {
           <div>
             <label
               htmlFor="email"
-              className="block text-md text-left pl-1
+              className="text-md block pl-1 text-left
                text-neutral-700 dark:text-neutral-300"
             >
               Email
-              <div className="mt-1 relative">
+              <div className="relative mt-1">
                 <Field
                   id="email"
                   name="email"
@@ -233,8 +233,8 @@ export function ForgotPasswordForm(): JSX.Element {
                   placeholder="cactus@jack.com"
                   autoComplete="email"
                   required
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
               </div>
               <ErrorMessage
@@ -249,7 +249,7 @@ export function ForgotPasswordForm(): JSX.Element {
             {!changedEmail ? (
               <div className="flex justify-center">
                 <PrimaryButton isSubmitting={isSubmitting}>
-                  <span className="font-bold text-md">
+                  <span className="text-md font-bold">
                     {isSubmitting ? 'Sending Link...' : 'Send Link'}{' '}
                     <span className="text-md">🔗</span>
                   </span>
@@ -258,15 +258,15 @@ export function ForgotPasswordForm(): JSX.Element {
             ) : (
               <div className="flex justify-center">
                 <span
-                  className="mt-5 border border-transparent bg-orange-700
-                    dark:bg-darkBG duration-500 rounded-md py-2 px-4
-                    inline-flex justify-center text-sm font-bold dark:text-orange-300"
+                  className="mt-5 inline-flex justify-center rounded-md
+                    border border-transparent bg-orange-700 py-2 px-4
+                    text-sm font-bold duration-500 dark:bg-darkBG dark:text-orange-300"
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">
                       <CheckCircleIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                    <div className="ml-2 font-bold text-base">
+                    <div className="ml-2 text-base font-bold">
                       <span>Reset Link 🔗 Sent</span>
                     </div>
                   </div>

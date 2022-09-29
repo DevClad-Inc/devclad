@@ -58,14 +58,14 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   }
   if (profile) {
     return (
-      <div className="justify-center flex p-0 lg:p-4">
-        <div className="border-[1px] dark:border-neutral-900 bg-darkBG2 border-neutral-400 shadow rounded-md lg:w-3/4 w-full">
-          <div className="px-4 py-5 sm:p-6 space-y-2">
+      <div className="flex justify-center p-0 lg:p-4">
+        <div className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow dark:border-neutral-900 lg:w-3/4">
+          <div className="space-y-2 px-4 py-5 sm:p-6">
             <div className="sm:inline-flex">
               <div className="flex flex-col">
                 <div className="flex-shrink-0">
                   <img
-                    className="object-cover h-32 w-32 sm:h-24 sm:w-24 rounded-full bg-linen"
+                    className="h-32 w-32 rounded-full bg-linen object-cover sm:h-24 sm:w-24"
                     src={
                       import.meta.env.VITE_DEVELOPMENT
                         ? import.meta.env.VITE_API_URL + profile.avatar
@@ -76,19 +76,19 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </div>
               </div>
               <h2
-                className="sm:ml-4 mt-4 font-sans text-2xl sm:text-3xl leading-6 font-black
-                 text-neutral-900 dark:text-neutral-100"
+                className="mt-4 font-sans text-2xl font-black leading-6 text-neutral-900 dark:text-neutral-100
+                 sm:ml-4 sm:text-3xl"
               >
                 {profile.first_name} {profile.last_name}{' '}
-                <div className="inline-flex ml-1 text-neutral-600 dark:text-neutral-400 text-base">
+                <div className="ml-1 inline-flex text-base text-neutral-600 dark:text-neutral-400">
                   {profile.pronouns ? `(${profile.pronouns})` : ''}
                 </div>
                 {profile.video_call_friendly && (
-                  <span className="sm:mt-0 sm:mb-0 mt-5 mb-5 block">
+                  <span className="mt-5 mb-5 block sm:mt-0 sm:mb-0">
                     <div className="-mt-4 flex-shrink-0">
                       <span
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-md
-                        text-xs font-medium bg-phthaloGreen text-honeyDew"
+                        className="inline-flex items-center rounded-md bg-phthaloGreen px-2.5
+                        py-0.5 text-xs font-medium text-honeyDew"
                       >
                         👋 Video Call Friendly
                       </span>
@@ -98,9 +98,9 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
               </h2>
             </div>
             <div
-              className="sm:ml-24 rounded-lg dark:bg-darkBG
-               p-4 text-neutral-800 dark:text-neutral-200
-               border-[1px] border-neutral-200 dark:border-neutral-900"
+              className="rounded-lg border-[1px] border-neutral-200
+               p-4 text-neutral-800 dark:border-neutral-900
+               dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
             >
               <div className="font-monoItalic">
                 <p>
@@ -110,10 +110,10 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </p>
               </div>
             </div>
-            <div className="sm:ml-20 -ml-4 space-y-4 rounded-md pt-4 pl-4 flex flex-col">
+            <div className="-ml-4 flex flex-col space-y-4 rounded-md pt-4 pl-4 sm:ml-20">
               <div className="flex flex-row space-x-2 text-sm">
                 {profile.calendly && (
-                  <div className="flex bg-blue-800/20 text-blue-400 p-2 rounded-md">
+                  <div className="flex rounded-md bg-blue-800/20 p-2 text-blue-400">
                     <button
                       type="button"
                       className="flex flex-row space-x-1"
@@ -125,7 +125,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                   </div>
                 )}
                 {profile.linkedin && (
-                  <div className="flex bg-blue-800/20 text-blue-400 p-2 rounded-md">
+                  <div className="flex rounded-md bg-blue-800/20 p-2 text-blue-400">
                     <button
                       type="button"
                       className="flex flex-row"
@@ -151,28 +151,28 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 )}
               </div>
             </div>
-            <div className="sm:ml-20 -ml-4 space-y-2 pb-4 rounded-md pl-4 flex flex-col">
-              <div className="flex flex-row space-x-2 text-sm sm:text-md font-mono">
+            <div className="-ml-4 flex flex-col space-y-2 rounded-md pb-4 pl-4 sm:ml-20">
+              <div className="sm:text-md flex flex-row space-x-2 font-mono text-sm">
                 {profile.languages &&
                   badge(profile.languages, 'bg-darkBG font-medium text-amber-200')}
               </div>
 
               {/* TODO: add GITHUB */}
-              <div className="flex flex-row space-x-2 text-sm sm:text-md">
+              <div className="sm:text-md flex flex-row space-x-2 text-sm">
                 {profile.location && profile.location !== 'Other' && (
-                  <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
+                  <div className="flex rounded-md bg-darkBG p-2 text-amber-200">
                     🌎 {profile.location}
                   </div>
                 )}
-                <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
+                <div className="flex rounded-md bg-darkBG p-2 text-amber-200">
                   🕛 {profile.timezone} Time
                 </div>
               </div>
             </div>
             <div
-              className="sm:ml-24 rounded-lg dark:bg-darkBG
-               p-4 text-neutral-800 dark:text-neutral-200
-               border-[1px] border-neutral-200 dark:border-neutral-900"
+              className="rounded-lg border-[1px] border-neutral-200
+               p-4 text-neutral-800 dark:border-neutral-900
+               dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
             >
               <div className="flex flex-col">
                 {/* TODO: add GITHUB */}
@@ -180,10 +180,10 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                   {!profile.website && (
                     <button
                       type="button"
-                      className="flex bg-black
-                      p-2 text-sm rounded-sm"
+                      className="flex rounded-sm
+                      bg-black p-2 text-sm"
                     >
-                      <ArrowUpRightIcon className="h-6 w-4 mr-1" aria-hidden="true" />
+                      <ArrowUpRightIcon className="mr-1 h-6 w-4" aria-hidden="true" />
                       <a href={profile.website} target="_blank" rel="noreferrer">
                         Link by {profile.first_name}{' '}
                       </a>
@@ -207,12 +207,12 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
               </div>
             </div>
             <div
-              className="sm:ml-24 rounded-lg dark:bg-darkBG
-               p-4 text-neutral-800 dark:text-neutral-200
-               border-[1px] border-neutral-200 dark:border-neutral-900"
+              className="rounded-lg border-[1px] border-neutral-200
+               p-4 text-neutral-800 dark:border-neutral-900
+               dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
             >
               <div className="flex flex-col">
-                <div className="space-y-2 font-monoItalic bg-darkBG">
+                <div className="space-y-2 bg-darkBG font-monoItalic">
                   <span className="block">
                     &quot;
                     {profile.idea_status && genIdea(profile.idea_status)}{' '}
@@ -223,9 +223,9 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
               </div>
             </div>
             <div
-              className="sm:ml-24 rounded-lg dark:bg-darkBG
-               p-4 text-neutral-800 dark:text-neutral-200
-               border-[1px] border-neutral-200 dark:border-neutral-900"
+              className="rounded-lg border-[1px] border-neutral-200
+               p-4 text-neutral-800 dark:border-neutral-900
+               dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
             >
               <div className="flex flex-col">
                 <div className="space-y-2 bg-darkBG">
@@ -243,16 +243,16 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </div>
               </div>
             </div>
-            <div className="sm:ml-24 text-md pt-4 space-x-2 justify-start flex">
+            <div className="text-md flex justify-start space-x-2 pt-4 sm:ml-24">
               <div className="flex flex-col">
                 <button type="button" className={primaryString2}>
-                  <ChatBubbleBottomCenterIcon className="lg:h-8 h-6 w-6 mr-2" aria-hidden="true" />
+                  <ChatBubbleBottomCenterIcon className="mr-2 h-6 w-6 lg:h-8" aria-hidden="true" />
                   Chat
                 </button>
               </div>
               <div className="flex flex-col">
                 <button type="button" className={primaryString2}>
-                  <VideoCameraIcon className="lg:h-8 h-6 w-6 mr-2" aria-hidden="true" />
+                  <VideoCameraIcon className="mr-2 h-6 w-6 lg:h-8" aria-hidden="true" />
                   Schedule
                 </button>
               </div>

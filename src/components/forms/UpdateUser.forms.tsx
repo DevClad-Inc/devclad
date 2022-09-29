@@ -90,7 +90,7 @@ export default function UpdateUserForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="firstName"
-                className="block text-md
+                className="text-md block
                  text-neutral-700 dark:text-neutral-300"
               >
                 First Name
@@ -99,8 +99,8 @@ export default function UpdateUserForm(): JSX.Element {
                   name="firstName"
                   id="firstName"
                   autoComplete="given-name"
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="firstName"
@@ -112,7 +112,7 @@ export default function UpdateUserForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="lastName"
-                className="block text-md
+                className="text-md block
                  text-neutral-700 dark:text-neutral-300"
               >
                 Last Name
@@ -122,8 +122,8 @@ export default function UpdateUserForm(): JSX.Element {
                   id="lastName"
                   placeholder="Last Name"
                   autoComplete="family-name"
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="lastName"
@@ -135,7 +135,7 @@ export default function UpdateUserForm(): JSX.Element {
             <div className="col-span-6 sm:col-span-4">
               <label
                 htmlFor="username"
-                className="block text-md  text-neutral-700 dark:text-neutral-300"
+                className="text-md block  text-neutral-700 dark:text-neutral-300"
               >
                 Username
                 <Field
@@ -143,8 +143,8 @@ export default function UpdateUserForm(): JSX.Element {
                   name="username"
                   id="username"
                   placeholder="username"
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                    dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="username"

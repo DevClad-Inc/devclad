@@ -166,7 +166,7 @@ export default function SocialProfileForm({
   };
   if (socialProfileQueryLoading) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex items-center justify-center">
         <LoadingCard />
       </div>
     );
@@ -193,7 +193,7 @@ export default function SocialProfileForm({
             <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="rawXP"
-                className="block text-md text-left pl-1
+                className="text-md block pl-1 text-left
            text-neutral-700 dark:text-neutral-300"
               >
                 Raw Experience
@@ -202,8 +202,8 @@ export default function SocialProfileForm({
                   id="rawXP"
                   name="rawXP"
                   rows={3}
-                  className="mt-1 block w-full dark:bg-darkBG border border-neutral-300
-                  dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-neutral-300
+                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                   placeholder=""
                 />
                 <ErrorMessage
@@ -225,7 +225,7 @@ export default function SocialProfileForm({
                   <>
                     <Listbox.Label
                       id="ideaStatus"
-                      className="block text-md
+                      className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
                       Idea Status
@@ -233,8 +233,8 @@ export default function SocialProfileForm({
                     <div className="relative mt-1">
                       <Listbox.Button
                         className="relative w-full cursor-default rounded-md
-                      dark:bg-darkBG py-2 pl-3 pr-10 text-left border border-neutral-300
-                      dark:border-neutral-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      border border-neutral-300 py-2 px-3 pl-3 pr-10 text-left
+                      shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                       >
                         <span className="block truncate">
                           {selectedIdeaStatus ? selectedIdeaStatus.name : 'Select'}
@@ -255,9 +255,9 @@ export default function SocialProfileForm({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-darkBG py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
+                          className="scrollbar absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
+                        focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
                           {ideaStatus.map((status) => (
                             <Listbox.Option
@@ -265,8 +265,8 @@ export default function SocialProfileForm({
                               className={({ active }) =>
                                 classNames(
                                   active
-                                    ? 'text-black bg-orange-300 dark:bg-orange-300'
-                                    : 'text-neutral-900 dark:text-neutral-100 bg-snow dark:bg-darkBG',
+                                    ? 'bg-orange-300 text-black dark:bg-orange-300'
+                                    : 'bg-snow text-neutral-900 dark:bg-darkBG dark:text-neutral-100',
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
@@ -333,7 +333,7 @@ export default function SocialProfileForm({
                   <>
                     <Listbox.Label
                       id="preferredDevType"
-                      className="block text-md
+                      className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
                       Preferred Development Type
@@ -342,8 +342,8 @@ export default function SocialProfileForm({
                     <div className="relative mt-1">
                       <Listbox.Button
                         className="relative w-full cursor-default rounded-md
-                      dark:bg-darkBG py-2 pl-3 pr-10 text-left border border-neutral-300
-                      dark:border-neutral-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      border border-neutral-300 py-2 px-3 pl-3 pr-10 text-left
+                      shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                       >
                         <span className="block truncate">
                           {selectedPrefDevType ? selectedPrefDevType.name : 'Select'}
@@ -364,9 +364,9 @@ export default function SocialProfileForm({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-darkBG py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
+                          className="scrollbar absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
+                        focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
                           {devType.map((type) => (
                             <Listbox.Option
@@ -374,8 +374,8 @@ export default function SocialProfileForm({
                               className={({ active }) =>
                                 classNames(
                                   active
-                                    ? 'text-black bg-orange-300 dark:bg-orange-300'
-                                    : 'text-neutral-900 dark:text-neutral-100 bg-snow dark:bg-darkBG',
+                                    ? 'bg-orange-300 text-black dark:bg-orange-300'
+                                    : 'bg-snow text-neutral-900 dark:bg-darkBG dark:text-neutral-100',
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
@@ -452,7 +452,7 @@ export default function SocialProfileForm({
                   <>
                     <Listbox.Label
                       id="devType"
-                      className="block text-md
+                      className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
                       Development Type
@@ -461,8 +461,8 @@ export default function SocialProfileForm({
                     <div className="relative mt-1">
                       <Listbox.Button
                         className="relative w-full cursor-default rounded-md
-                      dark:bg-darkBG py-2 pl-3 pr-10 text-left border border-neutral-300
-                      dark:border-neutral-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      border border-neutral-300 py-2 px-3 pl-3 pr-10 text-left
+                      shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                       >
                         <span className="block truncate">
                           {selectedDevType[0]
@@ -485,9 +485,9 @@ export default function SocialProfileForm({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-darkBG py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
+                          className="scrollbar absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
+                        focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
                           {devType.map((type) => (
                             <Listbox.Option
@@ -495,8 +495,8 @@ export default function SocialProfileForm({
                               className={({ active }) =>
                                 classNames(
                                   active
-                                    ? 'text-black bg-orange-300 dark:bg-orange-300'
-                                    : 'text-neutral-900 dark:text-neutral-100 bg-snow dark:bg-darkBG',
+                                    ? 'bg-orange-300 text-black dark:bg-orange-300'
+                                    : 'bg-snow text-neutral-900 dark:bg-darkBG dark:text-neutral-100',
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
@@ -569,7 +569,7 @@ export default function SocialProfileForm({
                   <>
                     <Listbox.Label
                       id="languages"
-                      className="block text-md
+                      className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
                       Languages
@@ -578,8 +578,8 @@ export default function SocialProfileForm({
                     <div className="relative mt-1">
                       <Listbox.Button
                         className="relative w-full cursor-default rounded-md
-                      dark:bg-darkBG py-2 pl-3 pr-10 text-left border border-neutral-300
-                      dark:border-neutral-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      border border-neutral-300 py-2 px-3 pl-3 pr-10 text-left
+                      shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                       >
                         <span className="block truncate">
                           {selectedLanguages[0]
@@ -602,9 +602,9 @@ export default function SocialProfileForm({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-darkBG py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
+                          className="scrollbar absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
+                        focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
                           {languages.map(({ language }) => (
                             <Listbox.Option
@@ -612,8 +612,8 @@ export default function SocialProfileForm({
                               className={({ active }) =>
                                 classNames(
                                   active
-                                    ? 'text-black bg-orange-300 dark:bg-orange-300'
-                                    : 'text-neutral-900 dark:text-neutral-100 bg-snow dark:bg-darkBG',
+                                    ? 'bg-orange-300 text-black dark:bg-orange-300'
+                                    : 'bg-snow text-neutral-900 dark:bg-darkBG dark:text-neutral-100',
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
@@ -683,7 +683,7 @@ export default function SocialProfileForm({
                   <>
                     <Listbox.Label
                       id="purposes"
-                      className="block text-md
+                      className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
                       What makes you want to use DevClad?
@@ -691,8 +691,8 @@ export default function SocialProfileForm({
                     <div className="relative mt-1">
                       <Listbox.Button
                         className="relative w-full cursor-default rounded-md
-                      dark:bg-darkBG py-2 pl-3 pr-10 text-left border border-neutral-300
-                      dark:border-neutral-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      border border-neutral-300 py-2 px-3 pl-3 pr-10 text-left
+                      shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                       >
                         <span className="block truncate">
                           {selectedPurposes[0]
@@ -715,9 +715,9 @@ export default function SocialProfileForm({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-darkBG py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
+                          className="scrollbar absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
+                        focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
                           {purposes.map(({ purpose }) => (
                             <Listbox.Option
@@ -725,8 +725,8 @@ export default function SocialProfileForm({
                               className={({ active }) =>
                                 classNames(
                                   active
-                                    ? 'text-black bg-orange-300 dark:bg-orange-300'
-                                    : 'text-neutral-900 dark:text-neutral-100 bg-snow dark:bg-darkBG',
+                                    ? 'bg-orange-300 text-black dark:bg-orange-300'
+                                    : 'bg-snow text-neutral-900 dark:bg-darkBG dark:text-neutral-100',
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
@@ -785,7 +785,7 @@ export default function SocialProfileForm({
                   <>
                     <Listbox.Label
                       id="location"
-                      className="block text-md
+                      className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
                       Location
@@ -793,8 +793,8 @@ export default function SocialProfileForm({
                     <div className="relative mt-1">
                       <Listbox.Button
                         className="relative w-full cursor-default rounded-md
-                      dark:bg-darkBG py-2 pl-3 pr-10 text-left border border-neutral-300
-                      dark:border-neutral-700 px-3 focus:outline-none shadow-sm sm:text-sm"
+                      border border-neutral-300 py-2 px-3 pl-3 pr-10 text-left
+                      shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                       >
                         <span className="block truncate">
                           {selectedCountry ? selectedCountry.name : 'Select'}
@@ -815,9 +815,9 @@ export default function SocialProfileForm({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options
-                          className="absolute z-10 mt-1 max-h-60 w-full overflow-auto scrollbar rounded-md
-                        dark:bg-darkBG py-1 text-base shadow-lg ring-1 ring-black
-                        ring-opacity-5 focus:outline-none sm:text-sm"
+                          className="scrollbar absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md
+                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
+                        focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
                           {countries.map(({ country }) => (
                             <Listbox.Option
@@ -825,8 +825,8 @@ export default function SocialProfileForm({
                               className={({ active }) =>
                                 classNames(
                                   active
-                                    ? 'text-black bg-orange-300 dark:bg-orange-300'
-                                    : 'text-neutral-900 dark:text-neutral-100 bg-snow dark:bg-darkBG',
+                                    ? 'bg-orange-300 text-black dark:bg-orange-300'
+                                    : 'bg-snow text-neutral-900 dark:bg-darkBG dark:text-neutral-100',
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
@@ -879,7 +879,7 @@ export default function SocialProfileForm({
             <div className="col-span-6 sm:col-span-5">
               <label
                 htmlFor="timezone"
-                className="block text-md  text-neutral-700 dark:text-neutral-300"
+                className="text-md block  text-neutral-700 dark:text-neutral-300"
               >
                 TimeZone
                 <p className="mt-2 text-sm  text-neutral-600 dark:text-neutral-400">

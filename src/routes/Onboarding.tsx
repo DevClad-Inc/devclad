@@ -30,11 +30,11 @@ export function StepOne() {
     <div className="max-w-prose">
       <UpdateProfileForm />
       <AvatarUploadForm />
-      <div className="p-2 mt-10 flex justify-center">
+      <div className="mt-10 flex justify-center p-2">
         <Link
-          className="mt-5 border border-transparent bg-orange-700
-        dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-md font-bold dark:text-orange-200
+          className="text-md mt-5 inline-flex justify-center
+        rounded-md border border-transparent bg-orange-700 py-2
+        px-4 font-bold duration-500 dark:bg-orange-900/20 dark:text-orange-200
         "
           to="/onboarding/step-two"
           onMouseEnter={() => {
@@ -92,12 +92,12 @@ export function StepTwo() {
   return (
     <div className="max-w-5xl">
       <SocialProfileForm initialSocialData={initialSocialData} />
-      <div className="p-2 mt-10 justify-between flex">
+      <div className="mt-10 flex justify-between p-2">
         <div className="inline-flex justify-start">
           <Link
-            className="border border-transparent bg-orange-700 text-white
-        dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-md font-bold dark:text-orange-200
+            className="text-md inline-flex justify-center rounded-md
+        border border-transparent bg-orange-700 py-2 px-4
+        font-bold text-white duration-500 dark:bg-orange-900/20 dark:text-orange-200
         "
             to="/onboarding/"
           >
@@ -184,9 +184,9 @@ export function Onboarding() {
             preserveAspectRatio="none"
             width="1090"
             height="1090"
-            className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-neutral-300/30
-          dark:stroke-orange-800/20 sm:h-auto"
+            className="-z-11 absolute left-1/2 h-[788px] -translate-x-1/2 stroke-neutral-300/30
+          dark:stroke-orange-800/20
+          sm:-top-24 sm:h-auto"
           >
             <circle cx="545" cy="545" r="544.5" />
             <circle cx="545" cy="545" r="512.5" />
@@ -204,7 +204,7 @@ export function Onboarding() {
               DevClad
             </h1>
           </div>
-          <h2 className="font-display text-center text-3xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+          <h2 className="mt-5 text-center font-display text-3xl font-bold text-neutral-700 dark:text-neutral-300">
             Onboarding
           </h2>
           <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
@@ -226,14 +226,14 @@ export function Onboarding() {
             <button
               onClick={handlelogOut}
               type="button"
-              className="mt-5 inline-flex items-center px-4 py-2 border border-transparent text-sm
-              rounded-md shadow-sm text-bloodRed bg-mistyRose dark:text-mistyRose dark:bg-bloodRed/60"
+              className="mt-5 inline-flex items-center rounded-md border border-transparent bg-mistyRose px-4
+              py-2 text-sm text-bloodRed shadow-sm dark:bg-bloodRed/60 dark:text-mistyRose"
             >
               <ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Sign Out
             </button>
           </div>
-          <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+          <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="w-fit-content mx-auto">
               {userStatus.status === 'Not Submitted' ? (
                 <>
@@ -244,7 +244,7 @@ export function Onboarding() {
                 <Success success="Request to join submitted. You will be notified once it's processed." />
               )}
             </div>
-            <div className="sm:mx-auto p-5 sm:w-full sm:max-w-fit">
+            <div className="p-5 sm:mx-auto sm:w-full sm:max-w-fit">
               <Outlet />
             </div>
           </div>

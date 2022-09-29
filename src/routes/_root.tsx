@@ -85,10 +85,10 @@ export default function Root(): JSX.Element {
     <div className="bg-[url('./assets/graph-paper.svg')]">
       <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
         <div
-          className="font-sans font-medium subpixel-antialiased
-          text-sm sm:text-md lg:text-lg
-          dark:bg-gradient-to-t from-black/50 via-darkBG2 to-black/50
-          bg-white dark:bg-black/80 dark:text-white"
+          className="sm:text-md bg-white from-black/50
+          via-darkBG2 to-black/50 font-sans
+          text-sm font-medium subpixel-antialiased dark:bg-black/80
+          dark:bg-gradient-to-t dark:text-white lg:text-lg"
         >
           <Toaster
             position="top-right"

@@ -63,8 +63,8 @@ export function AlertButton({
     <button
       type="submit"
       disabled={isSubmitting}
-      className="border border-transparent bg-orange-700 dark:bg-raisinBlack2 duration-500
-      rounded-md py-2 px-4 inline-flex justify-center text-sm font-bold dark:text-orange-300"
+      className="inline-flex justify-center rounded-md border border-transparent
+      bg-orange-700 py-2 px-4 text-sm font-bold duration-500 dark:bg-raisinBlack2 dark:text-orange-300"
     >
       {children}
     </button>
@@ -76,7 +76,7 @@ export function LoadingButton({ children }: { children?: React.ReactNode }) {
   return (
     <button type="button" className={altString} disabled>
       <svg
-        className="animate-spin -ml-1 mr-3 h-5 w-5"
+        className="-ml-1 mr-3 h-5 w-5 animate-spin"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

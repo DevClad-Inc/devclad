@@ -53,10 +53,10 @@ export function Settings() {
   const { pathname } = useLocation();
   return (
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-      <aside className="py-6 sm:px-6 lg:py-0 px-0 lg:px-0 lg:col-span-3">
+      <aside className="py-6 px-0 sm:px-6 lg:col-span-3 lg:py-0 lg:px-0">
         <nav
-          className="space-y-1 dark:bg-darkBG2 dark:border-neutral-900 border-[1px]
-        bg-snow rounded-md p-4"
+          className="space-y-1 rounded-md border-[1px] bg-snow
+        p-4 dark:border-neutral-900 dark:bg-darkBG2"
         >
           {navigation.map((item) => (
             <NavLink
@@ -65,12 +65,12 @@ export function Settings() {
               className={classNames(
                 item.href === pathname || `${item.href}/` === pathname
                   ? activeClass
-                  : 'text-neutral-900 dark:text-neutral-100 hover:text-neutral-900 dark:hover:text-white dark:hover:bg-darkBG hover:bg-white',
-                'group rounded-md px-3 py-2 flex items-center text-sm'
+                  : 'text-neutral-900 hover:bg-white hover:text-neutral-900 dark:text-neutral-100 dark:hover:bg-darkBG dark:hover:text-white',
+                'group flex items-center rounded-md px-3 py-2 text-sm'
               )}
               aria-current={pathname === item.href ? 'page' : undefined}
             >
-              <item.icon className="flex-shrink-0 -ml-1 mr-3 h-6 w-6" aria-hidden="true" />
+              <item.icon className="-ml-1 mr-3 h-6 w-6 flex-shrink-0" aria-hidden="true" />
               <span className="truncate">{item.name}</span>
             </NavLink>
           ))}
@@ -89,9 +89,9 @@ export function Settings() {
 
 export function AccountProfile() {
   return (
-    <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-      <div className="shadow sm:rounded-md sm:overflow-hidden">
-        <div className="py-6 px-4 space-y-6 sm:p-6 bg-darkBG2 dark:border-neutral-900 border-[1px] rounded-md">
+    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
+      <div className="shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <div>
             <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
               Account
@@ -100,7 +100,7 @@ export function AccountProfile() {
           <UpdateUserForm />
         </div>
         <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
-        <div className="py-6 px-4 space-y-6 sm:p-6 bg-darkBG2 dark:border-neutral-900 border-[1px] rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <div>
             <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
               Profile
@@ -109,7 +109,7 @@ export function AccountProfile() {
           <UpdateProfileForm />
         </div>
         <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
-        <div className="py-6 px-4 space-y-6 sm:p-6 bg-darkBG2 dark:border-neutral-900 border-[1px] rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <AvatarUploadForm />
         </div>
       </div>
@@ -123,9 +123,9 @@ export function SocialProfile() {
     ReturnType<ReturnType<typeof socialProfileLoader>>
   >;
   return (
-    <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-      <div className="shadow sm:rounded-md sm:overflow-hidden">
-        <div className="py-6 px-4 space-y-6 sm:p-6 bg-darkBG2 dark:border-neutral-900 border-[1px] rounded-md">
+    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
+      <div className="shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <div>
             <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
               Social Preferences
@@ -145,11 +145,11 @@ export function SocialProfile() {
 
 export function Password() {
   return (
-    <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-      <div className="shadow sm:rounded-md sm:overflow-hidden">
-        <div className="py-6 px-4 space-y-6 sm:p-6 bg-darkBG2 dark:border-neutral-900 border-[1px] rounded-md">
+    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
+      <div className="shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <div className="inline-flex">
-            <EnvelopeIcon className="mr-2 w-6 h-6" />
+            <EnvelopeIcon className="mr-2 h-6 w-6" />
             <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
               Email{' '}
             </h2>
@@ -157,9 +157,9 @@ export function Password() {
           <ChangeEmailForm />
         </div>
         <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
-        <div className="py-6 px-4 space-y-6 sm:p-6 bg-darkBG2 dark:border-neutral-900 border-[1px] rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <div className="inline-flex">
-            <KeyIcon className="mr-2 w-6 h-6" />
+            <KeyIcon className="mr-2 h-6 w-6" />
             <h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100">
               Password
             </h2>

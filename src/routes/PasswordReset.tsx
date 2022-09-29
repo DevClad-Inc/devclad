@@ -15,9 +15,9 @@ export function PassReset() {
           preserveAspectRatio="none"
           width="1090"
           height="1090"
-          className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-neutral-300/30
-          dark:stroke-orange-800/20 sm:h-auto"
+          className="-z-11 absolute left-1/2 h-[788px] -translate-x-1/2 stroke-neutral-300/30
+          dark:stroke-orange-800/20
+          sm:-top-24 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -35,7 +35,7 @@ export function PassReset() {
             DevClad
           </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+        <h2 className="mt-5 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
           Reset Password
         </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
@@ -43,7 +43,7 @@ export function PassReset() {
             Sign in to DevClad
           </Link>
         </p>
-        <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <PasswordResetForm />
@@ -74,9 +74,9 @@ export function ForgotPassword(): JSX.Element {
           preserveAspectRatio="none"
           width="1090"
           height="1090"
-          className="absolute sm:-top-24 left-1/2 -z-11 h-[788px] -translate-x-1/2
-          stroke-neutral-300/30
-          dark:stroke-orange-800/20 sm:h-auto"
+          className="-z-11 absolute left-1/2 h-[788px] -translate-x-1/2 stroke-neutral-300/30
+          dark:stroke-orange-800/20
+          sm:-top-24 sm:h-auto"
         >
           <circle cx="545" cy="545" r="544.5" />
           <circle cx="545" cy="545" r="512.5" />
@@ -94,7 +94,7 @@ export function ForgotPassword(): JSX.Element {
             DevClad
           </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+        <h2 className="mt-5 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
           Reset Password
         </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
@@ -103,7 +103,7 @@ export function ForgotPassword(): JSX.Element {
             Join DevClad
           </Link>
         </p>
-        <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-lg">
             <div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <ForgotPasswordForm />
