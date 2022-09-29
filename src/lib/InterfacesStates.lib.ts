@@ -23,7 +23,6 @@ export const initialUserState: User = {
 };
 
 export interface Profile {
-  uid?: string;
   avatar?: string;
   pronouns?: string;
   about?: string;
@@ -33,7 +32,6 @@ export interface Profile {
 }
 
 export const initialProfileState: Profile = {
-  uid: undefined,
   avatar: undefined,
   pronouns: undefined,
   about: undefined,
