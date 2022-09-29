@@ -1,15 +1,11 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import {
-  getOneOne,
-  getUsernameProfile,
-  getUsernameSocialProfile,
-} from '@/services/profile.services';
-import { userCircleQuery } from '@/lib/queriesAndLoaders';
+import { getUsernameProfile, getUsernameSocialProfile } from '@/services/profile.services';
+import { userBlockedQuery, userCircleQuery, userMatchesQuery } from '@/lib/queriesAndLoaders';
 
 export function useOneOneUsernames() {
   const usernames = [];
-  const matchesQuery = useQuery(['matches'], () => getOneOne());
+  const matchesQuery = useQuery(userMatchesQuery());
   if (matchesQuery.isSuccess && matchesQuery.data !== null) {
     const { data } = matchesQuery.data;
     for (let i = 0; i < data.matches_this_week.length; i += 1) {
@@ -26,6 +22,18 @@ export function useCircleUsernames(username: string) {
     const { data } = circleQuery.data;
     for (let i = 0; i < data.circle.length; i += 1) {
       usernames.push(data.circle[i]);
+    }
+  }
+  return { usernames };
+}
+
+export function useBlockedUsernames() {
+  const usernames = [];
+  const blockedQuery = useQuery(userBlockedQuery());
+  if (blockedQuery.isSuccess && blockedQuery.data !== null) {
+    const { data } = blockedQuery.data;
+    for (let i = 0; i < data.blocked_users.length; i += 1) {
+      usernames.push(data.blocked_users[i]);
     }
   }
   return { usernames };
@@ -71,6 +79,20 @@ export const useConnected = (username: string, otherUser: string): boolean => {
     }
   }
   return connected;
+};
+
+export const useBlocked = (username: string): boolean => {
+  const [blocked, setBlocked] = React.useState(false);
+  const blockedUsers = useBlockedUsernames();
+  const { usernames } = blockedUsers;
+  if (usernames !== undefined) {
+    if (usernames.includes(username) && !blocked) {
+      setBlocked(true);
+    } else if (!usernames.includes(username) && blocked) {
+      setBlocked(false);
+    }
+  }
+  return blocked;
 };
 
 export const useAdded = (username: string, otherUser: string): boolean => {

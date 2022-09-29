@@ -2,7 +2,9 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import {
+  getBlockedUsers,
   getCircle,
+  getOneOne,
   getProfile,
   getSocialProfile,
   getStatus,
@@ -42,9 +44,19 @@ export const socialProfileUsernameQuery = (username: string) => ({
   queryFn: async () => getUsernameSocialProfile(username),
 });
 
+export const userMatchesQuery = () => ({
+  queryKey: ['matches'],
+  queryFn: async () => getOneOne(),
+});
+
 export const userCircleQuery = (username: string) => ({
   queryKey: ['circle', username],
   queryFn: async () => getCircle(username),
+});
+
+export const userBlockedQuery = () => ({
+  queryKey: ['blocked'],
+  queryFn: async () => getBlockedUsers(),
 });
 
 // profileempty and socialempty query are only used in Onboarding

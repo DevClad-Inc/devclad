@@ -16,11 +16,12 @@ import {
   useCircleUsernames,
   useOneOneProfile,
   useConnected,
+  useBlockedUsernames,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';
 import ActionDropdown from '@/components/ActionDropdown';
-import { PatchCircle } from '@/services/profile.services';
+import { blockUser, PatchCircle } from '@/services/profile.services';
 import useAuth from '@/services/useAuth.services';
 import { Success, Error } from '@/lib/Feedback.lib';
 
@@ -48,6 +49,8 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   const connected = useConnected(loggedInUserUserName as string, username);
   // logged in username and connection check
   const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string);
+  const { usernames: blocked } = useBlockedUsernames();
+
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
     return <LoadingCard />;
   }
@@ -66,8 +69,6 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
             });
             await qc.invalidateQueries(['circle', loggedInUserUserName]);
             await qc.invalidateQueries(['circle', username]);
-            await qc.invalidateQueries(['social-profile', loggedInUserUserName]);
-            await qc.invalidateQueries(['social-profile', username]);
           })
           .catch(() => {
             toast.custom(<Error error="Something went wrong." />, {
@@ -83,14 +84,35 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
       name: 'Block',
       icon: NoSymbolIcon,
       alt: 'Block',
-      onClick: () => {},
+      onClick: async () => {
+        await blockUser(username, blocked, 'block')
+          .then(async () => {
+            toast.custom(<Success success="Blocked user successfully" />, {
+              id: 'block-profile-success',
+              duration: 3000,
+            });
+            await qc.invalidateQueries(['circle']);
+            await qc.invalidateQueries(['blocked']);
+          })
+          .catch(() => {
+            toast.custom(<Error error="Something went wrong." />, {
+              id: 'error-block-profile',
+              duration: 5000,
+            });
+          });
+      },
     },
   ];
   if (connected) {
     dropdownItems = [...connectedOnlyItems, ...dropdownItems];
   } else if (!connected && loggedInUserUserName !== username) {
     dropdownItems = [
-      { name: 'Connect', icon: PlusIcon, alt: 'Connect', onClick: () => {} },
+      {
+        name: 'Connect',
+        icon: PlusIcon,
+        alt: 'Connect',
+        onClick: async () => {},
+      },
       ...dropdownItems,
     ];
   }

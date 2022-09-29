@@ -242,7 +242,9 @@ export const getOneOne = async () => {
   return null;
 };
 
-export const passOrRejectOneOne = async () => {};
+export const shadowUser = async () => {};
+
+export const skipUser = async () => {};
 
 // =================== circle ===================
 export const getCircle = async (username: string) => {
@@ -287,6 +289,51 @@ export const PatchCircle = async (
       method: 'PATCH',
       url,
       data: { circle },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+  }
+  return null;
+};
+
+export const getBlockedUsers = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/block/`;
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+  return null;
+};
+
+export const blockUser = async (
+  operationUsername: string,
+  blocked: string[],
+  operation: string
+) => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/block/`;
+
+  if (operation === 'block') {
+    blocked.push(operationUsername);
+  } else if (operation === 'unblock') {
+    const index = blocked.indexOf(operationUsername);
+    if (index > -1) {
+      blocked.splice(index, 1);
+    }
+  }
+
+  if (token) {
+    return axios({
+      method: 'PATCH',
+      url,
+      data: { blocked_users: blocked },
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

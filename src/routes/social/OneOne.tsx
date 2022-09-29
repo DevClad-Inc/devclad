@@ -278,8 +278,6 @@ function MatchCard({ username }: { username: string }): JSX.Element {
                         });
                         await qc.invalidateQueries(['circle', loggedInUserUserName]);
                         await qc.invalidateQueries(['circle', username]);
-                        await qc.invalidateQueries(['social-profile', loggedInUserUserName]);
-                        await qc.invalidateQueries(['social-profile', username]);
                       })
                       .catch(() => {
                         toast.custom(<Error error="Something went wrong." />, {
