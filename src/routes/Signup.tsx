@@ -44,29 +44,25 @@ function Signup() {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img
-            className="mx-auto h-32 w-auto"
-            src={DevCladLogo}
-            alt="DevClad"
-          />
-          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">DevClad</h1>
+          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">
+            DevClad
+          </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Request to Join</h2>
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+          Request to Join
+        </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Already a member?
-          {' '}
-          <Link className=" text-orange-700 dark:text-orange-300" to="/">Sign in to DevClad</Link>
+          Already a member?{' '}
+          <Link className=" text-orange-700 dark:text-orange-300" to="/">
+            Sign in to DevClad
+          </Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            {signupError && (
-              <Error error={signupError} />
-            )}
+            {signupError && <Error error={signupError} />}
             <div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
-              <SignupForm
-                signupErrorState={signupError}
-                setSignupErrorState={setSignupError}
-              />
+              <SignupForm signupErrorState={signupError} setSignupErrorState={setSignupError} />
             </div>
           </div>
         </div>

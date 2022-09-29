@@ -4,10 +4,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
     fontSize: {
@@ -120,8 +117,9 @@ module.exports = {
       },
     },
   },
-  plugins: ['@tailwindcss/forms',
-  // add scrollbar color
+  plugins: [
+    '@tailwindcss/forms',
+    // add scrollbar color
     plugin(({ addBase, theme }) => {
       addBase({
         '.scrollbar': {

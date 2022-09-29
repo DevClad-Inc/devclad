@@ -30,16 +30,18 @@ export function PassReset() {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img
-            className="mx-auto h-32 w-auto"
-            src={DevCladLogo}
-            alt="DevClad"
-          />
-          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">DevClad</h1>
+          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">
+            DevClad
+          </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Reset Password</h2>
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+          Reset Password
+        </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-          <Link className=" text-orange-700 dark:text-orange-300" to="/">Sign in to DevClad</Link>
+          <Link className=" text-orange-700 dark:text-orange-300" to="/">
+            Sign in to DevClad
+          </Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -53,7 +55,7 @@ export function PassReset() {
   );
 }
 
-export function ForgotPassword() : JSX.Element {
+export function ForgotPassword(): JSX.Element {
   const navigate = useNavigate();
   const { authed } = useAuth();
 
@@ -87,18 +89,19 @@ export function ForgotPassword() : JSX.Element {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img
-            className="mx-auto h-32 w-auto"
-            src={DevCladLogo}
-            alt="DevClad"
-          />
-          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">DevClad</h1>
+          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">
+            DevClad
+          </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Reset Password</h2>
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+          Reset Password
+        </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-          Not a member?
-          {' '}
-          <Link className=" text-orange-700 dark:text-orange-300" to="/signup">Join DevClad</Link>
+          Not a member?{' '}
+          <Link className=" text-orange-700 dark:text-orange-300" to="/signup">
+            Join DevClad
+          </Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-lg">

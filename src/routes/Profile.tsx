@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  XCircleIcon, ChatBubbleBottomCenterIcon,
+  XCircleIcon,
+  ChatBubbleBottomCenterIcon,
   VideoCameraIcon,
   CalendarIcon,
   ArrowUpRightIcon,
@@ -11,9 +12,7 @@ import { NoSymbolIcon } from '@heroicons/react/24/outline';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { badge, primaryString2 } from '@/lib/Buttons.lib';
 import { useOneOneProfile } from '@/services/socialHooks.services';
-import {
-  MatchProfile,
-} from '@/lib/InterfacesStates.lib';
+import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';
 import ActionDropdown from '@/components/ActionDropdown';
 
@@ -36,8 +35,7 @@ const dropdownItems = [
     name: 'Block',
     icon: NoSymbolIcon,
     alt: 'Disconnect',
-    onClick: () => {
-    },
+    onClick: () => {},
   },
 ];
 
@@ -46,20 +44,17 @@ const connectedOnlyItems = [
     name: 'Disconnect',
     icon: XCircleIcon,
     alt: 'Block',
-    onClick: () => {
-    },
+    onClick: () => {},
   },
 ];
 
-function ProfileCard({ username }:{ username:string }): JSX.Element {
+function ProfileCard({ username }: { username: string }): JSX.Element {
   // const { connected } = useConnected(username);
   const profile = useOneOneProfile(username) as MatchProfile;
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', username]);
-  if ((state?.status === 'loading' || state?.status !== 'success') || profile === null) {
-    return (
-      <LoadingCard />
-    );
+  if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
+    return <LoadingCard />;
   }
   if (profile) {
     return (
@@ -72,28 +67,27 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                   <img
                     className="object-cover h-32 w-32 sm:h-24 sm:w-24 rounded-full bg-linen"
                     src={
-                import.meta.env.VITE_DEVELOPMENT
-                  ? (import.meta.env.VITE_API_URL + profile.avatar)
-                  : profile.avatar
-              }
+                      import.meta.env.VITE_DEVELOPMENT
+                        ? import.meta.env.VITE_API_URL + profile.avatar
+                        : profile.avatar
+                    }
                     alt=""
                   />
                 </div>
               </div>
-              <h2 className="sm:ml-4 mt-4 font-sans text-2xl sm:text-3xl leading-6 font-black
+              <h2
+                className="sm:ml-4 mt-4 font-sans text-2xl sm:text-3xl leading-6 font-black
                  text-neutral-900 dark:text-neutral-100"
               >
-                {profile.first_name}
-                {' '}
-                {profile.last_name}
-                {' '}
+                {profile.first_name} {profile.last_name}{' '}
                 <div className="inline-flex ml-1 text-neutral-600 dark:text-neutral-400 text-base">
                   {profile.pronouns ? `(${profile.pronouns})` : ''}
                 </div>
                 {profile.video_call_friendly && (
                   <span className="sm:mt-0 sm:mb-0 mt-5 mb-5 block">
                     <div className="-mt-4 flex-shrink-0">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-md
+                      <span
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-md
                         text-xs font-medium bg-phthaloGreen text-honeyDew"
                       >
                         👋 Video Call Friendly
@@ -102,9 +96,9 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                   </span>
                 )}
               </h2>
-
             </div>
-            <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+            <div
+              className="sm:ml-24 rounded-lg dark:bg-darkBG
                p-4 text-neutral-800 dark:text-neutral-200
                border-[1px] border-neutral-200 dark:border-neutral-900"
             >
@@ -137,7 +131,12 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                       className="flex flex-row"
                       onClick={() => window.open(profile.linkedin, '_blank')}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           className="fill-blue-400"
                           d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762
@@ -154,33 +153,24 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
             </div>
             <div className="sm:ml-20 -ml-4 space-y-2 pb-4 rounded-md pl-4 flex flex-col">
               <div className="flex flex-row space-x-2 text-sm sm:text-md font-mono">
-                {profile.languages && badge(
-                  profile.languages,
-                  'bg-darkBG font-medium text-amber-200',
-                )}
+                {profile.languages &&
+                  badge(profile.languages, 'bg-darkBG font-medium text-amber-200')}
               </div>
 
               {/* TODO: add GITHUB */}
               <div className="flex flex-row space-x-2 text-sm sm:text-md">
-                {(profile.location && profile.location !== 'Other')
-                      && (
-                      <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
-                        🌎
-                        {' '}
-                        {profile.location}
-                      </div>
-                      )}
+                {profile.location && profile.location !== 'Other' && (
+                  <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
+                    🌎 {profile.location}
+                  </div>
+                )}
                 <div className="flex bg-darkBG text-amber-200 p-2 rounded-md">
-                  🕛
-                  {' '}
-                  {profile.timezone}
-                  {' '}
-                  Time
+                  🕛 {profile.timezone} Time
                 </div>
               </div>
-
             </div>
-            <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+            <div
+              className="sm:ml-24 rounded-lg dark:bg-darkBG
                p-4 text-neutral-800 dark:text-neutral-200
                border-[1px] border-neutral-200 dark:border-neutral-900"
             >
@@ -195,45 +185,29 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                     >
                       <ArrowUpRightIcon className="h-6 w-4 mr-1" aria-hidden="true" />
                       <a href={profile.website} target="_blank" rel="noreferrer">
-                        Link by
-                        {' '}
-                        {profile.first_name}
-                        {' '}
+                        Link by {profile.first_name}{' '}
                       </a>
                     </button>
                   )}
                   <span className="block">
-                    ⚡
-                    {' '}
-                    {profile.first_name}
-                    {' '}
-                    is good at
-                    {' '}
-                    {profile.dev_type && badge(
-                      profile.dev_type,
-                      'lg:ml-1 bg-darkBG2 text-sm font-mono font-medium text-amber-200',
-                    )}
-                    {' '}
+                    ⚡ {profile.first_name} is good at{' '}
+                    {profile.dev_type &&
+                      badge(
+                        profile.dev_type,
+                        'lg:ml-1 bg-darkBG2 text-sm font-mono font-medium text-amber-200'
+                      )}{' '}
                   </span>
                   <span className="block">
-                    🧲 Interested in working with
-                    {' '}
-                    {profile.preferred_dev_type}
-                    {' '}
-                    developers.
+                    🧲 Interested in working with {profile.preferred_dev_type} developers.
                   </span>
                   <span className="block">
-                    ⚒️ Hacking stuff together for
-                    {' '}
-                    {profile.raw_xp && genExp(profile.raw_xp)}
-                    {' '}
-                    now.
+                    ⚒️ Hacking stuff together for {profile.raw_xp && genExp(profile.raw_xp)} now.
                   </span>
-
                 </div>
               </div>
             </div>
-            <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+            <div
+              className="sm:ml-24 rounded-lg dark:bg-darkBG
                p-4 text-neutral-800 dark:text-neutral-200
                border-[1px] border-neutral-200 dark:border-neutral-900"
             >
@@ -241,17 +215,15 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                 <div className="space-y-2 font-monoItalic bg-darkBG">
                   <span className="block">
                     &quot;
-                    {profile.idea_status && genIdea(profile.idea_status)}
-                    {' '}
-                    <span className="lowercase">
-                      {profile.idea_status}
-                    </span>
+                    {profile.idea_status && genIdea(profile.idea_status)}{' '}
+                    <span className="lowercase">{profile.idea_status}</span>
                     &quot;
                   </span>
                 </div>
               </div>
             </div>
-            <div className="sm:ml-24 rounded-lg dark:bg-darkBG
+            <div
+              className="sm:ml-24 rounded-lg dark:bg-darkBG
                p-4 text-neutral-800 dark:text-neutral-200
                border-[1px] border-neutral-200 dark:border-neutral-900"
             >
@@ -259,37 +231,27 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
                 <div className="space-y-2 bg-darkBG">
                   {profile.purpose && (
                     <span className="block space-y-2">
-                      <span className="flex">
-                        Why is
-                        {' '}
-                        {profile.first_name}
-                        {' '}
-                        here?
-                      </span>
+                      <span className="flex">Why is {profile.first_name} here?</span>
                       <span className="block space-x-2 space-y-2">
-                        {badge(profile.purpose, 'bg-darkBG2 text-sm font-mono font-medium text-amber-200')}
+                        {badge(
+                          profile.purpose,
+                          'bg-darkBG2 text-sm font-mono font-medium text-amber-200'
+                        )}
                       </span>
                     </span>
                   )}
                 </div>
-
               </div>
             </div>
             <div className="sm:ml-24 text-md pt-4 space-x-2 justify-start flex">
               <div className="flex flex-col">
-                <button
-                  type="button"
-                  className={primaryString2}
-                >
+                <button type="button" className={primaryString2}>
                   <ChatBubbleBottomCenterIcon className="lg:h-8 h-6 w-6 mr-2" aria-hidden="true" />
                   Chat
                 </button>
               </div>
               <div className="flex flex-col">
-                <button
-                  type="button"
-                  className={primaryString2}
-                >
+                <button type="button" className={primaryString2}>
                   <VideoCameraIcon className="lg:h-8 h-6 w-6 mr-2" aria-hidden="true" />
                   Schedule
                 </button>
@@ -309,7 +271,5 @@ function ProfileCard({ username }:{ username:string }): JSX.Element {
 export default function Profile(): JSX.Element {
   const { username } = useParams<{ username: string }>() as { username: string };
   useDocumentTitle(`Profile | ${username}`);
-  return (
-    <ProfileCard key={username} username={username} />
-  );
+  return <ProfileCard key={username} username={username} />;
 }

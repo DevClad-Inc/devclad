@@ -1,6 +1,4 @@
-import React, {
-  useState, useContext, createContext, useMemo,
-} from 'react';
+import React, { useState, useContext, createContext, useMemo } from 'react';
 
 export const SlowContext = createContext({
   slowMode: false,

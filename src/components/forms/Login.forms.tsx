@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useQueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
-import {
-  getUser, logIn,
-} from '@/services/auth.services';
-import {
-  invalidateAndStoreIDB,
-} from '@/context/User.context';
+import { getUser, logIn } from '@/services/auth.services';
+import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { LoginFormValues } from '@/lib/InterfacesStates.lib';
 
@@ -20,7 +14,7 @@ interface LoginFormProps {
   setLoginError: (loginError: boolean) => void;
 }
 
-export default function LoginForm({ loginError, setLoginError }:LoginFormProps): JSX.Element {
+export default function LoginForm({ loginError, setLoginError }: LoginFormProps): JSX.Element {
   const qc = useQueryClient();
   const validate = (values: LoginFormValues) => {
     const errors: LoginFormValues['errors'] = {};
@@ -34,7 +28,7 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
     }
     return errors;
   };
-    // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
+  // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
   const handleSubmit = async (values: LoginFormValues, { setSubmitting }: any) => {
     try {
       setSubmitting(true);
@@ -86,11 +80,13 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                 />
                 {loginError && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
                   </div>
                 )}
               </div>
-
               <ErrorMessage
                 name="email"
                 component="div"
@@ -117,9 +113,12 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                   dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {loginError && (
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
-                </div>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
+                  </div>
                 )}
               </div>
               <ErrorMessage
@@ -136,15 +135,12 @@ export default function LoginForm({ loginError, setLoginError }:LoginFormProps):
                 Forgot your password?
               </Link>
             </div>
-
           </div>
 
           <div className="w-full flex justify-center">
             <PrimaryButton isSubmitting={isSubmitting} wFull>
               <span className="w-full">
-                {isSubmitting ? 'Signing...' : 'Sign In'}
-                {' '}
-                <span className="text-xs">✨</span>
+                {isSubmitting ? 'Signing...' : 'Sign In'} <span className="text-xs">✨</span>
               </span>
             </PrimaryButton>
           </div>

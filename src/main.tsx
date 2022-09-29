@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
-import {
-  createBrowserRouter, RouterProvider,
-} from 'react-router-dom';
-import {
-  QueryClient, QueryClientProvider,
-} from '@tanstack/react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@/root.css';
 import '@/fonts.css';
 import '@/inter.css';
@@ -20,9 +16,7 @@ import VerifyEmail from '@/routes/VerifyEmail';
 import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
 import Hackathons from '@/components/Hackathons';
 import Projects from '@/components/Projects';
-import {
-  Settings, AccountProfile, SocialProfile, Password,
-} from '@/routes/Settings';
+import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Settings';
 import Home from '@/routes/Home';
 import { socialProfileLoader } from '@/lib/queriesAndLoaders';
 import Login from '@/routes/Login';
@@ -157,5 +151,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </UserProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

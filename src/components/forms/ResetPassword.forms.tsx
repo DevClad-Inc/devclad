@@ -2,9 +2,7 @@ import { ShieldCheckIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { forgotPassword, passwordChange, passwordReset } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/lib/Feedback.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
@@ -14,9 +12,7 @@ import { InterfaceEmail, PasswordReset } from '@/lib/InterfacesStates.lib';
 export default function PasswordResetForm(): JSX.Element {
   const [resetDone, setresetDone] = useState(false);
   const { uid, token } = useParams() as { uid: string; token: string };
-  if (uid && token) {
-    useDocumentTitle('Password Reset');
-  }
+  useDocumentTitle('Password Reset');
   const validate = (values: PasswordReset) => {
     const errors: PasswordReset['errors'] = {};
     if (!values.password1) {
@@ -28,14 +24,15 @@ export default function PasswordResetForm(): JSX.Element {
     if (values.password1.length < 8) {
       errors.password1 = 'Password must be at least 8 characters.';
     }
-    if ((values.password1 !== values.password2) && (values.password2.length > 0)) {
+    if (values.password1 !== values.password2 && values.password2.length > 0) {
       errors.password1 = 'Passwords do not match';
       errors.password2 = 'Passwords do not match';
     }
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=[\S]+$)/;
     // /^[@#](?=.{7,13}$)(?=\w{7,13})(?=[^aeiou_]{7,13})(?=.*[A-Z])(?=.*\d)/;
     if (!passwordRegex.test(values.password1)) {
-      errors.password1 = 'Password must contain at least one number, one lowercase, one uppercase, and one special character.';
+      errors.password1 =
+        'Password must contain at least one number, one lowercase, one uppercase, and one special character.';
     }
     return errors;
   };
@@ -43,42 +40,39 @@ export default function PasswordResetForm(): JSX.Element {
   // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
   const handlePassChange = async (values: PasswordReset, { setSubmitting }: any) => {
     setSubmitting(true);
-    const {
-      password1, password2,
-    } = values;
+    const { password1, password2 } = values;
     if (uid && token) {
-      await passwordReset(password1, password2, uid, token).then(() => {
-        toast.custom(
-          <Success success="Password reset successful." />,
-          { id: 'success-password-reset', duration: 3000 },
-        );
-        setresetDone(true);
-      }).catch((err) => {
-        toast.custom(
-          <Error error={err} />,
-          { id: 'error-password-reset', duration: 5000 },
-        );
-      });
+      await passwordReset(password1, password2, uid, token)
+        .then(() => {
+          toast.custom(<Success success="Password reset successful." />, {
+            id: 'success-password-reset',
+            duration: 3000,
+          });
+          setresetDone(true);
+        })
+        .catch((err) => {
+          toast.custom(<Error error={err} />, { id: 'error-password-reset', duration: 5000 });
+        });
     } else {
-      await passwordChange(password1, password2).then(() => {
-        toast.custom(
-          <Success success="Password change successful." />,
-          { id: 'success-password-change', duration: 3000 },
-        );
-        setresetDone(true);
-      }).catch((err) => {
-        toast.custom(
-          <Error error={err} />,
-          { id: 'error-password-change', duration: 5000 },
-        );
-      });
+      await passwordChange(password1, password2)
+        .then(() => {
+          toast.custom(<Success success="Password change successful." />, {
+            id: 'success-password-change',
+            duration: 3000,
+          });
+          setresetDone(true);
+        })
+        .catch((err) => {
+          toast.custom(<Error error={err} />, { id: 'error-password-change', duration: 5000 });
+        });
     }
     setSubmitting(false);
   };
   return (
     <Formik
       initialValues={{
-        password1: '', password2: '',
+        password1: '',
+        password2: '',
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -146,40 +140,32 @@ export default function PasswordResetForm(): JSX.Element {
             </div>
           </div>
           <div>
-            {!resetDone
-              ? (
-                <div className="flex text-sm justify-center">
-                  <PrimaryButton
-                    isSubmitting={isSubmitting}
-                  >
-                    <span>
-                      {isSubmitting ? 'Switching Password...' : 'Switch Password'}
-                      {' '}
-                      <span>🔐</span>
-                    </span>
-                  </PrimaryButton>
-                </div>
-              )
-              : (
-                <Link className="flex justify-center" to="/">
-                  <span
-                    className="mt-5 border border-transparent bg-orange-700
+            {!resetDone ? (
+              <div className="flex text-sm justify-center">
+                <PrimaryButton isSubmitting={isSubmitting}>
+                  <span>
+                    {isSubmitting ? 'Switching Password...' : 'Switch Password'} <span>🔐</span>
+                  </span>
+                </PrimaryButton>
+              </div>
+            ) : (
+              <Link className="flex justify-center" to="/">
+                <span
+                  className="mt-5 border border-transparent bg-orange-700
                     dark:bg-darkBG duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm dark:text-orange-300"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Password Reset Successful
-                        </span>
-                      </div>
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                  </span>
-                </Link>
-              )}
+                    <div className="ml-2 font-bold text-base">
+                      <span>Password Reset Successful</span>
+                    </div>
+                  </div>
+                </span>
+              </Link>
+            )}
           </div>
         </Form>
       )}
@@ -203,23 +189,20 @@ export function ForgotPasswordForm(): JSX.Element {
   // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
   const handlePassChange = async (values: InterfaceEmail, { setSubmitting }: any) => {
     setSubmitting(true);
-    const {
-      email,
-    } = values;
-    await forgotPassword(email).then((res) => {
-      if (res.detail === 'Password reset e-mail has been sent.') {
-        toast.custom(
-          <Success success="Link Sent 🔗" />,
-          { id: 'reset-link-sent', duration: 3000 },
-        );
-        setchangedEmail(true);
-      }
-    }).catch((err) => {
-      toast.custom(
-        <Error error={err} />,
-        { id: 'error-pass-link', duration: 5000 },
-      );
-    });
+    const { email } = values;
+    await forgotPassword(email)
+      .then((res) => {
+        if (res.detail === 'Password reset e-mail has been sent.') {
+          toast.custom(<Success success="Link Sent 🔗" />, {
+            id: 'reset-link-sent',
+            duration: 3000,
+          });
+          setchangedEmail(true);
+        }
+      })
+      .catch((err) => {
+        toast.custom(<Error error={err} />, { id: 'error-pass-link', duration: 5000 });
+      });
     setSubmitting(false);
   };
   return (
@@ -263,40 +246,33 @@ export function ForgotPasswordForm(): JSX.Element {
           </div>
 
           <div>
-            {!changedEmail
-              ? (
-                <div className="flex justify-center">
-                  <PrimaryButton
-                    isSubmitting={isSubmitting}
-                  >
-                    <span className="font-bold text-md">
-                      {isSubmitting ? 'Sending Link...' : 'Send Link'}
-                      {' '}
-                      <span className="text-md">🔗</span>
-                    </span>
-                  </PrimaryButton>
-                </div>
-              )
-              : (
-                <div className="flex justify-center">
-                  <span
-                    className="mt-5 border border-transparent bg-orange-700
+            {!changedEmail ? (
+              <div className="flex justify-center">
+                <PrimaryButton isSubmitting={isSubmitting}>
+                  <span className="font-bold text-md">
+                    {isSubmitting ? 'Sending Link...' : 'Send Link'}{' '}
+                    <span className="text-md">🔗</span>
+                  </span>
+                </PrimaryButton>
+              </div>
+            ) : (
+              <div className="flex justify-center">
+                <span
+                  className="mt-5 border border-transparent bg-orange-700
                     dark:bg-darkBG duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-orange-300"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <CheckCircleIcon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Reset Link 🔗 Sent
-                        </span>
-                      </div>
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <CheckCircleIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                  </span>
-                </div>
-              )}
+                    <div className="ml-2 font-bold text-base">
+                      <span>Reset Link 🔗 Sent</span>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            )}
           </div>
         </Form>
       )}

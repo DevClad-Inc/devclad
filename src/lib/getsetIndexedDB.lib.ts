@@ -1,9 +1,9 @@
 import { get, set } from 'idb-keyval';
 
 export default async function getsetIndexedDB<TState>(
-  key:string,
+  key: string,
   operation: string,
-  payload?: TState,
+  payload?: TState
 ): Promise<TState> {
   let kvData;
   if (operation === 'get') {

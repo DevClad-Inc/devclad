@@ -39,26 +39,26 @@ rounded-md shadow-sm text-phthaloGreen bg-honeyDew
 dark:bg-phthaloGreen dark:text-honeyDew`;
 
 // meant for Formik forms
-export function PrimaryButton({
-  children, isSubmitting, wFull,
-}: ButtonProps) {
+export function PrimaryButton({ children, isSubmitting, wFull }: ButtonProps) {
   return (
     <button
       type="submit"
       // check if onclick is defined, if not, use handleClick
       disabled={isSubmitting}
-      className={classNames(
-        wFull ? 'w-full' : 'w-auto px-6',
-        altString,
-      )}
+      className={classNames(wFull ? 'w-full' : 'w-auto px-6', altString)}
     >
       {children}
     </button>
   );
 }
 
-export function AlertButton({ children, isSubmitting }:
-{ children: React.ReactNode; isSubmitting: boolean }) {
+export function AlertButton({
+  children,
+  isSubmitting,
+}: {
+  children: React.ReactNode;
+  isSubmitting: boolean;
+}) {
   return (
     <button
       type="submit"
@@ -72,21 +72,23 @@ export function AlertButton({ children, isSubmitting }:
 }
 
 export function LoadingButton({ children }: { children?: React.ReactNode }) {
-  const waitTexts = [
-    'Loading',
-    'Just a sec',
-    'Meow',
-    'Pi Pi Pi',
-    'Stare at this',
-  ];
+  const waitTexts = ['Loading', 'Just a sec', 'Meow', 'Pi Pi Pi', 'Stare at this'];
   return (
-    <button
-      type="button"
-      className={altString}
-      disabled
-    >
-      <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+    <button type="button" className={altString} disabled>
+      <svg
+        className="animate-spin -ml-1 mr-3 h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
         <path
           className="opacity-75"
           fill="currentColor"
@@ -103,10 +105,7 @@ export const badge = (interests: string, classes: string) => {
   const interestsArray = interests.split(',');
   return interestsArray.map((interest) => (
     <span
-      className={classNames(
-        'inline-flex items-center rounded-md px-3 py-0.5',
-        classes,
-      )}
+      className={classNames('inline-flex items-center rounded-md px-3 py-0.5', classes)}
       key={interest}
     >
       {interest}

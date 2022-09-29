@@ -10,7 +10,7 @@ export const ThemeContext = React.createContext({
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(JSON.parse(Cookies.get('darkMode') || 'true'));
-  const toggle = (dark:boolean) => {
+  const toggle = (dark: boolean) => {
     setDarkMode(!dark);
     Cookies.set('darkMode', String(!dark), {
       expires: 365,
@@ -19,9 +19,5 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   };
   const value = useMemo(() => ({ darkMode, toggle }), [darkMode]);
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

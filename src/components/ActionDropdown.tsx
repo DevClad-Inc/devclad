@@ -13,12 +13,13 @@ interface ActionDropdownProps {
   }[];
 }
 
-export default function ActionDropdown({ items } : ActionDropdownProps) : JSX.Element {
+export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Element {
   return (
     <div className="flex flex-col">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="flex items-center rounded-lg dark:bg-black
+          <Menu.Button
+            className="flex items-center rounded-lg dark:bg-black
         p-2 text-neutral-800 dark:text-neutral-200
         border-[1px] border-neutral-200 dark:border-neutral-900"
           >
@@ -36,7 +37,8 @@ export default function ActionDropdown({ items } : ActionDropdownProps) : JSX.El
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-auto origin-top-right
+          <Menu.Items
+            className="absolute right-0 z-10 mt-2 w-auto origin-top-right
             rounded-md border-[1px] bg-black border-neutral-200 dark:border-neutral-900
             shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
@@ -49,7 +51,7 @@ export default function ActionDropdown({ items } : ActionDropdownProps) : JSX.El
                       onClick={item.onClick}
                       className={classNames(
                         active ? 'text-neutral-100' : 'text-neutral-400',
-                        'block px-4 py-2 text-sm',
+                        'block px-4 py-2 text-sm'
                       )}
                     >
                       <span className="flex items-center">

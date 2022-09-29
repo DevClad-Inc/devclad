@@ -14,21 +14,14 @@ const tabs = [
 export default function Social(): JSX.Element {
   useDocumentTitle('Social Mode');
   let loggedInUser: User = { ...initialUserState };
-  const {
-    data: userQueryData,
-    isSuccess: userQuerySuccess,
-  } = useQuery(userQuery());
+  const { data: userQueryData, isSuccess: userQuerySuccess } = useQuery(userQuery());
   if (userQuerySuccess && userQueryData !== null) {
     loggedInUser = userQueryData.data;
   }
   return (
     <>
       <Tab tabs={tabs} />
-      <span className="hidden">
-        {' '}
-        {loggedInUser.username}
-        {' '}
-      </span>
+      <span className="hidden"> {loggedInUser.username} </span>
 
       <Outlet />
     </>

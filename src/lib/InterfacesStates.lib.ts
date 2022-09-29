@@ -32,7 +32,7 @@ export interface Profile {
   calendly?: string;
 }
 
-export const initialProfileState : Profile = {
+export const initialProfileState: Profile = {
   uid: undefined,
   avatar: undefined,
   pronouns: undefined,
@@ -93,14 +93,14 @@ export interface SignupFormValues extends NewUser {
     email?: string;
     password1?: string;
     password2?: string;
-  }
+  };
 }
 
 export interface InterfaceEmail {
   email: string;
   errors?: {
     email?: string;
-  }
+  };
 }
 
 export interface LoginFormValues {
@@ -109,7 +109,7 @@ export interface LoginFormValues {
   errors?: {
     email?: string;
     password?: string;
-  }
+  };
 }
 
 export interface UpdateUserFormValues {
@@ -130,7 +130,7 @@ export interface UpdateProfileFormValues extends Profile {
     website?: string;
     linkedin?: string;
     calendly?: string;
-  }
+  };
 }
 
 export interface SocialProfileFormValues extends SocialProfileUpdate {
@@ -144,7 +144,7 @@ export interface SocialProfileFormValues extends SocialProfileUpdate {
     devType?: string;
     preferredDevType?: string;
     ideaStatus?: string;
-  }
+  };
 }
 
 export interface PasswordReset {
@@ -153,7 +153,7 @@ export interface PasswordReset {
   errors?: {
     password1?: string;
     password2?: string;
-  }
+  };
 }
 
 // use decorators to make MatchProfile extending Profile AND User

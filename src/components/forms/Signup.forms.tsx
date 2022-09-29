@@ -1,7 +1,9 @@
-import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
+  InboxArrowDownIcon,
+  ExclamationTriangleIcon,
+  CheckCircleIcon,
+} from '@heroicons/react/24/solid';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react';
 import { resendEmail, SignUp } from '@/services/auth.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
@@ -12,9 +14,10 @@ interface SignupFormProps {
   setSignupErrorState: (signupErrorState: string) => void;
 }
 
-export default function SignupForm(
-  { signupErrorState, setSignupErrorState }:SignupFormProps,
-): JSX.Element {
+export default function SignupForm({
+  signupErrorState,
+  setSignupErrorState,
+}: SignupFormProps): JSX.Element {
   const [signedUp, setSignedUp] = useState(false);
   const [emailVal, setEmailVal] = useState('');
   const validate = (values: SignupFormValues) => {
@@ -39,14 +42,15 @@ export default function SignupForm(
     if (values.password1.length < 8) {
       errors.password1 = 'Password must be at least 8 characters.';
     }
-    if ((values.password1 !== values.password2) && (values.password2.length > 0)) {
+    if (values.password1 !== values.password2 && values.password2.length > 0) {
       errors.password1 = 'Passwords do not match';
       errors.password2 = 'Passwords do not match';
     }
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=[\S]+$)/;
     // /^[@#](?=.{7,13}$)(?=\w{7,13})(?=[^aeiou_]{7,13})(?=.*[A-Z])(?=.*\d)/;
     if (!passwordRegex.test(values.password1)) {
-      errors.password1 = 'Password must contain at least one number, one lowercase, one uppercase, and one special character.';
+      errors.password1 =
+        'Password must contain at least one number, one lowercase, one uppercase, and one special character.';
     }
     return errors;
   };
@@ -56,7 +60,11 @@ export default function SignupForm(
     setSubmitting(true);
     const {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      firstName, lastName, email, password1, password2,
+      firstName,
+      lastName,
+      email,
+      password1,
+      password2,
     } = values;
     const user = {
       firstName,
@@ -98,7 +106,11 @@ export default function SignupForm(
   return (
     <Formik
       initialValues={{
-        firstName: '', lastName: '', email: '', password1: '', password2: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password1: '',
+        password2: '',
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -126,12 +138,14 @@ export default function SignupForm(
                     dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
-                </div>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
+                  </div>
                 )}
               </div>
-
               <ErrorMessage
                 name="firstName"
                 component="div"
@@ -158,12 +172,14 @@ export default function SignupForm(
                     dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
-                </div>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
+                  </div>
                 )}
               </div>
-
               <ErrorMessage
                 name="lastName"
                 component="div"
@@ -190,12 +206,14 @@ export default function SignupForm(
                     dark:border-neutral-700 rounded-md shadow-sm py-2 px-3 sm:text-sm focus:outline-none"
                 />
                 {signupErrorState && (
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
-                </div>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
+                  </div>
                 )}
               </div>
-
               <ErrorMessage
                 name="email"
                 component="div"
@@ -224,7 +242,10 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
                   </div>
                 )}
               </div>
@@ -234,10 +255,16 @@ export default function SignupForm(
                 className="text-sm text-bloodRed dark:text-mistyRose"
               />
             </label>
-            <p className="mt-2 pl-2 text-sm text-neutral-600 dark:text-neutral-400" id="password-description">
+            <p
+              className="mt-2 pl-2 text-sm text-neutral-600 dark:text-neutral-400"
+              id="password-description"
+            >
               At least 8 characters.
             </p>
-            <p className="mt-2 pl-2 text-xs text-neutral-600 dark:text-neutral-400" id="password-description">
+            <p
+              className="mt-2 pl-2 text-xs text-neutral-600 dark:text-neutral-400"
+              id="password-description"
+            >
               Tip: Autogenerate a password.
             </p>
           </div>
@@ -261,7 +288,10 @@ export default function SignupForm(
                 />
                 {signupErrorState && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationTriangleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+                    <ExclamationTriangleIcon
+                      className="h-5 w-5 text-bloodRed dark:text-mistyRose"
+                      aria-hidden="true"
+                    />
                   </div>
                 )}
               </div>
@@ -274,60 +304,47 @@ export default function SignupForm(
           </div>
 
           <div>
-            {!signedUp
-              ? (
-                <div className="flex justify-center">
-                  <PrimaryButton
-                    isSubmitting={isSubmitting}
-                    wFull
-                  >
-                    <span className="font-bold text-lg">
-                      {isSubmitting ? 'Signing up...' : 'Sign Up'}
-                      {' '}
-                      <span className="text-xs">✨</span>
-                    </span>
-                  </PrimaryButton>
-                </div>
-              )
-              : (
-                <button type="button" onClick={() => resendEmail(emailVal)}>
-                  <span
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
+            {!signedUp ? (
+              <div className="flex justify-center">
+                <PrimaryButton isSubmitting={isSubmitting} wFull>
+                  <span className="font-bold text-lg">
+                    {isSubmitting ? 'Signing up...' : 'Sign Up'} <span className="text-xs">✨</span>
+                  </span>
+                </PrimaryButton>
+              </div>
+            ) : (
+              <button type="button" onClick={() => resendEmail(emailVal)}>
+                <span
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
                     text-sm  text-green-800 bg-green-50 hover:shadow-lg hover:shadow-green-300
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
-                      </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Account Created.
-                        </span>
-                        { ' ' }
-                        <span>Check Email.</span>
-                      </div>
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
                     </div>
-                  </span>
-                  <span
-                    className="mt-5 border border-transparent bg-orange-700
+                    <div className="ml-2 font-bold text-base">
+                      <span>Account Created.</span> <span>Check Email.</span>
+                    </div>
+                  </div>
+                </span>
+                <span
+                  className="mt-5 border border-transparent bg-orange-700
                     dark:bg-darkBG duration-500 rounded-md py-2 px-4
                     inline-flex justify-center text-sm font-bold dark:text-orange-300"
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <div className="ml-2 font-bold text-base">
-                        <span>
-                          Resend Email.
-                        </span>
-                      </div>
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                  </span>
-                </button>
-              )}
+                    <div className="ml-2 font-bold text-base">
+                      <span>Resend Email.</span>
+                    </div>
+                  </div>
+                </span>
+              </button>
+            )}
           </div>
         </Form>
       )}

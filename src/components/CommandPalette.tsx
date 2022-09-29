@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import {
-  Dialog, Transition,
-} from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
-  HomeIcon, UserCircleIcon, UserGroupIcon, WrenchIcon, KeyIcon, VideoCameraIcon,
+  HomeIcon,
+  UserCircleIcon,
+  UserGroupIcon,
+  WrenchIcon,
+  KeyIcon,
+  VideoCameraIcon,
 } from '@heroicons/react/24/outline';
 import classNames from '@/lib/ClassNames.lib';
 
@@ -57,7 +60,6 @@ const items = [
     color: 'bg-indigo-500',
     icon: KeyIcon,
   },
-
 ];
 
 export default function CommandPalette() {
@@ -109,7 +111,8 @@ export default function CommandPalette() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="space-y-1 text-white bg-gradient-to-br backdrop-blur-sm
+            <Dialog.Panel
+              className="space-y-1 text-white bg-gradient-to-br backdrop-blur-sm
             bg-black
             from-black to-orange-900/5
             border-neutral-900 border-[1px]
@@ -129,8 +132,9 @@ export default function CommandPalette() {
                           if (next !== null) {
                             (next as HTMLElement).focus();
                           } else {
-                            (e.currentTarget.parentElement
-                              ?.firstElementChild as HTMLElement).focus();
+                            (
+                              e.currentTarget.parentElement?.firstElementChild as HTMLElement
+                            ).focus();
                           }
                         } else if (e.key === 'ArrowUp') {
                           e.preventDefault();
@@ -138,47 +142,42 @@ export default function CommandPalette() {
                           if (prev !== null) {
                             (prev as HTMLElement).focus();
                           } else {
-                            (e.currentTarget.parentElement
-                              ?.lastElementChild as HTMLElement).focus();
+                            (
+                              e.currentTarget.parentElement?.lastElementChild as HTMLElement
+                            ).focus();
                           }
                         } else if (e.key === 'Enter') {
                           setOpen(false);
                         }
                       }}
                       className={classNames(
-                        (item.url === pathname) || (`${item.url}/` === pathname)
+                        item.url === pathname || `${item.url}/` === pathname
                           ? 'animate-gradient'
                           : 'hover:animate-gradient-reverse hover:text-black',
                         'group rounded-md px-4 py-4 flex items-center text-sm',
-                        'border-neutral-800 border-dashed border-[1px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral',
+                        'border-neutral-800 border-dashed border-[1px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral'
                       )}
                       end
                     >
-                      <item.icon
-                        className="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                        aria-hidden="true"
-                      />
+                      <item.icon className="flex-shrink-0 -ml-1 mr-3 h-6 w-6" aria-hidden="true" />
                       <span className="font-light">{item.name}</span>
                     </NavLink>
                   ))}
                 </nav>
               </div>
               <div className="flex flex-wrap items-center py-2.5 px-4 text-xs bg-darkBG2 text-neutral-300">
-                Press
-                {' '}
+                Press{' '}
                 <kbd
                   className={classNames(
-                    'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-black font-semibold sm:mx-2',
+                    'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-black font-semibold sm:mx-2'
                   )}
                 >
                   ↓
-                </kbd>
-                {' '}
-                or
-                {' '}
+                </kbd>{' '}
+                or{' '}
                 <kbd
                   className={classNames(
-                    'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-black font-semibold sm:mx-2',
+                    'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-black font-semibold sm:mx-2'
                   )}
                 >
                   ↑
@@ -186,24 +185,22 @@ export default function CommandPalette() {
                 <span className="hidden sm:inline">to navigate,</span>
                 <kbd
                   className={classNames(
-                    'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-black font-semibold sm:mx-2',
+                    'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-black font-semibold sm:mx-2'
                   )}
                 >
                   ↵
-                </kbd>
-                {' '}
+                </kbd>{' '}
                 to teleport.
               </div>
               <div className="flex flex-wrap items-center justify-end py-2.5 px-4 text-xs bg-darkBG text-neutral-300">
                 <span className="hidden sm:inline">Press</span>
                 <kbd
                   className={classNames(
-                    'mx-1 flex h-5 w-8 items-center justify-center rounded border bg-black font-semibold sm:mx-2',
+                    'mx-1 flex h-5 w-8 items-center justify-center rounded border bg-black font-semibold sm:mx-2'
                   )}
                 >
                   Esc
-                </kbd>
-                {' '}
+                </kbd>{' '}
                 to close.
               </div>
             </Dialog.Panel>

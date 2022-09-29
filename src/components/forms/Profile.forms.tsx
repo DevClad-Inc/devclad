@@ -1,10 +1,6 @@
-import React, {
-  ChangeEvent, Fragment, useContext,
-} from 'react';
+import React, { ChangeEvent, Fragment, useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  Formik, Form, ErrorMessage, Field,
-} from 'formik';
+import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
@@ -18,10 +14,7 @@ import LoadingCard from '../LoadingCard';
 
 export default function UpdateProfileForm(): JSX.Element {
   let profileData: Profile = { ...initialProfileState };
-  const {
-    data: profileQueryData,
-    isSuccess: profileQuerySuccess,
-  } = useQuery(profileQuery());
+  const { data: profileQueryData, isSuccess: profileQuerySuccess } = useQuery(profileQuery());
   if (profileQuerySuccess && profileQueryData !== null) {
     profileData = profileQueryData.data;
   }
@@ -33,23 +26,26 @@ export default function UpdateProfileForm(): JSX.Element {
       errors.about = 'Required';
     }
     // WEBSITE
-    if ((values.website)
-    && !((values.website.startsWith('http'))
-    || (values.website.startsWith('https')))) {
+    if (
+      values.website &&
+      !(values.website.startsWith('http') || values.website.startsWith('https'))
+    ) {
       errors.website = 'Must start with http or https';
     }
     // LINKEDIN
-    if ((values.linkedin)
-    && (!((values.linkedin.startsWith('http'))
-    || (values.linkedin.startsWith('https')))
-    || (!values.linkedin.includes('linkedin.com')))) {
+    if (
+      values.linkedin &&
+      (!(values.linkedin.startsWith('http') || values.linkedin.startsWith('https')) ||
+        !values.linkedin.includes('linkedin.com'))
+    ) {
       errors.linkedin = 'Must start with http or https and include linkedin.com';
     }
     // CALENDLY
-    if ((values.calendly)
-    && (!((values.calendly.startsWith('http'))
-    || (values.calendly.startsWith('https')))
-    || (!values.calendly.includes('calendly.com')))) {
+    if (
+      values.calendly &&
+      (!(values.calendly.startsWith('http') || values.calendly.startsWith('https')) ||
+        !values.calendly.includes('calendly.com'))
+    ) {
       errors.calendly = 'Must start with http or https and include calendly.com';
     }
     return errors;
@@ -57,21 +53,22 @@ export default function UpdateProfileForm(): JSX.Element {
   const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
     try {
       setSubmitting(true);
-      await updateProfile(values, profileData)
-        .then(async () => {
-          setSubmitting(false);
-          invalidateAndStoreIDB(qc, 'profile');
-          toast.custom(
-            <Success success="Profile updated successfully" />,
-            { id: 'profile-update-success' },
-          );
+      await updateProfile(values, profileData).then(async () => {
+        setSubmitting(false);
+        invalidateAndStoreIDB(qc, 'profile');
+        toast.custom(<Success success="Profile updated successfully" />, {
+          id: 'profile-update-success',
         });
+      });
     } catch (error: any) {
       const { data } = error.response;
       if (data.calendly) {
         toast.custom(<Error error={data.calendly} />, { id: 'social-update-error' });
       } else {
-        toast.custom(<Error error="Languages, Development Type, and What makes you want to use this should be filled." />, { id: 'profile-update-error-unknown' });
+        toast.custom(
+          <Error error="Languages, Development Type, and What makes you want to use this should be filled." />,
+          { id: 'profile-update-error-unknown' }
+        );
       }
       setSubmitting(false);
     }
@@ -218,15 +215,10 @@ export default function UpdateProfileForm(): JSX.Element {
                   </p>
                 </label>
               </div>
-
             </div>
             <div className="px-4 py-3 text-right sm:px-6">
-              <PrimaryButton
-                isSubmitting={isSubmitting}
-              >
-                <span className="text-sm">
-                  Save
-                </span>
+              <PrimaryButton isSubmitting={isSubmitting}>
+                <span className="text-sm">Save</span>
               </PrimaryButton>
             </div>
           </Form>
@@ -270,29 +262,34 @@ export function AvatarUploadForm() {
           color: darkMode ? '#f0abfc' : '#1f2937',
         },
       });
-      updateProfileAvatar(file).then(async () => {
-        invalidateAndStoreIDB(qc, 'profile');
-        toast.custom(
-          <Success success="Profile avatar updated successfully!" />,
-        );
-      }).catch(() => {
-        toast.custom(<Error error="Please upload a valid image.
+      updateProfileAvatar(file)
+        .then(async () => {
+          invalidateAndStoreIDB(qc, 'profile');
+          toast.custom(<Success success="Profile avatar updated successfully!" />);
+        })
+        .catch(() => {
+          toast.custom(
+            <Error
+              error="Please upload a valid image.
         And, keep it below 5MB."
-        />);
-      });
+            />
+          );
+        });
     }
   };
   const handleonChange = (e: ChangeEvent<HTMLInputElement>) => {
     const avatar = e.target.files && e.target.files[0];
     if (avatar) {
-      updateProfileAvatar(avatar).then(async () => {
-        invalidateAndStoreIDB(qc, 'profile');
-        toast.custom(
-          <Success success="Profile avatar updated successfully!" />,
-        );
-      }).catch(() => {
-        toast.custom(<Error error="Profile avatar update failed! Please upload a valid image." />);
-      });
+      updateProfileAvatar(avatar)
+        .then(async () => {
+          invalidateAndStoreIDB(qc, 'profile');
+          toast.custom(<Success success="Profile avatar updated successfully!" />);
+        })
+        .catch(() => {
+          toast.custom(
+            <Error error="Profile avatar update failed! Please upload a valid image." />
+          );
+        });
     }
   };
 
@@ -302,15 +299,21 @@ export function AvatarUploadForm() {
         <div className="mt-1 flex items-center">
           <img
             className="inline-block object-cover h-24 w-24 rounded-full bg-white"
-            src={import.meta.env.VITE_DEVELOPMENT
-              ? (import.meta.env.VITE_API_URL + profileData.avatar)
-              : profileData.avatar}
+            src={
+              import.meta.env.VITE_DEVELOPMENT
+                ? import.meta.env.VITE_API_URL + profileData.avatar
+                : profileData.avatar
+            }
             alt=""
           />
         </div>
       </div>
       <div className="col-span-3">
-        <div className="mt-1 border-2 border-neutral-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center" onDragOver={enableDropping} onDrop={handleDrop}>
+        <div
+          className="mt-1 border-2 border-neutral-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center"
+          onDragOver={enableDropping}
+          onDrop={handleDrop}
+        >
           <div className="space-y-1 text-center">
             <svg
               className="mx-auto h-12 w-12 text-neutral-400"
@@ -346,7 +349,9 @@ export function AvatarUploadForm() {
               </label>
               <p className="pl-1 text-black dark:text-linen">or DRAG AND DROP</p>
             </div>
-            <p className="text-xs text-neutral-700 dark:text-neutral-300">PNG, JPG, GIF, SVG up to 5MB</p>
+            <p className="text-xs text-neutral-700 dark:text-neutral-300">
+              PNG, JPG, GIF, SVG up to 5MB
+            </p>
           </div>
         </div>
       </div>

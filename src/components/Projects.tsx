@@ -1,7 +1,7 @@
 import React from 'react';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 
-export default function Projects() : JSX.Element {
+export default function Projects(): JSX.Element {
   useDocumentTitle('Projects');
   return (
     <div>

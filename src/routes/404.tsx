@@ -6,7 +6,7 @@ import AppShell from '@/components/AppShell';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
 import { initialUserState, User } from '@/lib/InterfacesStates.lib';
 
-export default function FourOFour() : JSX.Element {
+export default function FourOFour(): JSX.Element {
   const { authed } = useAuth();
   useDocumentTitle('Oops! 404');
   const navigate = useNavigate();

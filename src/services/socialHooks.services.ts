@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   getOneOne,
-  getUsernameProfile, getUsernameSocialProfile,
+  getUsernameProfile,
+  getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { userCircleQuery } from '@/lib/queriesAndLoaders';
 
@@ -17,7 +18,7 @@ export function useOneOneUsernames() {
   return { usernames };
 }
 
-export function useCircleUsernames(username:string) {
+export function useCircleUsernames(username: string) {
   const usernames = [];
   const circleQuery = useQuery(userCircleQuery(username));
   if (circleQuery.isSuccess && circleQuery.data !== null) {
@@ -41,24 +42,24 @@ export function useCircleUsernames(username:string) {
 reason: we want to keep the API as reusable as possible
 AND, it helps with caching pieces of data */
 export function useOneOneProfile(username: string) {
-  const profileQuery = useQuery(
-    ['profile', username],
-    async () => getUsernameProfile(username),
-    {
-      enabled: username !== '',
-      staleTime: 1000 * 5 * 60, // 5 minutes
-    },
-  );
+  const profileQuery = useQuery(['profile', username], async () => getUsernameProfile(username), {
+    enabled: username !== '',
+    staleTime: 1000 * 5 * 60, // 5 minutes
+  });
   const socialProfileQuery = useQuery(
     ['social-profile', username],
     async () => getUsernameSocialProfile(username),
     {
       enabled: username !== '',
       staleTime: 1000 * 5 * 60, // 5 minutes
-    },
+    }
   );
-  if (profileQuery.isSuccess && socialProfileQuery.isSuccess
-      && profileQuery.data !== null && socialProfileQuery.data !== null) {
+  if (
+    profileQuery.isSuccess &&
+    socialProfileQuery.isSuccess &&
+    profileQuery.data !== null &&
+    socialProfileQuery.data !== null
+  ) {
     const { data: profile } = profileQuery.data;
     const { data: socialProfile } = socialProfileQuery.data;
     return { ...profile, ...socialProfile };

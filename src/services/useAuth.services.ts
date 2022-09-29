@@ -1,8 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import {
-  User, initialUserState,
-} from '@/lib/InterfacesStates.lib';
+import { User, initialUserState } from '@/lib/InterfacesStates.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
 
 export default function useAuth() {
@@ -13,9 +11,7 @@ export default function useAuth() {
 
   if (isSuccess && data) {
     loggedInUser = data.data;
-    const undefinedUser = Object.values(loggedInUser).every(
-      (value) => value === undefined,
-    );
+    const undefinedUser = Object.values(loggedInUser).every((value) => value === undefined);
     if (!undefinedUser && !authed) {
       setAuthed(true);
     }

@@ -11,14 +11,14 @@ Built using [React](https://reactjs.org/) + [Vite](https://vitejs.dev).
 
 ## Run in Development
 
->Install `yarn`: `npm install --global yarn`
+> Install `yarn`: `npm install --global yarn`
 
 1. Install packages - `yarn install`
 2. Run dev server - `yarn run dev` (default port is `5173`)
 
 `npm` works fine too. `yarn` is STRONGLY recommended.
 
->Run `pre-commit run -a` when running `pre-commit` hooks for the first time.
+> Run `pre-commit run -a` when running `pre-commit` hooks for the first time.
 
 ## Run in Production
 
@@ -31,13 +31,14 @@ Our SPA will consume APIs built using Django REST Framework deployed on AWS.
 
 - [DevClad-Server Repo](https://github.com/DevClad-Inc/devclad-server)
 
->`yarn preview` - preview the app on port `5173`.
+> `yarn preview` - preview the app on port `5173`.
 
 ---
 
 ## UI
 
 - **Primarily using**: [Tailwind UI](https://tailwindui.com/) - Application UI. (I have a personal license for this, I'll be adding everything we need from it in the repo anyway.)
+
   - Use `clsx` for classnames. Helpful for conditional styling like dark mode and stuff.
   - TailwindUI also uses Headless UI for interactivity+accessibility in its components.
     - [Headless UI](https://headlessui.dev)
@@ -66,8 +67,8 @@ Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint.
 
 ## Absolute Imports
 
-*Usage*: Use `@` for absolute imports.
-*Exception*: `./` imports in `main.tsx` and `App.tsx`.
+_Usage_: Use `@` for absolute imports.
+_Exception_: `./` imports in `main.tsx` and `App.tsx`.
 
 ## TypeScript?
 

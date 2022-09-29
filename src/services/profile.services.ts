@@ -2,9 +2,7 @@
 import axios from 'axios';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
-import {
-  Profile, SocialProfileUpdate, SocialProfile,
-} from '@/lib/InterfacesStates.lib';
+import { Profile, SocialProfileUpdate, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { refreshToken } from '@/services/auth.services';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -24,13 +22,11 @@ export async function getProfile() {
   }
   if (token === undefined && Cookies.get('refresh')) {
     // implementing this in Base functions (functions that execute on every page)
-    await refreshToken().catch(
-      () => {
-        Cookies.remove('token');
-        Cookies.remove('refresh');
-        delMany(['loggedInUser', 'profile']);
-      },
-    );
+    await refreshToken().catch(() => {
+      Cookies.remove('token');
+      Cookies.remove('refresh');
+      delMany(['loggedInUser', 'profile']);
+    });
   }
   return null;
 }
@@ -52,10 +48,7 @@ export async function getUsernameProfile(username: string) {
 }
 
 export async function updateProfile(values: Profile, profileData: Profile) {
-  const {
-    pronouns,
-    about, website, linkedin, calendly,
-  } = values;
+  const { pronouns, about, website, linkedin, calendly } = values;
   const token = Cookies.get('token');
   if (token && profileData) {
     return axios({
@@ -126,12 +119,18 @@ export async function getUsernameSocialProfile(username: string) {
 
 export async function updateSocialProfile(
   values: SocialProfileUpdate,
-  socialProfileData: SocialProfile,
+  socialProfileData: SocialProfile
 ) {
   const {
-    videoCallFriendly, preferredDevType,
+    videoCallFriendly,
+    preferredDevType,
     ideaStatus,
-    devType, rawXP, languages, purpose, location, timezone,
+    devType,
+    rawXP,
+    languages,
+    purpose,
+    location,
+    timezone,
   } = values;
   const token = Cookies.get('token');
   if (token && socialProfileData) {
@@ -142,14 +141,15 @@ export async function updateSocialProfile(
         Authorization: `Bearer ${token}`,
       },
       data: {
-        languages: (languages === '') ? socialProfileData.languages : languages,
-        location: (location === '') ? socialProfileData.location : location,
-        purpose: (purpose === '') ? socialProfileData.purpose : purpose,
+        languages: languages === '' ? socialProfileData.languages : languages,
+        location: location === '' ? socialProfileData.location : location,
+        purpose: purpose === '' ? socialProfileData.purpose : purpose,
         video_call_friendly: videoCallFriendly,
         timezone,
-        dev_type: (devType === '') ? socialProfileData.dev_type : devType,
-        preferred_dev_type: (preferredDevType === '') ? socialProfileData.preferred_dev_type : preferredDevType,
-        idea_status: (ideaStatus === '') ? socialProfileData.idea_status : ideaStatus,
+        dev_type: devType === '' ? socialProfileData.dev_type : devType,
+        preferred_dev_type:
+          preferredDevType === '' ? socialProfileData.preferred_dev_type : preferredDevType,
+        idea_status: ideaStatus === '' ? socialProfileData.idea_status : ideaStatus,
         raw_xp: rawXP,
       },
     });
@@ -196,17 +196,15 @@ export const getStatus = async () => {
   const token = Cookies.get('token');
   const url = `${API_URL}/users/status/`;
   if (token) {
-    return axios(
-      {
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-    );
+    });
   }
   return null;
 };
@@ -215,14 +213,12 @@ export const setSubmittedStatus = async () => {
   const token = Cookies.get('token');
   const url = `${API_URL}/users/status/`;
   if (token) {
-    return axios(
-      {
-        method: 'PATCH',
-        url,
-        data: { status: 'Submitted' },
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
+    return axios({
+      method: 'PATCH',
+      url,
+      data: { status: 'Submitted' },
+      headers: { Authorization: `Bearer ${token}` },
+    });
   }
   return null;
 };
@@ -233,17 +229,15 @@ export const getOneOne = async () => {
   const token = Cookies.get('token');
   const url = `${API_URL}/social/one-one/`;
   if (token) {
-    return axios(
-      {
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-    );
+    });
   }
   return null;
 };
@@ -252,17 +246,15 @@ export const getCircle = async (username: string) => {
   const token = Cookies.get('token');
   const url = `${API_URL}/social/circle/${username}/`;
   if (token) {
-    return axios(
-      {
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-    );
+    });
   }
   return null;
 };
@@ -271,18 +263,16 @@ export const disconnectCircle = async (username: string) => {
   const token = Cookies.get('token');
   const url = `${API_URL}/social/circle/${username}/`;
   if (token) {
-    return axios(
-      {
-        method: 'PATCH',
-        url,
-        data: { username },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+    return axios({
+      method: 'PATCH',
+      url,
+      data: { username },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-    );
+    });
   }
   return null;
 };

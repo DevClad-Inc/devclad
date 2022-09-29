@@ -1,26 +1,20 @@
 import React from 'react';
-import {
-  Link, Outlet, useLoaderData, useNavigate,
-} from 'react-router-dom';
+import { Link, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import DevCladLogo from '@/assets/devclad.svg';
-import {
-  Error, Info, Success, Warning,
-} from '@/lib/Feedback.lib';
+import { Error, Info, Success, Warning } from '@/lib/Feedback.lib';
 import SocialProfileForm from '@/components/forms/SocialProfile.forms';
+import { logOut } from '@/services/auth.services';
+import { UserStatus, initialUserStatus, initialUserState, User } from '@/lib/InterfacesStates.lib';
 import {
-  logOut,
-} from '@/services/auth.services';
-import {
-  UserStatus, initialUserStatus, initialUserState, User,
-} from '@/lib/InterfacesStates.lib';
-import {
-  checkProfileEmpty, checkSocialProfileEmpty,
+  checkProfileEmpty,
+  checkSocialProfileEmpty,
   getSocialProfile,
-  getStatus, setSubmittedStatus,
+  getStatus,
+  setSubmittedStatus,
 } from '@/services/profile.services';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
@@ -48,7 +42,6 @@ export function StepOne() {
           }}
         >
           Proceed to Step 2
-
         </Link>
       </div>
     </div>
@@ -57,24 +50,25 @@ export function StepOne() {
 
 export function StepTwo() {
   const initialSocialData = useLoaderData() as Awaited<
-  ReturnType<ReturnType<typeof socialProfileLoader>>
+    ReturnType<ReturnType<typeof socialProfileLoader>>
   >;
   const qc = useQueryClient();
   const checkEmpty: {
-    profile: boolean; socialProfile: boolean
+    profile: boolean;
+    socialProfile: boolean;
   } = { profile: false, socialProfile: false };
   const profileEmptyQuery = useQuery(['profile-empty'], async () => checkProfileEmpty());
-  const socialEmptyQuery = useQuery(['social-profile-empty'], async () => checkSocialProfileEmpty());
+  const socialEmptyQuery = useQuery(['social-profile-empty'], async () =>
+    checkSocialProfileEmpty()
+  );
   let userStatus: UserStatus = { ...initialUserStatus };
   const statusQuery = useQuery(['userStatus'], async () => getStatus());
-  if ((statusQuery.isSuccess && statusQuery.data !== null)) {
+  if (statusQuery.isSuccess && statusQuery.data !== null) {
     const { data } = statusQuery;
     userStatus = data.data;
   }
   if (profileEmptyQuery.isLoading || socialEmptyQuery.isLoading) {
-    return (
-      <LoadingCard />
-    );
+    return <LoadingCard />;
   }
   if (profileEmptyQuery.isSuccess && profileEmptyQuery.data) {
     const { data } = profileEmptyQuery;
@@ -108,7 +102,6 @@ export function StepTwo() {
             to="/onboarding/"
           >
             Back to Step 1
-
           </Link>
         </div>
 
@@ -116,33 +109,34 @@ export function StepTwo() {
           <button
             type="button"
             className={classNames(
-              (!checkEmpty.profile || !checkEmpty.socialProfile || userStatus.status === 'Submitted')
+              !checkEmpty.profile || !checkEmpty.socialProfile || userStatus.status === 'Submitted'
                 ? 'cursor-not-allowed'
                 : '',
-              linkClassesString,
+              linkClassesString
             )}
             onClick={async () => {
-              if (checkEmpty.profile && checkEmpty.socialProfile && userStatus.status !== 'Submitted') {
+              if (
+                checkEmpty.profile &&
+                checkEmpty.socialProfile &&
+                userStatus.status !== 'Submitted'
+              ) {
                 try {
                   setSubmittedStatus();
-                  toast.custom(
-                    <Success success="Submitted request!" />,
-                  );
+                  toast.custom(<Success success="Submitted request!" />);
                   await qc.invalidateQueries(['userStatus']);
                 } catch {
-                  toast.custom(
-                    <Error error="Something went wrong" />,
-                  );
+                  toast.custom(<Error error="Something went wrong" />);
                 }
               }
             }}
           >
-            {(!checkEmpty.profile || !checkEmpty.socialProfile) ? 'Please complete both steps' : `${submitText}`}
+            {!checkEmpty.profile || !checkEmpty.socialProfile
+              ? 'Please complete both steps'
+              : `${submitText}`}
           </button>
         </div>
       </div>
     </div>
-
   );
 }
 
@@ -164,19 +158,17 @@ export function Onboarding() {
     loggedInUser = userQueryData.data;
   }
   let userStatus: UserStatus = { ...initialUserStatus };
-  const statusQuery = useQuery(
-    ['userStatus'],
-    async () => getStatus(),
-  );
-  if ((statusQuery.isSuccess && statusQuery.data !== null)
-  && Object.values(userStatus).every((value) => value === undefined)) {
+  const statusQuery = useQuery(['userStatus'], async () => getStatus());
+  if (
+    statusQuery.isSuccess &&
+    statusQuery.data !== null &&
+    Object.values(userStatus).every((value) => value === undefined)
+  ) {
     const { data } = statusQuery;
     userStatus = data.data;
   }
   if (userQueryLoading || statusQuery.isLoading) {
-    return (
-      <LoadingCard />
-    );
+    return <LoadingCard />;
   }
   if (userStatus && userStatus.approved) {
     navigate('/');
@@ -207,27 +199,20 @@ export function Onboarding() {
         </div>
         <div className="backdrop-blur-0">
           <div className="sm:mx-auto sm:w-full sm:max-w-full">
-            <img
-              className="mx-auto h-32 w-auto"
-              src={DevCladLogo}
-              alt="DevClad"
-            />
-            <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">DevClad</h1>
+            <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+            <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">
+              DevClad
+            </h1>
           </div>
-          <h2 className="font-display text-center text-3xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Onboarding</h2>
+          <h2 className="font-display text-center text-3xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+            Onboarding
+          </h2>
           <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-            Hey,
-            {' '}
-            {loggedInUser.first_name}
-            . Glad to have you here!
-            {' '}
-            {loggedInUser.email}
-            {' '}
-            is your associated email address.
+            Hey, {loggedInUser.first_name}. Glad to have you here! {loggedInUser.email} is your
+            associated email address.
           </p>
           <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-            Questions?
-            {' '}
+            Questions?{' '}
             <a
               className=" text-orange-700 dark:text-orange-300"
               href="https://discord.devclad.com"
@@ -255,8 +240,9 @@ export function Onboarding() {
                   <Warning warning="Not submitted request to join yet." />
                   <Info info="Tip: Fill out as much as possible for quicker request approval." />
                 </>
-              )
-                : <Success success="Request to join submitted. You will be notified once it's processed." />}
+              ) : (
+                <Success success="Request to join submitted. You will be notified once it's processed." />
+              )}
             </div>
             <div className="sm:mx-auto p-5 sm:w-full sm:max-w-fit">
               <Outlet />
@@ -266,7 +252,5 @@ export function Onboarding() {
       </div>
     );
   }
-  return (
-    <LoadingCard />
-  );
+  return <LoadingCard />;
 }

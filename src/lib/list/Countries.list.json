@@ -1,11 +1,12 @@
-[ {"name":"Australia","code":"AU"},
-  {"name":"Canada","code":"CA"},
-  {"name":"European Union", "code": "EU"},
-  {"name":"Japan","code":"JP"},
-  {"name":"India", "code": "IN"},
-  {"name":"Non EU Europe (excluding UK)","code":"NEEU"},
-  {"name":"United States of America","code":"US"},
-  {"name":"United Kingdom","code":"GB"},
-  {"name":"South Korea","code":"KR"},
-  {"name":"Other","code":"OT"}
+[
+  { "name": "Australia", "code": "AU" },
+  { "name": "Canada", "code": "CA" },
+  { "name": "European Union", "code": "EU" },
+  { "name": "Japan", "code": "JP" },
+  { "name": "India", "code": "IN" },
+  { "name": "Non EU Europe (excluding UK)", "code": "NEEU" },
+  { "name": "United States of America", "code": "US" },
+  { "name": "United Kingdom", "code": "GB" },
+  { "name": "South Korea", "code": "KR" },
+  { "name": "Other", "code": "OT" }
 ]

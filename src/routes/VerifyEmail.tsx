@@ -15,27 +15,27 @@ export default function VerifyEmail(): JSX.Element {
   const [error, setError] = useState(false);
   const { key } = useParams() as { key: string };
   useEffect(() => {
-    const verification = async () => verifyEmail(key).then((res:any) => {
-      if (res.detail === 'ok') {
-        setVerified(true);
-        toast.custom(
-          <Success success="Email verified successfully." />,
-          { id: 'success-email-verification', duration: 3000 },
-        );
-      } else {
-        setError(true);
-        toast.error(
-          'Invalid verification key.',
-          { id: 'invalid-key-error' },
-        );
-      }
-    }).catch(() => {
-      setError(true);
-      toast.custom(
-        <Error error="Invalid verification key OR Email already verified." />,
-        { id: 'verify-email-error', duration: 5000 },
-      );
-    });
+    const verification = async () =>
+      verifyEmail(key)
+        .then((res: any) => {
+          if (res.detail === 'ok') {
+            setVerified(true);
+            toast.custom(<Success success="Email verified successfully." />, {
+              id: 'success-email-verification',
+              duration: 3000,
+            });
+          } else {
+            setError(true);
+            toast.error('Invalid verification key.', { id: 'invalid-key-error' });
+          }
+        })
+        .catch(() => {
+          setError(true);
+          toast.custom(<Error error="Invalid verification key OR Email already verified." />, {
+            id: 'verify-email-error',
+            duration: 5000,
+          });
+        });
     verification();
   }, []);
   return (
@@ -63,71 +63,63 @@ export default function VerifyEmail(): JSX.Element {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img
-            className="mx-auto h-32 w-auto"
-            src={DevCladLogo}
-            alt="DevClad"
-          />
-          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">DevClad</h1>
+          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">
+            DevClad
+          </h1>
         </div>
-        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">Verification</h2>
+        <h2 className="text-center text-2xl mt-5 font-bold text-neutral-700 dark:text-neutral-300">
+          Verification
+        </h2>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-          <Link
-            className=" text-orange-700 dark:text-orange-300"
-            to="/"
-          >
+          <Link className=" text-orange-700 dark:text-orange-300" to="/">
             Login
           </Link>
         </p>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            {
-              (verified && !error) ? (
-                <div className="text-center">
-                  <span
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
+            {verified && !error ? (
+              <div className="text-center">
+                <span
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md
                     text-sm  text-green-800 bg-green-50
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-green-200"
+                >
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <ShieldCheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                    </div>
+                    <div className="ml-2 font-bold text-base">
+                      <span>Email Verified successfully</span>
+                    </div>
+                  </div>
+                </span>
+
+                <Link to="/" className="items-center">
+                  <span
+                    className="mt-5 border border-transparent bg-orange-700
+                dark:bg-darkBG duration-500 rounded-md py-2 px-4
+                inline-flex justify-center text-sm font-bold dark:text-orange-300"
                   >
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <ShieldCheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                        <ArrowRightOnRectangleIcon className="h-5 w-5" aria-hidden="true" />
                       </div>
                       <div className="ml-2 font-bold text-base">
-                        <span>
-                          Email Verified successfully
-                        </span>
+                        <span>{authed ? 'Go to Dashboard' : 'Click to Login'}</span>
                       </div>
                     </div>
                   </span>
-
-                  <Link to="/" className="items-center">
-                    <span
-                      className="mt-5 border border-transparent bg-orange-700
-                dark:bg-darkBG duration-500 rounded-md py-2 px-4
-                inline-flex justify-center text-sm font-bold dark:text-orange-300"
-                    >
-                      <div className="flex">
-                        <div className="flex-shrink-0">
-                          <ArrowRightOnRectangleIcon className="h-5 w-5" aria-hidden="true" />
-                        </div>
-                        <div className="ml-2 font-bold text-base">
-                          <span>
-                            { authed ? 'Go to Dashboard' : 'Click to Login' }
-                          </span>
-                        </div>
-                      </div>
-                    </span>
-                  </Link>
-                </div>
-
-              ) : (
-                <div className="text-center">
-                  <p className="text-neutral-600 dark:text-neutral-400 text-center">Please wait while we verify your email.</p>
-                </div>
-              )
-}
+                </Link>
+              </div>
+            ) : (
+              <div className="text-center">
+                <p className="text-neutral-600 dark:text-neutral-400 text-center">
+                  Please wait while we verify your email.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
