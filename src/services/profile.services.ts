@@ -242,9 +242,12 @@ export const getOneOne = async () => {
   return null;
 };
 
+export const passOrRejectOneOne = async () => {};
+
+// =================== circle ===================
 export const getCircle = async (username: string) => {
   const token = Cookies.get('token');
-  const url = `${API_URL}/social/circle/${username}/`;
+  const url = `${API_URL}/social/circle/${username}/get/`;
   if (token) {
     return axios({
       method: 'GET',
@@ -259,14 +262,31 @@ export const getCircle = async (username: string) => {
   return null;
 };
 
-export const disconnectCircle = async (username: string) => {
+// Add is only for One-One
+export const PatchCircle = async (
+  operationUsername: string,
+  circle: string[],
+  operation: string
+) => {
   const token = Cookies.get('token');
-  const url = `${API_URL}/social/circle/${username}/`;
+  let url = `${API_URL}/social/circle/`;
+
+  if (operation === 'add') {
+    url += `${operationUsername}/add/`;
+    circle.push(operationUsername);
+  } else if (operation === 'remove') {
+    url += `${operationUsername}/remove/`;
+    const index = circle.indexOf(operationUsername);
+    if (index > -1) {
+      circle.splice(index, 1);
+    }
+  }
+
   if (token) {
     return axios({
       method: 'PATCH',
       url,
-      data: { username },
+      data: { circle },
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

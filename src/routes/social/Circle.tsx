@@ -3,16 +3,19 @@ import {
   ArrowUpRightIcon,
   ChatBubbleBottomCenterIcon,
   VideoCameraIcon,
-} from '@heroicons/react/24/outline';
+} from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import LoadingCard from '@/components/LoadingCard';
 import { primaryString2 } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
-import { useCircleUsernames, useOneOneProfile } from '@/services/socialHooks.services';
+import {
+  useCircleUsernames,
+  useOneOneProfile,
+  useConnected,
+} from '@/services/socialHooks.services';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import useAuth from '@/services/useAuth.services';
-import useConnected from '@/services/useConnected.services';
 
 function ConnectionCard({
   username,
@@ -76,8 +79,7 @@ function ConnectionCard({
             <div className="flex space-x-2 text-sm sm:ml-24 sm:text-lg">
               <div className="flex flex-col">
                 <button type="button" className={primaryString2}>
-                  <ChatBubbleBottomCenterIcon className="mr-2 h-6 w-6 sm:h-8" aria-hidden="true" />
-                  <span>Chat</span>
+                  <ChatBubbleBottomCenterIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />
                 </button>
               </div>
               <div className="flex flex-col">

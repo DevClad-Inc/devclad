@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
   getOneOne,
@@ -30,17 +31,6 @@ export function useCircleUsernames(username: string) {
   return { usernames };
 }
 
-// const timeUntilSundayMidnightUTC = () => {
-//   const now = new Date();
-//   const sunday = new Date(now); // in UTC
-//   sunday.setDate((now.getUTCDate() + (7 - now.getUTCDay())) % 7);
-//   sunday.setUTCHours(0, 0, 0, 0);
-//   return sunday.getTime() - now.getTime();
-// };
-
-/* !why not just modify response from the backend?
-reason: we want to keep the API as reusable as possible
-AND, it helps with caching pieces of data */
 export function useOneOneProfile(username: string) {
   const profileQuery = useQuery(['profile', username], async () => getUsernameProfile(username), {
     enabled: username !== '',
@@ -66,3 +56,28 @@ export function useOneOneProfile(username: string) {
   }
   return null;
 }
+
+export const useConnected = (username: string, otherUser: string): boolean => {
+  const [connected, setConnected] = React.useState(false);
+  const circle = useCircleUsernames(username);
+  const otherUserCircle = useCircleUsernames(otherUser);
+  const { usernames } = circle;
+  const { usernames: otherUsernames } = otherUserCircle;
+  if (usernames !== undefined && otherUsernames !== undefined) {
+    if (usernames.includes(otherUser) && otherUsernames.includes(username) && !connected) {
+      setConnected(true);
+    } else if (!usernames.includes(otherUser) && !otherUsernames.includes(username) && connected) {
+      setConnected(false);
+    }
+  }
+  return connected;
+};
+
+export const useAdded = (username: string, otherUser: string): boolean => {
+  const [added, setAdded] = React.useState(false);
+  const circleQuery = useCircleUsernames(username);
+  if (circleQuery.usernames.includes(otherUser) && !added) {
+    setAdded(true);
+  }
+  return added;
+};

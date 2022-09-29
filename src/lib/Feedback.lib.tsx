@@ -1,10 +1,10 @@
+import React from 'react';
 import {
   InformationCircleIcon,
   CheckCircleIcon,
   XCircleIcon,
   ShieldExclamationIcon,
-} from '@heroicons/react/24/solid';
-import React from 'react';
+} from '@heroicons/react/24/outline';
 
 export function Success({ success }: { success: string }): JSX.Element {
   return (
@@ -12,7 +12,7 @@ export function Success({ success }: { success: string }): JSX.Element {
       <div className="flex">
         <div className="flex-shrink-0">
           <CheckCircleIcon
-            className="h-5 w-5 text-green-400 dark:text-green-200"
+            className="h-6 w-5 text-green-400 dark:text-green-200"
             aria-hidden="true"
           />
         </div>
@@ -30,7 +30,7 @@ export function Warning({ warning }: { warning: string }): JSX.Element {
       <div className="flex">
         <div className="flex-shrink-0">
           <ShieldExclamationIcon
-            className="h-5 w-5 text-bistreBrown dark:text-saffron"
+            className="h-6 w-5 text-bistreBrown dark:text-saffron"
             aria-hidden="true"
           />
         </div>
@@ -48,7 +48,7 @@ export function Info({ info }: { info: string }): JSX.Element {
       <div className="flex">
         <div className="flex-shrink-0">
           <InformationCircleIcon
-            className="h-6 w-6 text-oxfordBlue dark:text-beauBlue"
+            className="h-6 w-5 text-oxfordBlue dark:text-beauBlue"
             aria-hidden="true"
           />
         </div>
@@ -65,7 +65,7 @@ export function Error({ error }: { error: string }): JSX.Element {
     <div className="mb-4 rounded-md bg-mistyRose p-4 dark:bg-bloodRed/60">
       <div className="flex">
         <div className="flex-shrink-0">
-          <XCircleIcon className="h-5 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+          <XCircleIcon className="h-6 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
         </div>
         <div className="ml-3">
           <h3 className="text-sm  text-bloodRed dark:text-mistyRose">{error}</h3>

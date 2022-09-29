@@ -232,17 +232,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   >
                     <li>
                       <div className="flex items-center">
-                        <ArrowLeftIcon
-                          className="h-5 w-5 flex-shrink-0 text-gray-300"
-                          aria-hidden
-                        />
                         <NavLink
-                          to="/social"
-                          className="ml-2 font-mono text-sm font-medium text-orange-300
+                          to="/social/circle"
+                          className="ml-2 flex font-mono text-sm font-medium text-orange-300
                             duration-300 hover:text-white"
                           end
                         >
-                          Social
+                          <ArrowLeftIcon
+                            className="mr-2 h-6 w-5 flex-shrink-0 text-gray-300"
+                            aria-hidden
+                          />
+                          Circle
                         </NavLink>
                       </div>
                     </li>

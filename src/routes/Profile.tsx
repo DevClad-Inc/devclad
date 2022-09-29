@@ -8,13 +8,21 @@ import {
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { NoSymbolIcon } from '@heroicons/react/24/outline';
+import { NoSymbolIcon, PlusIcon } from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { badge, primaryString2 } from '@/lib/Buttons.lib';
-import { useOneOneProfile } from '@/services/socialHooks.services';
+import {
+  useCircleUsernames,
+  useOneOneProfile,
+  useConnected,
+} from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';
 import ActionDropdown from '@/components/ActionDropdown';
+import { PatchCircle } from '@/services/profile.services';
+import useAuth from '@/services/useAuth.services';
+import { Success, Error } from '@/lib/Feedback.lib';
 
 export const genExp = (rawXP: number) => {
   if (rawXP === 1) {
@@ -30,32 +38,63 @@ export const genIdea = (idea: string) => {
   return 'I am';
 };
 
-const dropdownItems = [
-  {
-    name: 'Block',
-    icon: NoSymbolIcon,
-    alt: 'Disconnect',
-    onClick: () => {},
-  },
-];
-
-const connectedOnlyItems = [
-  {
-    name: 'Disconnect',
-    icon: XCircleIcon,
-    alt: 'Block',
-    onClick: () => {},
-  },
-];
-
 function ProfileCard({ username }: { username: string }): JSX.Element {
-  // const { connected } = useConnected(username);
   const profile = useOneOneProfile(username) as MatchProfile;
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', username]);
+  // logged in username and connection check
+  const { loggedInUser } = useAuth();
+  const loggedInUserUserName = loggedInUser?.username;
+  const connected = useConnected(loggedInUserUserName as string, username);
+  // logged in username and connection check
+  const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string);
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
     return <LoadingCard />;
   }
+
+  const connectedOnlyItems = [
+    {
+      name: 'Disconnect',
+      icon: XCircleIcon,
+      alt: 'Disconnect',
+      onClick: async () => {
+        await PatchCircle(username, circle, 'remove')
+          .then(async () => {
+            toast.custom(<Success success="Disconnected successfully" />, {
+              id: 'disconnect-profile-success',
+              duration: 3000,
+            });
+            await qc.invalidateQueries(['circle', loggedInUserUserName]);
+            await qc.invalidateQueries(['circle', username]);
+            await qc.invalidateQueries(['social-profile', loggedInUserUserName]);
+            await qc.invalidateQueries(['social-profile', username]);
+          })
+          .catch(() => {
+            toast.custom(<Error error="Something went wrong." />, {
+              id: 'error-disconnect-profile',
+              duration: 5000,
+            });
+          });
+      },
+    },
+  ];
+  let dropdownItems = [
+    {
+      name: 'Block',
+      icon: NoSymbolIcon,
+      alt: 'Block',
+      onClick: () => {},
+    },
+  ];
+  if (connected) {
+    dropdownItems = [...connectedOnlyItems, ...dropdownItems];
+  } else if (!connected && loggedInUserUserName !== username) {
+    dropdownItems = [
+      { name: 'Connect', icon: PlusIcon, alt: 'Connect', onClick: () => {} },
+      ...dropdownItems,
+    ];
+  }
+
   if (profile) {
     return (
       <div className="flex justify-center p-0 lg:p-4">
@@ -257,7 +296,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </button>
               </div>
               <div className="flex flex-col">
-                <ActionDropdown items={dropdownItems.concat(connectedOnlyItems)} />
+                <ActionDropdown items={dropdownItems} />
               </div>
             </div>
           </div>
