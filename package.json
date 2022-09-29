@@ -26,8 +26,7 @@
     "react-hot-toast": "^2.3.0",
     "react-router-dom": "^6.4.0",
     "react-scroll-to-top": "^3.0.0",
-    "react-select": "^5.4.0",
-    "yup": "^0.32.11"
+    "react-select": "^5.4.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
