@@ -31,7 +31,7 @@ function Routing(): JSX.Element {
         refreshToken();
       }, 1000 * 60 * 60);
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, authed]);
 
   // USER STATUS
   let userStatus: UserStatus = { ...initialUserStatus };
