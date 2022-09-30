@@ -134,7 +134,7 @@ export const useAdded = (username: string, otherUser: string): boolean => {
   return added;
 };
 
-export const useSkipped = (username: string, otherUser: string): boolean => {
+export const useSkipped = (otherUser: string): boolean => {
   const [skipped, setSkipped] = React.useState(false);
   const skippedUsers = useSkippedUsernames();
   const { usernames } = skippedUsers;
@@ -148,7 +148,7 @@ export const useSkipped = (username: string, otherUser: string): boolean => {
   return skipped;
 };
 
-export const useShadowed = (username: string, otherUser: string): boolean => {
+export const useShadowed = (otherUser: string): boolean => {
   const [shadowed, setShadowed] = React.useState(false);
   const shadowedUsers = useShadowedUsernames();
   const { usernames } = shadowedUsers;
