@@ -4,6 +4,8 @@ import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import { NewUser } from '@/lib/InterfacesStates.lib';
 
+export const API_URL = import.meta.env.VITE_API_URL;
+
 /*
 Bug in Axios: method signature does not work with PATCH/PUT. Returning an axios call.
 */
@@ -14,7 +16,6 @@ const headers = {
 
 const qc = new QueryClient();
 
-const API_URL = import.meta.env.VITE_API_URL;
 // const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
 
 export const verifyEmail = async (key: string) => {

@@ -1,13 +1,17 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getUsernameProfile, getUsernameSocialProfile } from '@/services/profile.services';
 import {
+  additionalSPQuery,
+  profileUsernameQuery,
+  socialProfileUsernameQuery,
+  socialProfileQuery,
   userBlockedQuery,
   userCircleQuery,
   userMatchesQuery,
   userShadowedQuery,
   userSkippedQuery,
 } from '@/lib/queriesAndLoaders';
+import { SocialProfile } from '@/lib/InterfacesStates.lib';
 
 export const useOneOneUsernames = () => {
   const usernames = [];
@@ -70,27 +74,46 @@ export const useBlockedUsernames = () => {
 };
 
 export const useOneOneProfile = (username: string) => {
-  const profileQuery = useQuery(['profile', username], async () => getUsernameProfile(username), {
+  const profileQuery = useQuery({
+    ...profileUsernameQuery(username),
     enabled: username !== '',
     staleTime: 1000 * 5 * 60, // 5 minutes
   });
-  const socialProfileQuery = useQuery(
-    ['social-profile', username],
-    async () => getUsernameSocialProfile(username),
-    {
-      enabled: username !== '',
-      staleTime: 1000 * 5 * 60, // 5 minutes
-    }
-  );
+  const spUsernameQuery = useQuery({
+    ...socialProfileUsernameQuery(username),
+    enabled: username !== '',
+    staleTime: 1000 * 5 * 60, // 5 minutes
+  });
   if (
     profileQuery.isSuccess &&
-    socialProfileQuery.isSuccess &&
+    spUsernameQuery.isSuccess &&
     profileQuery.data !== null &&
-    socialProfileQuery.data !== null
+    spUsernameQuery.data !== null
   ) {
     const { data: profile } = profileQuery.data;
-    const { data: socialProfile } = socialProfileQuery.data;
+    const { data: socialProfile } = spUsernameQuery.data;
     return { ...profile, ...socialProfile };
+  }
+  return null;
+};
+
+export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unknown | null }) => {
+  const spQuery = useQuery({
+    ...socialProfileQuery(),
+    initialData: initialSocialData,
+  });
+  if (spQuery.isSuccess && spQuery.data !== null) {
+    const { data } = spQuery.data as { data: SocialProfile };
+    return data;
+  }
+  return null;
+};
+
+export const useAdditionalSP = () => {
+  const additionalSocialProfileQuery = useQuery(additionalSPQuery());
+  if (additionalSocialProfileQuery.isSuccess && additionalSocialProfileQuery.data !== null) {
+    const { data } = additionalSocialProfileQuery.data;
+    return data;
   }
   return null;
 };

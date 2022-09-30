@@ -6,19 +6,18 @@ import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import DevCladLogo from '@/assets/devclad.svg';
 import { Error, Info, Success, Warning } from '@/lib/Feedback.lib';
-import SocialProfileForm from '@/components/forms/SocialProfile.forms';
+import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
 import { logOut } from '@/services/auth.services';
 import { UserStatus, initialUserStatus, initialUserState, User } from '@/lib/InterfacesStates.lib';
 import {
   checkProfileEmpty,
   checkSocialProfileEmpty,
-  getSocialProfile,
   getStatus,
   setSubmittedStatus,
 } from '@/services/profile.services';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { socialProfileLoader, userQuery } from '@/lib/queriesAndLoaders';
+import { socialProfileLoader, socialProfileQuery, userQuery } from '@/lib/queriesAndLoaders';
 import LoadingCard from '@/components/LoadingCard';
 
 const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
@@ -38,7 +37,7 @@ export function StepOne() {
         "
           to="/onboarding/step-two"
           onMouseEnter={() => {
-            qc.prefetchQuery(['social-profile'], () => getSocialProfile());
+            qc.prefetchQuery(socialProfileQuery());
           }}
         >
           Proceed to Step 2

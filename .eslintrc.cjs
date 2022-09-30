@@ -34,6 +34,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     '@typescript-eslint/no-shadow': ['error', { ignoreTypeValueShadow: true }],
     'no-shadow': 'off',
+    '@typescript-eslint/naming-convention': 'warn',
     'no-restricted-syntax': [
       'error',
       {

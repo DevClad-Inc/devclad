@@ -10,7 +10,7 @@ import {
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import UpdateUserForm from '@/components/forms/UpdateUser.forms';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import SocialProfileForm from '@/components/forms/SocialProfile.forms';
+import { AdditionalSPForm, SocialProfileForm } from '@/components/forms/SocialProfile.forms';
 import PasswordResetForm from '@/components/forms/ResetPassword.forms';
 import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';
 import { socialProfileLoader } from '@/lib/queriesAndLoaders';
@@ -124,7 +124,7 @@ export function SocialProfile() {
   >;
   return (
     <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-      <div className="shadow sm:overflow-hidden sm:rounded-md">
+      <div className="space-y-4 shadow sm:overflow-hidden sm:rounded-md">
         <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
           <div>
             <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
@@ -136,6 +136,14 @@ export function SocialProfile() {
             </p>
           </div>
           <SocialProfileForm initialSocialData={initialSocialData} />
+        </div>
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+          <div>
+            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+              Additional Preferences
+            </h2>
+          </div>
+          <AdditionalSPForm />
         </div>
         <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
       </div>

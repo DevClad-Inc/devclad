@@ -2,10 +2,8 @@
 import axios from 'axios';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
-import { Profile, SocialProfileUpdate, SocialProfile } from '@/lib/InterfacesStates.lib';
-import { refreshToken } from '@/services/auth.services';
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
+import { refreshToken, API_URL } from '@/services/auth.services';
 
 export async function getProfile() {
   const url = `${API_URL}/users/profile/`;
@@ -117,16 +115,12 @@ export async function getUsernameSocialProfile(username: string) {
   return null;
 }
 
-export async function updateSocialProfile(
-  values: SocialProfileUpdate,
-  socialProfileData: SocialProfile
-) {
+export async function updateSocialProfile(values: SocialProfile, socialProfileData: SocialProfile) {
   const {
-    videoCallFriendly,
-    preferredDevType,
-    ideaStatus,
-    devType,
-    rawXP,
+    preferred_dev_type,
+    idea_status,
+    dev_type,
+    raw_xp,
     languages,
     purpose,
     location,
@@ -144,13 +138,44 @@ export async function updateSocialProfile(
         languages: languages === '' ? socialProfileData.languages : languages,
         location: location === '' ? socialProfileData.location : location,
         purpose: purpose === '' ? socialProfileData.purpose : purpose,
-        video_call_friendly: videoCallFriendly,
         timezone,
-        dev_type: devType === '' ? socialProfileData.dev_type : devType,
+        dev_type: dev_type === '' ? socialProfileData.dev_type : dev_type,
         preferred_dev_type:
-          preferredDevType === '' ? socialProfileData.preferred_dev_type : preferredDevType,
-        idea_status: ideaStatus === '' ? socialProfileData.idea_status : ideaStatus,
-        raw_xp: rawXP,
+          preferred_dev_type === '' ? socialProfileData.preferred_dev_type : preferred_dev_type,
+        idea_status: idea_status === '' ? socialProfileData.idea_status : idea_status,
+        raw_xp,
+      },
+    });
+  }
+  return null;
+}
+
+export async function getAdditionalSP() {
+  const url = `${API_URL}/social/additional-prefs/`;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+  return null;
+}
+
+export async function updateAdditionalSP(values: AdditionalSP) {
+  const { video_call_friendly, available_always_off } = values;
+  const token = Cookies.get('token');
+  if (token) {
+    return axios({
+      method: 'PATCH',
+      url: `${API_URL}/social/additional-prefs/`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        video_call_friendly,
+        available_always_off,
       },
     });
   }

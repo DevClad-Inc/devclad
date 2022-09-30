@@ -2,6 +2,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import {
+  getAdditionalSP,
   getBlockedUsers,
   getCircle,
   getOneOne,
@@ -29,6 +30,11 @@ export const profileQuery = () => ({
 export const socialProfileQuery = () => ({
   queryKey: ['social-profile'],
   queryFn: async () => getSocialProfile(),
+});
+
+export const additionalSPQuery = () => ({
+  queryKey: ['additional-sprefs'],
+  queryFn: async () => getAdditionalSP(),
 });
 
 export const statusQuery = () => ({

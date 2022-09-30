@@ -52,12 +52,22 @@ export interface SocialProfile {
   idea_status?: string;
 }
 
-export interface SocialProfileUpdate extends SocialProfile {
-  videoCallFriendly?: boolean;
-  rawXP?: number;
-  devType?: string;
-  preferredDevType?: string;
-  ideaStatus?: string;
+export interface SocialProfileFormValues extends SocialProfile {
+  errors?: {
+    languages?: string;
+    raw_xp?: string;
+    purpose?: string;
+    location?: string;
+    timezone?: string;
+    dev_type?: string;
+    preferred_dev_type?: string;
+    idea_status?: string;
+  };
+}
+
+export interface AdditionalSP {
+  video_call_friendly?: boolean;
+  available_always_off?: boolean;
 }
 
 export const initialSocialProfileState: SocialProfile = {
@@ -131,20 +141,6 @@ export interface UpdateProfileFormValues extends Profile {
   };
 }
 
-export interface SocialProfileFormValues extends SocialProfileUpdate {
-  errors?: {
-    languages?: string;
-    rawXP?: string;
-    purpose?: string;
-    location?: string;
-    videoCallFriendly?: boolean;
-    timezone?: string;
-    devType?: string;
-    preferredDevType?: string;
-    ideaStatus?: string;
-  };
-}
-
 export interface PasswordReset {
   password1: string;
   password2: string;
@@ -153,9 +149,6 @@ export interface PasswordReset {
     password2?: string;
   };
 }
-
-// use decorators to make MatchProfile extending Profile AND User
-
 export interface MatchProfile extends Profile, SocialProfile {
   first_name?: string;
   last_name?: string;

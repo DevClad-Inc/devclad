@@ -67,6 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'forgot-password',
+        hasErrorBoundary: true,
         element: <ForgotPassword />,
       },
       // AUTHED AND UNAPPROVED
@@ -76,11 +77,13 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
+            hasErrorBoundary: true,
             element: <StepOne />,
           },
           {
             path: '/onboarding/step-two',
             element: <StepTwo />,
+            hasErrorBoundary: true,
             loader: socialProfileLoader(queryClient),
           },
         ],
@@ -88,41 +91,50 @@ const router = createBrowserRouter([
       // AUTHED AND APPROVED
       {
         path: 'profile/:username',
+        hasErrorBoundary: true,
         element: <Profile />,
       },
       {
         path: 'social',
+        hasErrorBoundary: true,
         element: <Social />,
         children: [
           {
             index: true,
+            hasErrorBoundary: true,
             element: <OneOne />,
           },
           {
             path: '/social/circle',
+            hasErrorBoundary: true,
             element: <Circle />,
           },
         ],
       },
       {
         path: 'projects',
+        hasErrorBoundary: true,
         element: <Projects />,
       },
       {
         path: 'hackathons',
+        hasErrorBoundary: true,
         element: <Hackathons />,
       },
       {
         path: 'settings',
+        hasErrorBoundary: true,
         element: <Settings />,
         children: [
           {
             index: true,
+            hasErrorBoundary: true,
             element: <AccountProfile />,
           },
           {
             path: '/settings/social',
             element: <SocialProfile />,
+            hasErrorBoundary: true,
             loader: socialProfileLoader(queryClient),
           },
           {

@@ -2,15 +2,13 @@
 import React, { Fragment, useState } from 'react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { toast } from 'react-hot-toast';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Listbox, Transition } from '@headlessui/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { Listbox, Switch, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
-import {
-  initialSocialProfileState,
-  SocialProfile,
-  SocialProfileFormValues,
-} from '@/lib/InterfacesStates.lib';
-import { updateSocialProfile } from '@/services/profile.services';
+import { VideoCameraIcon, VideoCameraSlashIcon } from '@heroicons/react/24/outline';
+import ClockIcon from '@heroicons/react/24/outline/ClockIcon';
+import { AdditionalSP, SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
+import { updateAdditionalSP, updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/lib/Feedback.lib';
 import Countries from '@/lib/list/Countries.list.json';
@@ -18,8 +16,9 @@ import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
 
 import classNames from '@/lib/ClassNames.lib';
-import { socialProfileQuery } from '@/lib/queriesAndLoaders';
 import LoadingCard from '../LoadingCard';
+
+import { useAdditionalSP, useSocialProfile } from '@/services/socialHooks.services';
 
 export const devType = [
   { name: 'AI', id: 0 },
@@ -48,7 +47,7 @@ const purposes = Purposes.map((purpose) => ({ purpose })) as {
 //   { name: 'Any', id: 5 },
 // ];
 
-const ideaStatus = [
+const idea_status = [
   { name: 'Open to exploring ideas.', id: 0 },
   { name: 'Not open to exploring ideas.', id: 1 },
   { name: 'Need people working on my idea.', id: 2 },
@@ -72,24 +71,11 @@ interface InitialSocialDataProps {
   initialSocialData: unknown | null;
 }
 
-export default function SocialProfileForm({
-  initialSocialData,
-}: InitialSocialDataProps): JSX.Element {
-  let socialProfileData: SocialProfile = { ...initialSocialProfileState };
-  const {
-    data: socialProfileQueryData,
-    isSuccess: socialProfileQuerySuccess,
-    isLoading: socialProfileQueryLoading,
-  } = useQuery({
-    ...socialProfileQuery(),
-    initialData: initialSocialData,
-  });
-  if (socialProfileQuerySuccess && socialProfileQueryData !== null) {
-    const { data } = socialProfileQueryData as { data: SocialProfile };
-    socialProfileData = data;
-  }
-  // const [selectedTzDeviation,
-  //   setselectedTzDeviation] = useState<{ name:string, id:number }>();
+export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps): JSX.Element {
+  const spData = useSocialProfile({ initialSocialData }) as SocialProfile;
+
+  // ============= FORM value states for multi-selects =============
+
   const [selectedIdeaStatus, setselectedIdeaStatus] = useState<{ name: string; id: number }>();
   const [selectedDevType, setselectedDevType] = useState<
     Array<{
@@ -104,22 +90,29 @@ export default function SocialProfileForm({
   const [selectedPurposes, setSelectedPurposes] = useState<Array<{ name: string; id: number }>>([]);
   const [selectedCountry, setSelectedCountry] = useState<{ name: string; code: string }>();
   let detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  // this is a hack to get the timezone to display correctly; FUCK YOU CHROME
-  // this is not needed on safari or firefox
+  // this is a hack to get the timezone to display correctly; FUCK YOU CHROMium
   if (detected === 'Asia/Calcutta') {
     detected = 'Asia/Kolkata';
   }
   const [profileTimezone, setProfileTimezone] = React.useState<string>(detected);
+
+  // ============= FORM value states for multi-selects =============
+
   const qc = useQueryClient();
+  const state = qc.getQueryState(['social-profile']);
+  if (state?.status === 'loading' || state?.status !== 'success' || spData === null) {
+    return <LoadingCard />;
+  }
+
+  // ============= VALIDATE AND SUBMIT =============
+
   const validate = (values: SocialProfileFormValues) => {
     const errors: SocialProfileFormValues['errors'] = {};
-    // validation for other fields only is UserStatus is "Not Submitted"
-    // RAW XP
-    if (!values.rawXP) {
-      errors.rawXP = 'Required';
+    if (!values.raw_xp) {
+      errors.raw_xp = 'Required';
     }
-    if (values.rawXP && (values.rawXP > 50 || values.rawXP < 0)) {
-      errors.rawXP = 'Must be between 0 and 50';
+    if (values.raw_xp && (values.raw_xp > 50 || values.raw_xp < 0)) {
+      errors.raw_xp = 'Must be between 0 and 50';
     }
     return errors;
   };
@@ -128,10 +121,10 @@ export default function SocialProfileForm({
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     try {
-      values.preferredDevType = selectedPrefDevType?.name;
-      values.ideaStatus = selectedIdeaStatus?.name;
+      values.preferred_dev_type = selectedPrefDevType?.name;
+      values.idea_status = selectedIdeaStatus?.name;
       values.location = selectedCountry?.name;
-      values.devType = selectedDevType
+      values.dev_type = selectedDevType
         .map((type: { name: string; id: number }) => type.name)
         .sort()
         .join(', ');
@@ -144,7 +137,7 @@ export default function SocialProfileForm({
         .sort()
         .join(', ');
       setSubmitting(true);
-      await updateSocialProfile(values, socialProfileData).then(async () => {
+      await updateSocialProfile(values, spData).then(async () => {
         setSubmitting(false);
         await qc.invalidateQueries();
         toast.custom(<Success success="Preferences updated successfully" />, {
@@ -164,23 +157,18 @@ export default function SocialProfileForm({
       setSubmitting(false);
     }
   };
-  if (socialProfileQueryLoading) {
-    return (
-      <div className="flex items-center justify-center">
-        <LoadingCard />
-      </div>
-    );
-  }
+
+  // ============= VALIDATE AND SUBMIT =============
+
   return (
     <Formik
       initialValues={{
-        videoCallFriendly: socialProfileData.video_call_friendly,
         timezone: detected,
-        preferredDevType: socialProfileData.preferred_dev_type,
-        ideaStatus: socialProfileData.idea_status,
-        rawXP: socialProfileData.raw_xp,
-        purpose: socialProfileData.purpose,
-        location: socialProfileData.location,
+        preferred_dev_type: spData.preferred_dev_type,
+        idea_status: spData.idea_status,
+        raw_xp: spData.raw_xp,
+        purpose: spData.purpose,
+        location: spData.location,
       }}
       validate={validate}
       onSubmit={(values, { setSubmitting }) => {
@@ -192,22 +180,22 @@ export default function SocialProfileForm({
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6 sm:col-span-3">
               <label
-                htmlFor="rawXP"
+                htmlFor="raw_xp"
                 className="text-md block pl-1 text-left
            text-neutral-700 dark:text-neutral-300"
               >
                 Raw Experience
                 <Field
                   type="number"
-                  id="rawXP"
-                  name="rawXP"
+                  id="raw_xp"
+                  name="raw_xp"
                   rows={3}
                   className="mt-1 block w-full rounded-md border border-neutral-300
                   py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
                   placeholder=""
                 />
                 <ErrorMessage
-                  name="rawXP"
+                  name="raw_xp"
                   component="div"
                   className="text-sm text-bloodRed dark:text-mistyRose"
                 />
@@ -224,7 +212,7 @@ export default function SocialProfileForm({
                 {({ open }) => (
                   <>
                     <Listbox.Label
-                      id="ideaStatus"
+                      id="idea_status"
                       className="text-md block
                     text-neutral-700 dark:text-neutral-300"
                     >
@@ -259,7 +247,7 @@ export default function SocialProfileForm({
                         py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
                         focus:outline-none dark:bg-darkBG sm:text-sm"
                         >
-                          {ideaStatus.map((status) => (
+                          {idea_status.map((status) => (
                             <Listbox.Option
                               key={status.id}
                               className={({ active }) =>
@@ -306,14 +294,14 @@ export default function SocialProfileForm({
                 )}
               </Listbox>
               <ErrorMessage
-                name="ideaStatus"
+                name="idea_status"
                 component="div"
                 className="text-sm text-bloodRed dark:text-mistyRose"
               />
-              {socialProfileData.idea_status && socialProfileData.idea_status.length > 0 && (
+              {spData.idea_status && spData.idea_status.length > 0 && (
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
                   Currently set to &#34;
-                  {socialProfileData.idea_status}
+                  {spData.idea_status}
                   &#34;.
                 </p>
               )}
@@ -419,14 +407,13 @@ export default function SocialProfileForm({
                 component="div"
                 className="text-sm text-bloodRed dark:text-mistyRose"
               />
-              {socialProfileData.preferred_dev_type &&
-                socialProfileData.preferred_dev_type.length > 0 && (
-                  <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-                    Currently set to &#34;
-                    {socialProfileData.preferred_dev_type}
-                    &#34;.
-                  </p>
-                )}
+              {spData.preferred_dev_type && spData.preferred_dev_type.length > 0 && (
+                <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                  Currently set to &#34;
+                  {spData.preferred_dev_type}
+                  &#34;.
+                </p>
+              )}
               <p className="mt-2 text-sm text-neutral-500">
                 Preferred Development Type of your 1-on-1 match.
               </p>
@@ -535,10 +522,10 @@ export default function SocialProfileForm({
                   </>
                 )}
               </Listbox>
-              {socialProfileData.dev_type && socialProfileData.dev_type.length > 0 && (
+              {spData.dev_type && spData.dev_type.length > 0 && (
                 <p className="mt-2 text-sm  text-neutral-600 dark:text-neutral-400">
                   Currently set to &#34;
-                  {socialProfileData.dev_type}
+                  {spData.dev_type}
                   &#34;.
                 </p>
               )}
@@ -652,10 +639,10 @@ export default function SocialProfileForm({
                   </>
                 )}
               </Listbox>
-              {socialProfileData.languages && socialProfileData.languages.length > 0 && (
+              {spData.languages && spData.languages.length > 0 && (
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
                   Currently set to &#34;
-                  {socialProfileData.languages}
+                  {spData.languages}
                   &#34;.
                 </p>
               )}
@@ -765,10 +752,10 @@ export default function SocialProfileForm({
                   </>
                 )}
               </Listbox>
-              {socialProfileData.purpose && socialProfileData.purpose.length > 0 && (
+              {spData.purpose && spData.purpose.length > 0 && (
                 <p className="mt-2 text-sm  text-neutral-600 dark:text-neutral-400">
                   Currently set to &#34;
-                  {socialProfileData.purpose}
+                  {spData.purpose}
                   &#34;.
                 </p>
               )}
@@ -865,10 +852,10 @@ export default function SocialProfileForm({
                   </>
                 )}
               </Listbox>
-              {socialProfileData.location && socialProfileData.location.length > 0 && (
+              {spData.location && spData.location.length > 0 && (
                 <p className="mt-2 text-sm  text-neutral-600 dark:text-neutral-400">
                   Currently set to &#34;
-                  {socialProfileData.location}
+                  {spData.location}
                   &#34;.
                 </p>
               )}
@@ -906,5 +893,105 @@ export default function SocialProfileForm({
         </Form>
       )}
     </Formik>
+  );
+}
+
+export function AdditionalSPForm() {
+  const profile = useAdditionalSP() as AdditionalSP;
+  const qc = useQueryClient();
+  const state = qc.getQueryState(['additional-sprefs']);
+  const [videoCallFriendly, setVideoCallFriendly] = useState(false);
+  const [availableAlwaysOff, setAvailableAlwaysOff] = useState(false);
+
+  if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
+    return <LoadingCard />;
+  }
+
+  const handleSubmit = async (values: AdditionalSP) => {
+    await updateAdditionalSP(values)
+      .then(async () => {
+        toast.custom(<Success success="Preferences saved successfully" />, {
+          id: 'ad-prefs-success',
+          duration: 3000,
+        });
+        await qc.invalidateQueries(['additional-sprefs']);
+      })
+      .catch(() => {
+        toast.custom(<Success success="Something went wrong" />, {
+          id: 'ad-prefs-error',
+          duration: 3000,
+        });
+      });
+  };
+
+  return (
+    <div className="space-y-4">
+      <Switch.Group as="div" className="flex items-center">
+        <Switch
+          checked={videoCallFriendly}
+          onChange={() => {
+            setVideoCallFriendly(!videoCallFriendly);
+            handleSubmit({ ...profile, video_call_friendly: !videoCallFriendly });
+          }}
+          className={classNames(
+            videoCallFriendly ? 'bg-orange-300' : 'bg-neutral-700',
+            'relative inline-flex h-6 w-12 flex-shrink-0 cursor-pointer rounded-sm border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2'
+          )}
+        >
+          <span
+            aria-hidden="true"
+            className={classNames(
+              videoCallFriendly ? 'translate-x-6 bg-black' : 'translate-x-0 bg-white',
+              'pointer-events-none inline-block h-5 w-5 transform rounded-sm shadow ring-0 transition duration-200 ease-in-out'
+            )}
+          />
+        </Switch>
+        <Switch.Label as="span" className="ml-3 flex">
+          {profile.video_call_friendly ? (
+            <VideoCameraIcon className="mr-2 h-8 w-8 text-orange-300" />
+          ) : (
+            <VideoCameraSlashIcon className="mr-2 h-8 w-8 text-neutral-500" />
+          )}
+        </Switch.Label>
+        <span className="text-base">Video Call Friendly{!profile.video_call_friendly && '?'}</span>
+      </Switch.Group>
+      <Switch.Group as="div" className="flex items-center">
+        <Switch
+          checked={availableAlwaysOff}
+          onChange={() => {
+            setAvailableAlwaysOff(!availableAlwaysOff);
+            handleSubmit({ ...profile, available_always_off: !availableAlwaysOff });
+          }}
+          className={classNames(
+            availableAlwaysOff ? 'bg-neutral-700' : 'bg-orange-300',
+            'relative inline-flex h-6 w-12 flex-shrink-0 cursor-pointer rounded-sm border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2'
+          )}
+        >
+          <span
+            aria-hidden="true"
+            className={classNames(
+              availableAlwaysOff ? 'translate-x-0 bg-white' : 'translate-x-6 bg-black',
+              'pointer-events-none inline-block h-5 w-5 transform rounded-sm shadow ring-0 transition duration-200 ease-in-out'
+            )}
+          />
+        </Switch>
+        <Switch.Label as="span" className="ml-3 flex">
+          <span className="text-base">
+            {profile.available_always_off ? (
+              <ClockIcon className="mr-2 h-8 w-8 text-neutral-500" />
+            ) : (
+              <ClockIcon className="mr-2 h-8 w-8 text-orange-300" />
+            )}
+          </span>
+        </Switch.Label>
+        <span>
+          {profile.available_always_off ? (
+            <span className="text-base">1-on-1 Mode off until turned on</span>
+          ) : (
+            <span className="text-base">1-on-1 Mode on until turned off</span>
+          )}
+        </span>
+      </Switch.Group>
+    </div>
   );
 }
