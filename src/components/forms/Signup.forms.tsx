@@ -1,8 +1,4 @@
-import {
-  InboxArrowDownIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-} from '@heroicons/react/24/solid';
+import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react';
 import { resendEmail, SignUp } from '@/services/auth.services';
@@ -322,7 +318,7 @@ export default function SignupForm({
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                      <CheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
                     </div>
                     <div className="ml-2 text-base font-bold">
                       <span>Account Created.</span> <span>Check Email.</span>

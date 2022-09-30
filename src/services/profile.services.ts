@@ -275,7 +275,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
     return axios({
       method: 'PATCH',
       url,
-      data: { shadowed },
+      data: { shadowed_users: shadowed },
       headers: { Authorization: `Bearer ${token}` },
     });
   }
@@ -284,7 +284,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
 
 export const getSkippedUsers = async () => {
   const token = Cookies.get('token');
-  const url = `${API_URL}/social/skip/`;
+  const url = `${API_URL}/social/skipped/`;
   if (token) {
     return axios({
       method: 'GET',
@@ -301,7 +301,7 @@ export const getSkippedUsers = async () => {
 
 export const skipUser = async (username: string, skipped: string[], skip: boolean) => {
   const token = Cookies.get('token');
-  const url = `${API_URL}/social/skip/`;
+  const url = `${API_URL}/social/skipped/`;
 
   if (skip) {
     skipped.push(username);
@@ -315,7 +315,7 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
     return axios({
       method: 'PATCH',
       url,
-      data: { skipped },
+      data: { skipped_users: skipped },
       headers: { Authorization: `Bearer ${token}` },
     });
   }

@@ -1,4 +1,4 @@
-import { ShieldCheckIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
+import { ShieldCheckIcon, CheckIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
@@ -264,7 +264,7 @@ export function ForgotPasswordForm(): JSX.Element {
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <CheckCircleIcon className="h-5 w-5" aria-hidden="true" />
+                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
                     </div>
                     <div className="ml-2 text-base font-bold">
                       <span>Reset Link 🔗 Sent</span>

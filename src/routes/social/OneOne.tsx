@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  XCircleIcon,
   ChatBubbleBottomCenterIcon,
   ExclamationTriangleIcon,
   PlusCircleIcon,
@@ -10,6 +9,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import {
   altString,
@@ -24,12 +24,14 @@ import {
   useOneOneProfile,
   useOneOneUsernames,
   useAdded,
+  useSkippedUsernames,
+  useShadowedUsernames,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';
 import { genExp, genIdea } from '@/routes/Profile';
 import useAuth from '@/services/useAuth.services';
-import { PatchCircle } from '@/services/profile.services';
+import { PatchCircle, shadowUser, skipUser } from '@/services/profile.services';
 import { Success, Error } from '@/lib/Feedback.lib';
 
 function MatchCard({ username }: { username: string }): JSX.Element {
@@ -41,7 +43,64 @@ function MatchCard({ username }: { username: string }): JSX.Element {
   const loggedInUserUserName = loggedInUser?.username;
   const added = useAdded(loggedInUserUserName as string, username);
   // logged in username and connection check
+  const { usernames: skippedUsers } = useSkippedUsernames();
+  const { usernames: shadowedUsers } = useShadowedUsernames();
   const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string);
+
+  const handleAdd = async () => {
+    await PatchCircle(username, circle, 'add')
+      .then(async () => {
+        toast.custom(<Success success="Added to circle" />, {
+          id: 'connect-profile-success',
+          duration: 3000,
+        });
+        await qc.invalidateQueries(['circle', loggedInUserUserName]);
+        await qc.invalidateQueries(['circle', username]);
+      })
+      .catch(() => {
+        toast.custom(<Error error="Something went wrong." />, {
+          id: 'error-connect-profile',
+          duration: 5000,
+        });
+      });
+  };
+
+  const handleSkip = async () => {
+    await skipUser(username, skippedUsers, true)
+      .then(async () => {
+        toast.custom(<Success success="Skipped successfully" />, {
+          id: 'skip-profile-success',
+          duration: 3000,
+        });
+        await qc.invalidateQueries(['skipped']);
+        await qc.invalidateQueries(['matches']);
+      })
+      .catch(() => {
+        toast.custom(<Error error="Something went wrong." />, {
+          id: 'skip-profile-error',
+          duration: 3000,
+        });
+      });
+  };
+
+  const handleShadow = async () => {
+    await shadowUser(username, shadowedUsers, true)
+      .then(async () => {
+        toast.custom(<Success success="Shadowed successfully" />, {
+          id: 'shadow-profile-success',
+          duration: 3000,
+        });
+        await qc.invalidateQueries(['shadowed']);
+        await qc.invalidateQueries(['matches']);
+      })
+      .catch(() => {
+        toast.custom(<Error error="Something went wrong." />, {
+          id: 'shadow-profile-error',
+          duration: 3000,
+        });
+      });
+  };
+
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
     return <LoadingCard />;
   }
@@ -259,42 +318,27 @@ function MatchCard({ username }: { username: string }): JSX.Element {
           </div>
           <div className="relative hidden justify-evenly sm:hidden md:visible md:flex">
             <div className="-mt-5 flex justify-center">
-              <button type="button" className={warningString}>
+              <button type="button" className={warningString} onClick={handleSkip}>
                 <ExclamationTriangleIcon className="mr-2 h-6 w-5" aria-hidden="true" />
                 <span className="text-xs">Pass For 4 Weeks</span>
               </button>
             </div>
-            {!added && (
-              <div className="-mt-5 flex justify-center">
-                <button
-                  type="button"
-                  className={greenString}
-                  onClick={async () => {
-                    await PatchCircle(username, circle, 'add')
-                      .then(async () => {
-                        toast.custom(<Success success="Added to circle" />, {
-                          id: 'connect-profile-success',
-                          duration: 3000,
-                        });
-                        await qc.invalidateQueries(['circle', loggedInUserUserName]);
-                        await qc.invalidateQueries(['circle', username]);
-                      })
-                      .catch(() => {
-                        toast.custom(<Error error="Something went wrong." />, {
-                          id: 'error-connect-profile',
-                          duration: 5000,
-                        });
-                      });
-                  }}
-                >
+            <div className="-mt-5 flex justify-center">
+              {!added ? (
+                <button type="button" className={greenString} onClick={handleAdd}>
                   <PlusCircleIcon className="mr-2 h-6 w-5" aria-hidden="true" />
                   <span>Add To Circle</span>
                 </button>
-              </div>
-            )}
+              ) : (
+                <button type="button" className={greenString}>
+                  <CheckIcon className="mr-2 h-6 w-5" aria-hidden />
+                  <span>Added To Circle</span>
+                </button>
+              )}
+            </div>
             <div className="-mt-5 flex justify-center">
-              <button type="button" className={redString}>
-                <XCircleIcon className="mr-2 h-6 w-5" aria-hidden="true" />
+              <button type="button" className={redString} onClick={handleShadow}>
+                <XMarkIcon className="mr-2 h-6 w-5" aria-hidden="true" />
                 <span className="text-xs">Never Show Again</span>
               </button>
             </div>

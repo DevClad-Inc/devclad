@@ -1,8 +1,8 @@
 import React from 'react';
 import {
   InformationCircleIcon,
-  CheckCircleIcon,
-  XCircleIcon,
+  CheckIcon,
+  XMarkIcon,
   ShieldExclamationIcon,
 } from '@heroicons/react/24/outline';
 
@@ -11,10 +11,7 @@ export function Success({ success }: { success: string }): JSX.Element {
     <div className="mb-4 rounded-md bg-green-50 p-4 dark:bg-phthaloGreen">
       <div className="flex">
         <div className="flex-shrink-0">
-          <CheckCircleIcon
-            className="h-6 w-5 text-green-400 dark:text-green-200"
-            aria-hidden="true"
-          />
+          <CheckIcon className="h-6 w-5 text-green-400 dark:text-green-200" aria-hidden="true" />
         </div>
         <div className="ml-3">
           <h3 className="text-sm  text-green-800 dark:text-green-200">{success}</h3>
@@ -65,7 +62,7 @@ export function Error({ error }: { error: string }): JSX.Element {
     <div className="mb-4 rounded-md bg-mistyRose p-4 dark:bg-bloodRed/60">
       <div className="flex">
         <div className="flex-shrink-0">
-          <XCircleIcon className="h-6 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
+          <XMarkIcon className="h-6 w-5 text-bloodRed dark:text-mistyRose" aria-hidden="true" />
         </div>
         <div className="ml-3">
           <h3 className="text-sm  text-bloodRed dark:text-mistyRose">{error}</h3>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  XCircleIcon,
+  XMarkIcon,
   ChatBubbleBottomCenterIcon,
   VideoCameraIcon,
   CalendarIcon,
@@ -60,7 +60,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   const connectedOnlyItems = [
     {
       name: 'Disconnect',
-      icon: XCircleIcon,
+      icon: XMarkIcon,
       alt: 'Disconnect',
       onClick: async () => {
         await PatchCircle(username, circle, 'remove')
