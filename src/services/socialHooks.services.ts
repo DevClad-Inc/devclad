@@ -1,9 +1,15 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getUsernameProfile, getUsernameSocialProfile } from '@/services/profile.services';
-import { userBlockedQuery, userCircleQuery, userMatchesQuery } from '@/lib/queriesAndLoaders';
+import {
+  userBlockedQuery,
+  userCircleQuery,
+  userMatchesQuery,
+  userShadowedQuery,
+  userSkippedQuery,
+} from '@/lib/queriesAndLoaders';
 
-export function useOneOneUsernames() {
+export const useOneOneUsernames = () => {
   const usernames = [];
   const matchesQuery = useQuery(userMatchesQuery());
   if (matchesQuery.isSuccess && matchesQuery.data !== null) {
@@ -13,9 +19,33 @@ export function useOneOneUsernames() {
     }
   }
   return { usernames };
-}
+};
 
-export function useCircleUsernames(username: string) {
+export const useShadowedUsernames = () => {
+  const usernames = [];
+  const shadowedQuery = useQuery(userShadowedQuery());
+  if (shadowedQuery.isSuccess && shadowedQuery.data !== null) {
+    const { data } = shadowedQuery.data;
+    for (let i = 0; i < data.length; i += 1) {
+      usernames.push(data.shadowed_users[i]);
+    }
+  }
+  return { usernames };
+};
+
+export const useSkippedUsernames = () => {
+  const usernames = [];
+  const skippedQuery = useQuery(userSkippedQuery());
+  if (skippedQuery.isSuccess && skippedQuery.data !== null) {
+    const { data } = skippedQuery.data;
+    for (let i = 0; i < data.length; i += 1) {
+      usernames.push(data.skipped_users[i]);
+    }
+  }
+  return { usernames };
+};
+
+export const useCircleUsernames = (username: string) => {
   const usernames = [];
   const circleQuery = useQuery(userCircleQuery(username));
   if (circleQuery.isSuccess && circleQuery.data !== null) {
@@ -25,9 +55,9 @@ export function useCircleUsernames(username: string) {
     }
   }
   return { usernames };
-}
+};
 
-export function useBlockedUsernames() {
+export const useBlockedUsernames = () => {
   const usernames = [];
   const blockedQuery = useQuery(userBlockedQuery());
   if (blockedQuery.isSuccess && blockedQuery.data !== null) {
@@ -37,9 +67,9 @@ export function useBlockedUsernames() {
     }
   }
   return { usernames };
-}
+};
 
-export function useOneOneProfile(username: string) {
+export const useOneOneProfile = (username: string) => {
   const profileQuery = useQuery(['profile', username], async () => getUsernameProfile(username), {
     enabled: username !== '',
     staleTime: 1000 * 5 * 60, // 5 minutes
@@ -63,7 +93,7 @@ export function useOneOneProfile(username: string) {
     return { ...profile, ...socialProfile };
   }
   return null;
-}
+};
 
 export const useConnected = (username: string, otherUser: string): boolean => {
   const [connected, setConnected] = React.useState(false);
@@ -102,4 +132,32 @@ export const useAdded = (username: string, otherUser: string): boolean => {
     setAdded(true);
   }
   return added;
+};
+
+export const useSkipped = (username: string, otherUser: string): boolean => {
+  const [skipped, setSkipped] = React.useState(false);
+  const skippedUsers = useSkippedUsernames();
+  const { usernames } = skippedUsers;
+  if (usernames !== undefined) {
+    if (usernames.includes(otherUser) && !skipped) {
+      setSkipped(true);
+    } else if (!usernames.includes(otherUser) && skipped) {
+      setSkipped(false);
+    }
+  }
+  return skipped;
+};
+
+export const useShadowed = (username: string, otherUser: string): boolean => {
+  const [shadowed, setShadowed] = React.useState(false);
+  const shadowedUsers = useShadowedUsernames();
+  const { usernames } = shadowedUsers;
+  if (usernames !== undefined) {
+    if (usernames.includes(otherUser) && !shadowed) {
+      setShadowed(true);
+    } else if (!usernames.includes(otherUser) && shadowed) {
+      setShadowed(false);
+    }
+  }
+  return shadowed;
 };

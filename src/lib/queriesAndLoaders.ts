@@ -6,6 +6,8 @@ import {
   getCircle,
   getOneOne,
   getProfile,
+  getShadowUsers,
+  getSkippedUsers,
   getSocialProfile,
   getStatus,
   getUsernameProfile,
@@ -57,6 +59,16 @@ export const userCircleQuery = (username: string) => ({
 export const userBlockedQuery = () => ({
   queryKey: ['blocked'],
   queryFn: async () => getBlockedUsers(),
+});
+
+export const userShadowedQuery = () => ({
+  queryKey: ['shadowed'],
+  queryFn: async () => getShadowUsers(),
+});
+
+export const userSkippedQuery = () => ({
+  queryKey: ['skipped'],
+  queryFn: async () => getSkippedUsers(),
 });
 
 // profileempty and socialempty query are only used in Onboarding

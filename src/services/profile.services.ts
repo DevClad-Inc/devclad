@@ -242,9 +242,85 @@ export const getOneOne = async () => {
   return null;
 };
 
-export const shadowUser = async () => {};
+export const getShadowUsers = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/shadow/`;
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+  }
+  return null;
+};
 
-export const skipUser = async () => {};
+export const shadowUser = async (username: string, shadowed: string[], shadow: boolean) => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/shadow/`;
+
+  if (shadow) {
+    shadowed.push(username);
+  } else {
+    const index = shadowed.indexOf(username);
+    if (index > -1) {
+      shadowed.splice(index, 1);
+    }
+  }
+  if (token) {
+    return axios({
+      method: 'PATCH',
+      url,
+      data: { shadowed },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+  return null;
+};
+
+export const getSkippedUsers = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/skip/`;
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+  }
+  return null;
+};
+
+export const skipUser = async (username: string, skipped: string[], skip: boolean) => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/skip/`;
+
+  if (skip) {
+    skipped.push(username);
+  } else {
+    const index = skipped.indexOf(username);
+    if (index > -1) {
+      skipped.splice(index, 1);
+    }
+  }
+  if (token) {
+    return axios({
+      method: 'PATCH',
+      url,
+      data: { skipped },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+  return null;
+};
 
 // =================== circle ===================
 export const getCircle = async (username: string) => {
