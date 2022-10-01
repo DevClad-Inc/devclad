@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import DevCladLogo from '@/assets/devclad.svg';
-import { Error, Info, Success, Warning } from '@/lib/Feedback.lib';
+import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
 import { logOut } from '@/services/auth.services';
 import { UserStatus, initialUserStatus, initialUserState, User } from '@/lib/InterfacesStates.lib';
@@ -21,7 +21,7 @@ import { socialProfileLoader, socialProfileQuery, userQuery } from '@/lib/querie
 import LoadingCard from '@/components/LoadingCard';
 
 const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
-duration-500 rounded-md py-2 px-4 inline-flex justify-center text-md font-bold dark:text-orange-200`;
+duration-500 rounded-md py-1 px-6 inline-flex justify-center text-md dark:text-orange-200`;
 
 export function StepOne() {
   const qc = useQueryClient();
@@ -31,10 +31,7 @@ export function StepOne() {
       <AvatarUploadForm />
       <div className="mt-10 flex justify-center p-2">
         <Link
-          className="text-md mt-5 inline-flex justify-center
-        rounded-md border border-transparent bg-orange-700 py-2
-        px-4 font-bold duration-500 dark:bg-orange-900/20 dark:text-orange-200
-        "
+          className={linkClassesString}
           to="/onboarding/step-two"
           onMouseEnter={() => {
             qc.prefetchQuery(socialProfileQuery());
@@ -72,14 +69,14 @@ export function StepTwo() {
   if (profileEmptyQuery.isSuccess && profileEmptyQuery.data) {
     const { data } = profileEmptyQuery;
     const completed = data.data;
-    if (completed.complete === true) {
+    if (completed.is_complete === true) {
       checkEmpty.profile = true;
     }
   }
   if (socialEmptyQuery.isSuccess && socialEmptyQuery.data) {
     const { data } = socialEmptyQuery;
     const completed = data.data;
-    if (completed.complete === true) {
+    if (completed.is_complete === true) {
       checkEmpty.socialProfile = true;
     }
   }
@@ -93,13 +90,7 @@ export function StepTwo() {
       <SocialProfileForm initialSocialData={initialSocialData} />
       <div className="mt-10 flex justify-between p-2">
         <div className="inline-flex justify-start">
-          <Link
-            className="text-md inline-flex justify-center rounded-md
-        border border-transparent bg-orange-700 py-2 px-4
-        font-bold text-white duration-500 dark:bg-orange-900/20 dark:text-orange-200
-        "
-            to="/onboarding/"
-          >
+          <Link className={linkClassesString} to="/onboarding/">
             Back to Step 1
           </Link>
         </div>
@@ -119,13 +110,14 @@ export function StepTwo() {
                 checkEmpty.socialProfile &&
                 userStatus.status !== 'Submitted'
               ) {
-                try {
-                  setSubmittedStatus();
-                  toast.custom(<Success success="Submitted request!" />);
-                  await qc.invalidateQueries(['userStatus']);
-                } catch {
-                  toast.custom(<Error error="Something went wrong" />);
-                }
+                await setSubmittedStatus()
+                  .then(async () => {
+                    toast.custom(<Success success="Submitted request!" />);
+                    await qc.refetchQueries(['userStatus']);
+                  })
+                  .catch(() => {
+                    toast.custom(<Error error="Something went wrong" />);
+                  });
               }
             }}
           >
@@ -175,27 +167,6 @@ export function Onboarding() {
   if (userStatus && !userStatus.approved) {
     return (
       <div>
-        <div className="relative mt-5 sm:mt-10">
-          <svg
-            viewBox="0 0 1090 1090"
-            aria-hidden="true"
-            fill="none"
-            preserveAspectRatio="none"
-            width="1090"
-            height="1090"
-            className="-z-11 absolute left-1/2 h-[788px] -translate-x-1/2 stroke-neutral-300/30
-          dark:stroke-orange-800/20
-          sm:-top-24 sm:h-auto"
-          >
-            <circle cx="545" cy="545" r="544.5" />
-            <circle cx="545" cy="545" r="512.5" />
-            <circle cx="545" cy="545" r="480.5" />
-            <circle cx="545" cy="545" r="448.5" />
-            <circle cx="545" cy="545" r="416.5" />
-            <circle cx="545" cy="545" r="384.5" />
-            <circle cx="545" cy="545" r="352.5" />
-          </svg>
-        </div>
         <div className="backdrop-blur-0">
           <div className="sm:mx-auto sm:w-full sm:max-w-full">
             <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
@@ -203,7 +174,7 @@ export function Onboarding() {
               DevClad
             </h1>
           </div>
-          <h2 className="mt-5 text-center font-display text-3xl font-bold text-neutral-700 dark:text-neutral-300">
+          <h2 className="mt-5 text-center font-display text-3xl text-neutral-700 dark:text-neutral-300">
             Onboarding
           </h2>
           <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
@@ -226,7 +197,7 @@ export function Onboarding() {
               onClick={handlelogOut}
               type="button"
               className="mt-5 inline-flex items-center rounded-md border border-transparent bg-mistyRose px-4
-              py-2 text-sm text-bloodRed shadow-sm dark:bg-bloodRed/60 dark:text-mistyRose"
+              py-2 text-sm text-bloodRed shadow-sm dark:bg-bloodRed2 dark:text-mistyRose"
             >
               <ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Sign Out

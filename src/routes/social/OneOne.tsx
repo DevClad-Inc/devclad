@@ -32,7 +32,7 @@ import LoadingCard from '@/components/LoadingCard';
 import { genExp, genIdea } from '@/routes/Profile';
 import useAuth from '@/services/useAuth.services';
 import { PatchCircle, shadowUser, skipUser } from '@/services/profile.services';
-import { Success, Error } from '@/lib/Feedback.lib';
+import { Success, Error, ConfirmDialog } from '@/components/Feedback';
 
 function MatchCard({ username }: { username: string }): JSX.Element {
   const profile = useOneOneProfile(username) as MatchProfile;
@@ -46,6 +46,10 @@ function MatchCard({ username }: { username: string }): JSX.Element {
   const { usernames: skippedUsers } = useSkippedUsernames();
   const { usernames: shadowedUsers } = useShadowedUsernames();
   const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string);
+
+  const [open, setOpen] = React.useState(false);
+  const [action, setAction] = React.useState('');
+  const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleAdd = async () => {
     await PatchCircle(username, circle, 'add')
@@ -107,6 +111,19 @@ function MatchCard({ username }: { username: string }): JSX.Element {
   if (profile) {
     return (
       <>
+        {open ? (
+          <ConfirmDialog
+            open={open}
+            setOpen={setOpen}
+            cancelButtonRef={cancelButtonRef}
+            firstName={profile.first_name as string}
+            action={action}
+            onConfirm={() => {
+              if (action === 'warn') handleSkip();
+              else if (action === 'danger') handleShadow();
+            }}
+          />
+        ) : null}
         <div className="flex justify-center p-0 lg:p-4">
           <div className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow dark:border-neutral-900 lg:w-3/4">
             <div className="space-y-2 px-4 py-5 sm:p-6">
@@ -318,7 +335,14 @@ function MatchCard({ username }: { username: string }): JSX.Element {
           </div>
           <div className="relative hidden justify-evenly sm:hidden md:visible md:flex">
             <div className="-mt-5 flex justify-center">
-              <button type="button" className={warningString} onClick={handleSkip}>
+              <button
+                type="button"
+                className={warningString}
+                onClick={() => {
+                  setAction('warn');
+                  setOpen(true);
+                }}
+              >
                 <ExclamationTriangleIcon className="mr-2 h-6 w-5" aria-hidden="true" />
                 <span className="text-xs">Pass For 4 Weeks</span>
               </button>
@@ -337,7 +361,14 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               )}
             </div>
             <div className="-mt-5 flex justify-center">
-              <button type="button" className={redString} onClick={handleShadow}>
+              <button
+                type="button"
+                className={redString}
+                onClick={() => {
+                  setAction('danger');
+                  setOpen(true);
+                }}
+              >
                 <XMarkIcon className="mr-2 h-6 w-5" aria-hidden="true" />
                 <span className="text-xs">Never Show Again</span>
               </button>

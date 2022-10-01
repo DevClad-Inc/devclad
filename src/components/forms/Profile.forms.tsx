@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Profile, initialProfileState, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
-import { Error, Success } from '@/lib/Feedback.lib';
+import { Error, Success } from '@/components/Feedback';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
@@ -82,6 +82,7 @@ export default function UpdateProfileForm(): JSX.Element {
           pronouns: profileData.pronouns,
           website: profileData.website,
           linkedin: profileData.linkedin,
+          calendly: profileData.calendly,
         }}
         validate={validate}
         onSubmit={(values, { setSubmitting }) => {

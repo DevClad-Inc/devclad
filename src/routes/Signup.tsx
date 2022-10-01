@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
-import { Error } from '@/lib/Feedback.lib';
+import { Error } from '@/components/Feedback';
 import SignupForm from '@/components/forms/Signup.forms';
 import useAuth from '@/services/useAuth.services';
 

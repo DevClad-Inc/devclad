@@ -86,8 +86,9 @@ export default function Root(): JSX.Element {
       <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
         <div
           className="sm:text-md bg-white from-black/50
-          via-darkBG2 to-black/50 font-sans
-          text-sm font-medium subpixel-antialiased dark:bg-black/80
+          via-darkBG2 to-black/50
+          font-sans text-sm font-medium
+          subpixel-antialiased selection:bg-orange-300 selection:text-black dark:bg-black/80
           dark:bg-gradient-to-t dark:text-white lg:text-lg"
         >
           <Toaster

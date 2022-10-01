@@ -24,7 +24,7 @@ import LoadingCard from '@/components/LoadingCard';
 import ActionDropdown from '@/components/ActionDropdown';
 import { blockUser, PatchCircle } from '@/services/profile.services';
 import useAuth from '@/services/useAuth.services';
-import { Success, Error } from '@/lib/Feedback.lib';
+import { Success, Error } from '@/components/Feedback';
 
 export const genExp = (rawXP: number) => {
   if (rawXP === 1) {

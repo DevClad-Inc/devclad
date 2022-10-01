@@ -10,7 +10,7 @@ import ClockIcon from '@heroicons/react/24/outline/ClockIcon';
 import { AdditionalSP, SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { updateAdditionalSP, updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { Success, Error } from '@/lib/Feedback.lib';
+import { Success, Error } from '@/components/Feedback';
 import Countries from '@/lib/list/Countries.list.json';
 import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';

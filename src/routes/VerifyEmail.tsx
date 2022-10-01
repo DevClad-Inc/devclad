@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
 import { verifyEmail } from '@/services/auth.services';
-import { Error, Success } from '@/lib/Feedback.lib';
+import { Error, Success } from '@/components/Feedback';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import useAuth from '@/services/useAuth.services';
 

@@ -31,7 +31,7 @@ export const primaryString2 = `border dark:border-neutral-900 bg-orange-700 text
 export const redString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bloodRed bg-mistyRose
-dark:text-mistyRose dark:bg-bloodRed/60`;
+dark:text-mistyRose dark:bg-bloodRed2`;
 
 export const greenString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold

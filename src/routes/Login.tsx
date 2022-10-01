@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import DevCladLogo from '@/assets/devclad.svg';
 import LoginForm from '@/components/forms/Login.forms';
-import { Error } from '@/lib/Feedback.lib';
+import { Error } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import useAuth from '@/services/useAuth.services';
 

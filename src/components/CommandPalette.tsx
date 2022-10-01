@@ -98,7 +98,7 @@ export default function CommandPalette() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-darkBG2 bg-opacity-75 backdrop-blur-sm transition-opacity" />
+          <div className="fixed inset-0 bg-darkBG2 bg-opacity-90 backdrop-blur-sm transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20">

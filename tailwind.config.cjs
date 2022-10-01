@@ -43,6 +43,7 @@ module.exports = {
         raisinBlack2: '#27272a',
         oxfordBlue: '#002A52',
         bloodRed: '#660C00',
+        bloodRed2: '#3D0700',
         phthaloGreen: '#113123',
         saffron: '#F0C000',
         blackChocolate: '#241B00',

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { changeEmail, checkVerified, resendEmail } from '@/services/auth.services';
-import { Error, Success, Warning } from '@/lib/Feedback.lib';
+import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
@@ -93,7 +93,7 @@ export default function ChangeEmailForm(): JSX.Element {
             ) : (
               <>
                 <Warning warning="Please verify your email. You will not be able to login with an unverified email." />
-                <span className="inline-flex rounded-md p-2 text-sm dark:bg-bloodRed/60 dark:text-mistyRose">
+                <span className="inline-flex rounded-md p-2 text-sm dark:to-bloodRed2 dark:text-mistyRose">
                   {' '}
                   <ShieldExclamationIcon className="mr-2 h-6 w-5 text-bloodRed dark:text-mistyRose" />{' '}
                   {loggedInUser.email} is unverified.
