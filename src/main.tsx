@@ -15,7 +15,6 @@ import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
 import VerifyEmail from '@/routes/VerifyEmail';
 import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
 import Hackathons from '@/components/Hackathons';
-import Projects from '@/components/Projects';
 import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Settings';
 import Home from '@/routes/Home';
 import { socialProfileLoader } from '@/lib/queriesAndLoaders';
@@ -28,6 +27,7 @@ import Social from '@/routes/social/Social';
 import OneOne from '@/routes/social/OneOne';
 import Circle from '@/routes/social/Circle';
 import Profile from './routes/Profile';
+import Messages, { MessageChild } from './routes/Messages';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -112,9 +112,21 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'projects',
+        path: 'messages',
         hasErrorBoundary: true,
-        element: <Projects />,
+        element: <Messages />,
+        children: [
+          {
+            index: true,
+            hasErrorBoundary: true,
+            element: <LoadingCard />,
+          },
+          {
+            path: '/messages/:username',
+            hasErrorBoundary: true,
+            element: <MessageChild />,
+          },
+        ],
       },
       {
         path: 'hackathons',

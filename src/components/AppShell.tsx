@@ -5,8 +5,8 @@ import {
   HomeIcon,
   UsersIcon,
   FireIcon,
-  FolderIcon,
   ArrowLeftIcon,
+  ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline';
 
 import DevCladLogo from '@/assets/devclad.svg';
@@ -32,16 +32,16 @@ const navigation = [
     alt: 'Social',
   },
   {
+    name: 'Messages',
+    href: '/messages',
+    icon: ChatBubbleLeftRightIcon,
+    alt: 'Messages',
+  },
+  {
     name: 'Hackathons',
     href: '/hackathons',
     icon: FireIcon,
     alt: 'Hackathons',
-  },
-  {
-    name: 'Projects',
-    href: '/projects',
-    icon: FolderIcon,
-    alt: 'Projects',
   },
 ];
 
@@ -260,7 +260,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     )}
                   >
                     {checkMacOS() ? (
-                      <span className="text-lg">⌘</span>
+                      <span className="mb-1 text-xl">⌘</span>
                     ) : (
                       <span className="text-xs">Ctrl</span>
                     )}

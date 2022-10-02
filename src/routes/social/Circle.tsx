@@ -32,6 +32,7 @@ function ConnectionCard({
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
     return <LoadingCard />;
   }
+
   if (profile && connected) {
     return (
       <div className="flex justify-center p-0 lg:p-4">
@@ -78,9 +79,9 @@ function ConnectionCard({
             </div>
             <div className="flex space-x-2 text-sm sm:ml-24 sm:text-lg">
               <div className="flex flex-col">
-                <button type="button" className={primaryString2}>
+                <Link to={`/messages/${username}/`} className={primaryString2}>
                   <ChatBubbleBottomCenterIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />
-                </button>
+                </Link>
               </div>
               <div className="flex flex-col">
                 <button type="button" className={primaryString2}>

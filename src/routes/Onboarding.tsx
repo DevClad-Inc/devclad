@@ -177,7 +177,7 @@ export function Onboarding() {
           <h2 className="mt-5 text-center font-display text-3xl text-neutral-700 dark:text-neutral-300">
             Onboarding
           </h2>
-          <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="mt-2 p-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
             Hey, {loggedInUser.first_name}. Glad to have you here! {loggedInUser.email} is your
             associated email address.
           </p>
@@ -204,7 +204,7 @@ export function Onboarding() {
             </button>
           </div>
           <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <div className="w-fit-content mx-auto">
+            <div className="w-fit-content mx-auto p-2">
               {userStatus.status === 'Not Submitted' ? (
                 <>
                   <Warning warning="Not submitted request to join yet." />

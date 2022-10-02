@@ -7,7 +7,7 @@ import {
   ArrowUpRightIcon,
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { NoSymbolIcon, PlusIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
@@ -341,13 +341,13 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
               {!blocked && (
                 <>
                   <div className="flex flex-col">
-                    <button type="button" className={primaryString2}>
+                    <Link to={`/messages/${username}/`} className={primaryString2}>
                       <ChatBubbleBottomCenterIcon
                         className="mr-2 h-6 w-6 lg:h-8"
                         aria-hidden="true"
                       />
                       Chat
-                    </button>
+                    </Link>
                   </div>
                   <div className="flex flex-col">
                     <button type="button" className={primaryString2}>
