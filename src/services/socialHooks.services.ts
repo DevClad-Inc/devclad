@@ -11,7 +11,7 @@ import {
   userShadowedQuery,
   userSkippedQuery,
 } from '@/lib/queriesAndLoaders';
-import { SocialProfile } from '@/lib/InterfacesStates.lib';
+import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 
 export const useOneOneUsernames = () => {
   const usernames = [];
@@ -105,6 +105,18 @@ export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unk
   if (spQuery.isSuccess && spQuery.data !== null) {
     const { data } = spQuery.data as { data: SocialProfile };
     return data;
+  }
+  return null;
+};
+
+export const useProfile = (username: string) => {
+  const profileQuery = useQuery({
+    ...profileUsernameQuery(username),
+    enabled: username !== '',
+  });
+  if (profileQuery.isSuccess && profileQuery.data !== null) {
+    const { data } = profileQuery.data as { data: Profile };
+    return { ...data };
   }
   return null;
 };

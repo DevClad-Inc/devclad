@@ -1,10 +1,14 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
+import { PaperClipIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { useQueryClient } from '@tanstack/react-query';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { useCircleUsernames, useConnected } from '@/services/socialHooks.services';
+import { useCircleUsernames, useConnected, useProfile } from '@/services/socialHooks.services';
 import useAuth from '@/services/useAuth.services';
 import { badge } from '@/lib/Buttons.lib';
+import { Profile } from '@/lib/InterfacesStates.lib';
+import LoadingCard from '@/components/LoadingCard';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
@@ -57,54 +61,181 @@ export default function Messages() {
     usernames: string[];
   };
   return (
-    <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-      <aside className="py-6 px-0 sm:px-6 lg:col-span-3 lg:py-0 lg:px-0">
+    <div className="lg:grid lg:grid-cols-12 lg:gap-x-6">
+      <aside className="py-0 px-0 sm:py-6 sm:px-6 lg:col-span-4 lg:py-0 lg:px-0">
         <nav
-          className="hidden space-y-1 rounded-md border-[1px] bg-snow
+          className="hidden space-y-2 rounded-md border-[1px]
         p-4 dark:border-neutral-900 dark:bg-darkBG2 md:block"
         >
-          {circle.map((user) => (
-            <MessagesNav key={user} user={user} />
-          ))}
-          {circle.map((user) => (
-            <MessagesNav key={user} user={user} />
-          ))}
           {circle.map((user) => (
             <MessagesNav key={user} user={user} />
           ))}
         </nav>
       </aside>
       <Outlet />
-      {/* <div className="flex items-center pb-5">
-        <span className="mr-2 text-xs font-black italic font-sans">Dark Mode</span>
-        <ToggleTheme />
-      </div> */}
     </div>
   );
 }
 
 export function MessageChild(): JSX.Element {
   const { username } = useParams() as { username: string };
+  const { loggedInUser } = useAuth();
+  const loggedInUserUserName = loggedInUser?.username;
+  const profileData = useProfile(loggedInUserUserName as string) as Profile;
+  const qc = useQueryClient();
+  const state = qc.getQueryState(['profile', loggedInUserUserName]);
+
+  if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
+    return <LoadingCard />;
+  }
   return (
-    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
+    <div className="space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
       <div className="shadow sm:overflow-hidden sm:rounded-md">
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+        <div className="h-[75vh] space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div>
-            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100">
               Message {username}
             </h2>
+          </div>
+          <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
+          <div className="flex h-full flex-col">
+            <div className="scrollbar flex-1 overflow-y-auto">
+              <div className="flex flex-col space-y-4">
+                <div className="flex flex-col space-y-6">
+                  <div className="flex flex-row items-center space-x-2">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2">
+                        <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                          <span className="text-orange-400">@</span>
+                          <span className="text-orange-400">username</span>
+                        </div>
+                        <div className="text-xs text-neutral-400 dark:text-neutral-600">
+                          <span>1h ago</span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-neutral-900 dark:text-neutral-100">
+                        <span>Message</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row-reverse items-center space-x-2">
+                    <div className="ml-2 flex-shrink-0">
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex-0">
+                      <div className="flex items-center space-x-2">
+                        <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                          <span className="text-orange-400">@</span>
+                          <span className="text-orange-400">username</span>
+                        </div>
+                        <div className="text-xs text-neutral-400 dark:text-neutral-600">
+                          <span>1h ago</span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-neutral-900 dark:text-neutral-100">
+                        <span>Message</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center space-x-2">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2">
+                        <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                          <span className="text-orange-400">@</span>
+                          <span className="text-orange-400">{username}</span>
+                        </div>
+                        <div className="text-xs text-neutral-400 dark:text-neutral-600">
+                          <span>1h ago</span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-neutral-900 dark:text-neutral-100">
+                        <span>Message</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-start sm:space-x-4">
+        <div className="flex-shrink-0">
+          <img
+            className="hidden h-12 w-12 rounded-full bg-linen object-cover sm:inline-block"
+            src={
+              import.meta.env.VITE_DEVELOPMENT
+                ? import.meta.env.VITE_API_URL + profileData.avatar
+                : profileData.avatar
+            }
+            alt=""
+          />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="relative">
+            <div className="overflow-hidden rounded-lg border-[1px] border-neutral-900 bg-darkBG2 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+              <textarea
+                rows={2}
+                name="comment"
+                id="comment"
+                className="block w-full resize-none bg-darkBG p-2 py-3 placeholder:text-gray-300 focus:ring-0 sm:text-sm"
+                placeholder={`Message ${username}`}
+                defaultValue=""
+              />
+
+              {/* Spacer element to match the height of the toolbar */}
+              <div className="py-1" aria-hidden="true">
+                {/* Matches height of button in toolbar (1px border + 36px content height) */}
+                <div className="py-px">
+                  <div className="h-9" />
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+              <div className="flex items-center space-x-5">
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+                  >
+                    <PaperClipIcon className="h-5 w-5" aria-hidden="true" />
+                    <span className="sr-only">Attach a file</span>
+                  </button>
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <button
+                  type="submit"
+                  className="inline-flex items-center rounded-md border-[1px] border-neutral-700
+                   bg-black px-6 py-1 text-sm  shadow-sm hover:bg-orange-400
+                    focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
+                >
+                  Send <PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// export default function Messages(): JSX.Element {
-//   return (
-//     <div>
-//       <h1>Messages</h1>
-//       <Outlet />
-//     </div>
-//   );
-// }

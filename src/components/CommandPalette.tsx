@@ -8,6 +8,7 @@ import {
   WrenchIcon,
   KeyIcon,
   VideoCameraIcon,
+  ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline';
 import classNames from '@/lib/ClassNames.lib';
 
@@ -22,6 +23,14 @@ const items = [
   },
   {
     id: 2,
+    name: 'Messages Dashboard',
+    description: 'Messages Dashboard',
+    url: '/messages',
+    color: 'bg-indigo-500',
+    icon: ChatBubbleLeftRightIcon,
+  },
+  {
+    id: 3,
     name: 'Social Mode 1-on-1',
     description: 'Social Mode. 1-on-1.',
     url: '/social',
@@ -29,7 +38,7 @@ const items = [
     icon: VideoCameraIcon,
   },
   {
-    id: 3,
+    id: 4,
     name: 'Social Mode Circle',
     description: 'Social Mode. Circle.',
     url: '/social/circle',
@@ -37,7 +46,7 @@ const items = [
     icon: UserGroupIcon,
   },
   {
-    id: 4,
+    id: 5,
     name: 'Account Settings',
     description: 'Settings.',
     url: '/settings',
@@ -45,7 +54,7 @@ const items = [
     icon: WrenchIcon,
   },
   {
-    id: 5,
+    id: 6,
     name: 'Social Preferencess',
     description: 'Social Preferences',
     url: '/settings/social',
@@ -53,7 +62,7 @@ const items = [
     icon: UserCircleIcon,
   },
   {
-    id: 6,
+    id: 7,
     name: 'Email and Password',
     description: 'Email and Password',
     url: '/settings/password',
