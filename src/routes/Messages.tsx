@@ -64,8 +64,8 @@ export default function Messages() {
     <div className="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <aside className="py-0 px-0 sm:py-6 sm:px-6 lg:col-span-4 lg:py-0 lg:px-0">
         <nav
-          className="hidden space-y-2 rounded-md border-[1px]
-        p-4 dark:border-neutral-900 dark:bg-darkBG2 md:block"
+          className="scrollbar hidden space-y-2 overflow-auto rounded-md border-[1px] p-4
+        dark:border-neutral-900 dark:bg-darkBG2 md:block lg:max-h-[77vh]"
         >
           {circle.map((user) => (
             <MessagesNav key={user} user={user} />
@@ -91,13 +91,7 @@ export function MessageChild(): JSX.Element {
   return (
     <div className="space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
       <div className="shadow sm:overflow-hidden sm:rounded-md">
-        <div className="h-[75vh] space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
-          <div>
-            <h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100">
-              Message {username}
-            </h2>
-          </div>
-          <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
+        <div className="h-[60vh] space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div className="flex h-full flex-col">
             <div className="scrollbar flex-1 overflow-y-auto">
               <div className="flex flex-col space-y-4">
@@ -120,7 +114,7 @@ export function MessageChild(): JSX.Element {
                           <span>1h ago</span>
                         </div>
                       </div>
-                      <div className="text-sm text-neutral-900 dark:text-neutral-100">
+                      <div className="mt-2 w-3/5 rounded-xl bg-neutral-900 p-3 text-sm text-neutral-900 dark:text-neutral-100">
                         <span>Message</span>
                       </div>
                     </div>
@@ -226,10 +220,11 @@ export function MessageChild(): JSX.Element {
                 <button
                   type="submit"
                   className="inline-flex items-center rounded-md border-[1px] border-neutral-700
-                   bg-black px-6 py-1 text-sm  shadow-sm hover:bg-orange-400
-                    focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
+                   bg-darkBG2 px-6 py-1 text-sm  shadow-sm hover:bg-darkBG
+                    focus:outline-none focus:ring-2 focus:ring-neutral-600"
                 >
-                  Send <PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
+                  Send
+                  <PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
             </div>

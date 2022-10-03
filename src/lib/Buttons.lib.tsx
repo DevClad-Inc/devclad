@@ -15,8 +15,8 @@ export const altString = `border border-transparent bg-orange-700/30 text-orange
 dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
 inline-flex justify-center text-sm font-semibold dark:text-orange-300`;
 
-export const invertString = `border border-transparent bg-black text-white
-dark:bg-white duration-500 rounded-md py-2 px-4
+export const invertString = `border-neutral-100 border-[1px] bg-black text-white
+dark:bg-white duration-500 rounded-md py-1 px-6
 inline-flex justify-center text-sm font-semibold dark:text-black`;
 
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
