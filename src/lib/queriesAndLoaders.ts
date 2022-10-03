@@ -14,8 +14,17 @@ import {
   getUsernameProfile,
   getUsernameSocialProfile,
 } from '@/services/profile.services';
+import { getStreamToken } from '@/services/stream.services';
 
 // ! only using social profile loader rn
+
+export const streamQuery = () => ({
+  queryKey: ['stream'],
+  queryFn: () => getStreamToken(),
+  staleTime: 1000 * 60 * 60 * 24, // 24 hours
+  cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+  refetchOnWindowFocus: false,
+});
 
 export const userQuery = () => ({
   queryKey: ['user'],

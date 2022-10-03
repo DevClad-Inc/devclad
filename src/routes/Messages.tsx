@@ -174,7 +174,7 @@ export function MessageChild(): JSX.Element {
       <div className="flex items-start sm:space-x-4">
         <div className="flex-shrink-0">
           <img
-            className="hidden h-12 w-12 rounded-full bg-linen object-cover sm:inline-block"
+            className="hidden h-10 w-10 rounded-full bg-linen object-cover sm:inline-block"
             src={
               import.meta.env.VITE_DEVELOPMENT
                 ? import.meta.env.VITE_API_URL + profileData.avatar
@@ -190,7 +190,7 @@ export function MessageChild(): JSX.Element {
                 rows={2}
                 name="comment"
                 id="comment"
-                className="block w-full resize-none bg-darkBG p-2 py-3 placeholder:text-gray-300 focus:ring-0 sm:text-sm"
+                className="block w-full resize-none bg-darkBG p-2 py-3 placeholder:text-gray-500 focus:outline-none sm:text-sm"
                 placeholder={`Message ${username}`}
                 defaultValue=""
               />
@@ -219,9 +219,8 @@ export function MessageChild(): JSX.Element {
               <div className="flex-shrink-0">
                 <button
                   type="submit"
-                  className="inline-flex items-center rounded-md border-[1px] border-neutral-700
-                   bg-darkBG2 px-6 py-1 text-sm  shadow-sm hover:bg-darkBG
-                    focus:outline-none focus:ring-2 focus:ring-neutral-600"
+                  className="inline-flex items-center rounded-md border-[1px] border-neutral-700 bg-darkBG2 px-6
+                   py-1 text-sm hover:bg-darkBG focus:outline-none focus:ring-2 focus:ring-neutral-600"
                 >
                   Send
                   <PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
