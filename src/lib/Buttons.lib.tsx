@@ -5,33 +5,24 @@ interface ButtonProps {
   children: React.ReactNode;
   isSubmitting?: boolean;
   wFull?: boolean;
+  classString?: string;
 }
 
-export const primaryString = `border border-transparent bg-orange-700 text-white
-        dark:bg-darkBG2 duration-500 rounded-md py-2 px-4
-        inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
-
-export const altString = `border border-transparent bg-orange-700/30
-dark:bg-orange-300 duration-500 rounded-md py-2 px-4
-inline-flex justify-center font-semibold text-black`;
-
-export const invertString = `border-neutral-100 border-[1px] bg-black text-white
-dark:bg-white duration-500 rounded-md py-1 px-6
-inline-flex justify-center text-sm font-semibold dark:text-black`;
+export const altString = `border border-transparent bg-orange-300
+duration-500 rounded-md py-2 px-4 inline-flex justify-center font-semibold text-black`;
 
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
 dark:text-saffron dark:bg-blackChocolate`;
 
-export const primaryString2 = `border dark:border-neutral-800 bg-orange-700 text-white
-        dark:bg-darkBG duration-500 rounded-md py-2 px-4
-        inline-flex justify-center font-semibold dark:text-white`;
+export const primaryString = `border border-neutral-800
+bg-black duration-500 rounded-md py-2 px-4 hover:bg-neutral-900
+inline-flex justify-center font-semibold text-white`;
 
 export const redString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
-rounded-md shadow-sm text-bloodRed bg-mistyRose
-dark:text-mistyRose dark:bg-bloodRed2`;
+rounded-md shadow-sm text-mistyRose bg-bloodRed2`;
 
 export const greenString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
@@ -39,13 +30,13 @@ rounded-md shadow-sm text-phthaloGreen bg-honeyDew
 dark:bg-phthaloGreen dark:text-honeyDew`;
 
 // meant for Formik forms
-export function PrimaryButton({ children, isSubmitting, wFull }: ButtonProps) {
+export function PrimaryButton({ children, isSubmitting, wFull, classString }: ButtonProps) {
   return (
     <button
       type="submit"
       // check if onclick is defined, if not, use handleClick
       disabled={isSubmitting}
-      className={classNames(wFull ? 'w-full' : 'w-auto px-6', altString)}
+      className={classNames(wFull ? 'w-full' : 'w-auto px-6', classString as string)}
     >
       {children}
     </button>
@@ -74,7 +65,7 @@ export function AlertButton({
 export function LoadingButton({ children }: { children?: React.ReactNode }) {
   const waitTexts = ['Loading', 'Just a sec', 'Meow', 'Pi Pi Pi', 'Yeezy SZN'];
   return (
-    <button type="button" className={primaryString2} disabled>
+    <button type="button" className={primaryString} disabled>
       <svg
         className="-ml-1 mr-3 h-8 w-6 animate-spin"
         xmlns="http://www.w3.org/2000/svg"
@@ -115,6 +106,7 @@ export const badge = (interests: string, classes: string) => {
 PrimaryButton.defaultProps = {
   isSubmitting: false,
   wFull: false,
+  classString: primaryString,
 };
 
 LoadingButton.defaultProps = {

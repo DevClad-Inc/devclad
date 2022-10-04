@@ -7,7 +7,7 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import LoadingCard from '@/components/LoadingCard';
-import { primaryString2 } from '@/lib/Buttons.lib';
+import { primaryString } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import {
   useCircleUsernames,
@@ -79,24 +79,18 @@ function ConnectionCard({
             </div>
             <div className="flex space-x-2 text-sm sm:ml-24 sm:text-lg">
               <div className="flex flex-col">
-                <Link to={`/messages/${username}/`} className={primaryString2}>
+                <Link to={`/messages/${otherUser}/`} className={primaryString}>
                   <ChatBubbleBottomCenterIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />
                 </Link>
               </div>
               <div className="flex flex-col">
-                <button type="button" className={primaryString2}>
+                <button type="button" className={primaryString}>
                   <VideoCameraIcon className="mr-2 h-6 w-6 sm:h-8" aria-hidden="true" />
                   <span>Schedule</span>
                 </button>
               </div>
               <div className="flex flex-col">
-                <Link
-                  type="button"
-                  to={`/profile/${otherUser}`}
-                  className="flex rounded-lg border-[1px]
-                  border-neutral-200 p-2 text-neutral-800
-                  dark:border-neutral-800 dark:bg-black dark:text-neutral-200"
-                >
+                <Link type="button" to={`/profile/${otherUser}`} className={primaryString}>
                   <ArrowUpRightIcon className="mr-2 h-6 w-5 sm:h-8" aria-hidden="true" />
                   Profile
                 </Link>

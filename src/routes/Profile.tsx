@@ -11,7 +11,7 @@ import { Link, useParams } from 'react-router-dom';
 import { NoSymbolIcon, PlusIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { badge, primaryString2 } from '@/lib/Buttons.lib';
+import { badge, primaryString } from '@/lib/Buttons.lib';
 import {
   useCircleUsernames,
   useOneOneProfile,
@@ -341,7 +341,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
               {!blocked && (
                 <>
                   <div className="flex flex-col">
-                    <Link to={`/messages/${username}/`} className={primaryString2}>
+                    <Link to={`/messages/${username}/`} className={primaryString}>
                       <ChatBubbleBottomCenterIcon
                         className="mr-2 h-6 w-6 lg:h-8"
                         aria-hidden="true"
@@ -350,7 +350,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                     </Link>
                   </div>
                   <div className="flex flex-col">
-                    <button type="button" className={primaryString2}>
+                    <button type="button" className={primaryString}>
                       <VideoCameraIcon className="mr-2 h-6 w-6 lg:h-8" aria-hidden="true" />
                       Schedule
                     </button>

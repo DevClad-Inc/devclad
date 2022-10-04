@@ -6,8 +6,9 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
-import { PrimaryButton } from '@/lib/Buttons.lib';
+import { PrimaryButton, primaryString } from '@/lib/Buttons.lib';
 import { LoginFormValues } from '@/lib/InterfacesStates.lib';
+import { getStreamToken } from '@/services/stream.services';
 
 interface LoginFormProps {
   loginError: boolean;
@@ -47,6 +48,9 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
         .catch(() => {
           delMany(['loggedInUser', 'profile']);
         });
+      await getStreamToken().then(() => {
+        invalidateAndStoreIDB(qc, 'stream');
+      });
     } catch (error) {
       setLoginError(true);
       setSubmitting(false);
@@ -140,9 +144,9 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
           </div>
 
           <div className="flex w-full justify-center">
-            <PrimaryButton isSubmitting={isSubmitting} wFull>
+            <PrimaryButton isSubmitting={isSubmitting} wFull classString={`${primaryString}`}>
               <span className="w-full">
-                {isSubmitting ? 'Signing...' : 'Sign In'} <span className="text-xs">✨</span>
+                {isSubmitting ? 'Signing...' : 'Sign In'} <span className="text-sm">✨</span>
               </span>
             </PrimaryButton>
           </div>
