@@ -42,8 +42,10 @@ export default function ChangeEmailForm(): JSX.Element {
     return errors;
   };
 
-  // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
-  const handlePassChange = async (values: InterfaceEmail, { setSubmitting }: any) => {
+  const handlePassChange = async (
+    values: InterfaceEmail,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     setSubmitting(true);
     const { email } = values;
     await changeEmail(email)
@@ -111,7 +113,7 @@ export default function ChangeEmailForm(): JSX.Element {
                 autoComplete="email"
                 required
                 className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 dark:border-neutral-700
+                    py-2 px-3 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 dark:border-neutral-800
                     dark:bg-darkBG sm:text-sm"
               />
               <ErrorMessage

@@ -188,7 +188,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   <ol
                     className="flex items-center space-x-4 rounded-md
                   border-[1px] border-neutral-200
-                 p-2 shadow-2xl shadow-white/20 dark:border-neutral-900"
+                 p-2 shadow-2xl shadow-white/20 dark:border-neutral-800"
                   >
                     <li>
                       <div>
@@ -228,7 +228,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   <ol
                     className="flex items-center space-x-4 rounded-md
                     border-[1px] border-neutral-200
-                  p-2 shadow-2xl shadow-white/20 dark:border-neutral-900"
+                  p-2 shadow-2xl shadow-white/20 dark:border-neutral-800"
                   >
                     <li>
                       <div className="flex items-center">
@@ -252,7 +252,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   className="hidden items-center rounded-md border-[1px] border-neutral-200 p-2
                 font-mono text-xs font-medium text-orange-300 shadow-2xl shadow-white/20
                 duration-300 hover:text-white
-                dark:border-neutral-900 md:visible md:flex"
+                dark:border-neutral-800 md:visible md:flex"
                 >
                   <kbd
                     className={classNames(
@@ -281,7 +281,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     {checkIOS() || checkMacOS() ? '⚙' : ''} {loggedInUser.first_name}
                     &apos;s Settings
                   </h1>
-                  <hr className="border-1 my-8 border-neutral-200 dark:border-neutral-900" />
+                  <hr className="border-1 my-8 border-neutral-200 dark:border-neutral-800" />
                 </>
               )}
             </div>

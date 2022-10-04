@@ -50,7 +50,10 @@ export default function UpdateProfileForm(): JSX.Element {
     }
     return errors;
   };
-  const handleSubmit = async (values: UpdateProfileFormValues, { setSubmitting }: any) => {
+  const handleSubmit = async (
+    values: UpdateProfileFormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     try {
       setSubmitting(true);
       await updateProfile(values, profileData).then(async () => {
@@ -106,7 +109,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     name="about"
                     rows={3}
                     className="mt-1 block w-full rounded-md border border-neutral-300
-                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                     placeholder="Currently, I'm ..."
                   />
                   <ErrorMessage
@@ -132,7 +135,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     name="pronouns"
                     rows={3}
                     className="mt-1 block w-full rounded-md border border-neutral-300
-                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                     placeholder=""
                   />
                   <ErrorMessage
@@ -155,7 +158,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     name="linkedin"
                     rows={3}
                     className="mt-1 block w-full rounded-md border border-neutral-300
-                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                     placeholder="https://linkedin.com/..."
                   />
                   <ErrorMessage
@@ -178,7 +181,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     name="website"
                     rows={3}
                     className="mt-1 block w-full rounded-md border border-neutral-300
-                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                     placeholder="https://"
                   />
                   <ErrorMessage
@@ -204,7 +207,7 @@ export default function UpdateProfileForm(): JSX.Element {
                     id="calendly"
                     placeholder="https://calendly.com/..."
                     className="mt-1 block w-full rounded-md border border-neutral-300
-                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                  py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                   />
                   <ErrorMessage
                     name="calendly"

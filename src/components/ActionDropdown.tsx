@@ -21,7 +21,7 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
           <Menu.Button
             className="flex items-center rounded-lg border-[1px]
         border-neutral-200 p-2 text-neutral-800
-        dark:border-neutral-900 dark:bg-black dark:text-neutral-200"
+        dark:border-neutral-800 dark:bg-black dark:text-neutral-200"
           >
             <span className="sr-only">Open options</span>
             <EllipsisVerticalIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />
@@ -40,7 +40,7 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
           <Menu.Items
             className="absolute right-0 z-10 mt-2 w-auto origin-top-right
             rounded-md border-[1px] border-neutral-200 bg-black shadow-lg
-            ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-neutral-900"
+            ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-neutral-800"
           >
             <div className="py-1 font-light">
               {items.map((item) => (

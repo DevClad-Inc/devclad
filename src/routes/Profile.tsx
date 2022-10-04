@@ -148,7 +148,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   if (profile) {
     return (
       <div className="flex justify-center p-0 lg:p-4">
-        <div className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow dark:border-neutral-900 lg:w-3/4">
+        <div className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow dark:border-neutral-800 lg:w-3/4">
           <div className="space-y-2 px-4 py-5 sm:p-6">
             <div className="sm:inline-flex">
               <div className="flex flex-col">
@@ -188,7 +188,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
             </div>
             <div
               className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
             >
               <div className="font-monoItalic">
@@ -262,7 +262,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </div>
                 <div
                   className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
                 >
                   <div className="flex flex-col">
@@ -300,7 +300,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </div>
                 <div
                   className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
                 >
                   <div className="flex flex-col">
@@ -316,7 +316,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
                 </div>
                 <div
                   className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
                 >
                   <div className="flex flex-col">

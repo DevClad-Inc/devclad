@@ -51,17 +51,12 @@ export default function SignupForm({
     return errors;
   };
 
-  // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
-  const handleSignUp = async (values: SignupFormValues, { setSubmitting }: any) => {
+  const handleSignUp = async (
+    values: SignupFormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     setSubmitting(true);
-    const {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      firstName,
-      lastName,
-      email,
-      password1,
-      password2,
-    } = values;
+    const { firstName, lastName, email, password1, password2 } = values;
     const user = {
       firstName,
       lastName,
@@ -131,7 +126,7 @@ export default function SignupForm({
                   autoComplete="First Name"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -165,7 +160,7 @@ export default function SignupForm({
                   autoComplete="Last Name"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -199,7 +194,7 @@ export default function SignupForm({
                   autoComplete="email"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -234,7 +229,7 @@ export default function SignupForm({
                   aria-describedby="password-description"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -280,7 +275,7 @@ export default function SignupForm({
                   autoComplete="current-password"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 {signupErrorState && (
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">

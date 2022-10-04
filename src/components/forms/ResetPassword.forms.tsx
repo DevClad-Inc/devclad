@@ -12,7 +12,6 @@ import { InterfaceEmail, PasswordReset } from '@/lib/InterfacesStates.lib';
 export default function PasswordResetForm(): JSX.Element {
   const [resetDone, setresetDone] = useState(false);
   const { uid, token } = useParams() as { uid: string; token: string };
-  useDocumentTitle('Password Reset');
   const validate = (values: PasswordReset) => {
     const errors: PasswordReset['errors'] = {};
     if (!values.password1) {
@@ -37,8 +36,10 @@ export default function PasswordResetForm(): JSX.Element {
     return errors;
   };
 
-  // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
-  const handlePassChange = async (values: PasswordReset, { setSubmitting }: any) => {
+  const handlePassChange = async (
+    values: PasswordReset,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     setSubmitting(true);
     const { password1, password2 } = values;
     if (uid && token) {
@@ -101,7 +102,7 @@ export default function PasswordResetForm(): JSX.Element {
                   aria-describedby="password-description"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="password1"
@@ -129,7 +130,7 @@ export default function PasswordResetForm(): JSX.Element {
                   aria-describedby="password-description"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
                 <ErrorMessage
                   name="password2"
@@ -186,8 +187,10 @@ export function ForgotPasswordForm(): JSX.Element {
     return errors;
   };
 
-  // setSubmitting typing issue: https://github.com/jaredpalmer/formik/issues/2086
-  const handlePassChange = async (values: InterfaceEmail, { setSubmitting }: any) => {
+  const handlePassChange = async (
+    values: InterfaceEmail,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     setSubmitting(true);
     const { email } = values;
     await forgotPassword(email)
@@ -234,7 +237,7 @@ export function ForgotPasswordForm(): JSX.Element {
                   autoComplete="email"
                   required
                   className="mt-1 block w-full rounded-md border border-neutral-300
-                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-700 dark:bg-darkBG sm:text-sm"
+                    py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 dark:bg-darkBG sm:text-sm"
                 />
               </div>
               <ErrorMessage

@@ -38,7 +38,7 @@ function ConnectionCard({
       <div className="flex justify-center p-0 lg:p-4">
         <div
           className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow
-         dark:border-neutral-900 xl:w-3/4"
+         dark:border-neutral-800 xl:w-3/4"
         >
           <div className="space-y-2 px-4 py-5 sm:p-6">
             <div className="sm:inline-flex">
@@ -95,7 +95,7 @@ function ConnectionCard({
                   to={`/profile/${otherUser}`}
                   className="flex rounded-lg border-[1px]
                   border-neutral-200 p-2 text-neutral-800
-                  dark:border-neutral-900 dark:bg-black dark:text-neutral-200"
+                  dark:border-neutral-800 dark:bg-black dark:text-neutral-200"
                 >
                   <ArrowUpRightIcon className="mr-2 h-6 w-5 sm:h-8" aria-hidden="true" />
                   Profile

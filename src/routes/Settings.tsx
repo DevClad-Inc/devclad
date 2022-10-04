@@ -44,7 +44,7 @@ function classNames(...classes: string[]) {
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
-                    border-[1px] border-neutral-200 dark:border-neutral-900
+                    border-[1px] border-neutral-200 dark:border-neutral-800
                     dark:text-orange-300
                     text-orange-700`;
 
@@ -56,7 +56,7 @@ export function Settings() {
       <aside className="py-6 px-0 sm:px-6 lg:col-span-3 lg:py-0 lg:px-0">
         <nav
           className="space-y-1 rounded-md border-[1px] bg-snow
-        p-4 dark:border-neutral-900 dark:bg-darkBG2"
+        p-4 dark:border-neutral-800 dark:bg-darkBG2"
         >
           {navigation.map((item) => (
             <NavLink
@@ -89,31 +89,28 @@ export function Settings() {
 
 export function AccountProfile() {
   return (
-    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-      <div className="shadow sm:overflow-hidden sm:rounded-md">
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+    <div className="sm:px-6 lg:col-span-9 lg:px-0">
+      <div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div>
-            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
               Account
             </h2>
           </div>
           <UpdateUserForm />
         </div>
-        <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div>
-            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
               Profile
             </h2>
           </div>
           <UpdateProfileForm />
         </div>
-        <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <AvatarUploadForm />
         </div>
       </div>
-      <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
     </div>
   );
 }
@@ -123,11 +120,11 @@ export function SocialProfile() {
     ReturnType<ReturnType<typeof socialProfileLoader>>
   >;
   return (
-    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-      <div className="space-y-4 shadow sm:overflow-hidden sm:rounded-md">
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+    <div className="sm:px-6 lg:col-span-9 lg:px-0">
+      <div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div>
-            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
               Social Preferences
             </h2>
             <p className="mt-2 text-xs italic text-neutral-600 dark:text-neutral-400">
@@ -137,15 +134,14 @@ export function SocialProfile() {
           </div>
           <SocialProfileForm initialSocialData={initialSocialData} />
         </div>
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div>
-            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
               Additional Preferences
             </h2>
           </div>
           <AdditionalSPForm />
         </div>
-        <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
       </div>
     </div>
   );
@@ -153,28 +149,26 @@ export function SocialProfile() {
 
 export function Password() {
   return (
-    <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-      <div className="shadow sm:overflow-hidden sm:rounded-md">
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+    <div className="sm:px-6 lg:col-span-9 lg:px-0">
+      <div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div className="inline-flex">
             <EnvelopeIcon className="mr-2 h-6 w-6" />
-            <h2 className="font-sans text-2xl leading-6  text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
               Email{' '}
             </h2>
           </div>
           <ChangeEmailForm />
         </div>
-        <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
-        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-900 sm:p-6">
+        <div className="space-y-6 rounded-md border-[1px] bg-darkBG2 py-6 px-4 dark:border-neutral-800 sm:p-6">
           <div className="inline-flex">
             <KeyIcon className="mr-2 h-6 w-6" />
-            <h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100">
+            <h2 className="font-sans text-3xl leading-6 text-neutral-900 dark:text-neutral-100">
               Password
             </h2>
           </div>
           <PasswordResetForm />
         </div>
-        <hr className="my-6 border-t border-neutral-100 dark:border-neutral-900" />
       </div>
     </div>
   );

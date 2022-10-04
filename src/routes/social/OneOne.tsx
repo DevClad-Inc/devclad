@@ -12,14 +12,7 @@ import { toast } from 'react-hot-toast';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import {
-  altString,
-  greenString,
-  redString,
-  warningString,
-  badge,
-  primaryString2,
-} from '@/lib/Buttons.lib';
+import { greenString, redString, warningString, badge, primaryString2 } from '@/lib/Buttons.lib';
 import {
   useCircleUsernames,
   useOneOneProfile,
@@ -126,7 +119,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
           />
         ) : null}
         <div className="flex justify-center p-0 lg:p-4">
-          <div className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow dark:border-neutral-900 lg:w-3/4">
+          <div className="w-full rounded-md border-[1px] border-neutral-400 bg-darkBG2 shadow dark:border-neutral-800 lg:w-3/4">
             <div className="space-y-2 px-4 py-5 sm:p-6">
               <div className="sm:inline-flex">
                 <div className="flex flex-col">
@@ -166,7 +159,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               </div>
               <div
                 className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
               >
                 <div className="font-monoItalic">
@@ -238,7 +231,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               </div>
               <div
                 className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
               >
                 <div className="flex flex-col">
@@ -275,7 +268,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               </div>
               <div
                 className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
               >
                 <div className="flex flex-col">
@@ -291,7 +284,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               </div>
               <div
                 className="rounded-lg border-[1px] border-neutral-200
-               p-4 text-neutral-800 dark:border-neutral-900
+               p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
               >
                 <div className="flex flex-col">
@@ -332,7 +325,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
         </div>
         <div key="actions" className="relative p-8">
           <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-neutral-100 dark:border-neutral-900" />
+            <div className="w-full border-t border-neutral-100 dark:border-neutral-800" />
           </div>
           <div className="relative hidden justify-evenly sm:hidden md:visible md:flex">
             <div className="-mt-5 flex justify-center">
@@ -407,12 +400,6 @@ export default function OneOne(): JSX.Element {
                 Since you suck at making conversation and don&apos; get bitches, here are some
                 prompts to spark a conversation.
               </p>
-            </div>
-            <div className="mt-5">
-              <button type="button" className={altString}>
-                <ChatBubbleBottomCenterIcon className="mr-2 h-6 w-5" aria-hidden="true" />
-                Chat with John
-              </button>
             </div>
           </div>
         </div>

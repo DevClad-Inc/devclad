@@ -64,6 +64,7 @@ export const socialProfileUsernameQuery = (username: string) => ({
 export const userMatchesQuery = () => ({
   queryKey: ['matches'],
   queryFn: async () => getOneOne(),
+  staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
 export const userCircleQuery = (username: string) => ({

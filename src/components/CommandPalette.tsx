@@ -123,7 +123,7 @@ export default function CommandPalette() {
             <Dialog.Panel
               className="mx-auto max-w-xl space-y-1 overflow-hidden
             rounded-md
-            border-[1px] border-neutral-900
+            border-[1px] border-neutral-800
             bg-black bg-gradient-to-br
             from-black to-orange-900/5 text-white shadow-2xl shadow-white/20 backdrop-blur-sm
             transition-all"

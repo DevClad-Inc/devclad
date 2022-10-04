@@ -11,9 +11,9 @@ export const primaryString = `border border-transparent bg-orange-700 text-white
         dark:bg-darkBG2 duration-500 rounded-md py-2 px-4
         inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
 
-export const altString = `border border-transparent bg-orange-700/30 text-orange-900
-dark:bg-orange-900/20 duration-500 rounded-md py-2 px-4
-inline-flex justify-center text-sm font-semibold dark:text-orange-300`;
+export const altString = `border border-transparent bg-orange-700/30
+dark:bg-orange-300 duration-500 rounded-md py-1.5 px-5
+inline-flex justify-center font-semibold text-black`;
 
 export const invertString = `border-neutral-100 border-[1px] bg-black text-white
 dark:bg-white duration-500 rounded-md py-1 px-6
@@ -24,7 +24,7 @@ border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
 dark:text-saffron dark:bg-blackChocolate`;
 
-export const primaryString2 = `border dark:border-neutral-900 bg-orange-700 text-white
+export const primaryString2 = `border dark:border-neutral-800 bg-orange-700 text-white
         dark:bg-darkBG duration-500 rounded-md py-2 px-4
         inline-flex justify-center font-semibold dark:text-white`;
 

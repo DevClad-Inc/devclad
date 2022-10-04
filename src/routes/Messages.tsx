@@ -12,7 +12,7 @@ import LoadingCard from '@/components/LoadingCard';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
-                    border-[1px] border-neutral-200 dark:border-neutral-900
+                    border-[1px] border-neutral-200 dark:border-neutral-800
                     dark:text-orange-300
                     text-orange-700`;
 
@@ -65,7 +65,7 @@ export default function Messages() {
       <aside className="py-0 px-0 sm:py-6 sm:px-6 lg:col-span-4 lg:py-0 lg:px-0">
         <nav
           className="scrollbar hidden space-y-2 overflow-auto rounded-md border-[1px] p-4
-        dark:border-neutral-900 dark:bg-darkBG2 md:block lg:max-h-[77vh]"
+        dark:border-neutral-800 dark:bg-darkBG2 md:block lg:max-h-[77vh]"
         >
           {circle.map((user) => (
             <MessagesNav key={user} user={user} />
@@ -185,7 +185,7 @@ export function MessageChild(): JSX.Element {
         </div>
         <div className="min-w-0 flex-1">
           <div className="relative">
-            <div className="overflow-hidden rounded-lg border-[1px] border-neutral-900 bg-darkBG2 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+            <div className="overflow-hidden rounded-lg border-[1px] border-neutral-800 bg-darkBG2 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
               <textarea
                 rows={2}
                 name="comment"
@@ -219,7 +219,7 @@ export function MessageChild(): JSX.Element {
               <div className="flex-shrink-0">
                 <button
                   type="submit"
-                  className="inline-flex items-center rounded-md border-[1px] border-neutral-700 bg-darkBG2 px-6
+                  className="inline-flex items-center rounded-md border-[1px] border-neutral-800 bg-darkBG2 px-6
                    py-1 text-sm hover:bg-darkBG focus:outline-none focus:ring-2 focus:ring-neutral-600"
                 >
                   Send
