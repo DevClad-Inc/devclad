@@ -12,7 +12,7 @@ export const primaryString = `border border-transparent bg-orange-700 text-white
         inline-flex justify-center text-sm font-semibold dark:text-orange-200`;
 
 export const altString = `border border-transparent bg-orange-700/30
-dark:bg-orange-300 duration-500 rounded-md py-1.5 px-5
+dark:bg-orange-300 duration-500 rounded-md py-2 px-4
 inline-flex justify-center font-semibold text-black`;
 
 export const invertString = `border-neutral-100 border-[1px] bg-black text-white
@@ -72,11 +72,11 @@ export function AlertButton({
 }
 
 export function LoadingButton({ children }: { children?: React.ReactNode }) {
-  const waitTexts = ['Loading', 'Just a sec', 'Meow', 'Pi Pi Pi', 'Stare at this'];
+  const waitTexts = ['Loading', 'Just a sec', 'Meow', 'Pi Pi Pi', 'Yeezy SZN'];
   return (
-    <button type="button" className={altString} disabled>
+    <button type="button" className={primaryString2} disabled>
       <svg
-        className="-ml-1 mr-3 h-5 w-5 animate-spin"
+        className="-ml-1 mr-3 h-8 w-6 animate-spin"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

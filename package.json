@@ -24,7 +24,8 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.3.0",
     "react-router-dom": "^6.4.0",
-    "stream-chat": "^7.1.0"
+    "stream-chat": "^7.1.0",
+    "stream-chat-react": "^10.1.2"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",

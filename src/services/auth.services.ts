@@ -128,7 +128,6 @@ export async function refreshToken() {
         secure: true,
       });
       await qc.invalidateQueries();
-      // window.location.reload();
     })
     .catch(() => null);
   return response;
@@ -152,6 +151,7 @@ export async function getUser() {
     await refreshToken().catch(() => {
       Cookies.remove('token');
       Cookies.remove('refresh');
+      Cookies.remove('streamToken');
       delMany(['loggedInUser', 'profile']);
     });
   }
@@ -240,6 +240,7 @@ export async function logOut() {
     .then(() => {
       Cookies.remove('token');
       Cookies.remove('refresh');
+      Cookies.remove('streamToken');
       delMany(['loggedInUser', 'profile']);
     })
     .catch(() => null);

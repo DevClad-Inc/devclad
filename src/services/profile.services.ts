@@ -23,6 +23,7 @@ export async function getProfile() {
     await refreshToken().catch(() => {
       Cookies.remove('token');
       Cookies.remove('refresh');
+      Cookies.remove('streamToken');
       delMany(['loggedInUser', 'profile']);
     });
   }

@@ -907,6 +907,15 @@ export function AdditionalSPForm() {
     return <LoadingCard />;
   }
 
+  if (
+    state?.status === 'success' &&
+    videoCallFriendly !== profile.video_call_friendly &&
+    availableAlwaysOff !== profile.available_always_off
+  ) {
+    setVideoCallFriendly(profile.video_call_friendly as boolean);
+    setAvailableAlwaysOff(profile.available_always_off as boolean);
+  }
+
   const handleSubmit = async (values: AdditionalSP) => {
     await updateAdditionalSP(values)
       .then(async () => {
@@ -934,14 +943,14 @@ export function AdditionalSPForm() {
             handleSubmit({ ...profile, video_call_friendly: !videoCallFriendly });
           }}
           className={classNames(
-            videoCallFriendly ? 'bg-orange-300' : 'bg-neutral-700',
+            profile.video_call_friendly ? 'bg-orange-300' : 'bg-neutral-700',
             'relative inline-flex h-6 w-12 flex-shrink-0 cursor-pointer rounded-sm border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2'
           )}
         >
           <span
             aria-hidden="true"
             className={classNames(
-              videoCallFriendly ? 'translate-x-6 bg-black' : 'translate-x-0 bg-white',
+              profile.video_call_friendly ? 'translate-x-6 bg-black' : 'translate-x-0 bg-white',
               'pointer-events-none inline-block h-5 w-5 transform rounded-sm shadow ring-0 transition duration-200 ease-in-out'
             )}
           />
@@ -957,7 +966,7 @@ export function AdditionalSPForm() {
       </Switch.Group>
       <Switch.Group as="div" className="flex items-center">
         <Switch
-          checked={availableAlwaysOff}
+          checked={!availableAlwaysOff}
           onChange={() => {
             setAvailableAlwaysOff(!availableAlwaysOff);
             handleSubmit({ ...profile, available_always_off: !availableAlwaysOff });
@@ -977,7 +986,7 @@ export function AdditionalSPForm() {
         </Switch>
         <Switch.Label as="span" className="ml-3 flex">
           <span className="text-base">
-            {profile.available_always_off ? (
+            {availableAlwaysOff ? (
               <ClockIcon className="mr-2 h-8 w-8 text-neutral-500" />
             ) : (
               <ClockIcon className="mr-2 h-8 w-8 text-orange-300" />
@@ -985,7 +994,7 @@ export function AdditionalSPForm() {
           </span>
         </Switch.Label>
         <span>
-          {profile.available_always_off ? (
+          {availableAlwaysOff ? (
             <span className="text-base">1-on-1 Mode off until turned on</span>
           ) : (
             <span className="text-base">1-on-1 Mode on until turned off</span>

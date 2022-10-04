@@ -17,8 +17,11 @@ export const getStreamToken = async () => {
         Accept: 'application/json',
       },
     })
-      .then((resp) => resp)
-      .catch((err) => err);
+      .then((resp) => {
+        Cookies.set('streamToken', resp.data.token, { sameSite: 'strict', secure: true });
+        return resp.data.token;
+      })
+      .catch(() => null);
   }
   return null;
 };
