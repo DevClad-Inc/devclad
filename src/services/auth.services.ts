@@ -6,9 +6,6 @@ import { NewUser } from '@/lib/InterfacesStates.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
-/*
-Bug in Axios: method signature does not work with PATCH/PUT. Returning an axios call.
-*/
 const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
@@ -158,23 +155,14 @@ export async function getUser() {
   return null;
 }
 
-// todo: make updateUser more like updateProfile, I wrote this earlier and it's sorta lower quality
 export async function updateUser(first_name?: string, last_name?: string, username?: string) {
   const token = Cookies.get('token');
   if (token) {
-    // method signature does not work with Patch/Put idk why
-    return axios({
-      method: 'PATCH',
-      url: `${API_URL}/auth/user/`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: {
-        first_name,
-        last_name,
-        username,
-      },
-    });
+    return axios.patch(
+      `${API_URL}/auth/user/`,
+      { first_name, last_name, username },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
   }
   return null;
 }
@@ -194,7 +182,6 @@ export async function SignUp(user: NewUser) {
         // expires: twoHour,
         sameSite: 'strict',
         secure: true, // change to false while developing on safari
-        // safari does not treat localhost as secure even for testing purposes
       });
       Cookies.set('refresh', resp.data.refresh_token, {
         expires: 30,
@@ -217,7 +204,6 @@ export async function logIn(email: string, password: string) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        // expires: twoHour,
         sameSite: 'strict',
         secure: true,
       });

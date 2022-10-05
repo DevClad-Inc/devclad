@@ -77,15 +77,9 @@ export function Settings() {
         </nav>
       </aside>
       <Outlet />
-      {/* <div className="flex items-center pb-5">
-        <span className="mr-2 text-xs font-black italic font-sans">Dark Mode</span>
-        <ToggleTheme />
-      </div> */}
     </div>
   );
 }
-
-// todo : appearance instead of just a dark mode toggle
 
 export function AccountProfile() {
   return (
