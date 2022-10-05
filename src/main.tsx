@@ -26,8 +26,8 @@ import LoadingCard from '@/components/LoadingCard';
 import Social from '@/routes/social/Social';
 import OneOne from '@/routes/social/OneOne';
 import Circle from '@/routes/social/Circle';
-import Profile from './routes/Profile';
-import Messages, { MessageChild } from './routes/Messages';
+import Profile from '@/routes/Profile';
+import Messages, { MessageChild } from '@/routes/Messages';
 
 axios.defaults.headers.common.withCredentials = true;
 

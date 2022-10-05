@@ -49,7 +49,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
           delMany(['loggedInUser', 'profile']);
         });
       await getStreamToken().then(() => {
-        invalidateAndStoreIDB(qc, 'stream');
+        qc.invalidateQueries(['stream']);
       });
     } catch (error) {
       setLoginError(true);
@@ -144,9 +144,13 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
           </div>
 
           <div className="flex w-full justify-center">
-            <PrimaryButton isSubmitting={isSubmitting} wFull classString={`${primaryString}`}>
+            <PrimaryButton
+              isSubmitting={isSubmitting}
+              wFull
+              classString={`${primaryString} border-0 animate-darkglowbtn`}
+            >
               <span className="w-full">
-                {isSubmitting ? 'Signing...' : 'Sign In'} <span className="text-sm">✨</span>
+                {isSubmitting ? 'Signing In...' : 'Sign In'} <span>✨</span>
               </span>
             </PrimaryButton>
           </div>

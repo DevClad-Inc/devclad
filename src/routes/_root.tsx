@@ -6,7 +6,6 @@ import { Outlet, useNavigate, useLocation, ScrollRestoration } from 'react-route
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
 import { UserStatus, initialUserStatus } from '@/lib/InterfacesStates.lib';
-import { refreshToken } from '@/services/auth.services';
 import { getStatus } from '@/services/profile.services';
 import useAuth from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
@@ -24,14 +23,6 @@ function Routing(): JSX.Element {
   const qc = useQueryClient();
   const { pathname } = useLocation();
   const { authed, loggedInUser } = useAuth();
-  // AUTH CHECK AND REFRESH TOKEN
-  React.useEffect(() => {
-    if (authed) {
-      setInterval(() => {
-        refreshToken();
-      }, 1000 * 60 * 60);
-    }
-  }, [loggedInUser, authed]);
 
   // USER STATUS
   let userStatus: UserStatus = { ...initialUserStatus };

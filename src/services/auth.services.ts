@@ -108,10 +108,27 @@ export const resendEmail = async (email: string) => {
   return response.data;
 };
 
+export async function verifyToken(token: string): Promise<boolean> {
+  const url = `${API_URL}/auth/token/verify/`;
+  return axios({
+    method: 'POST',
+    url,
+    data: { token },
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((resp) => {
+      if (resp.status === 200) {
+        return true;
+      }
+      return false;
+    })
+    .catch(() => false);
+}
+
 export async function refreshToken() {
   const url = `${API_URL}/auth/token/refresh/`;
   const token = Cookies.get('token');
-  const response = await axios
+  return axios
     .post(url, {
       refresh: Cookies.get('refresh'),
       headers: {
@@ -121,20 +138,25 @@ export async function refreshToken() {
     })
     .then(async (resp) => {
       Cookies.set('token', resp.data.access, {
+        expires: 1 / 8, // every 3 hours (higher than it's expiration on backend)
+        sameSite: 'strict',
+        secure: true,
+      });
+      Cookies.set('refresh', resp.data.refresh, {
+        expires: 14, // 2 weeks
         sameSite: 'strict',
         secure: true,
       });
       await qc.invalidateQueries();
     })
     .catch(() => null);
-  return response;
 }
 
 export async function getUser() {
   const url = `${API_URL}/auth/user/`;
   const token = Cookies.get('token');
-  if (token) {
-    // return user data
+
+  if (token && (await verifyToken(token)) === true) {
     return axios
       .get(url, {
         headers: {
@@ -144,7 +166,7 @@ export async function getUser() {
       .then((resp) => resp)
       .catch(() => null);
   }
-  if (token === undefined && Cookies.get('refresh')) {
+  if ((token === undefined || (await verifyToken(token)) === false) && Cookies.get('refresh')) {
     await refreshToken().catch(() => {
       Cookies.remove('token');
       Cookies.remove('refresh');
@@ -179,12 +201,12 @@ export async function SignUp(user: NewUser) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        // expires: twoHour,
+        expires: 1 / 8,
         sameSite: 'strict',
-        secure: true, // change to false while developing on safari
+        secure: true,
       });
       Cookies.set('refresh', resp.data.refresh_token, {
-        expires: 30,
+        expires: 14, // 2 weeks
         sameSite: 'strict',
         secure: true,
       });
@@ -204,11 +226,12 @@ export async function logIn(email: string, password: string) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
+        expires: 1 / 8,
         sameSite: 'strict',
         secure: true,
       });
       Cookies.set('refresh', resp.data.refresh_token, {
-        expires: 30,
+        expires: 14, // 2 weeks
         sameSite: 'strict',
         secure: true,
       });
@@ -217,18 +240,24 @@ export async function logIn(email: string, password: string) {
 }
 
 export async function logOut() {
+  const refresh = Cookies.get('refresh');
   const url = `${API_URL}/auth/logout/`;
-  const response = await axios
-    .post(url, {
-      headers,
-      credentials: 'same-origin',
-    })
-    .then(() => {
-      Cookies.remove('token');
-      Cookies.remove('refresh');
-      Cookies.remove('streamToken');
-      delMany(['loggedInUser', 'profile']);
-    })
-    .catch(() => null);
-  return response;
+
+  if (refresh) {
+    const response = await axios
+      .post(url, {
+        refresh,
+        headers,
+        credentials: 'same-origin',
+      })
+      .then(() => {
+        Cookies.remove('refresh');
+        Cookies.remove('token');
+        Cookies.remove('streamToken');
+        delMany(['loggedInUser', 'profile']);
+      })
+      .catch(() => null);
+    return response;
+  }
+  return null;
 }
