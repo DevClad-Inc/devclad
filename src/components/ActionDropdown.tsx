@@ -19,9 +19,10 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button
-            className="flex items-center rounded-lg border-[1px]
-        border-neutral-200 p-2 text-neutral-800
-        dark:border-neutral-800 dark:bg-black dark:text-neutral-200"
+            className="inline-flex justify-center
+            rounded-md border border-neutral-800 bg-black p-2
+            font-semibold
+            text-white duration-300 hover:border-neutral-400 hover:bg-neutral-900"
           >
             <span className="sr-only">Open options</span>
             <EllipsisVerticalIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />

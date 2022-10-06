@@ -4,8 +4,9 @@ import classNames from '@/lib/ClassNames.lib';
 interface ButtonProps {
   children: React.ReactNode;
   isSubmitting?: boolean;
+  disabled?: boolean;
   wFull?: boolean;
-  classString?: string;
+  className?: string;
 }
 
 export const altString = `border border-transparent bg-orange-300
@@ -15,10 +16,6 @@ export const warningString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
 rounded-md shadow-sm text-bistreBrown bg-gyCrayola
 dark:text-saffron dark:bg-blackChocolate`;
-
-export const primaryString = `border border-neutral-800
-bg-black duration-500 rounded-md py-2 px-4 hover:bg-neutral-900
-inline-flex justify-center font-semibold text-white`;
 
 export const redString = `mt-5 inline-flex items-center px-4 py-2
 border border-transparent text-sm font-semibold
@@ -30,13 +27,20 @@ rounded-md shadow-sm text-phthaloGreen bg-honeyDew
 dark:bg-phthaloGreen dark:text-honeyDew`;
 
 // meant for Formik forms
-export function PrimaryButton({ children, isSubmitting, wFull, classString }: ButtonProps) {
+export function PrimaryButton({ children, isSubmitting, disabled, wFull, className }: ButtonProps) {
   return (
     <button
       type="submit"
       // check if onclick is defined, if not, use handleClick
-      disabled={isSubmitting}
-      className={classNames(wFull ? 'w-full' : 'w-auto px-6', classString as string)}
+      disabled={isSubmitting || disabled}
+      className={classNames(
+        wFull ? 'w-full' : 'w-auto px-6',
+        className ||
+          `inline-flex justify-center
+      rounded-md border border-neutral-800 bg-black py-2 px-4
+      font-semibold
+      text-white duration-300 hover:border-neutral-400 hover:bg-neutral-900`
+      )}
     >
       {children}
     </button>
@@ -65,7 +69,7 @@ export function AlertButton({
 export function LoadingButton({ children }: { children?: React.ReactNode }) {
   const waitTexts = ['Loading', 'Just a sec', 'Meow', 'Pi Pi Pi', 'Yeezy SZN'];
   return (
-    <button type="button" className={primaryString} disabled>
+    <PrimaryButton disabled>
       <svg
         className="-ml-1 mr-3 h-8 w-6 animate-spin"
         xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +92,7 @@ export function LoadingButton({ children }: { children?: React.ReactNode }) {
       </svg>
       {waitTexts[Math.floor(Math.random() * waitTexts.length)]}
       {children}
-    </button>
+    </PrimaryButton>
   );
 }
 
@@ -105,8 +109,12 @@ export const badge = (interests: string, classes: string) => {
 };
 PrimaryButton.defaultProps = {
   isSubmitting: false,
+  disabled: false,
   wFull: false,
-  classString: primaryString,
+  className: `border border-neutral-800
+  bg-black duration-300 rounded-md py-2 px-4 hover:bg-neutral-900
+  hover:border-neutral-400
+  inline-flex justify-center font-semibold text-white`,
 };
 
 LoadingButton.defaultProps = {

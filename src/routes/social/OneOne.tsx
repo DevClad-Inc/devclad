@@ -12,7 +12,7 @@ import { toast } from 'react-hot-toast';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { greenString, redString, warningString, badge, primaryString } from '@/lib/Buttons.lib';
+import { greenString, redString, warningString, badge, PrimaryButton } from '@/lib/Buttons.lib';
 import {
   useCircleUsernames,
   useOneOneProfile,
@@ -305,19 +305,21 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               </div>
               <div className="text-md flex justify-start space-x-2 pt-4 sm:ml-24">
                 <div className="flex flex-col">
-                  <Link to={`/messages/${username}/`} className={primaryString}>
-                    <ChatBubbleBottomCenterIcon
-                      className="mr-2 h-6 w-6 lg:h-8"
-                      aria-hidden="true"
-                    />
-                    Chat
-                  </Link>
+                  <PrimaryButton>
+                    <Link className="flex" to={`/messages/${username}/`}>
+                      <ChatBubbleBottomCenterIcon
+                        className="mr-2 h-6 w-6 lg:h-8"
+                        aria-hidden="true"
+                      />
+                      Chat
+                    </Link>
+                  </PrimaryButton>
                 </div>
                 <div className="flex flex-col">
-                  <button type="button" className={primaryString}>
+                  <PrimaryButton>
                     <VideoCameraIcon className="mr-2 h-6 w-6 lg:h-8" aria-hidden="true" />
                     Schedule Meeting
-                  </button>
+                  </PrimaryButton>
                 </div>
               </div>
             </div>

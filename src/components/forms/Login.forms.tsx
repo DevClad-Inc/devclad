@@ -6,7 +6,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
-import { PrimaryButton, primaryString } from '@/lib/Buttons.lib';
+import { PrimaryButton } from '@/lib/Buttons.lib';
 import { LoginFormValues } from '@/lib/InterfacesStates.lib';
 import { getStreamToken } from '@/services/stream.services';
 
@@ -144,11 +144,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
           </div>
 
           <div className="flex w-full justify-center">
-            <PrimaryButton
-              isSubmitting={isSubmitting}
-              wFull
-              classString={`${primaryString} border-0 animate-darkglowbtn`}
-            >
+            <PrimaryButton isSubmitting={isSubmitting} wFull>
               <span className="w-full">
                 {isSubmitting ? 'Signing In...' : 'Sign In'} <span>✨</span>
               </span>
