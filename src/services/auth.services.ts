@@ -138,7 +138,7 @@ export async function refreshToken() {
     })
     .then(async (resp) => {
       Cookies.set('token', resp.data.access, {
-        // expires: 1 / 8, // every 3 hours (higher than it's expiration on backend)
+        expires: 1 / 12,
         sameSite: 'strict',
         secure: true,
       });
@@ -204,7 +204,7 @@ export async function SignUp(user: NewUser) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        // expires: 1 / 8,
+        expires: 1 / 12,
         sameSite: 'strict',
         secure: true,
       });
@@ -229,7 +229,7 @@ export async function logIn(email: string, password: string) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        // expires: 1 / 8,
+        expires: 1 / 12,
         sameSite: 'strict',
         secure: true,
       });
