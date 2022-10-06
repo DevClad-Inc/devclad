@@ -21,7 +21,7 @@ import { socialProfileLoader } from '@/lib/queriesAndLoaders';
 import Login from '@/routes/Login';
 import Signup from '@/routes/Signup';
 import FourOFour from '@/routes/404';
-import LoadingCard from '@/components/LoadingCard';
+import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
 // SOCIAL
 import Social from '@/routes/social/Social';
 import OneOne from '@/routes/social/OneOne';
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'forgot-password',
-        // hasErrorBoundary: true,
+        hasErrorBoundary: true,
         element: <ForgotPassword />,
       },
       // AUTHED AND UNAPPROVED
@@ -77,13 +77,13 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             element: <StepOne />,
           },
           {
             path: '/onboarding/step-two',
             element: <StepTwo />,
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             loader: socialProfileLoader(queryClient),
           },
         ],
@@ -91,62 +91,62 @@ const router = createBrowserRouter([
       // AUTHED AND APPROVED
       {
         path: 'profile/:username',
-        // hasErrorBoundary: true,
+        hasErrorBoundary: true,
         element: <Profile />,
       },
       {
         path: 'social',
-        // hasErrorBoundary: true,
+        hasErrorBoundary: true,
         element: <Social />,
         children: [
           {
             index: true,
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             element: <OneOne />,
           },
           {
             path: '/social/circle',
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             element: <Circle />,
           },
         ],
       },
       {
         path: 'messages',
-        // hasErrorBoundary: true,
+        hasErrorBoundary: true,
         element: <Messages />,
         children: [
           {
             index: true,
-            // hasErrorBoundary: true,
-            element: <LoadingCard />,
+            hasErrorBoundary: true,
+            element: <MessagesLoading />,
           },
           {
             path: '/messages/:username',
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             element: <MessageChild />,
           },
         ],
       },
       {
         path: 'hackathons',
-        // hasErrorBoundary: true,
+        hasErrorBoundary: true,
         element: <Hackathons />,
       },
       {
         path: 'settings',
-        // hasErrorBoundary: true,
+        hasErrorBoundary: true,
         element: <Settings />,
         children: [
           {
             index: true,
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             element: <AccountProfile />,
           },
           {
             path: '/settings/social',
             element: <SocialProfile />,
-            // hasErrorBoundary: true,
+            hasErrorBoundary: true,
             loader: socialProfileLoader(queryClient),
           },
           {
@@ -169,7 +169,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <UserProvider>
         <SpeedProvider>
           <ThemeProvider>
-            <RouterProvider router={router} fallbackElement={<LoadingCard />} />
+            <RouterProvider router={router} fallbackElement={<ProfileLoading />} />
           </ThemeProvider>
         </SpeedProvider>
       </UserProvider>

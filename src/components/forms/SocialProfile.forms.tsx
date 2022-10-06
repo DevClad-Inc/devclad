@@ -16,7 +16,7 @@ import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
 
 import classNames from '@/lib/ClassNames.lib';
-import LoadingCard from '../LoadingCard';
+import { ProfileLoading } from '../LoadingStates';
 
 import { useAdditionalSP, useSocialProfile } from '@/services/socialHooks.services';
 
@@ -101,7 +101,7 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
   const qc = useQueryClient();
   const state = qc.getQueryState(['social-profile']);
   if (state?.status === 'loading' || state?.status !== 'success' || spData === null) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
 
   // ============= VALIDATE AND SUBMIT =============
@@ -904,7 +904,7 @@ export function AdditionalSPForm() {
   const [availableAlwaysOff, setAvailableAlwaysOff] = useState(false);
 
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
 
   if (

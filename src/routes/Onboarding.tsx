@@ -18,7 +18,7 @@ import {
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { socialProfileLoader, socialProfileQuery, userQuery } from '@/lib/queriesAndLoaders';
-import LoadingCard from '@/components/LoadingCard';
+import { ProfileLoading } from '@/components/LoadingStates';
 
 const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
 duration-500 rounded-md py-1 px-6 inline-flex justify-center text-md dark:text-orange-200`;
@@ -64,7 +64,7 @@ export function StepTwo() {
     userStatus = data.data;
   }
   if (profileEmptyQuery.isLoading || socialEmptyQuery.isLoading) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
   if (profileEmptyQuery.isSuccess && profileEmptyQuery.data) {
     const { data } = profileEmptyQuery;
@@ -159,7 +159,7 @@ export function Onboarding() {
     userStatus = data.data;
   }
   if (userQueryLoading || statusQuery.isLoading) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
   if (userStatus && userStatus.approved) {
     navigate('/');
@@ -222,5 +222,5 @@ export function Onboarding() {
       </div>
     );
   }
-  return <LoadingCard />;
+  return <ProfileLoading />;
 }

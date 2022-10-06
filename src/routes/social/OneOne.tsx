@@ -22,7 +22,7 @@ import {
   useShadowedUsernames,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
-import LoadingCard from '@/components/LoadingCard';
+import { ProfileLoading } from '@/components/LoadingStates';
 import { genExp, genIdea } from '@/routes/Profile';
 import { useAuth } from '@/services/useAuth.services';
 import { PatchCircle, shadowUser, skipUser } from '@/services/profile.services';
@@ -100,7 +100,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
   };
 
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
   if (profile) {
     return (
@@ -386,7 +386,7 @@ export default function OneOne(): JSX.Element {
   return (
     <>
       {(state?.status === 'loading' || state?.status !== 'success' || usernames === null) && (
-        <LoadingCard />
+        <ProfileLoading />
       )}
       {usernames?.map((username) => (
         <MatchCard key={username} username={username} />

@@ -10,7 +10,7 @@ import QueryLoader from '@/lib/QueryLoader.lib';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { profileQuery } from '@/lib/queriesAndLoaders';
-import LoadingCard from '../LoadingCard';
+import { ProfileLoading } from '../LoadingStates';
 
 export default function UpdateProfileForm(): JSX.Element {
   let profileData: Profile = { ...initialProfileState };
@@ -232,7 +232,7 @@ export default function UpdateProfileForm(): JSX.Element {
   }
   return (
     <div className="flex items-center justify-center">
-      <LoadingCard />
+      <ProfileLoading />
     </div>
   );
 }

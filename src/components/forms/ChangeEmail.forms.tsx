@@ -12,7 +12,7 @@ import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
 import { userQuery } from '@/lib/queriesAndLoaders';
-import LoadingCard from '../LoadingCard';
+import { ProfileLoading } from '../LoadingStates';
 
 export default function ChangeEmailForm(): JSX.Element {
   let loggedInUser: User = { ...initialUserState };
@@ -69,7 +69,7 @@ export default function ChangeEmailForm(): JSX.Element {
   if (userQueryLoading || verifiedQuery.isLoading) {
     return (
       <div className="flex items-center justify-center">
-        <LoadingCard />
+        <ProfileLoading />
       </div>
     );
   }

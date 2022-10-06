@@ -8,7 +8,7 @@ import { useCircleUsernames, useConnected, useProfile } from '@/services/socialH
 import { useAuth } from '@/services/useAuth.services';
 import { badge } from '@/lib/Buttons.lib';
 import { Profile } from '@/lib/InterfacesStates.lib';
-import LoadingCard from '@/components/LoadingCard';
+import { MessagesLoading } from '@/components/LoadingStates';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
@@ -86,7 +86,7 @@ export function MessageChild(): JSX.Element {
   const state = qc.getQueryState(['profile', loggedInUserUserName]);
 
   if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
-    return <LoadingCard />;
+    return <MessagesLoading />;
   }
   return (
     <div className="space-y-6 sm:px-6 lg:col-span-8 lg:px-0">

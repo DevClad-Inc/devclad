@@ -9,7 +9,7 @@ import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesSt
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/components/Feedback';
 import { userQuery } from '@/lib/queriesAndLoaders';
-import LoadingCard from '../LoadingCard';
+import { ProfileLoading } from '../LoadingStates';
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {
@@ -73,7 +73,7 @@ export default function UpdateUserForm(): JSX.Element {
     }
   };
   if (userQueryLoading) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
   return (
     <Formik

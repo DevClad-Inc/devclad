@@ -20,7 +20,7 @@ import {
   useBlockedUsernames,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
-import LoadingCard from '@/components/LoadingCard';
+import { ProfileLoading } from '@/components/LoadingStates';
 import ActionDropdown from '@/components/ActionDropdown';
 import { blockUser, PatchCircle } from '@/services/profile.services';
 import { useAuth } from '@/services/useAuth.services';
@@ -54,7 +54,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   const { usernames: blockedUsers } = useBlockedUsernames();
 
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
 
   const connectedOnlyItems = [

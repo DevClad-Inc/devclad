@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import LoadingCard from '@/components/LoadingCard';
+import { ProfileLoading } from '@/components/LoadingStates';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import {
@@ -30,7 +30,7 @@ function ConnectionCard({
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', otherUser]);
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
-    return <LoadingCard />;
+    return <ProfileLoading />;
   }
 
   if (profile && connected) {
@@ -122,7 +122,7 @@ export default function Circle(): JSX.Element {
   return (
     <>
       {(state?.status === 'loading' || state?.status !== 'success' || usernames === null) && (
-        <LoadingCard />
+        <ProfileLoading />
       )}
       {usernames?.map((username) => (
         <ConnectionCard
