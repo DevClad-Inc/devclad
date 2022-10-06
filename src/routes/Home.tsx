@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { logOut } from '@/services/auth.services';
 import { redString } from '@/lib/Buttons.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 
 function Home(): JSX.Element {
   const qc = useQueryClient();

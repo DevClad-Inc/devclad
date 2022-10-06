@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
 import PasswordResetForm, { ForgotPasswordForm } from '@/components/forms/ResetPassword.forms';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 
 export function PassReset() {
   return (

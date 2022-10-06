@@ -24,7 +24,7 @@ import {
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';
 import { genExp, genIdea } from '@/routes/Profile';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 import { PatchCircle, shadowUser, skipUser } from '@/services/profile.services';
 import { Success, Error, ConfirmDialog } from '@/components/Feedback';
 

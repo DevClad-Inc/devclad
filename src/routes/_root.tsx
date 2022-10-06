@@ -1,13 +1,11 @@
 import clsx from 'clsx';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useNavigate, useLocation, ScrollRestoration } from 'react-router-dom';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
-import { UserStatus, initialUserStatus } from '@/lib/InterfacesStates.lib';
-import { getStatus } from '@/services/profile.services';
-import useAuth from '@/services/useAuth.services';
+import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 
 const allowedPaths = [
@@ -22,17 +20,8 @@ function Routing(): JSX.Element {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { pathname } = useLocation();
-  const { authed, loggedInUser } = useAuth();
-
-  // USER STATUS
-  let userStatus: UserStatus = { ...initialUserStatus };
-  const statusQuery = useQuery(['userStatus'], () => getStatus(), {
-    enabled: loggedInUser.pk !== undefined,
-  });
-  if (statusQuery.isSuccess && statusQuery.data !== null) {
-    const { data } = statusQuery as { data: { data: UserStatus } };
-    userStatus = data.data;
-  }
+  const { authed } = useAuth();
+  const { approved } = useApproved();
 
   // CASE 1: UNAUTHED
   if (!authed && qc.getQueryData(['user']) === null) {
@@ -43,7 +32,7 @@ function Routing(): JSX.Element {
   }
 
   // CASE 2: AUTHED+UNAPPROVED USER
-  if (authed && userStatus.approved === false) {
+  if (authed && approved === false) {
     if (!pathname.includes('onboarding')) {
       navigate('/onboarding');
     }
@@ -51,7 +40,7 @@ function Routing(): JSX.Element {
   }
 
   // CASE 3: AUTHED+APPROVED USER
-  if (authed && userStatus.approved) {
+  if (authed && approved) {
     return (
       <AppShell>
         <Outlet />

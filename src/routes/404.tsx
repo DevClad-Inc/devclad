@@ -1,30 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 import AppShell from '@/components/AppShell';
-import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
-import { initialUserState, User } from '@/lib/InterfacesStates.lib';
 
 export default function FourOFour(): JSX.Element {
   const { authed } = useAuth();
   useDocumentTitle('Oops! 404');
   const navigate = useNavigate();
-  // USEref
-  const userRef = React.useRef<User>(initialUserState);
 
   React.useEffect(() => {
-    if (Object.values(userRef).every((v) => v === undefined)) {
-      getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
-        if (localUser) {
-          userRef.current = localUser;
-        }
-      });
-    }
-    if (!authed && userRef.current.pk === undefined) {
+    if (!authed) {
       navigate('/login');
     }
-  }, [authed, userRef, navigate]);
+  }, [authed, navigate]);
 
   return (
     // todo: CHANGE THIS!!

@@ -5,7 +5,7 @@ import DevCladLogo from '@/assets/devclad.svg';
 import LoginForm from '@/components/forms/Login.forms';
 import { Error } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 
 function Login() {
   const navigate = useNavigate();

@@ -2,13 +2,20 @@
 import axios from 'axios';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
+import { QueryClient } from '@tanstack/react-query';
 import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
-import { refreshToken, API_URL } from '@/services/auth.services';
+import { refreshToken, API_URL, verifyToken } from '@/services/auth.services';
+
+const qc = new QueryClient();
 
 export async function getProfile() {
   const url = `${API_URL}/users/profile/`;
   const token = Cookies.get('token');
+  let isVerified = false;
   if (token) {
+    isVerified = await verifyToken(token);
+  }
+  if (isVerified) {
     return axios
       .get(url, {
         headers: {
@@ -18,13 +25,13 @@ export async function getProfile() {
       .then((resp) => resp)
       .catch(() => null);
   }
-  if (token === undefined && Cookies.get('refresh')) {
-    // implementing this in Base functions (functions that execute on every page)
-    await refreshToken().catch(() => {
-      Cookies.remove('token');
-      Cookies.remove('refresh');
-      Cookies.remove('streamToken');
-      delMany(['loggedInUser', 'profile']);
+  if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
+    await qc.invalidateQueries().then(async () => {
+      await refreshToken().catch(() => {
+        Cookies.remove('token');
+        Cookies.remove('refresh');
+        delMany(['loggedInUser', 'profile']);
+      });
     });
   }
   return null;

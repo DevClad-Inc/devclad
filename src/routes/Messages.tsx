@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { useCircleUsernames, useConnected, useProfile } from '@/services/socialHooks.services';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 import { badge } from '@/lib/Buttons.lib';
 import { Profile } from '@/lib/InterfacesStates.lib';
 import LoadingCard from '@/components/LoadingCard';

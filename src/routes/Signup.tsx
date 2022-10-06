@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
 import { Error } from '@/components/Feedback';
 import SignupForm from '@/components/forms/Signup.forms';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 
 function Signup() {
   const [signupError, setSignupError] = useState('');

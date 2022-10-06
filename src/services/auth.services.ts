@@ -138,7 +138,7 @@ export async function refreshToken() {
     })
     .then(async (resp) => {
       Cookies.set('token', resp.data.access, {
-        expires: 1 / 8, // every 3 hours (higher than it's expiration on backend)
+        // expires: 1 / 8, // every 3 hours (higher than it's expiration on backend)
         sameSite: 'strict',
         secure: true,
       });
@@ -147,7 +147,6 @@ export async function refreshToken() {
         sameSite: 'strict',
         secure: true,
       });
-      await qc.invalidateQueries();
     })
     .catch(() => null);
 }
@@ -155,8 +154,11 @@ export async function refreshToken() {
 export async function getUser() {
   const url = `${API_URL}/auth/user/`;
   const token = Cookies.get('token');
-
-  if (token && (await verifyToken(token)) === true) {
+  let isVerified = false;
+  if (token) {
+    isVerified = await verifyToken(token);
+  }
+  if (isVerified) {
     return axios
       .get(url, {
         headers: {
@@ -166,12 +168,13 @@ export async function getUser() {
       .then((resp) => resp)
       .catch(() => null);
   }
-  if ((token === undefined || (await verifyToken(token)) === false) && Cookies.get('refresh')) {
-    await refreshToken().catch(() => {
-      Cookies.remove('token');
-      Cookies.remove('refresh');
-      Cookies.remove('streamToken');
-      delMany(['loggedInUser', 'profile']);
+  if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
+    await qc.invalidateQueries().then(async () => {
+      await refreshToken().catch(() => {
+        Cookies.remove('token');
+        Cookies.remove('refresh');
+        delMany(['loggedInUser', 'profile']);
+      });
     });
   }
   return null;
@@ -201,7 +204,7 @@ export async function SignUp(user: NewUser) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: 1 / 8,
+        // expires: 1 / 8,
         sameSite: 'strict',
         secure: true,
       });
@@ -226,7 +229,7 @@ export async function logIn(email: string, password: string) {
     })
     .then((resp) => {
       Cookies.set('token', resp.data.access_token, {
-        expires: 1 / 8,
+        // expires: 1 / 8,
         sameSite: 'strict',
         secure: true,
       });

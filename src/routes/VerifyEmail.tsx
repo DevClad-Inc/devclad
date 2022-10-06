@@ -6,7 +6,7 @@ import DevCladLogo from '@/assets/devclad.svg';
 import { verifyEmail } from '@/services/auth.services';
 import { Error, Success } from '@/components/Feedback';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 
 export default function VerifyEmail(): JSX.Element {
   useDocumentTitle('Verify Email');

@@ -15,7 +15,7 @@ import {
   useConnected,
 } from '@/services/socialHooks.services';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import useAuth from '@/services/useAuth.services';
+import { useAuth } from '@/services/useAuth.services';
 
 function ConnectionCard({
   username,
