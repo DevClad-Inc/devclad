@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { Outlet, useNavigate, useLocation, ScrollRestoration } from 'react-router-dom';
+import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
 import { refreshToken } from '@/services/auth.services';
@@ -18,7 +18,6 @@ const allowedPaths = [
 ];
 
 function Routing(): JSX.Element {
-  const navigate = useNavigate();
   const qc = useQueryClient();
   const { pathname } = useLocation();
   const { authed } = useAuth();
@@ -35,7 +34,7 @@ function Routing(): JSX.Element {
   // CASE 1: UNAUTHED
   if (qc.getQueryData(['user']) === null) {
     if (!allowedPaths.includes(pathname)) {
-      navigate('/login');
+      return <Navigate to="/login" />;
     }
     return <Outlet />;
   }
@@ -43,7 +42,7 @@ function Routing(): JSX.Element {
   // CASE 2: AUTHED+UNAPPROVED USER
   if (authed && approved === false) {
     if (!pathname.includes('onboarding')) {
-      navigate('/onboarding');
+      return <Navigate to="/onboarding" />;
     }
     return <Outlet />;
   }

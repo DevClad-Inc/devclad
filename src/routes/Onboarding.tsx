@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
@@ -136,7 +136,7 @@ export function Onboarding() {
   const navigate = useNavigate();
   const handlelogOut = async () => {
     await logOut().then(() => {
-      navigate(0);
+      navigate('/login');
     });
   };
   let loggedInUser: User = { ...initialUserState };
@@ -162,7 +162,7 @@ export function Onboarding() {
     return <ProfileLoading />;
   }
   if (userStatus && userStatus.approved) {
-    navigate('/');
+    return <Navigate to="/" />;
   }
   if (userStatus && !userStatus.approved) {
     return (
