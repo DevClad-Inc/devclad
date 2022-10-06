@@ -82,7 +82,7 @@ function ConnectionCard({
                 <PrimaryButton>
                   <Link className="flex" to={`/messages/${otherUser}/`}>
                     <ChatBubbleBottomCenterIcon
-                      className="mr-2 h-6 w-6 lg:h-8"
+                      className="mr-2 h-6 w-6 sm:h-8"
                       aria-hidden="true"
                     />
                     Chat

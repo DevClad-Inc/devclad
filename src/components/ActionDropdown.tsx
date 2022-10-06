@@ -25,7 +25,7 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
             text-white duration-300 hover:border-neutral-400 hover:bg-neutral-900"
           >
             <span className="sr-only">Open options</span>
-            <EllipsisVerticalIcon className="h-6 w-6 sm:h-8" aria-hidden="true" />
+            <EllipsisVerticalIcon className="h-6 w-6 lg:h-8" aria-hidden="true" />
           </Menu.Button>
         </div>
 
