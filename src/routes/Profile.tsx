@@ -46,7 +46,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   const state = qc.getQueryState(['profile', username]);
   // logged in username and connection check
   const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser?.username;
+  const loggedInUserUserName = loggedInUser.username;
   const connected = useConnected(loggedInUserUserName as string, username);
   const blocked = useBlocked(username);
   // logged in username and connection check
@@ -69,7 +69,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
               id: 'disconnect-profile-success',
               duration: 3000,
             });
-            await qc.invalidateQueries(['circle', loggedInUserUserName]);
+            await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
             await qc.invalidateQueries(['circle', username]);
           })
           .catch(() => {

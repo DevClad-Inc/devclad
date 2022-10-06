@@ -148,7 +148,14 @@ export async function refreshToken() {
         secure: true,
       });
     })
-    .catch(() => null);
+    .then(async () => {
+      await qc.invalidateQueries();
+    })
+    .catch(() => {
+      Cookies.remove('token');
+      Cookies.remove('refresh');
+      delMany(['loggedInUser', 'profile']);
+    });
 }
 
 export async function getUser() {
@@ -169,13 +176,7 @@ export async function getUser() {
       .catch(() => null);
   }
   if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
-    await qc.invalidateQueries().then(async () => {
-      await refreshToken().catch(() => {
-        Cookies.remove('token');
-        Cookies.remove('refresh');
-        delMany(['loggedInUser', 'profile']);
-      });
-    });
+    await refreshToken();
   }
   return null;
 }

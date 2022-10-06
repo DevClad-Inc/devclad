@@ -44,6 +44,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
       await getUser()
         .then(() => {
           invalidateAndStoreIDB(qc, 'user');
+          qc.refetchQueries(['userStatus']);
         })
         .catch(() => {
           delMany(['loggedInUser', 'profile']);

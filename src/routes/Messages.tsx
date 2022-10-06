@@ -19,7 +19,7 @@ const activeClass = `bg-neutral-50 dark:bg-darkBG2
 function MessagesNav({ user }: { user: string }): JSX.Element {
   const { pathname } = useLocation();
   const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser?.username;
+  const loggedInUserUserName = loggedInUser.username;
   const connected = useConnected(user, loggedInUserUserName as string);
   if (connected) {
     return (
@@ -54,7 +54,7 @@ export default function Messages() {
   useDocumentTitle('Messages');
   // logged in username and connection check
   const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser?.username;
+  const loggedInUserUserName = loggedInUser.username;
   // const connected = useConnected(username, otherUser);
   // logged in username and connection check
   const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string) as {
@@ -80,10 +80,10 @@ export default function Messages() {
 export function MessageChild(): JSX.Element {
   const { username } = useParams() as { username: string };
   const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser?.username;
+  const loggedInUserUserName = loggedInUser.username;
   const profileData = useProfile(loggedInUserUserName as string) as Profile;
   const qc = useQueryClient();
-  const state = qc.getQueryState(['profile', loggedInUserUserName]);
+  const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
   if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
     return <MessagesLoading />;

@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useNavigate, useLocation, ScrollRestoration } from 'react-router-dom';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
+import { refreshToken } from '@/services/auth.services';
 import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 
@@ -22,9 +23,17 @@ function Routing(): JSX.Element {
   const { pathname } = useLocation();
   const { authed } = useAuth();
   const { approved } = useApproved();
+  // AUTH CHECK AND REFRESH TOKEN
+  React.useEffect(() => {
+    if (authed) {
+      setInterval(() => {
+        refreshToken();
+      }, 1000 * 60 * 90); // 90 minutes (lower than 2 hour on the backend)
+    }
+  }, [authed]);
 
   // CASE 1: UNAUTHED
-  if (!authed && qc.getQueryData(['user']) === null) {
+  if (qc.getQueryData(['user']) === null) {
     if (!allowedPaths.includes(pathname)) {
       navigate('/login');
     }

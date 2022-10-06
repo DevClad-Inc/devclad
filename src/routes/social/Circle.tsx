@@ -116,7 +116,7 @@ export default function Circle(): JSX.Element {
   useDocumentTitle('Circle');
   const qc = useQueryClient();
   const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser?.username;
+  const loggedInUserUserName = loggedInUser.username;
   const { usernames } = useCircleUsernames(loggedInUserUserName as string);
   const state = qc.getQueryState(['circle', loggedInUserUserName as string]);
   return (

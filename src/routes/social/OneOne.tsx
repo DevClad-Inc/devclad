@@ -34,7 +34,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
   const state = qc.getQueryState(['profile', username]);
   // logged in username and connection check
   const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser?.username;
+  const loggedInUserUserName = loggedInUser.username;
   const added = useAdded(loggedInUserUserName as string, username);
   // logged in username and connection check
   const { usernames: skippedUsers } = useSkippedUsernames();
@@ -52,7 +52,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
           id: 'connect-profile-success',
           duration: 3000,
         });
-        await qc.invalidateQueries(['circle', loggedInUserUserName]);
+        await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
         await qc.invalidateQueries(['circle', username]);
       })
       .catch(() => {
