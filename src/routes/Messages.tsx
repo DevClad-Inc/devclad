@@ -250,22 +250,24 @@ export function MessagesChild2() {
   const { streamToken } = useAuth();
 
   React.useEffect(() => {
-    const connect = async () => {
-      await client
-        .connectUser(
-          {
-            id: streamToken?.uid as string,
-            name: 'Jim Lahey',
-            image: 'https://i.imgur.com/fR9Jz14.png',
-          },
-          streamToken?.token as string
-        )
-        .then((res) => {
-          console.log('res', res);
-        });
-    };
-    connect();
-  }, [client]);
+    if (streamToken !== null) {
+      const connect = async () => {
+        await client
+          .connectUser(
+            {
+              id: streamToken?.uid as string,
+              name: 'Jim Lahey',
+              image: 'https://i.imgur.com/fR9Jz14.png',
+            },
+            streamToken?.token as string
+          )
+          .then((res) => {
+            console.log('res', res);
+          });
+      };
+      connect();
+    }
+  }, [client, streamToken]);
 
   return (
     <div />

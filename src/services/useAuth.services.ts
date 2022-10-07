@@ -14,7 +14,10 @@ export function useAuth() {
   const userRef = React.useRef<User>({ ...initialUserState });
 
   const { isSuccess, data } = useQuery(userQuery());
-  const { isSuccess: streamSuccess, data: streamData } = useQuery(streamQuery());
+  const { isSuccess: streamSuccess, data: streamData } = useQuery({
+    ...streamQuery(),
+    enabled: isSuccess && data !== null,
+  });
 
   if (streamSuccess && streamData) {
     streamTokenRef.current = streamData;

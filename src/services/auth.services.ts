@@ -257,7 +257,6 @@ export async function logOut() {
       .then(() => {
         Cookies.remove('refresh');
         Cookies.remove('token');
-        Cookies.remove('streamToken');
         delMany(['loggedInUser', 'profile']);
       })
       .catch(() => null);
