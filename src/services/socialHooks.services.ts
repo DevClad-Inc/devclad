@@ -10,8 +10,18 @@ import {
   userMatchesQuery,
   userShadowedQuery,
   userSkippedQuery,
+  streamUIDQuery,
 } from '@/lib/queriesAndLoaders';
 import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
+
+export const useStreamUID = (username: string) => {
+  const { isSuccess, data } = useQuery(streamUIDQuery(username));
+  if (isSuccess && data) {
+    const { uid } = data as { uid: string };
+    return uid;
+  }
+  return null;
+};
 
 export const useOneOneUsernames = () => {
   const usernames = [];
@@ -110,15 +120,16 @@ export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unk
 };
 
 export const useProfile = (username: string) => {
+  const profileRef = React.useRef<Profile | null>(null);
   const profileQuery = useQuery({
     ...profileUsernameQuery(username),
     enabled: username !== '',
   });
   if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery.data as { data: Profile };
-    return { ...data };
+    const { data } = profileQuery.data;
+    profileRef.current = data;
   }
-  return null;
+  return profileRef.current;
 };
 
 export const useAdditionalSP = () => {

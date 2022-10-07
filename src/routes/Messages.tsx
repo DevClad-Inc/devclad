@@ -12,13 +12,20 @@ import { StreamChat } from 'stream-chat';
 //   Channel,
 //   Window,
 // } from 'stream-chat-react';
+import toast from 'react-hot-toast';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
-import { useCircleUsernames, useConnected, useProfile } from '@/services/socialHooks.services';
+import {
+  useCircleUsernames,
+  useConnected,
+  useProfile,
+  useStreamUID,
+} from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 import { badge } from '@/lib/Buttons.lib';
 import { Profile } from '@/lib/InterfacesStates.lib';
 import { MessagesLoading } from '@/components/LoadingStates';
+import { Error } from '@/components/Feedback';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
@@ -89,12 +96,65 @@ export default function Messages() {
 }
 
 export function MessageChild(): JSX.Element {
+  const client = StreamChat.getInstance(import.meta.env.VITE_STREAM_API_KEY);
+  // UID of the other user
   const { username } = useParams() as { username: string };
-  const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser.username;
+  const otherUserUID = useStreamUID(username);
+  // UID of logged in user
+  const { loggedInUser, streamToken } = useAuth();
+  const loggedInUserUserName = loggedInUser.username as string;
+  const currUserUID = useStreamUID(loggedInUserUserName);
+
   const profileData = useProfile(loggedInUserUserName as string) as Profile;
+  // const otherProfile = useProfile(username) as Profile;
+
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
+
+  // todo: make this a hook
+  React.useEffect(() => {
+    if (
+      streamToken !== null &&
+      loggedInUser !== null &&
+      currUserUID !== null &&
+      otherUserUID !== null
+    ) {
+      const ConnectandCreateChannel = async () => {
+        await client
+          .connectUser(
+            {
+              id: streamToken?.uid as string,
+              first_name: loggedInUser.first_name as string,
+              last_name: loggedInUser.last_name as string,
+              username: loggedInUser.username,
+              email: loggedInUser.email,
+              image: profileData.avatar as string,
+            },
+            streamToken?.token as string
+          )
+          .then(async () => {
+            const channel = client.channel('messaging', { members: [currUserUID, otherUserUID] });
+            await channel
+              .create()
+              .then(async () => {
+                // console.log(resp);
+                // await channel.watch();
+              })
+              .catch(() => {
+                toast.custom(<Error error="Error initiating chat." />, {
+                  id: 'error-channel-create',
+                });
+              });
+          })
+          .catch(() => {
+            toast.custom(<Error error="Cannot connect to Stream. Try refreshing the page." />, {
+              id: 'stream-connect-error',
+            });
+          });
+      };
+      ConnectandCreateChannel();
+    }
+  }, [client, currUserUID, loggedInUser, otherUserUID, profileData, streamToken]);
 
   if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
     return <MessagesLoading />;
@@ -115,7 +175,7 @@ export function MessageChild(): JSX.Element {
                         alt=""
                       />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-row">
                       <div className="flex items-center space-x-2">
                         <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
                           <span className="text-orange-400">@</span>
@@ -125,8 +185,11 @@ export function MessageChild(): JSX.Element {
                           <span>1h ago</span>
                         </div>
                       </div>
-                      <div className="mt-2 w-3/5 rounded-xl bg-neutral-900 p-3 text-sm text-neutral-900 dark:text-neutral-100">
-                        <span>Message</span>
+                      <div className="mt-2 max-w-sm rounded-xl bg-neutral-900 p-3 text-sm text-neutral-100">
+                        <span>
+                          Message Message Message Message Message Message Message Message Message
+                          Message
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -138,7 +201,7 @@ export function MessageChild(): JSX.Element {
                         alt=""
                       />
                     </div>
-                    <div className="flex-0">
+                    <div className="flex-row-reverse">
                       <div className="flex items-center space-x-2">
                         <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
                           <span className="text-orange-400">@</span>
@@ -148,30 +211,7 @@ export function MessageChild(): JSX.Element {
                           <span>1h ago</span>
                         </div>
                       </div>
-                      <div className="text-sm text-neutral-900 dark:text-neutral-100">
-                        <span>Message</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-row items-center space-x-2">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                        alt=""
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                          <span className="text-orange-400">@</span>
-                          <span className="text-orange-400">{username}</span>
-                        </div>
-                        <div className="text-xs text-neutral-400 dark:text-neutral-600">
-                          <span>1h ago</span>
-                        </div>
-                      </div>
-                      <div className="text-sm text-neutral-900 dark:text-neutral-100">
+                      <div className="mt-2 max-w-sm rounded-xl bg-neutral-800 p-3 text-sm text-white">
                         <span>Message</span>
                       </div>
                     </div>
@@ -246,29 +286,6 @@ export function MessageChild(): JSX.Element {
 }
 
 export function MessagesChild2() {
-  const client = StreamChat.getInstance(import.meta.env.VITE_STREAM_API_KEY);
-  const { streamToken } = useAuth();
-
-  React.useEffect(() => {
-    if (streamToken !== null) {
-      const connect = async () => {
-        await client
-          .connectUser(
-            {
-              id: streamToken?.uid as string,
-              name: 'Jim Lahey',
-              image: 'https://i.imgur.com/fR9Jz14.png',
-            },
-            streamToken?.token as string
-          )
-          .then((res) => {
-            console.log('res', res);
-          });
-      };
-      connect();
-    }
-  }, [client, streamToken]);
-
   return (
     <div />
     // <Chat client={client}>
