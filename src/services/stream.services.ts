@@ -17,7 +17,7 @@ export const getStreamToken = async () => {
         Accept: 'application/json',
       },
     })
-      .then((resp) => resp.data.token)
+      .then((resp) => resp.data)
       .catch(() => null);
   }
   return null;

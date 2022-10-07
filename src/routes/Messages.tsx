@@ -2,6 +2,16 @@ import React from 'react';
 import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { PaperClipIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useQueryClient } from '@tanstack/react-query';
+import { StreamChat } from 'stream-chat';
+// import {
+//   ChannelHeader,
+//   Chat,
+//   MessageInput,
+//   MessageList,
+//   Thread,
+//   Channel,
+//   Window,
+// } from 'stream-chat-react';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { useCircleUsernames, useConnected, useProfile } from '@/services/socialHooks.services';
@@ -21,6 +31,7 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
   const { loggedInUser } = useAuth();
   const loggedInUserUserName = loggedInUser.username;
   const connected = useConnected(user, loggedInUserUserName as string);
+
   if (connected) {
     return (
       <NavLink
@@ -231,5 +242,42 @@ export function MessageChild(): JSX.Element {
         </div>
       </div>
     </div>
+  );
+}
+
+export function MessagesChild2() {
+  const client = StreamChat.getInstance(import.meta.env.VITE_STREAM_API_KEY);
+  const { streamToken } = useAuth();
+
+  React.useEffect(() => {
+    const connect = async () => {
+      await client
+        .connectUser(
+          {
+            id: streamToken?.uid as string,
+            name: 'Jim Lahey',
+            image: 'https://i.imgur.com/fR9Jz14.png',
+          },
+          streamToken?.token as string
+        )
+        .then((res) => {
+          console.log('res', res);
+        });
+    };
+    connect();
+  }, [client]);
+
+  return (
+    <div />
+    // <Chat client={client}>
+    //   <Channel channel={channel}>
+    //     <Window>
+    //       <ChannelHeader />
+    //       <MessageList />
+    //       <MessageInput />
+    //     </Window>
+    //     <Thread />
+    //   </Channel>
+    // </Chat>
   );
 }

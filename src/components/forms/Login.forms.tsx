@@ -8,7 +8,7 @@ import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { LoginFormValues } from '@/lib/InterfacesStates.lib';
-import { getStreamToken } from '@/services/stream.services';
+import { streamQuery } from '@/lib/queriesAndLoaders';
 
 interface LoginFormProps {
   loginError: boolean;
@@ -49,9 +49,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
         .catch(() => {
           delMany(['loggedInUser', 'profile']);
         });
-      await getStreamToken().then(() => {
-        qc.invalidateQueries(['stream']);
-      });
+      qc.fetchQuery(streamQuery());
     } catch (error) {
       setLoginError(true);
       setSubmitting(false);

@@ -3,9 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
 import { statusQuery, streamQuery, userQuery } from '@/lib/queriesAndLoaders';
 
+export type StreamTokenT = {
+  token: string;
+  uid: string;
+};
+
 export function useAuth() {
   const authedRef = React.useRef<boolean>(false);
-  const streamTokenRef = React.useRef<string | null>(null);
+  const streamTokenRef = React.useRef<StreamTokenT | null>(null);
   const userRef = React.useRef<User>({ ...initialUserState });
 
   const { isSuccess, data } = useQuery(userQuery());

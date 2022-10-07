@@ -27,7 +27,7 @@ import Social from '@/routes/social/Social';
 import OneOne from '@/routes/social/OneOne';
 import Circle from '@/routes/social/Circle';
 import Profile from '@/routes/Profile';
-import Messages, { MessageChild } from '@/routes/Messages';
+import Messages, { MessageChild, MessagesChild2 } from '@/routes/Messages';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -125,6 +125,11 @@ const router = createBrowserRouter([
             path: '/messages/:username',
             hasErrorBoundary: true,
             element: <MessageChild />,
+          },
+          {
+            path: '/messages/test',
+            hasErrorBoundary: true,
+            element: <MessagesChild2 />,
           },
         ],
       },

@@ -31,7 +31,6 @@ export function PrimaryButton({ children, isSubmitting, disabled, wFull, classNa
   return (
     <button
       type="submit"
-      // check if onclick is defined, if not, use handleClick
       disabled={isSubmitting || disabled}
       className={classNames(
         wFull ? 'w-full' : 'w-auto px-6',
