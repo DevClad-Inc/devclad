@@ -152,9 +152,10 @@ export async function refreshToken() {
       await qc.invalidateQueries();
     })
     .catch(() => {
+      delMany(['loggedInUser', 'profile']);
       Cookies.remove('token');
       Cookies.remove('refresh');
-      delMany(['loggedInUser', 'profile']);
+      Cookies.remove('streamConnected');
     });
 }
 
@@ -255,9 +256,10 @@ export async function logOut() {
         credentials: 'same-origin',
       })
       .then(() => {
-        Cookies.remove('refresh');
-        Cookies.remove('token');
         delMany(['loggedInUser', 'profile']);
+        Cookies.remove('token');
+        Cookies.remove('refresh');
+        Cookies.remove('streamConnected');
       })
       .catch(() => null);
     return response;

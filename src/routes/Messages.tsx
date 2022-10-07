@@ -13,6 +13,7 @@ import { StreamChat } from 'stream-chat';
 //   Window,
 // } from 'stream-chat-react';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 import classNames from '@/lib/ClassNames.lib';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import {
@@ -117,7 +118,9 @@ export function MessageChild(): JSX.Element {
       streamToken !== null &&
       loggedInUser !== null &&
       currUserUID !== null &&
-      otherUserUID !== null
+      otherUserUID !== null &&
+      profileData !== null &&
+      Cookies.get('streamConnected') !== 'true'
     ) {
       const ConnectandCreateChannel = async () => {
         await client
@@ -133,6 +136,7 @@ export function MessageChild(): JSX.Element {
             streamToken?.token as string
           )
           .then(async () => {
+            Cookies.set('streamConnected', 'true');
             const channel = client.channel('messaging', { members: [currUserUID, otherUserUID] });
             await channel
               .create()
