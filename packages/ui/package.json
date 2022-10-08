@@ -1,6 +1,7 @@
 {
 	"name": "@devclad/ui",
 	"version": "0.0.0",
+	"license": "Elastic License 2.0",
 	"main": "index.js",
 	"files": [
 		"tailwindcss-config.js"
