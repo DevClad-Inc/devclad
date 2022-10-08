@@ -14,6 +14,11 @@ export default defineConfig({
       brotliSize: true,
     }) as any,
   ],
+  build: {
+    rollupOptions: {
+      external: ['@devclad/ui', '@devclad/config'],
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
