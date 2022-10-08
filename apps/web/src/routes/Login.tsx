@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import DevCladLogo from '@devclad/ui/assets/svg/devclad.svg';
+import DevCladLogo from '@devclad/ui/svg/devclad.svg';
 import LoginForm from '@/components/forms/Login.forms';
 import { Error } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';

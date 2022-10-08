@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import GraphTexure from '@devclad/ui/assets/svg/graph-texture.svg';
+import GraphTexure from '@devclad/ui/assets/graph-texture.svg';
 import Landing from '@/components/Landing';
 
 function App() {

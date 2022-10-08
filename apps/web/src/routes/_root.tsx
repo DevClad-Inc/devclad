@@ -3,7 +3,7 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
-import GraphTexure from '@devclad/ui/assets/svg/graph-texture.svg';
+import GraphTexure from '@devclad/ui/svg/graph-texture.svg';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
 import { refreshToken } from '@/services/auth.services';

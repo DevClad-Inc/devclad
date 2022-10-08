@@ -2,7 +2,7 @@ import React from 'react';
 import { Popover } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { toast, Toaster } from 'react-hot-toast';
-import DevCladLogo from '@devclad/ui/assets/svg/devclad.svg';
+import DevCladLogo from '@devclad/ui/assets/devclad.svg';
 import {
   WrenchIcon,
   UserGroupIcon,

@@ -9,7 +9,7 @@ import {
   ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline';
 
-import DevCladLogo from '@devclad/ui/assets/svg/devclad.svg';
+import DevCladLogo from '@devclad/ui/svg/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
 import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
