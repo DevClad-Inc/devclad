@@ -1,0 +1,71 @@
+/**
+ * @license
+ *
+ * Font Family: JetBrains Mono
+ * Designed by: JetBrains, Philipp Nurullin, Konstantin Bulenkov
+ * URL: https://www.fontshare.com/fonts/jet-brains-mono
+ * © 2022 Indian Type Foundry
+ *
+ * Font Styles:
+ * JetBrains Mono Variable(Variable font)
+ * JetBrains Mono Variable Italic(Variable font)
+ * JetBrains Mono Thin
+ * JetBrains Mono Thin Italic
+ * JetBrains Mono Extra Light
+ * JetBrains Mono Extra Light Italic
+ * JetBrains Mono Light
+ * JetBrains Mono Light Italic
+ * JetBrains Mono Regular
+ * JetBrains Mono Italic
+ * JetBrains Mono Medium
+ * JetBrains Mono Medium Italic
+ * JetBrains Mono Semi Bold
+ * JetBrains Mono Semi Bold Italic
+ * JetBrains Mono Bold
+ * JetBrains Mono Bold Italic
+ * JetBrains Mono Extra Bold
+ * JetBrains Mono Extra Bold Italic
+ *
+*/
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 400.0;
+*
+* available axes:
+
+* 'wght' (range from 100.0 to 800.0)
+
+*/
+
+@font-face {
+  font-family: 'JetBrainsMono-Variable';
+  src: url('./fonts/JetBrainsMono-Variable.woff2') format('woff2'),
+    url('./fonts/JetBrainsMono-Variable.woff') format('woff'),
+    url('./fonts/JetBrainsMono-Variable.ttf') format('truetype');
+  font-weight: 100 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 400.0;
+*
+* available axes:
+
+* 'wght' (range from 100.0 to 800.0)
+
+*/
+
+@font-face {
+  font-family: 'JetBrainsMono-VariableItalic';
+  src: url('./fonts/JetBrainsMono-VariableItalic.woff2') format('woff2'),
+    url('./fonts/JetBrainsMono-VariableItalic.woff') format('woff'),
+    url('./fonts/JetBrainsMono-VariableItalic.ttf') format('truetype');
+  font-weight: 100 800;
+  font-display: swap;
+  font-style: italic;
+}

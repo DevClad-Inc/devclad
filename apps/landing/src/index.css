@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'ClashDisplay-Variable';
+  font-size: 16px;
+  font-weight: 400;
+  scroll-behavior: smooth;
+  font-synthesis: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  -webkit-text-size-adjust: 100%;
+}
