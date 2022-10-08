@@ -9,7 +9,6 @@ export default defineConfig({
     outDir: './dist',
     assetsDir: '.',
   },
-  // publicDir: '../../packages/ui/assets',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
