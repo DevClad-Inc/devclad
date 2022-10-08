@@ -42,6 +42,11 @@ export default defineConfig({
   //     external: [/^@devclad\/ui/, /^@devclad\/config/],
   //   },
   // },
+  build: {
+    outDir: './dist',
+    assetsDir: '.',
+  },
+  publicDir: '../../packages/ui/assets',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
