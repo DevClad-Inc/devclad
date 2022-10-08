@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "license": "Elastic License 2.0",
   "main": "index.js",
-  "files": [
-    "tailwindcss-config.js"
-  ],
+  "exports": {
+    ".": "./fonts.css",
+    "./tailwindcss-config": "./tailwindcss-config.js",
+    "./postcss": "./postcss.config.js",
+    "./fontscss": "./fonts.css",
+    "./assets/*": "./assets/*"
+  },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "tailwindcss": "^3.1.8"

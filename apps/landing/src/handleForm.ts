@@ -22,7 +22,6 @@ export default function handleForm(email: string) {
       }
       if (records) {
         records.forEach((record) => {
-          //   console.log(record.getId());
           toast.success(`Thanks, you'll be notified of the launch!`, {
             style: {
               background: '#111111',

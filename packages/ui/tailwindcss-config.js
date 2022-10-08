@@ -120,12 +120,10 @@ module.exports = {
   },
   plugins: [
     "@tailwindcss/forms",
-    // add scrollbar color
     plugin(({ addBase, theme }) => {
       addBase({
         ".scrollbar": {
           overflowY: "auto",
-          // if dark mode is enabled, use the dark scrollbar color
           scrollbarWidth: "thin",
         },
         ".scrollbar::-webkit-scrollbar": {

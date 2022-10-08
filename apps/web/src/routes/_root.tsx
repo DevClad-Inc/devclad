@@ -3,6 +3,7 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
+import GraphTexure from '@devclad/ui/assets/svg/graph-texture.svg';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
 import { refreshToken } from '@/services/auth.services';
@@ -27,11 +28,11 @@ function Routing(): JSX.Element {
     if (authed) {
       setInterval(() => {
         refreshToken();
-      }, 1000 * 60 * 90); // 90 minutes (lower than 2 hour on the backend)
+      }, 1000 * 60 * 90); // (lower than 2 hour on the backend)
     }
   }, [authed]);
 
-  // CASE 1: UNAUTHED
+  // UNAUTHED
   if (qc.getQueryData(['user']) === null) {
     if (!allowedPaths.includes(pathname)) {
       return <Navigate to="/login" />;
@@ -39,7 +40,7 @@ function Routing(): JSX.Element {
     return <Outlet />;
   }
 
-  // CASE 2: AUTHED+UNAPPROVED USER
+  // AUTHED+UNAPPROVED USER
   if (authed && approved === false) {
     if (!pathname.includes('onboarding')) {
       return <Navigate to="/onboarding" />;
@@ -47,7 +48,7 @@ function Routing(): JSX.Element {
     return <Outlet />;
   }
 
-  // CASE 3: AUTHED+APPROVED USER
+  // AUTHED+APPROVED USER
   if (authed && approved) {
     return (
       <AppShell>
@@ -70,7 +71,7 @@ export default function Root(): JSX.Element {
     }
   }, [darkMode]);
   return (
-    <div className="bg-[url('./assets/graph-paper.svg')]">
+    <div style={{ backgroundImage: `url(${GraphTexure})` }}>
       <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
         <div
           className="sm:text-md bg-white from-black/50

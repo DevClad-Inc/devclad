@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@devclad/ui": "*",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.11",
     "@tanstack/react-query": "^4.9.0",

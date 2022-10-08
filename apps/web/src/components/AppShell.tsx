@@ -9,7 +9,7 @@ import {
   ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline';
 
-import DevCladLogo from '@/assets/devclad.svg';
+import DevCladLogo from '@devclad/ui/assets/svg/devclad.svg';
 import classNames from '@/lib/ClassNames.lib';
 import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
@@ -154,7 +154,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <div className="w-full">
               <nav
                 className="flex rounded-tl-xl border-t
-               bg-black shadow-lg backdrop-blur-lg dark:border-orange-300/30
+               border-orange-300 bg-black
               "
                 aria-label="Tabs"
               >
@@ -187,8 +187,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {!noBreadCrumbRoutes.includes(pathArray[0]) && (
                   <ol
                     className="flex items-center space-x-4 rounded-md
-                  border-[1px] border-neutral-200
-                 p-2 shadow-2xl shadow-white/20 dark:border-neutral-800"
+                  border-[1px] border-neutral-900 p-2 shadow-white/20"
                   >
                     <li>
                       <div>
@@ -227,8 +226,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {pathname.includes('profile') && (
                   <ol
                     className="flex items-center space-x-4 rounded-md
-                    border-[1px] border-neutral-200
-                  p-2 shadow-2xl shadow-white/20 dark:border-neutral-800"
+                    border-[1px] border-neutral-900 p-2 shadow-white/20"
                   >
                     <li>
                       <div className="flex items-center">
@@ -249,10 +247,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   </ol>
                 )}
                 <span
-                  className="hidden items-center rounded-md border-[1px] border-neutral-200 p-2
-                font-mono text-xs font-medium text-orange-300 shadow-2xl shadow-white/20
-                duration-300 hover:text-white
-                dark:border-neutral-800 md:visible md:flex"
+                  className="hidden items-center rounded-md border-[1px] border-neutral-900
+                p-2 font-mono text-xs font-medium text-orange-300
+                shadow-white/20 duration-500
+                hover:text-white md:visible md:flex"
                 >
                   <kbd
                     className={classNames(

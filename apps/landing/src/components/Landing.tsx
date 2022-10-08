@@ -2,6 +2,7 @@ import React from 'react';
 import { Popover } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { toast, Toaster } from 'react-hot-toast';
+import DevCladLogo from '@devclad/ui/assets/svg/devclad.svg';
 import {
   WrenchIcon,
   UserGroupIcon,
@@ -9,7 +10,6 @@ import {
   ArrowUpIcon,
 } from '@heroicons/react/24/solid';
 import handleForm from '../handleForm';
-import DevCladLogo from '../assets/devclad.svg';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -42,8 +42,8 @@ function CTA() {
         >
           <div className="sm:flex">
             <div className="min-w-2 flex-1">
-              <label htmlFor="email" className="sr-only">
-                Email address
+              <label htmlFor="email">
+                <span className="sr-only">Email address</span>
                 <input
                   id="email"
                   type="email"
@@ -110,7 +110,7 @@ export default function Landing() {
               <div className="relative">
                 <div className="z-10 mx-auto px-4 sm:px-6 sm:text-center lg:items-center">
                   <div className="lg:py-24">
-                    <h1 className="font-quilon text-whitewhite mt-5 text-5xl font-bold tracking-tight lg:-mt-6">
+                    <h1 className="text-whitewhite mt-5 text-5xl font-bold tracking-tight lg:-mt-6">
                       DevClad
                     </h1>
                     <span className="mb-2 flex sm:justify-center">
@@ -131,7 +131,7 @@ export default function Landing() {
                       <span className="rounded-full bg-amber-100 px-3 py-0.5 font-mono text-xs font-semibold text-black lg:text-sm">
                         Beta 1.0 soon
                       </span>
-                      <span className="font-quilon ml-4 text-xs lg:text-sm">Join our Discord</span>
+                      <span className=" ml-4 text-xs lg:text-sm">Join our Discord</span>
                       <ChevronRightIcon
                         className="ml-2 h-5 w-5 text-neutral-500"
                         aria-hidden="true"
@@ -140,7 +140,7 @@ export default function Landing() {
                     <div className="flex sm:justify-center">
                       <div className="rounded-xl bg-gradient-to-br from-darkBG via-black to-neutral-900 p-6 sm:w-3/4">
                         <h1
-                          className="font-quilon text-5xl font-semibold tracking-tighter
+                          className=" text-5xl font-semibold tracking-tighter
                       text-[#fff] sm:text-7xl sm:font-medium md:text-8xl xl:text-9xl"
                         >
                           <span className="block">
@@ -168,7 +168,7 @@ export default function Landing() {
                           <div className="absolute mt-5 flex h-12 w-12 items-center justify-center rounded-md bg-orange-100 text-black">
                             <UserGroupIcon className="h-6 w-6" aria-hidden="true" />
                           </div>
-                          <dd className="font-quilon mt-3 ml-16 text-orange-50">
+                          <dd className=" mt-3 ml-16 text-orange-50">
                             Weekly 1—&#8288;on&#8288;—&#8288;1 match from a pool of vetted
                             developers 🌎 using ML.
                           </dd>
@@ -176,7 +176,7 @@ export default function Landing() {
                             <div className="absolute mt-7 flex h-12 w-12 items-center justify-center rounded-md bg-amber-100 text-black">
                               <ArrowTrendingUpIcon className="h-6 w-6" aria-hidden="true" />
                             </div>
-                            <dd className="font-quilon mt-2 ml-16 text-amber-50">
+                            <dd className=" mt-2 ml-16 text-amber-50">
                               Project and Hackathon Discovery that makes teaming up{' '}
                               <span className="text-green-100">seamless</span>.
                             </dd>
@@ -185,7 +185,7 @@ export default function Landing() {
                             <div className="absolute mt-7 flex h-12 w-12 items-center justify-center rounded-md bg-orange-100 text-black">
                               <WrenchIcon className="h-6 w-6" aria-hidden="true" />
                             </div>
-                            <dd className="font-quilon mt-2 ml-16 text-orange-50">
+                            <dd className="mt-2 ml-16 text-orange-50">
                               <span>
                                 <span>
                                   Minimal & Robust Integrated Team Toolkit to get sh*t done faster.
@@ -202,17 +202,9 @@ export default function Landing() {
                     </div>
                   </div>
                 </div>
-
-                {/*
-               floating svg on the right
-
-               */}
               </div>
             </div>
           </div>
-
-          {/* More main page content here... */}
-          {/* About */}
         </main>
         <div className="font-quilon mt-5 sm:-mt-20">
           <div className="relative mx-auto max-w-prose rounded-xl text-center">
