@@ -1,0 +1,11 @@
+{
+	"files": [],
+	"references": [
+		{
+			"path": "apps/web"
+		},
+		{
+			"path": "packages/eslint-config-custom"
+		}
+	]
+}
