@@ -13,7 +13,7 @@ export default defineConfig({
     visualizer({
       gzipSize: true,
       brotliSize: true,
-    }),
+    }) as any,
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
