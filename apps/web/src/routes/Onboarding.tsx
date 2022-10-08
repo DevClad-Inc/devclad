@@ -3,7 +3,7 @@ import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
-import DevCladLogo from '@devclad/ui/svg/devclad.svg';
+import DevCladLogo from '@devclad/ui/assets/devclad.svg';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';

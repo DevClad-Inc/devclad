@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
-import DevCladLogo from '@devclad/ui/svg/devclad.svg';
+import DevCladLogo from '@devclad/ui/assets/devclad.svg';
 import { verifyEmail } from '@/services/auth.services';
 import { Error, Success } from '@/components/Feedback';
 import useDocumentTitle from '@/lib/useDocumentTitle.lib';
