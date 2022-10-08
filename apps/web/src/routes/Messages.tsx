@@ -119,8 +119,8 @@ export function MessageChild(): JSX.Element {
       loggedInUser !== null &&
       currUserUID !== null &&
       otherUserUID !== null &&
-      profileData !== null &&
-      Cookies.get('streamConnected') !== 'true'
+      profileData !== null
+      // && Cookies.get('streamConnected') !== 'true'
     ) {
       const ConnectandCreateChannel = async () => {
         await client
