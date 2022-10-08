@@ -62,11 +62,8 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 
 export default function Messages() {
   useDocumentTitle('Messages');
-  // logged in username and connection check
   const { loggedInUser } = useAuth();
   const loggedInUserUserName = loggedInUser.username;
-  // const connected = useConnected(username, otherUser);
-  // logged in username and connection check
   const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string) as {
     usernames: string[];
   };
@@ -103,7 +100,6 @@ export function MessageChild(): JSX.Element {
   const qc = useQueryClient();
   const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
-  // todo: make this a hook
   React.useEffect(() => {
     if (
       streamToken !== null &&
@@ -241,9 +237,7 @@ export function MessageChild(): JSX.Element {
                 defaultValue=""
               />
 
-              {/* Spacer element to match the height of the toolbar */}
               <div className="py-1" aria-hidden="true">
-                {/* Matches height of button in toolbar (1px border + 36px content height) */}
                 <div className="py-px">
                   <div className="h-9" />
                 </div>
