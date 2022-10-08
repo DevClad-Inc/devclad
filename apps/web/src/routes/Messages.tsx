@@ -3,15 +3,6 @@ import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { PaperClipIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useQueryClient } from '@tanstack/react-query';
 import { StreamChat } from 'stream-chat';
-// import {
-//   ChannelHeader,
-//   Chat,
-//   MessageInput,
-//   MessageList,
-//   Thread,
-//   Channel,
-//   Window,
-// } from 'stream-chat-react';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import classNames from '@/lib/ClassNames.lib';
@@ -286,21 +277,5 @@ export function MessageChild(): JSX.Element {
         </div>
       </div>
     </div>
-  );
-}
-
-export function MessagesChild2() {
-  return (
-    <div />
-    // <Chat client={client}>
-    //   <Channel channel={channel}>
-    //     <Window>
-    //       <ChannelHeader />
-    //       <MessageList />
-    //       <MessageInput />
-    //     </Window>
-    //     <Thread />
-    //   </Channel>
-    // </Chat>
   );
 }

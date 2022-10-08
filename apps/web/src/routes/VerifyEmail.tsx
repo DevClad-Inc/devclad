@@ -1,5 +1,5 @@
-import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
+import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import DevCladLogo from '@/assets/devclad.svg';
