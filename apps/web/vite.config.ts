@@ -39,7 +39,7 @@ export default defineConfig({
   ],
   build: {
     rollupOptions: {
-      external: ['@devclad/ui', '@devclad/config'],
+      external: [/^@devclad\/ui/, /^@devclad\/config/],
     },
   },
   resolve: {
