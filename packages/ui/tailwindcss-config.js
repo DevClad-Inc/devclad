@@ -8,6 +8,7 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontSize: {
+      xxs: [".625rem", { lineHeight: "0.75rem" }],
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.5rem" }],
       base: ["1rem", { lineHeight: "1.5rem" }],
@@ -21,6 +22,7 @@ module.exports = {
       "7xl": ["4.5rem", { lineHeight: "1" }],
       "8xl": ["6rem", { lineHeight: "1" }],
       "9xl": ["8rem", { lineHeight: "1" }],
+      "10xl": ["10rem", { lineHeight: "1" }],
     },
     extend: {
       colors: {
@@ -55,6 +57,36 @@ module.exports = {
         display: ['"Quilon-Variable"'],
       },
       keyframes: {
+        "gradient-y": {
+          "0%, 100%": {
+            "background-size": "400% 400%",
+            "background-position": "center top",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "center center",
+          },
+        },
+        "gradient-x": {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
+        "gradient-xy": {
+          "0%, 100%": {
+            "background-size": "400% 400%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
         // gradient text animation from #F0C000 to #660C00
         gradient: {
           "0%, 100%": { color: "#fab296", backgroundPosition: "0% 50%" },
@@ -116,10 +148,38 @@ module.exports = {
         dropdarkglow: "dropdarkglow 10s ease-out infinite",
         darkglowbtn: "darkglowbutton 20s ease-out infinite",
       },
+      animation: {
+        blob: "blob 7s infinite",
+      },
+      keyframes: {
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(50px, -30px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+        },
+      },
     },
   },
   plugins: [
     "@tailwindcss/forms",
+    "@tailwindcss/aspect-ratio",
+    plugin(function ({ addBase, theme }) {
+      addBase({
+        body: {
+          color: theme("colors.white"),
+          backgroundColor: theme("colors.black"),
+        },
+      });
+    }),
     plugin(({ addBase, theme }) => {
       addBase({
         ".scrollbar": {

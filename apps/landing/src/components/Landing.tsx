@@ -50,18 +50,18 @@ function CTA() {
                   placeholder="Enter your email"
                   className="block w-full rounded-md bg-darkBG px-4 py-4
           text-base text-white placeholder-white focus:outline-none
-          focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 focus:ring-offset-neutral-900"
+          focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-neutral-900"
                 />
               </label>
             </div>
-            <div className="mt-3 animate-dropdarkglow sm:mt-0 sm:ml-3">
+            <div className="animate-dropdarkglow mt-3 sm:mt-0 sm:ml-3">
               <button
                 type="submit"
                 className={classNames(
                   submitted
                     ? 'bg-green-300 text-black hover:bg-green-400 focus:ring-emerald-300 focus:ring-offset-2'
-                    : 'bg-black text-white hover:bg-orange-600 focus:ring-indigo-300 focus:ring-offset-2',
-                  'block w-full animate-darkglowbtn rounded-md py-4 px-4 font-medium duration-500 focus:outline-none focus:ring-2 focus:ring-offset-neutral-900'
+                    : 'bg-transparent text-white hover:bg-black',
+                  'animate-darkglowbtn block w-full rounded-md py-4 px-4 font-medium duration-500 focus:outline-none focus:ring-2 focus:ring-offset-neutral-900'
                 )}
               >
                 {submitted ? 'You will be notified!' : 'Get Notified'}
@@ -69,7 +69,7 @@ function CTA() {
             </div>
           </div>
           <p className="mt-5 text-center font-mono text-sm text-orange-100 sm:p-3 lg:p-2">
-            DevClad Starter ($5/mo) included for first 1000 users.
+            DevClad Membership ($5/mo) included for first 1000 users.
           </p>
         </form>
       </div>
@@ -137,7 +137,7 @@ export default function Landing() {
                         aria-hidden="true"
                       />
                     </a>
-                    <div className="flex sm:justify-center">
+                    <div className=" flex sm:justify-center">
                       <div className="rounded-xl bg-gradient-to-br from-darkBG via-black to-neutral-900 p-6 sm:w-3/4">
                         <h1
                           className=" text-5xl font-semibold tracking-tighter
