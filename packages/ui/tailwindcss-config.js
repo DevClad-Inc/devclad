@@ -52,74 +52,26 @@ module.exports = {
       },
       fontFamily: {
         mono: ['"JetBrainsMono-Variable"'],
-        monoItalic: ['"JetBrainsMono-VariableItalic"'],
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-        display: ['"Quilon-Variable"'],
       },
       keyframes: {
-        "gradient-y": {
-          "0%, 100%": {
-            "background-size": "400% 400%",
-            "background-position": "center top",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "center center",
-          },
-        },
-        "gradient-x": {
-          "0%, 100%": {
-            "background-size": "200% 200%",
-            "background-position": "left center",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
-        "gradient-xy": {
-          "0%, 100%": {
-            "background-size": "400% 400%",
-            "background-position": "left center",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
-        // gradient text animation from #F0C000 to #660C00
         gradient: {
           "0%, 100%": { color: "#fab296", backgroundPosition: "0% 50%" },
           "25%": { color: "#45caff", backgroundPosition: "100% 25%" },
           "75%": { color: "#aafa96", backgroundPosition: "0% 50%" },
         },
-        darkglow: {
-          "0%": {
-            boxShadow: "0 0 0 3px #3a015c",
-          },
-          "25%": {
-            boxShadow: "0 0 0 3px #280000",
-          },
-          "50%": {
-            boxShadow: "0 0 0 3px #290025",
-          },
-          "75%": {
-            boxShadow: "0 0 0 3px #35012c",
-          },
-          "100%": { boxShadow: "0 0 0 3px #3a015c" },
-        },
         darkglowbutton: {
           "0%": {
-            boxShadow: "0 0 0 1px #3a015c",
+            boxShadow: "0 0 0 2px #3a015c",
           },
           "25%": {
-            boxShadow: "0 0 0 1px #280000",
+            boxShadow: "0 0 0 2x #280000",
           },
           "50%": {
             boxShadow: "0 0 0 1px #651673",
           },
           "75%": {
-            boxShadow: "0 0 0 1px #35012c",
+            boxShadow: "0 0 0 2px #35012c",
           },
           "100%": { boxShadow: "0 0 0 1px #3a015c" },
         },
@@ -138,20 +90,6 @@ module.exports = {
           },
           "100%": { boxShadow: "0 10px 20px 5px #3a015c" },
         },
-      },
-      animation: {
-        gradient: "gradient 10s ease-out infinite",
-        "gradient-reverse": "gradient 10s ease infinite reverse",
-        "spin-slow": "spin 10s linear",
-        "pulse-slow": "pulse 10s linear infinite",
-        darkglow: "darkglow 5s ease-out infinite",
-        dropdarkglow: "dropdarkglow 10s ease-out infinite",
-        darkglowbtn: "darkglowbutton 20s ease-out infinite",
-      },
-      animation: {
-        blob: "blob 7s infinite",
-      },
-      keyframes: {
         blob: {
           "0%": {
             transform: "translate(0px, 0px) scale(1)",
@@ -166,6 +104,20 @@ module.exports = {
             transform: "translate(0px, 0px) scale(1)",
           },
         },
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.5s ease-in forwards",
+        gradient: "gradient 10s ease-out infinite",
+        "gradient-reverse": "gradient 10s ease infinite reverse",
+        "spin-slow": "spin 10s linear",
+        "pulse-slow": "pulse 10s linear infinite",
+        dropdarkglow: "dropdarkglow 10s ease-out infinite",
+        darkglowbtn: "darkglowbutton 20s ease-out infinite",
+        blob: "blob 7s infinite",
       },
     },
   },

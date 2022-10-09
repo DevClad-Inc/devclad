@@ -162,7 +162,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
                p-4 text-neutral-800 dark:border-neutral-800
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
               >
-                <div className="font-monoItalic">
+                <div className="italic text-neutral-300">
                   <p>
                     &quot;
                     {profile.about}
@@ -272,7 +272,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
                dark:bg-darkBG dark:text-neutral-200 sm:ml-24"
               >
                 <div className="flex flex-col">
-                  <div className="space-y-2 bg-darkBG font-monoItalic">
+                  <div className="space-y-2 bg-darkBG italic text-neutral-300">
                     <span className="block">
                       &quot;
                       {profile.idea_status && genIdea(profile.idea_status)}{' '}

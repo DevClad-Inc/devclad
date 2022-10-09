@@ -174,7 +174,7 @@ export function Onboarding() {
               DevClad
             </h1>
           </div>
-          <h2 className="mt-5 text-center font-display text-3xl text-neutral-700 dark:text-neutral-300">
+          <h2 className="mt-5 text-center text-3xl text-neutral-700 dark:text-neutral-300">
             Onboarding
           </h2>
           <p className="mt-2 p-2 text-center text-sm text-neutral-600 dark:text-neutral-400">

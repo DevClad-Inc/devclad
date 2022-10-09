@@ -14,7 +14,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setDarkMode(!dark);
     Cookies.set('darkMode', String(!dark), {
       expires: 365,
-      secure: true,
+      secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       sameSite: 'lax',
     });
   };

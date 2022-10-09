@@ -1,8 +1,8 @@
 import React from 'react';
 import { PageContextProvider } from './usePageContext';
 import type { PageContext } from './types';
-import '@/root.css';
 import '@devclad/ui/fontscss';
+import '@/root.css';
 
 function Content({ children }: { children: React.ReactNode }) {
   return <div className="bg-black text-white">{children}</div>;

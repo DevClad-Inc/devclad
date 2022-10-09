@@ -24,10 +24,11 @@ export default function handleForm(email: string) {
         records.forEach((record) => {
           toast.success(`Thanks, you'll be notified of the launch!`, {
             style: {
-              background: '#111111',
-              color: '#ffffe3',
+              background: '#000',
+              color: '#fff',
+              border: '1px dashed #555',
               width: '100%',
-              fontSize: '20px',
+              fontSize: '18px',
               textAlign: 'center',
             },
             duration: 5000,

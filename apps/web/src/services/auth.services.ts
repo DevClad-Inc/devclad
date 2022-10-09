@@ -140,12 +140,12 @@ export async function refreshToken() {
       Cookies.set('token', resp.data.access, {
         expires: 1 / 12,
         sameSite: 'strict',
-        secure: true,
+        secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       });
       Cookies.set('refresh', resp.data.refresh, {
         expires: 14, // 2 weeks
         sameSite: 'strict',
-        secure: true,
+        secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       });
     })
     .then(async () => {
@@ -208,12 +208,12 @@ export async function SignUp(user: NewUser) {
       Cookies.set('token', resp.data.access_token, {
         expires: 1 / 12,
         sameSite: 'strict',
-        secure: true,
+        secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       });
       Cookies.set('refresh', resp.data.refresh_token, {
         expires: 14, // 2 weeks
         sameSite: 'strict',
-        secure: true,
+        secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       });
       return resp;
     })
@@ -233,12 +233,12 @@ export async function logIn(email: string, password: string) {
       Cookies.set('token', resp.data.access_token, {
         expires: 1 / 12,
         sameSite: 'strict',
-        secure: true,
+        secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       });
       Cookies.set('refresh', resp.data.refresh_token, {
         expires: 14, // 2 weeks
         sameSite: 'strict',
-        secure: true,
+        secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
       });
     });
   return response;
