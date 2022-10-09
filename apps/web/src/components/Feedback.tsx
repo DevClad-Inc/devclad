@@ -7,7 +7,7 @@ import {
   ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
-import classNames from '@/lib/ClassNames.lib';
+import { classNames } from '@devclad/lib';
 
 export function Success({ success }: { success: string }): JSX.Element {
   return (

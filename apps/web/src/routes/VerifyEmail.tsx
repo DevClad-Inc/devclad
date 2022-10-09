@@ -3,9 +3,9 @@ import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import DevCladLogo from '@devclad/ui/assets/devclad.svg';
+import { useDocumentTitle } from '@devclad/lib';
 import { verifyEmail } from '@/services/auth.services';
 import { Error, Success } from '@/components/Feedback';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 export default function VerifyEmail(): JSX.Element {

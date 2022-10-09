@@ -7,9 +7,9 @@ import {
   UsersIcon,
   EnvelopeIcon,
 } from '@heroicons/react/24/solid';
+import { useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import UpdateUserForm from '@/components/forms/UpdateUser.forms';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { AdditionalSPForm, SocialProfileForm } from '@/components/forms/SocialProfile.forms';
 import PasswordResetForm from '@/components/forms/ResetPassword.forms';
 import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';

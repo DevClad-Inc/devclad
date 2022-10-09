@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from '@/lib/ClassNames.lib';
+import { classNames } from '@devclad/lib';
 
 interface ButtonProps {
   children: React.ReactNode;

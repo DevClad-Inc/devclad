@@ -10,7 +10,7 @@ import {
   VideoCameraIcon,
   ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline';
-import classNames from '@/lib/ClassNames.lib';
+import { classNames } from '@devclad/lib';
 
 const items = [
   {

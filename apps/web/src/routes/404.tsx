@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { useDocumentTitle } from '@devclad/lib';
 import { useAuth } from '@/services/useAuth.services';
 import AppShell from '@/components/AppShell';
 

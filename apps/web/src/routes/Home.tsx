@@ -2,9 +2,9 @@ import React from 'react';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useDocumentTitle } from '@devclad/lib';
 import { logOut } from '@/services/auth.services';
 import { redString } from '@/lib/Buttons.lib';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 function Home(): JSX.Element {

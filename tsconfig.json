@@ -6,6 +6,9 @@
     },
     {
       "path": "apps/landing"
+    },
+    {
+      "path": "packages/lib"
     }
   ]
 }

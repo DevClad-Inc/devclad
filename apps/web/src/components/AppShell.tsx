@@ -10,12 +10,11 @@ import {
 } from '@heroicons/react/24/outline';
 
 import DevCladLogo from '@devclad/ui/assets/devclad.svg';
-import classNames from '@/lib/ClassNames.lib';
+import { checkIOS, checkMacOS, classNames } from '@devclad/lib';
 import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { profileQuery } from '@/lib/queriesAndLoaders';
 import CheckChild from '@/lib/CheckChild.lib';
-import { checkIOS, checkMacOS } from '@/lib/CheckDevice.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 const navigation = [

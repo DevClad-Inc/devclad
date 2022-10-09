@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useDocumentTitle } from '@devclad/lib';
 import { forgotPassword, passwordChange, passwordReset } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/components/Feedback';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { InterfaceEmail, PasswordReset } from '@/lib/InterfacesStates.lib';
 

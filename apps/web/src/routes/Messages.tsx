@@ -5,8 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
-import classNames from '@/lib/ClassNames.lib';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { classNames, useDocumentTitle } from '@devclad/lib';
 import {
   useCircleUsernames,
   useConnected,

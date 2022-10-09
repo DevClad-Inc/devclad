@@ -7,6 +7,7 @@ import { Listbox, Switch, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { VideoCameraIcon, VideoCameraSlashIcon } from '@heroicons/react/24/outline';
 import ClockIcon from '@heroicons/react/24/outline/ClockIcon';
+import { classNames } from '@devclad/lib';
 import { AdditionalSP, SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { updateAdditionalSP, updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
@@ -15,7 +16,6 @@ import Countries from '@/lib/list/Countries.list.json';
 import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
 
-import classNames from '@/lib/ClassNames.lib';
 import { ProfileLoading } from '../LoadingStates';
 
 import { useAdditionalSP, useSocialProfile } from '@/services/socialHooks.services';

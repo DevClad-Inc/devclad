@@ -1,10 +1,7 @@
 import React from 'react';
 import { toast } from 'react-hot-toast';
+import { classNames } from '@devclad/lib';
 import handleForm from '../handleForm';
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function CTA() {
   const [submitted, setSubmitted] = React.useState(false);

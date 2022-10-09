@@ -6,6 +6,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { useDocumentTitle } from '@devclad/lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
@@ -14,7 +15,6 @@ import {
   useOneOneProfile,
   useConnected,
 } from '@/services/socialHooks.services';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 function ConnectionCard({

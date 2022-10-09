@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default function Page({ is404 }: { is404: boolean }) {
+// eslint-disable-next-line import/prefer-default-export
+export function Page({ is404 }: { is404: boolean }) {
   if (is404) {
     return (
       <>

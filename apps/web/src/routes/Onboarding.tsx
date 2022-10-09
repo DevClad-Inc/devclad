@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import DevCladLogo from '@devclad/ui/assets/devclad.svg';
+import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
@@ -15,8 +16,6 @@ import {
   getStatus,
   setSubmittedStatus,
 } from '@/services/profile.services';
-import classNames from '@/lib/ClassNames.lib';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
 import { socialProfileLoader, socialProfileQuery, userQuery } from '@/lib/queriesAndLoaders';
 import { ProfileLoading } from '@/components/LoadingStates';
 

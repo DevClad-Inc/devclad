@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import classNames from '@/lib/ClassNames.lib';
+import { classNames } from '@devclad/lib';
 
 export default function Tabs({ tabs }: { tabs: { name: string; href: string }[] }) {
   const { pathname } = useLocation();

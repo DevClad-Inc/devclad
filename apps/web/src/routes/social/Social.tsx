@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { useDocumentTitle } from '@devclad/lib';
 import Tab from '@/components/Tab';
 import { useAuth } from '@/services/useAuth.services';
 

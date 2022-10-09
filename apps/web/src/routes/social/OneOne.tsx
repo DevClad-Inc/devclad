@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { useDocumentTitle } from '@devclad/lib';
 import { greenString, redString, warningString, badge, PrimaryButton } from '@/lib/Buttons.lib';
 import {
   useCircleUsernames,

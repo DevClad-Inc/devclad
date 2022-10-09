@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { NoSymbolIcon, PlusIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
-import useDocumentTitle from '@/lib/useDocumentTitle.lib';
+import { useDocumentTitle } from '@devclad/lib';
 import { badge, PrimaryButton } from '@/lib/Buttons.lib';
 import {
   useCircleUsernames,

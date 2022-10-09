@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import React, { Fragment } from 'react';
-import classNames from '@/lib/ClassNames.lib';
+import { classNames } from '@devclad/lib';
 
 // todo: add a way to pass in a custom icon
 
