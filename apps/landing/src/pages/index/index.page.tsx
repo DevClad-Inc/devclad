@@ -7,12 +7,12 @@ import Landing from '@/components/Landing';
 export function Page() {
   return (
     <div
-      className="relative bg-black"
+      className="relative"
       style={{
         backgroundImage: `url(${GraphTexture})`,
       }}
     >
-      <div className="relative bg-gradient-to-tr from-black/80 to-black">
+      <div className="relative bg-gradient-to-b from-black via-black/75 to-black">
         <Toaster />
         <div
           className="absolute top-10 -left-2 h-48 w-48 rounded-full bg-sky-900/60

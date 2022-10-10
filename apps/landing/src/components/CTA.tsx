@@ -59,13 +59,13 @@ export default function CTA() {
                 />
               </label>
             </div>
-            <div className="mt-3 animate-dropdarkglow rounded-sm sm:mt-0 sm:ml-3">
+            <div className="mt-3 rounded-sm sm:mt-0 sm:ml-3 md:animate-dropdarkglow">
               <button
                 type="submit"
                 className={classNames(
                   submitted
                     ? 'border-[1px] border-honeyDew text-white hover:border-phthaloGreen focus:ring-neutral-300 focus:ring-offset-2'
-                    : 'border-[1px] border-neutral-500 bg-black text-white duration-1000 hover:border-neutral-400',
+                    : 'border-[1px] border-neutral-600 bg-black text-white duration-1000 hover:border-neutral-400',
                   'block w-full rounded-md py-3 px-3 font-medium duration-500 focus:outline-none focus:ring-2 focus:ring-offset-neutral-900'
                 )}
               >
