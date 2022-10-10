@@ -76,9 +76,9 @@ export default function Landing() {
   const featureRef = React.useRef<HTMLDivElement>(null);
   const roadmapRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
-  const { inView: featureInView } = useELInView({ viewRef: featureRef });
-  const { inView: roadMapInView } = useELInView({ viewRef: roadmapRef });
-  const { inView: contactInView } = useELInView({ viewRef: contactRef });
+  const { inView: featureInView, viewed: featureViewed } = useELInView({ viewRef: featureRef });
+  const { inView: roadMapInView, viewed: roadMapViewed } = useELInView({ viewRef: roadmapRef });
+  const { inView: contactInView, viewed: contactViewed } = useELInView({ viewRef: contactRef });
   return (
     <div className="max-h-min w-full">
       <div className="pt-6 pb-10 backdrop-blur-0 md:pb-0 lg:pb-0">
@@ -92,19 +92,28 @@ export default function Landing() {
         </main>
         <div
           ref={featureRef}
-          className={classNames(featureInView ? 'animate-fadeIn' : '', 'mt-10 md:-mt-16 lg:-mt-10')}
+          className={classNames(
+            featureInView && featureViewed < 2 ? 'animate-fadeIn' : '',
+            'mt-10 md:-mt-16 lg:-mt-10'
+          )}
         >
           <Features />
         </div>
         <div
           ref={roadmapRef}
-          className={classNames(roadMapInView ? 'animate-fadeIn' : '', 'mt-10 md:-mt-16 lg:-mt-10')}
+          className={classNames(
+            roadMapInView && roadMapViewed < 2 ? 'animate-fadeIn' : '',
+            'mt-10 md:-mt-16 lg:-mt-10'
+          )}
         >
           <Roadmap />
         </div>
         <div
           ref={contactRef}
-          className={classNames(contactInView ? 'animate-fadeIn' : '', 'mt-5 sm:-mt-20')}
+          className={classNames(
+            contactInView && contactViewed < 2 ? 'animate-fadeIn' : '',
+            'mt-5 sm:-mt-20'
+          )}
         >
           <Contact />
         </div>

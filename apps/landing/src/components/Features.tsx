@@ -21,7 +21,7 @@ const features = [
     icon: UserGroupIcon,
   },
   {
-    name: 'Video Calls with sane Scheduling',
+    name: 'Video Calls + Scheduling',
     description:
       'Schedule meetings with your circle and weekly 1-on-1 directly from and even ON DevClad. 📅',
     icon: VideoCameraIcon,
@@ -52,30 +52,30 @@ export function Features(): JSX.Element {
         <p className="mx-auto mt-5 max-w-prose font-mono text-xl text-neutral-300">
           Weekly 1—⁠on⁠—⁠1 match from a pool of vetted developers 🌎 using ML.
         </p>
-        <div className="mt-12">
+        <div className="mt-12 flex">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-3">
             {features.map((feature) => (
               <div key={feature.name} className="pt-6">
-                <div className="flow-root rounded-xl border-[1px] border-neutral-800 bg-black px-6 pb-8">
+                <div className="flow-root h-full rounded-xl border-[1px] border-neutral-800 bg-black px-6 pb-8">
                   <div className="-mt-6">
                     <div>
                       <span
-                        className="inline-flex animate-dropglowSM items-center justify-center
-                       rounded-xl border-[1px] border-dotted border-neutral-800 bg-darkBG2 p-4 shadow-lg"
+                        className="inline-flex animate-dropglow items-center justify-center
+                       rounded-xl border-[1px] border-neutral-800 bg-black p-4 shadow-lg"
                       >
                         <feature.icon
                           className={classNames(
                             feature.icon === HandRaisedIcon ? '-rotate-[30deg]' : '',
-                            'h-8 w-8 animate-gradient-reverse'
+                            'h-8 w-8'
                           )}
                           aria-hidden="true"
                         />
                       </span>
                     </div>
-                    <h3 className="mt-8 animate-gradient font-medium tracking-tight text-neutral-100 sm:text-xl lg:text-lg">
+                    <h3 className="mt-8 font-bold tracking-tight text-neutral-100 sm:text-xl lg:text-2xl">
                       {feature.name}
                     </h3>
-                    <p className="mt-5 font-mono text-neutral-300 sm:text-sm lg:text-base">
+                    <p className="mt-5 font-mono text-neutral-300 sm:text-sm lg:text-lg">
                       {feature.description}
                     </p>
                   </div>
@@ -105,7 +105,7 @@ export function Roadmap(): JSX.Element {
           <div className="grid max-w-prose grid-cols-1 gap-8 sm:grid-cols-2">
             {roadmap.map((feature) => (
               <div key={feature.name} className="pt-6">
-                <div className="flow-root rounded-xl border-[1px] border-neutral-800 bg-black px-6 pb-8 ">
+                <div className="flow-root h-full rounded-xl border-[1px] border-neutral-800 bg-black px-6 pb-8 ">
                   <div className="-mt-6">
                     <div>
                       <span
@@ -121,10 +121,10 @@ export function Roadmap(): JSX.Element {
                         />
                       </span>
                     </div>
-                    <h3 className="mt-8 animate-gradient font-medium tracking-tight text-neutral-100 sm:text-xl lg:text-lg">
+                    <h3 className="mt-8 font-bold tracking-tight text-neutral-100 sm:text-xl lg:text-2xl">
                       {feature.name}
                     </h3>
-                    <p className="mt-5 font-mono text-neutral-300 sm:text-sm lg:text-base">
+                    <p className="mt-5 font-mono text-neutral-300 sm:text-sm lg:text-lg">
                       {feature.description}
                     </p>
                   </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { checkIOS, checkMacOS } from '@devclad/lib';
-import CTA from './CTA';
+import CTA from '@/components/CTA';
 
 // network, build, and ship
 function NBS(): JSX.Element {
