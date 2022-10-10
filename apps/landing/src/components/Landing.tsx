@@ -94,7 +94,7 @@ export default function Landing() {
           ref={featureRef}
           className={classNames(
             featureInView && featureViewed < 2 ? 'animate-fadeIn' : '',
-            'mt-10 md:-mt-16 lg:-mt-10'
+            'mt-10 lg:-mt-10'
           )}
         >
           <Features />
@@ -103,7 +103,7 @@ export default function Landing() {
           ref={roadmapRef}
           className={classNames(
             roadMapInView && roadMapViewed < 2 ? 'animate-fadeIn' : '',
-            'mt-10 md:-mt-16 lg:-mt-10'
+            'mt-10 md:-mt-5 lg:-mt-10'
           )}
         >
           <Roadmap />
