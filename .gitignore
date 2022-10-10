@@ -24,10 +24,7 @@ dist-ssr
 *.sw?
 
 # all .env files
-.env
-.env.local
-.env.development
-.env.test
+.env*
 
 .turbo
 
@@ -67,3 +64,35 @@ apps/userpics/app/styles/tailwind.css
 apps/userpics/api/_assets
 apps/userpics/api/index.js
 apps/userpics/api/index.js.map
+
+# Django
+
+.vscode
+.coverage
+.venv
+.idea
+*.sqlite3
+*__pycache__*
+*.log
+*.pot
+*.pyc
+**/.DS_STORE
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+media
+*.pub
+docean
+celerybeat-schedule
+
+
+# yes ik there are duplicates probably. remove them if you want, it's a chore to do it myself

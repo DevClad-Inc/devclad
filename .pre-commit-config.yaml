@@ -6,11 +6,17 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        files: \.py$
+        exclude: ^(migrations/|tests/|test_data/|.*\.pyc$)$
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.24.0
     hooks:
       - id: eslint
-        files: \.[jt]sx?$ # match all .js, .ts, .jsx and .tsx files
+        files: \.[jt]sx?$
         types: [file]
         args:
           - --fix
@@ -33,7 +39,7 @@ repos:
     rev: v2.5.0
     hooks:
       - id: prettier
-        files: \.[jt]sx?$ # match all
+        files: \.[jt]sx?$
         types: [file]
         args:
           - --write

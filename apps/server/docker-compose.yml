@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  server:
+    container_name: devclad-server
+    build:
+      context: ./
+    command:
+      - sh
+      - -c
+      - |
+        while ! nc -z database 5432; do
+          echo "Waiting for database to be ready..."
+          sleep 1
+        done
+        python3 manage.py migrate
+        python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 8010:8000
+    env_file:
+      - ./.env
+
+  database:
+    container_name: devclad-database
+    image: postgres:14-alpine
+    volumes:
+      - devclad-database:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+volumes:
+  devclad-database:
