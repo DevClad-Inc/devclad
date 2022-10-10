@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import DevCladLogo from '@devclad/ui/assets/devclad.svg';
+import { DevCladSVG } from '@devclad/ui';
 import PasswordResetForm, { ForgotPasswordForm } from '@/components/forms/ResetPassword.forms';
 import { useAuth } from '@/services/useAuth.services';
 
@@ -30,7 +30,7 @@ export function PassReset() {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <img className="mx-auto h-32 w-auto" src={DevCladSVG} alt="DevClad" />
           <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">
             DevClad
           </h1>
@@ -89,7 +89,7 @@ export function ForgotPassword(): JSX.Element {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <img className="mx-auto h-32 w-auto" src={DevCladSVG} alt="DevClad" />
           <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">
             DevClad
           </h1>

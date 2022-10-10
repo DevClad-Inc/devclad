@@ -3,7 +3,7 @@ import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
-import DevCladLogo from '@devclad/ui/assets/devclad.svg';
+import { DevCladSVG } from '@devclad/ui';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
@@ -168,7 +168,7 @@ export function Onboarding() {
       <div>
         <div className="backdrop-blur-0">
           <div className="sm:mx-auto sm:w-full sm:max-w-full">
-            <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+            <img className="mx-auto h-32 w-auto" src={DevCladSVG} alt="DevClad" />
             <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">
               DevClad
             </h1>

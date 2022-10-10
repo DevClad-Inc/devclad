@@ -3,7 +3,7 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
-import GraphTexure from '@devclad/ui/assets/graph-texture.svg';
+import { GraphTextureSVG } from '@devclad/ui';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
 import { refreshToken } from '@/services/auth.services';
@@ -71,7 +71,7 @@ export default function Root(): JSX.Element {
     }
   }, [darkMode]);
   return (
-    <div style={{ backgroundImage: `url(${GraphTexure})` }}>
+    <div style={{ backgroundImage: `url(${GraphTextureSVG})` }}>
       <div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
         <div
           className="sm:text-md bg-white from-black/50

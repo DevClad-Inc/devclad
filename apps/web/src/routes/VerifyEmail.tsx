@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ShieldCheckIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
-import DevCladLogo from '@devclad/ui/assets/devclad.svg';
+import { DevCladSVG } from '@devclad/ui';
 import { useDocumentTitle } from '@devclad/lib';
 import { verifyEmail } from '@/services/auth.services';
 import { Error, Success } from '@/components/Feedback';
@@ -63,7 +63,7 @@ export default function VerifyEmail(): JSX.Element {
       </div>
       <div className="backdrop-blur-0">
         <div className="sm:mx-auto sm:w-full sm:max-w-full">
-          <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+          <img className="mx-auto h-32 w-auto" src={DevCladSVG} alt="DevClad" />
           <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-neutral-100">
             DevClad
           </h1>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import DevCladLogo from '@devclad/ui/assets/devclad.svg';
+import { DevCladSVG } from '@devclad/ui';
 import LoginForm from '@/components/forms/Login.forms';
 import { Error } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
@@ -20,7 +20,7 @@ function Login() {
   return (
     <div className="mt-5 backdrop-blur-0">
       <div className="sm:mx-auto sm:w-full sm:max-w-full">
-        <img className="mx-auto h-32 w-auto" src={DevCladLogo} alt="DevClad" />
+        <img className="mx-auto h-32 w-auto" src={DevCladSVG} alt="DevClad" />
         <h1 className="text-center text-5xl font-black text-neutral-900 dark:text-white">
           DevClad
         </h1>

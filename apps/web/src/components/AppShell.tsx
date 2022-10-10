@@ -9,8 +9,8 @@ import {
   ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline';
 
-import DevCladLogo from '@devclad/ui/assets/devclad.svg';
 import { checkIOS, checkMacOS, classNames } from '@devclad/lib';
+import { DevCladSVG } from '@devclad/ui';
 import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
 import QueryLoader from '@/lib/QueryLoader.lib';
 import { profileQuery } from '@/lib/queriesAndLoaders';
@@ -80,7 +80,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 onClick={() => setSidebarExpand(!sidebarExpand)}
                 className="m-auto"
               >
-                <img className="m-auto h-24 w-auto rounded-full" src={DevCladLogo} alt="DevClad" />
+                <img className="m-auto h-24 w-auto rounded-full" src={DevCladSVG} alt="DevClad" />
               </button>
             </div>
             <nav

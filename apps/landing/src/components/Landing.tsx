@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { Popover } from '@headlessui/react';
-import DevCladLogo from '@devclad/ui/assets/devclad.svg';
-import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import { classNames } from '@devclad/lib';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import type { Container, Engine, MoveDirection, OutMode } from 'tsparticles-engine';
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
+import { DevCladSVG } from '@devclad/ui';
 import Hero from './Hero';
 import Contact from './Contact';
 import { Features, Roadmap } from './Features';
@@ -118,7 +118,7 @@ function Nav(): JSX.Element {
             <div className="mt-10 flex w-full items-center justify-between rounded-full md:w-auto">
               <a href="/">
                 <span className="sr-only">DevClad</span>
-                <img className="h-24 w-24" src={DevCladLogo} alt="" />
+                <img className="h-24 w-24" src={DevCladSVG} alt="" />
               </a>
             </div>
           </div>
