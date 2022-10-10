@@ -8,6 +8,9 @@
       "path": "apps/landing"
     },
     {
+      "path": "apps/userpics"
+    },
+    {
       "path": "packages/lib"
     },
     {
