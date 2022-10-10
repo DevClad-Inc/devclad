@@ -58,7 +58,7 @@ module.exports = {
         gradient: {
           "0%, 100%": { color: "#fab296", backgroundPosition: "0% 50%" },
           "25%": { color: "#45caff", backgroundPosition: "100% 25%" },
-          "75%": { color: "#aafa96", backgroundPosition: "0% 50%" },
+          "75%": { color: "#ffffff", backgroundPosition: "0% 50%" },
         },
         darkglowbutton: {
           "0%": {
@@ -125,7 +125,7 @@ module.exports = {
         },
       },
       animation: {
-        fadeIn: "fadeIn 0.5s ease-in forwards",
+        fadeIn: "fadeIn 1s ease-in forwards",
         gradient: "gradient 10s ease-out infinite",
         "gradient-reverse": "gradient 10s ease infinite reverse",
         "spin-slow": "spin 10s linear",

@@ -1,67 +1,11 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Popover } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
-import type { Container, Engine, MoveDirection, OutMode } from 'tsparticles-engine';
-import { Particles } from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
 import { DevCladSVG } from '@devclad/ui';
 import Hero from './Hero';
 import Contact from './Contact';
 import { Features, Roadmap } from './Features';
-
-function StarrySky() {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadFull(engine);
-  }, []);
-  const particlesLoaded = useCallback(async (container: Container | undefined) => {
-    await container?.refresh();
-  }, []);
-  return (
-    <div className="absolute inset-0">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        loaded={particlesLoaded}
-        // https://github.com/matteobruni/tsparticles/blob/main/presets/stars/src/options.ts
-        options={{
-          particles: {
-            move: {
-              direction: 'none' as MoveDirection,
-              enable: true,
-              outModes: {
-                default: 'out' as OutMode,
-              },
-              random: true,
-              speed: 0.1,
-              straight: false,
-            },
-            opacity: {
-              animation: {
-                enable: true,
-                speed: 0.1,
-                sync: false,
-              },
-              value: { min: 0, max: 0.15 },
-            },
-            size: {
-              value: { min: 0.5, max: 5 },
-              // number of particles
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 80,
-            },
-          },
-          detectRetina: true,
-        }}
-      />
-    </div>
-  );
-}
 
 function useELInView({ viewRef }: { viewRef: React.RefObject<HTMLElement> }) {
   const [inView, setInView] = React.useState(false);
@@ -137,14 +81,13 @@ export default function Landing() {
   const { inView: contactInView } = useELInView({ viewRef: contactRef });
   return (
     <div className="max-h-min w-full">
-      <StarrySky />
       <div className="pt-6 pb-10 backdrop-blur-0 md:pb-0 lg:pb-0">
         <div
           className="hidden sm:absolute sm:inset-y-0 sm:block sm:h-screen sm:w-full"
           aria-hidden="true"
         />
         <Nav />
-        <main className="sm:h-screen">
+        <main className="sm:h-full">
           <Hero />
         </main>
         <div
