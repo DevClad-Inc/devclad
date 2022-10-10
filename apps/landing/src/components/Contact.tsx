@@ -5,10 +5,7 @@ export default function Contact(): JSX.Element {
   return (
     <div className="relative mx-auto max-w-prose rounded-xl text-center sm:py-24">
       <div className="max-w-prose p-2 py-16 ">
-        <h2
-          className="text-3xl font-extrabold
-                      text-white sm:text-4xl"
-        >
+        <h2 className="text-3xl font-extrabold  text-white sm:text-4xl">
           <span className="block">Reach out</span>
           <a
             href="https://discord.connectdome.com"
