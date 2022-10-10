@@ -10,7 +10,7 @@ import Hero from './Hero';
 import Contact from './Contact';
 import { Features, Roadmap } from './Features';
 
-function StarrySky(): JSX.Element {
+function StarrySky() {
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
   }, []);

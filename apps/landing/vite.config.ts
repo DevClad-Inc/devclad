@@ -15,6 +15,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      '@heroicons/react/24/solid': '@heroicons/react/24/solid/index.js',
+      '@heroicons/react/24/outline': '@heroicons/react/24/outline/index.js',
     },
   },
 });
