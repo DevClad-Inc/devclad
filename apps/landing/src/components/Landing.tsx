@@ -3,7 +3,7 @@ import { Popover } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 import type { Container, Engine, MoveDirection, OutMode } from 'tsparticles-engine';
-import Particles from 'react-tsparticles';
+import { Particles } from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
 import { DevCladSVG } from '@devclad/ui';
 import Hero from './Hero';
