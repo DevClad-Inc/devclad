@@ -75,20 +75,35 @@ module.exports = {
           },
           "100%": { boxShadow: "0 0 0 1px #3a015c" },
         },
-        dropdarkglow: {
+        dropglow: {
           "0%": {
-            boxShadow: "0 10px 20px 5px #3a015c",
+            boxShadow: "0 10px 20px 5px #341600",
           },
           "25%": {
-            boxShadow: "0 10px 20px 5px #35012c",
+            boxShadow: "0 10px 20px 5px #083249",
           },
           "50%": {
-            boxShadow: "0 10px 20px 5px #651673",
+            boxShadow: "0 10px 20px 5px #330151",
           },
           "75%": {
-            boxShadow: "0 10px 20px 5px #280000",
+            boxShadow: "0 10px 20px 5px #170019",
           },
-          "100%": { boxShadow: "0 10px 20px 5px #3a015c" },
+          "100%": { boxShadow: "0 10px 20px 5px #341600" },
+        },
+        dropglowSM: {
+          "0%": {
+            boxShadow: "0 5px 10px 5px #341600",
+          },
+          "25%": {
+            boxShadow: "0 5px 20px 5px #083249",
+          },
+          "50%": {
+            boxShadow: "0 5px 10px 5px #330151",
+          },
+          "75%": {
+            boxShadow: "0 5px 10px 5px #170019",
+          },
+          "100%": { boxShadow: "0 5px 10px 5px #341600" },
         },
         blob: {
           "0%": {
@@ -115,7 +130,8 @@ module.exports = {
         "gradient-reverse": "gradient 10s ease infinite reverse",
         "spin-slow": "spin 10s linear",
         "pulse-slow": "pulse 10s linear infinite",
-        dropdarkglow: "dropdarkglow 10s ease-out infinite",
+        dropglow: "dropglow 10s ease-out infinite",
+        dropglowSM: "dropglowSM 10s ease-out infinite",
         darkglowbtn: "darkglowbutton 20s ease-out infinite",
         blob: "blob 7s infinite",
       },

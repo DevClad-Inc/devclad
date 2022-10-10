@@ -59,7 +59,7 @@ export default function CTA() {
                 />
               </label>
             </div>
-            <div className="mt-3 rounded-sm sm:mt-0 sm:ml-3 md:animate-dropdarkglow">
+            <div className="mt-3 animate-dropglowSM rounded-sm sm:mt-0 sm:ml-3">
               <button
                 type="submit"
                 className={classNames(

@@ -30,7 +30,7 @@ export function Page() {
          via-fuchsia-900/10 to-black opacity-80 mix-blend-difference blur-2xl filter"
         />
         <div className="absolute bottom-1/2 right-2 h-96 w-96 animate-blob rounded-full bg-sky-900/30 opacity-50 mix-blend-difference blur-2xl filter" />
-        <div className="absolute bottom-1/2 right-2 h-96 w-96 animate-blob animate-dropdarkglow rounded-full bg-gradient-to-tr from-sky-900/30 via-fuchsia-900/30 to-black opacity-50 mix-blend-difference blur-2xl filter" />
+        <div className="absolute bottom-1/2 right-2 h-96 w-96 animate-blob animate-dropglow rounded-full bg-gradient-to-tr from-sky-900/30 via-fuchsia-900/30 to-black opacity-50 mix-blend-difference blur-2xl filter" />
       </div>
     </div>
   );

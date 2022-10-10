@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { checkIOS, checkMacOS } from '@devclad/lib';
 import CTA from './CTA';
 
@@ -78,7 +78,6 @@ export default function Hero(): JSX.Element {
                 {isIOSMacOS && <NBS />}
               </div>
               <CTA />
-              <div className="justify-center sm:flex " />
             </div>
           </div>
         </div>

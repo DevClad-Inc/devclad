@@ -1,13 +1,66 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Popover } from '@headlessui/react';
 import DevCladLogo from '@devclad/ui/assets/devclad.svg';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
+import { classNames } from '@devclad/lib';
+import type { Container, Engine, MoveDirection, OutMode } from 'tsparticles-engine';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
 import Hero from './Hero';
 import Contact from './Contact';
+import { Features, Roadmap } from './Features';
 
-// todo: add this to shared package
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+function StarrySky(): JSX.Element {
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadFull(engine);
+  }, []);
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    await container?.refresh();
+  }, []);
+  return (
+    <div className="absolute inset-0">
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        loaded={particlesLoaded}
+        // https://github.com/matteobruni/tsparticles/blob/main/presets/stars/src/options.ts
+        options={{
+          particles: {
+            move: {
+              direction: 'none' as MoveDirection,
+              enable: true,
+              outModes: {
+                default: 'out' as OutMode,
+              },
+              random: true,
+              speed: 0.1,
+              straight: false,
+            },
+            opacity: {
+              animation: {
+                enable: true,
+                speed: 0.1,
+                sync: false,
+              },
+              value: { min: 0, max: 0.15 },
+            },
+            size: {
+              value: { min: 0.5, max: 5 },
+              // number of particles
+            },
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80,
+            },
+          },
+          detectRetina: true,
+        }}
+      />
+    </div>
+  );
 }
 
 function useELInView({ viewRef }: { viewRef: React.RefObject<HTMLElement> }) {
@@ -76,22 +129,39 @@ function Nav(): JSX.Element {
 }
 
 export default function Landing() {
+  const featureRef = React.useRef<HTMLDivElement>(null);
+  const roadmapRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
-  const { inView, viewed } = useELInView({ viewRef: contactRef });
+  const { inView: featureInView } = useELInView({ viewRef: featureRef });
+  const { inView: roadMapInView } = useELInView({ viewRef: roadmapRef });
+  const { inView: contactInView } = useELInView({ viewRef: contactRef });
   return (
     <div className="max-h-min w-full">
+      <StarrySky />
       <div className="pt-6 pb-10 backdrop-blur-0 md:pb-0 lg:pb-0">
         <div
           className="hidden sm:absolute sm:inset-y-0 sm:block sm:h-screen sm:w-full"
           aria-hidden="true"
         />
         <Nav />
-        <main>
+        <main className="sm:h-screen">
           <Hero />
         </main>
         <div
+          ref={featureRef}
+          className={classNames(featureInView ? 'animate-fadeIn' : '', 'mt-10 md:-mt-16 lg:-mt-10')}
+        >
+          <Features />
+        </div>
+        <div
+          ref={roadmapRef}
+          className={classNames(roadMapInView ? 'animate-fadeIn' : '', 'mt-10 md:-mt-16 lg:-mt-10')}
+        >
+          <Roadmap />
+        </div>
+        <div
           ref={contactRef}
-          className={classNames(inView && viewed < 2 ? 'animate-fadeIn' : '', 'mt-5 sm:-mt-20')}
+          className={classNames(contactInView ? 'animate-fadeIn' : '', 'mt-5 sm:-mt-20')}
         >
           <Contact />
         </div>
