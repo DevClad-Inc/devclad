@@ -1,17 +1,11 @@
 import React from 'react';
-import { GraphTextureSVG } from '@devclad/ui';
 import { Toaster } from 'react-hot-toast';
 import Landing from '@/components/Landing';
 
 // eslint-disable-next-line import/prefer-default-export
 export function Page() {
   return (
-    <div
-      className="relative"
-      style={{
-        backgroundImage: `url(${GraphTextureSVG})`,
-      }}
-    >
+    <div className="relative overflow-y-auto overflow-x-hidden">
       <div className="relative bg-gradient-to-b from-black via-black/75 to-black">
         <Toaster />
         <div

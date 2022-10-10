@@ -17,7 +17,6 @@ export default function handleForm(email: string) {
     ],
     (err, records) => {
       if (err) {
-        //   console.error(err);
         return;
       }
       if (records) {
