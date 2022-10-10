@@ -31,7 +31,7 @@ const features = [
 const roadmap = [
   {
     name: 'Discovery',
-    description: 'Project and Hackathon Discovery that makes teaming up seamlss.',
+    description: 'Project and Hackathon Discovery that makes teaming up seamless.',
     icon: ArrowTrendingUpIcon,
   },
   {
