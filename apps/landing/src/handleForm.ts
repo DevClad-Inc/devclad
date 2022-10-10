@@ -3,7 +3,8 @@ import { toast } from 'react-hot-toast';
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
+  apiKey: import.meta.env.VITE_AIRTABLE_API_KEY ?? process.env.AIRTABLE_API_KEY,
 });
 
 const base = Airtable.base('appoNmB2moP42AA2y');
