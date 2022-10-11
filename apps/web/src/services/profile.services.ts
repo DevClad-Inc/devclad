@@ -298,7 +298,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
     return axios({
       method: 'PATCH',
       url,
-      data: { shadowed_users: shadowed },
+      data: { shadowed },
       headers: { Authorization: `Bearer ${token}` },
     });
   }
@@ -327,7 +327,9 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
   const url = `${API_URL}/social/skipped/`;
 
   if (skip) {
-    skipped.push(username);
+    if (skipped.indexOf(username) === -1) {
+      skipped.push(username);
+    }
   } else {
     const index = skipped.indexOf(username);
     if (index > -1) {
@@ -338,7 +340,7 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
     return axios({
       method: 'PATCH',
       url,
-      data: { skipped_users: skipped },
+      data: { skipped },
       headers: { Authorization: `Bearer ${token}` },
     });
   }
@@ -346,6 +348,23 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
 };
 
 // =================== circle ===================
+export const getAdded = async () => {
+  const token = Cookies.get('token');
+  const url = `${API_URL}/social/added/`;
+  if (token) {
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+  }
+  return null;
+};
+
 export const getCircle = async (username: string) => {
   const token = Cookies.get('token');
   const url = `${API_URL}/social/circle/${username}/get/`;
@@ -371,10 +390,11 @@ export const PatchCircle = async (
 ) => {
   const token = Cookies.get('token');
   let url = `${API_URL}/social/circle/`;
-
   if (operation === 'add') {
     url += `${operationUsername}/add/`;
-    circle.push(operationUsername);
+    if (circle.indexOf(operationUsername) === -1) {
+      circle.push(operationUsername);
+    }
   } else if (operation === 'remove') {
     url += `${operationUsername}/remove/`;
     const index = circle.indexOf(operationUsername);
@@ -420,7 +440,9 @@ export const blockUser = async (
   const url = `${API_URL}/social/block/`;
 
   if (operation === 'block') {
-    blocked.push(operationUsername);
+    if (blocked.indexOf(operationUsername) === -1) {
+      blocked.push(operationUsername);
+    }
   } else if (operation === 'unblock') {
     const index = blocked.indexOf(operationUsername);
     if (index > -1) {
@@ -432,7 +454,7 @@ export const blockUser = async (
     return axios({
       method: 'PATCH',
       url,
-      data: { blocked_users: blocked },
+      data: { blocked },
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

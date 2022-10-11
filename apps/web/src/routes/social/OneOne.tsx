@@ -17,9 +17,9 @@ import {
   useCircleUsernames,
   useOneOneProfile,
   useOneOneUsernames,
-  useAdded,
   useSkippedUsernames,
   useShadowedUsernames,
+  useConnected,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
@@ -35,11 +35,11 @@ function MatchCard({ username }: { username: string }): JSX.Element {
   // logged in username and connection check
   const { loggedInUser } = useAuth();
   const loggedInUserUserName = loggedInUser.username;
-  const added = useAdded(loggedInUserUserName as string, username);
+  const connected = useConnected(username);
   // logged in username and connection check
   const { usernames: skippedUsers } = useSkippedUsernames();
   const { usernames: shadowedUsers } = useShadowedUsernames();
-  const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string);
+  const { usernames: circle } = useCircleUsernames();
 
   const [open, setOpen] = React.useState(false);
   const [action, setAction] = React.useState('');
@@ -344,7 +344,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
               </button>
             </div>
             <div className="-mt-5 flex justify-center">
-              {!added ? (
+              {!connected ? (
                 <button type="button" className={greenString} onClick={handleAdd}>
                   <PlusCircleIcon className="mr-2 h-6 w-5" aria-hidden="true" />
                   <span>Add To Circle</span>

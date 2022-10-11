@@ -90,20 +90,19 @@ def get_indirect_match(user, number_of_matches_to_make=1):
 
 def get_one_one_match(user, number_of_matches_to_make=1):
     indirect_matching = False
-    logged_in_user = user
-    logged_in_social_profile = SocialProfile.objects.get(user=logged_in_user)
+    logged_in_social_profile = SocialProfile.objects.get(user=user)
     all_profiles = [
         transform_variables_profile(social_profile)
         for social_profile in list(
-            SocialProfile.objects.exclude(user=logged_in_user)
+            SocialProfile.objects.exclude(user=user)
             .exclude(
                 available_always_off=True
             )  # for users who just logged in and haven't set their availability yet
             .exclude(available_this_week=False)
-            .exclude(blocked_users__socialprofile__user=logged_in_user)
-            .exclude(shadow_users__socialprofile__user=logged_in_user)
-            .exclude(circle__socialprofile__user=logged_in_user)
-            .exclude(skipped_users__socialprofile__user=logged_in_user)
+            .exclude(blocked=logged_in_social_profile)
+            .exclude(shadowed=logged_in_social_profile)
+            .exclude(circle=logged_in_social_profile)
+            .exclude(skipped=logged_in_social_profile)
             .values_list(
                 "user",
                 "idea_status",
@@ -118,7 +117,8 @@ def get_one_one_match(user, number_of_matches_to_make=1):
     indirect_all_profiles = [
         transform_variables_profile(social_profile)
         for social_profile in list(
-            SocialProfile.objects.exclude(user=logged_in_user)
+            SocialProfile.objects
+            # .exclude(user=logged_in_user)
             .exclude(
                 available_always_off=True
             )  # for users who just logged in and haven't set their availability yet
@@ -126,10 +126,10 @@ def get_one_one_match(user, number_of_matches_to_make=1):
             .annotate(num_matches=Count("matches_this_week"))
             .filter(num_matches__lt=2)
             .filter(num_matches__gt=0)
-            .exclude(blocked_users__socialprofile__user=logged_in_user)
-            .exclude(shadow_users__socialprofile__user=logged_in_user)
-            .exclude(circle__socialprofile__user=logged_in_user)
-            .exclude(skipped_users__socialprofile__user=logged_in_user)
+            .exclude(blocked=logged_in_social_profile)
+            .exclude(shadowed=logged_in_social_profile)
+            .exclude(circle=logged_in_social_profile)
+            .exclude(skipped=logged_in_social_profile)
             .values_list(
                 "user",
                 "idea_status",
@@ -168,7 +168,7 @@ def get_one_one_match(user, number_of_matches_to_make=1):
         except IndexError:
             return []
 
-    user = SocialProfile.objects.filter(user=logged_in_user).values_list(
+    user = SocialProfile.objects.filter(user=user).values_list(
         "user",
         "idea_status",
         "video_call_friendly",

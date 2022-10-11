@@ -11,8 +11,10 @@ import {
   userShadowedQuery,
   userSkippedQuery,
   streamUIDQuery,
+  userAddedQuery,
 } from '@/lib/queriesAndLoaders';
 import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
+import { useAuth } from '@/services/useAuth.services';
 
 export const useStreamUID = (username: string) => {
   const { isSuccess, data } = useQuery(streamUIDQuery(username));
@@ -41,7 +43,7 @@ export const useShadowedUsernames = () => {
   if (shadowedQuery.isSuccess && shadowedQuery.data !== null) {
     const { data } = shadowedQuery.data;
     for (let i = 0; i < data.length; i += 1) {
-      usernames.push(data.shadowed_users[i]);
+      usernames.push(data.shadowed[i]);
     }
   }
   return { usernames };
@@ -53,19 +55,33 @@ export const useSkippedUsernames = () => {
   if (skippedQuery.isSuccess && skippedQuery.data !== null) {
     const { data } = skippedQuery.data;
     for (let i = 0; i < data.length; i += 1) {
-      usernames.push(data.skipped_users[i]);
+      usernames.push(data.skipped[i]);
     }
   }
   return { usernames };
 };
 
-export const useCircleUsernames = (username: string) => {
+export const useCircleUsernames = () => {
+  const { loggedInUser } = useAuth();
+  const username = loggedInUser?.username;
   const usernames = [];
-  const circleQuery = useQuery(userCircleQuery(username));
+  const circleQuery = useQuery(userCircleQuery(username as string));
   if (circleQuery.isSuccess && circleQuery.data !== null) {
     const { data } = circleQuery.data;
     for (let i = 0; i < data.circle.length; i += 1) {
       usernames.push(data.circle[i]);
+    }
+  }
+  return { usernames };
+};
+
+export const useAddedUsernames = () => {
+  const usernames = [];
+  const addedQuery = useQuery(userAddedQuery());
+  if (addedQuery.isSuccess && addedQuery.data !== null) {
+    const { data } = addedQuery.data;
+    for (let i = 0; i < data.added.length; i += 1) {
+      usernames.push(data.added[i]);
     }
   }
   return { usernames };
@@ -76,8 +92,8 @@ export const useBlockedUsernames = () => {
   const blockedQuery = useQuery(userBlockedQuery());
   if (blockedQuery.isSuccess && blockedQuery.data !== null) {
     const { data } = blockedQuery.data;
-    for (let i = 0; i < data.blocked_users.length; i += 1) {
-      usernames.push(data.blocked_users[i]);
+    for (let i = 0; i < data.blocked.length; i += 1) {
+      usernames.push(data.blocked[i]);
     }
   }
   return { usernames };
@@ -141,20 +157,27 @@ export const useAdditionalSP = () => {
   return null;
 };
 
-export const useConnected = (username: string, otherUser: string): boolean => {
+export const useConnected = (otherUser: string): boolean => {
   const [connected, setConnected] = React.useState(false);
-  const circle = useCircleUsernames(username);
-  const otherUserCircle = useCircleUsernames(otherUser);
+  const circle = useCircleUsernames();
   const { usernames } = circle;
-  const { usernames: otherUsernames } = otherUserCircle;
-  if (usernames !== undefined && otherUsernames !== undefined) {
-    if (usernames.includes(otherUser) && otherUsernames.includes(username) && !connected) {
+  if (usernames !== undefined) {
+    if (usernames.includes(otherUser) && !connected) {
       setConnected(true);
-    } else if (!usernames.includes(otherUser) && !otherUsernames.includes(username) && connected) {
+    } else if (!usernames.includes(otherUser) && connected) {
       setConnected(false);
     }
   }
   return connected;
+};
+
+export const useAdded = (otherUser: string): boolean => {
+  const [added, setAdded] = React.useState(false);
+  const addedUsers = useAddedUsernames();
+  if (addedUsers.usernames.includes(otherUser) && !added) {
+    setAdded(true);
+  }
+  return added;
 };
 
 export const useBlocked = (username: string): boolean => {
@@ -169,15 +192,6 @@ export const useBlocked = (username: string): boolean => {
     }
   }
   return blocked;
-};
-
-export const useAdded = (username: string, otherUser: string): boolean => {
-  const [added, setAdded] = React.useState(false);
-  const circleQuery = useCircleUsernames(username);
-  if (circleQuery.usernames.includes(otherUser) && !added) {
-    setAdded(true);
-  }
-  return added;
 };
 
 export const useSkipped = (otherUser: string): boolean => {

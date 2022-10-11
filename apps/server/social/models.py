@@ -63,11 +63,21 @@ class SocialProfile(models.Model):
     )  # if this is true, the user is not available this week until they change it
     indirect_matching = models.BooleanField(default=True)
     matches_this_week = models.ManyToManyField("self", blank=True)
-    skipped_users = models.ManyToManyField("self", blank=True)  # clear every 4 weeks
-    shadowed_users = models.ManyToManyField("self", blank=True)  # never clear
-    blocked_users = models.ManyToManyField("self", blank=True)
-    circle = models.ManyToManyField("self", blank=True, symmetrical=False)
+    skipped = models.ManyToManyField("self", blank=True)  # clear every 4 weeks
+    shadowed = models.ManyToManyField("self", blank=True)  # never clear
+    blocked = models.ManyToManyField("self", blank=True)
+    circle = models.ManyToManyField(
+        "self", blank=True, symmetrical=False, related_name="circle_symmetrical"
+    )
     # todo: option to remove from circle;
 
     def __str__(self):
         return self.user.username
+
+    def get_flat_values(self: "SocialProfile", field: str) -> list:
+        match field:
+            case "circle_symmetrical":
+                return self.circle_symmetrical.values_list("user__username", flat=True)
+            case _:
+                model_field = getattr(self, field)
+                return model_field.all().values_list("user__username", flat=True)

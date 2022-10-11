@@ -18,6 +18,7 @@ import {
   useConnected,
   useBlocked,
   useBlockedUsernames,
+  useAdded,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
@@ -47,16 +48,33 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
   // logged in username and connection check
   const { loggedInUser } = useAuth();
   const loggedInUserUserName = loggedInUser.username;
-  const connected = useConnected(loggedInUserUserName as string, username);
+  const connected = useConnected(username);
+  const added = useAdded(username);
   const blocked = useBlocked(username);
   // logged in username and connection check
-  const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string);
+  const { usernames: circle } = useCircleUsernames();
   const { usernames: blockedUsers } = useBlockedUsernames();
 
   if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
     return <ProfileLoading />;
   }
-
+  const handleAdd = async () => {
+    await PatchCircle(username, circle, 'add')
+      .then(async () => {
+        toast.custom(<Success success="Added to circle" />, {
+          id: 'connect-profile-success',
+          duration: 3000,
+        });
+        await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
+        await qc.invalidateQueries(['circle', username]);
+      })
+      .catch(() => {
+        toast.custom(<Error error="User not in matches this week." />, {
+          id: 'error-connect-profile',
+          duration: 5000,
+        });
+      });
+  };
   const connectedOnlyItems = [
     {
       name: 'Disconnect',
@@ -105,44 +123,49 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
       },
     },
   ];
-  if (connected) {
-    dropdownItems = [...connectedOnlyItems, ...dropdownItems];
-  } else if (!connected && loggedInUserUserName !== username) {
-    dropdownItems = [
-      {
-        name: 'Connect',
-        icon: PlusIcon,
-        alt: 'Connect',
-        onClick: async () => {},
-      },
-      ...dropdownItems,
-    ];
-  }
-  if (blocked && loggedInUserUserName !== username) {
-    dropdownItems = [
-      {
-        name: 'Unblock',
-        icon: NoSymbolIcon,
-        alt: 'Unblock',
-        onClick: async () => {
-          await blockUser(username, blockedUsers, 'unblock')
-            .then(async () => {
-              toast.custom(<Success success="Unblocked user successfully" />, {
-                id: 'unblock-profile-success',
-                duration: 3000,
+  switch (true) {
+    case connected:
+      dropdownItems = [...connectedOnlyItems, ...dropdownItems];
+      break;
+    case added && loggedInUserUserName !== username:
+      dropdownItems = [...connectedOnlyItems];
+      break;
+    case blocked && loggedInUserUserName !== username:
+      dropdownItems = [
+        {
+          name: 'Unblock',
+          icon: NoSymbolIcon,
+          alt: 'Unblock',
+          onClick: async () => {
+            await blockUser(username, blockedUsers, 'unblock')
+              .then(async () => {
+                toast.custom(<Success success="Unblocked user successfully" />, {
+                  id: 'unblock-profile-success',
+                  duration: 3000,
+                });
+                await qc.invalidateQueries(['circle']);
+                await qc.invalidateQueries(['blocked']);
+              })
+              .catch(() => {
+                toast.custom(<Error error="Something went wrong." />, {
+                  id: 'error-unblock-profile',
+                  duration: 5000,
+                });
               });
-              await qc.invalidateQueries(['circle']);
-              await qc.invalidateQueries(['blocked']);
-            })
-            .catch(() => {
-              toast.custom(<Error error="Something went wrong." />, {
-                id: 'error-unblock-profile',
-                duration: 5000,
-              });
-            });
+          },
         },
-      },
-    ];
+      ];
+      break;
+    default:
+      dropdownItems = [
+        {
+          name: 'Connect',
+          icon: PlusIcon,
+          alt: 'Connect',
+          onClick: handleAdd,
+        },
+        ...dropdownItems,
+      ];
   }
 
   if (profile) {

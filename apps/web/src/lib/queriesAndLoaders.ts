@@ -2,6 +2,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import {
+  getAdded,
   getAdditionalSP,
   getBlockedUsers,
   getCircle,
@@ -79,6 +80,11 @@ export const userCircleQuery = (username: string) => ({
   queryKey: ['circle', username],
   enabled: !!username,
   queryFn: async () => getCircle(username),
+});
+
+export const userAddedQuery = () => ({
+  queryKey: ['added'],
+  queryFn: async () => getAdded(),
 });
 
 export const userBlockedQuery = () => ({

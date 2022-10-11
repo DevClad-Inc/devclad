@@ -1,3 +1,4 @@
+from functools import partial
 from urllib.request import Request
 from django.contrib.auth import get_user_model
 
@@ -10,6 +11,7 @@ from social.serializers import (
     AdditionalSPSerializer,
     SocialDisplayProfileSerializer,
     CircleSerializer,
+    AddedSerializer,
     BlockedUsersSerializer,
     ShadowUsersSerializer,
     SkippedUsersSerializer,
@@ -157,18 +159,12 @@ def circle(request: Request, username: str, operation: str) -> Response:
                         return Response(
                             {"error": "User does not have a Social Profile"}, status=404
                         )
-                    username_list = []
                     serializer = CircleSerializer(profile)
-                    username_list.extend(
-                        User.objects.get(id=id).username
-                        for id in serializer.data["circle"]
-                    )
-                    return Response({"circle": username_list})
+                    return Response({"circle": serializer.data["circle"]})
                 case _:
                     return Response({"error": "Invalid operation"}, status=400)
 
         case "PATCH":
-            username_list = []
             request_user_profile = SocialProfile.objects.get(user=request.user)
             try:
                 other_user_profile = SocialProfile.objects.get(user__username=username)
@@ -179,47 +175,37 @@ def circle(request: Request, username: str, operation: str) -> Response:
             match operation:
                 case "add":
                     matches_this_week = request_user_profile.matches_this_week.all()
-                    user_circle = request_user_profile.circle.all()
-
                     for username in request.data["circle"]:
                         user_profile = SocialProfile.objects.get(
                             user__username=username
                         )
-                        if user_profile not in (matches_this_week | user_circle):
+                        user_profile_added = user_profile.get_flat_values("circle")
+                        if user_profile not in (matches_this_week):
+                            if request_user_profile not in user_profile_added:
+                                return Response(
+                                    {"error": "Operation blocked."}, status=400
+                                )
                             return Response(
                                 {"error": "User not in matches this week"}, status=400
                             )
-                        elif user_profile == request_user_profile:
+                        if user_profile == request_user_profile:
                             return Response(
                                 {"error": "Cannot add self to circle"}, status=400
                             )
 
-                    request.data["circle"] = [
-                        User.objects.get(username=name).id
-                        for name in request.data["circle"]
-                    ]
-
                     serializer = CircleSerializer(
                         request_user_profile, data=request.data
                     )
-
                     match serializer.is_valid():
                         case True:
                             serializer.save()
+                            print(serializer.data)
                             other_user_profile.circle.add(request_user_profile)
-                            username_list.extend(
-                                User.objects.get(id=id).username
-                                for id in serializer.data["circle"]
-                            )
-                            return Response({"circle": username_list})
-                        case False:
+                            return Response({"circle": serializer.data["circle"]})
+                        case _:
                             return Response(serializer.errors, status=400)
 
                 case "remove":
-                    request.data["circle"] = [
-                        User.objects.get(username=name).id
-                        for name in request.data["circle"]
-                    ]
                     serializer = CircleSerializer(
                         request_user_profile, data=request.data, partial=True
                     )
@@ -231,15 +217,31 @@ def circle(request: Request, username: str, operation: str) -> Response:
                                 in other_user_profile.circle.all()
                             ):
                                 other_user_profile.circle.remove(request_user_profile)
-                            username_list.extend(
-                                User.objects.get(id=id).username
-                                for id in serializer.data["circle"]
-                            )
-                            return Response({"circle": username_list})
+                            return Response({"circle": serializer.data["circle"]})
                         case False:
                             return Response(serializer.errors, status=400)
                 case _:
                     return Response({"error": "Invalid operation"}, status=400)
+        case _:
+            return Response({"error": "Invalid method"}, status=405)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def added(request: Request) -> Response:
+    """
+    List of users that request.user has added to their circle; not necessarily the other way around
+    """
+    match request.method:
+        case "GET":
+            try:
+                profile = SocialProfile.objects.get(user=request.user)
+            except SocialProfile.DoesNotExist:
+                return Response(
+                    {"error": "User does not have a Social Profile"}, status=404
+                )
+            serializer = AddedSerializer(profile)
+            return Response({"added": serializer.data["circle"]})
         case _:
             return Response({"error": "Invalid method"}, status=405)
 
@@ -258,58 +260,46 @@ def block(request: Request) -> Response:
                 return Response(
                     {"error": "User does not have a Social Profile"}, status=404
                 )
-            username_list = []
             serializer = BlockedUsersSerializer(profile)
-            username_list.extend(
-                User.objects.get(id=id).username
-                for id in serializer.data["blocked_users"]
-            )
-            return Response({"blocked_users": username_list})
+            return Response({"blocked": serializer.data["blocked"]})
 
         case "PATCH":
-            username_list = []
             request_user_profile = SocialProfile.objects.get(user=request.user)
-            request.data["blocked_users"] = [
-                User.objects.get(username=name).id
-                for name in request.data["blocked_users"]
-            ]
             serializer = BlockedUsersSerializer(request_user_profile, data=request.data)
+            print(serializer)
             if serializer.is_valid():
-                serializer.save()
-                for user_id in request.data["blocked_users"]:
-                    user_profile = SocialProfile.objects.get(user__id=user_id)
-                    if user_profile == request_user_profile:
-                        return Response({"error": "Cannot block self"}, status=400)
-                    user_profile.circle.remove(
-                        request_user_profile
-                        if request_user_profile in user_profile.circle.all()
-                        else None
-                    )
-                    user_profile.matches_this_week.remove(
-                        request_user_profile
-                        if request_user_profile in user_profile.matches_this_week.all()
-                        else None
-                    )
-                    user_profile.shadowed_users.remove(
-                        request_user_profile
-                        if request_user_profile in user_profile.shadowed_users.all()
-                        else None
-                    )
-                    user_profile.skipped_users.remove(
-                        request_user_profile
-                        if request_user_profile in user_profile.skipped_users.all()
-                        else None
-                    )
-                    request_user_profile.circle.remove(
-                        user_profile
-                        if user_profile in request_user_profile.circle.all()
-                        else None
-                    )
-                username_list.extend(
-                    User.objects.get(id=id).username
-                    for id in serializer.data["blocked_users"]
-                )
-                return Response({"blocked_users": username_list})
+                print(serializer.data)
+                for username in request.data["blocked"]:
+                    user_profile = SocialProfile.objects.get(user__username=username)
+                    print(user_profile)
+                    # if user_profile == request_user_profile:
+                    #     return Response({"error": "Cannot block self"}, status=400)
+                    # user_profile.circle.remove(
+                    #     request_user_profile
+                    #     if request_user_profile in user_profile.circle.all()
+                    #     else None
+                    # )
+                    # user_profile.matches_this_week.remove(
+                    #     request_user_profile
+                    #     if request_user_profile in user_profile.matches_this_week.all()
+                    #     else None
+                    # )
+                    # user_profile.shadowed.remove(
+                    #     request_user_profile
+                    #     if request_user_profile in user_profile.shadowed.all()
+                    #     else None
+                    # )
+                    # user_profile.skipped.remove(
+                    #     request_user_profile
+                    #     if request_user_profile in user_profile.skipped.all()
+                    #     else None
+                    # )
+                    # request_user_profile.circle.remove(
+                    #     user_profile
+                    #     if user_profile in request_user_profile.circle.all()
+                    #     else None
+                    # )
+                return Response({"blocked": serializer.data["blocked"]})
             return Response(serializer.errors, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)
@@ -329,26 +319,16 @@ def shadow(request: Request) -> Response:
                 return Response(
                     {"error": "User does not have a Social Profile"}, status=404
                 )
-            username_list = []
             serializer = ShadowUsersSerializer(profile)
-            username_list.extend(
-                User.objects.get(id=id).username
-                for id in serializer.data["shadowed_users"]
-            )
-            return Response({"shadowed_users": username_list})
+            return Response({"shadowed": serializer.data["shadowed"]})
 
         case "PATCH":
-            username_list = []
             request_user_profile = SocialProfile.objects.get(user=request.user)
-            request.data["shadowed_users"] = [
-                User.objects.get(username=name).id
-                for name in request.data["shadowed_users"]
-            ]
             serializer = ShadowUsersSerializer(request_user_profile, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                for user_id in request.data["shadowed_users"]:
-                    user_profile = SocialProfile.objects.get(user__id=user_id)
+                for username in request.data["shadowed"]:
+                    user_profile = SocialProfile.objects.get(user__username=username)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot shadow self"}, status=400)
                     elif (
@@ -363,17 +343,12 @@ def shadow(request: Request) -> Response:
                         if request_user_profile in user_profile.matches_this_week.all()
                         else None
                     )
-                    user_profile.skipped_users.remove(
+                    user_profile.skipped.remove(
                         request_user_profile
-                        if request_user_profile in user_profile.skipped_users.all()
+                        if request_user_profile in user_profile.skipped.all()
                         else None
                     )
-
-                username_list.extend(
-                    User.objects.get(id=id).username
-                    for id in serializer.data["shadowed_users"]
-                )
-                return Response({"shadowed_users": username_list})
+                return Response({"shadowed": serializer.data["shadowed"]})
             return Response(serializer.errors, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)
@@ -393,26 +368,16 @@ def skip(request: Request) -> Response:
                 return Response(
                     {"error": "User does not have a Social Profile"}, status=404
                 )
-            username_list = []
             serializer = SkippedUsersSerializer(profile)
-            username_list.extend(
-                User.objects.get(id=id).username
-                for id in serializer.data["skipped_users"]
-            )
-            return Response({"skipped_users": username_list})
+            return Response({"skipped": serializer.data["skipped"]})
 
         case "PATCH":
-            username_list = []
             request_user_profile = SocialProfile.objects.get(user=request.user)
-            request.data["skipped_users"] = [
-                User.objects.get(username=name).id
-                for name in request.data["skipped_users"]
-            ]
             serializer = SkippedUsersSerializer(request_user_profile, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                for user_id in request.data["skipped_users"]:
-                    user_profile = SocialProfile.objects.get(user__id=user_id)
+                for username in request.data["skipped"]:
+                    user_profile = SocialProfile.objects.get(user__username=username)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot skip self"}, status=400)
                     elif (
@@ -423,7 +388,7 @@ def skip(request: Request) -> Response:
                             status=400,
                         )
                     # this won't happen but this is fail safe for users trying to use the API directly
-                    elif user_profile in request_user_profile.shadowed_users.all():
+                    elif user_profile in request_user_profile.shadowed.all():
                         return Response(
                             {"error": "Cannot skip a shadowed user"}, status=400
                         )
@@ -432,11 +397,7 @@ def skip(request: Request) -> Response:
                         if request_user_profile in user_profile.matches_this_week.all()
                         else None
                     )
-                username_list.extend(
-                    User.objects.get(id=id).username
-                    for id in serializer.data["skipped_users"]
-                )
-                return Response({"skipped_users": username_list})
+                return Response({"skipped": serializer.data["skipped"]})
             return Response(serializer.errors, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)

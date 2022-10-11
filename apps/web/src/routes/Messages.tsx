@@ -26,9 +26,7 @@ const activeClass = `bg-neutral-50 dark:bg-darkBG2
 
 function MessagesNav({ user }: { user: string }): JSX.Element {
   const { pathname } = useLocation();
-  const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser.username;
-  const connected = useConnected(user, loggedInUserUserName as string);
+  const connected = useConnected(user);
 
   if (connected) {
     return (
@@ -61,9 +59,7 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 
 export default function Messages() {
   useDocumentTitle('Messages');
-  const { loggedInUser } = useAuth();
-  const loggedInUserUserName = loggedInUser.username;
-  const { usernames: circle } = useCircleUsernames(loggedInUserUserName as string) as {
+  const { usernames: circle } = useCircleUsernames() as {
     usernames: string[];
   };
   return (

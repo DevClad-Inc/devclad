@@ -17,14 +17,8 @@ import {
 } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 
-function ConnectionCard({
-  username,
-  otherUser,
-}: {
-  username: string;
-  otherUser: string;
-}): JSX.Element {
-  const connected = useConnected(username, otherUser);
+function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
+  const connected = useConnected(otherUser);
 
   const profile = useOneOneProfile(otherUser) as MatchProfile;
   const qc = useQueryClient();
@@ -117,7 +111,7 @@ export default function Circle(): JSX.Element {
   const qc = useQueryClient();
   const { loggedInUser } = useAuth();
   const loggedInUserUserName = loggedInUser.username;
-  const { usernames } = useCircleUsernames(loggedInUserUserName as string);
+  const { usernames } = useCircleUsernames();
   const state = qc.getQueryState(['circle', loggedInUserUserName as string]);
   return (
     <>
@@ -125,11 +119,7 @@ export default function Circle(): JSX.Element {
         <ProfileLoading />
       )}
       {usernames?.map((username) => (
-        <ConnectionCard
-          key={username}
-          username={loggedInUserUserName as string}
-          otherUser={username}
-        />
+        <ConnectionCard key={username} otherUser={username} />
       ))}
     </>
   );

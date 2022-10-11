@@ -139,24 +139,34 @@ def user_status(request) -> Response:
     """
     Determine if the user is authenticated and return their UserStatus
     """
-    try:
-        user_status = UserStatus.objects.get(user=request.user)
-    except UserStatus.DoesNotExist:
-        return Response({"error": "User does not have a User Status"}, status=404)
-    if request.method == "GET":
-        serializer = UserStatusSerializer(user_status)
-        return Response(serializer.data)
-    if request.method == "PATCH":
-        serializer = UserStatusSerializer(user_status, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
+    match request.method:
+        case "GET":
+            try:
+                user_status = UserStatus.objects.get(user=request.user)
+            except UserStatus.DoesNotExist:
+                return Response(
+                    {"error": "User does not have a UserStatus"}, status=404
+                )
+            serializer = UserStatusSerializer(user_status)
             return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
-    if request.method not in ["GET", "PATCH"]:
-        return Response({"error": "Invalid method"}, status=405)
-
-    return Response(serializer.errors, status=400)
+        case "PATCH":
+            try:
+                user_status = UserStatus.objects.get(user=request.user)
+            except UserStatus.DoesNotExist:
+                return Response(
+                    {"error": "User does not have a UserStatus"}, status=404
+                )
+            serializer = UserStatusSerializer(
+                user_status, data=request.data, partial=True
+            )
+            match serializer.is_valid():
+                case True:
+                    serializer.save()
+                    return Response(serializer.data)
+                case _:
+                    return Response(serializer.errors, status=400)
+        case _:
+            return Response({"error": "Invalid method"}, status=405)
 
 
 @api_view(["GET", "PATCH"])

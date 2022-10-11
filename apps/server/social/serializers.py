@@ -5,6 +5,16 @@ from users.validators import devType_validator, location_validator, purpose_vali
 from timezone_field.rest_framework import TimeZoneSerializerField
 
 
+class ReadWriteSerializerMethodField(serializers.SerializerMethodField):
+    def __init__(self, method_name=None, **kwargs):
+        self.method_name = method_name
+        kwargs["source"] = "*"
+        super(serializers.SerializerMethodField, self).__init__(**kwargs)
+
+    def to_internal_value(self, data):
+        return {self.field_name: data}
+
+
 class SocialProfileSerializer(serializers.ModelSerializer):
     timezone = TimeZoneSerializerField()
     purpose = serializers.CharField(validators=[purpose_validator])
@@ -18,9 +28,9 @@ class SocialProfileSerializer(serializers.ModelSerializer):
         exclude = [
             "id",
             "user",
-            "skipped_users",
-            "blocked_users",
-            "shadowed_users",
+            "skipped",
+            "blocked",
+            "shadowed",
             "matches_this_week",
             "circle",
             "preferred_timezone_deviation",
@@ -47,9 +57,9 @@ class SocialDisplayProfileSerializer(serializers.ModelSerializer):
         exclude = [
             "id",
             "user",
-            "skipped_users",
-            "shadowed_users",
-            "blocked_users",
+            "skipped",
+            "shadowed",
+            "blocked",
             "matches_this_week",
             "circle",
             "preferred_timezone_deviation",
@@ -64,10 +74,18 @@ class SocialDisplayProfileSerializer(serializers.ModelSerializer):
 # GET: get circle
 class CircleSerializer(serializers.ModelSerializer):
     # manytomany field
-    circle = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=SocialProfile.objects.all()
-    )
+    circle = ReadWriteSerializerMethodField()
 
+    class Meta:
+        model = SocialProfile
+        fields = ["circle"]
+
+    def get_circle(self, obj):
+        sp = SocialProfile.objects.get(user=obj.user)
+        return sp.get_flat_values("circle_symmetrical")
+
+
+class AddedSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialProfile
         fields = ["circle"]
@@ -80,25 +98,50 @@ class UIDSerializer(serializers.Serializer):
 
 
 class MatchesThisWeekSerializer(serializers.ModelSerializer):
+    matches_this_week = ReadWriteSerializerMethodField()
+
     class Meta:
         model = SocialProfile
         fields = ["matches_this_week"]
         read_only_fields = ["matches_this_week"]
 
+    def get_matches_this_week(self, obj):
+        sp = SocialProfile.objects.get(user=obj.user)
+        return sp.get_flat_values("matches_this_week")
+
 
 class SkippedUsersSerializer(serializers.ModelSerializer):
+    skipped = ReadWriteSerializerMethodField()
+
     class Meta:
         model = SocialProfile
-        fields = ["skipped_users"]
+        fields = ["skipped"]
+
+    def get_skipped(self, obj):
+        sp = SocialProfile.objects.get(user=obj.user)
+        return sp.get_flat_values("skipped")
 
 
 class ShadowUsersSerializer(serializers.ModelSerializer):
+    shadowed = ReadWriteSerializerMethodField()
+
     class Meta:
         model = SocialProfile
-        fields = ["shadowed_users"]
+        fields = ["shadowed"]
+
+    def get_shadowed(self, obj):
+        sp = SocialProfile.objects.get(user=obj.user)
+        return sp.get_flat_values("shadowed")
 
 
 class BlockedUsersSerializer(serializers.ModelSerializer):
+    blocked = ReadWriteSerializerMethodField()
+
     class Meta:
         model = SocialProfile
-        fields = ["blocked_users"]
+        fields = ["blocked"]
+
+    def get_blocked(self, obj):
+        sp = SocialProfile.objects.get(user=obj.user)
+        print(sp.get_flat_values("blocked"), "blocked")
+        return sp.get_flat_values("blocked")
