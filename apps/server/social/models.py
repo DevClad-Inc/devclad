@@ -69,7 +69,6 @@ class SocialProfile(models.Model):
     circle = models.ManyToManyField(
         "self", blank=True, symmetrical=False, related_name="circle_symmetrical"
     )
-    # todo: option to remove from circle;
 
     def __str__(self):
         return self.user.username
@@ -77,7 +76,10 @@ class SocialProfile(models.Model):
     def get_flat_values(self: "SocialProfile", field: str) -> list:
         match field:
             case "circle_symmetrical":
-                return self.circle_symmetrical.values_list("user__username", flat=True)
+                list_one = self.circle_symmetrical.all()
+                list_two = self.circle.all()
+                intersect = list(set(list_one) & set(list_two))
+                return [user.user.username for user in intersect]
             case _:
                 model_field = getattr(self, field)
                 return model_field.all().values_list("user__username", flat=True)

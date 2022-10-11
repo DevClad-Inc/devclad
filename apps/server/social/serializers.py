@@ -86,9 +86,15 @@ class CircleSerializer(serializers.ModelSerializer):
 
 
 class AddedSerializer(serializers.ModelSerializer):
+    circle = serializers.SerializerMethodField()
+
     class Meta:
         model = SocialProfile
         fields = ["circle"]
+
+    def get_circle(self, obj):
+        sp = SocialProfile.objects.get(user=obj.user)
+        return sp.get_flat_values("circle")
 
 
 class UIDSerializer(serializers.Serializer):

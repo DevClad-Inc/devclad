@@ -181,16 +181,13 @@ def circle(request: Request, username: str, operation: str) -> Response:
                         )
                         user_profile_added = user_profile.get_flat_values("circle")
                         if user_profile not in (matches_this_week):
+                            # this check is for an upcoming feature: add by a secret code
                             if request_user_profile not in user_profile_added:
                                 return Response(
                                     {"error": "Operation blocked."}, status=400
                                 )
                             return Response(
                                 {"error": "User not in matches this week"}, status=400
-                            )
-                        if user_profile == request_user_profile:
-                            return Response(
-                                {"error": "Cannot add self to circle"}, status=400
                             )
 
                     request.data["circle"] = [
@@ -211,6 +208,10 @@ def circle(request: Request, username: str, operation: str) -> Response:
                             return Response(serializer.errors, status=400)
 
                 case "remove":
+                    request.data["circle"] = [
+                        User.objects.get(username=uname).id
+                        for uname in request.data["circle"]
+                    ]
                     serializer = CircleSerializer(
                         request_user_profile, data=request.data, partial=True
                     )
@@ -275,6 +276,7 @@ def block(request: Request) -> Response:
             ]
             serializer = BlockedUsersSerializer(request_user_profile, data=request.data)
             if serializer.is_valid():
+                serializer.save()
                 for id in request.data["blocked"]:
                     user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
