@@ -193,6 +193,11 @@ def circle(request: Request, username: str, operation: str) -> Response:
                                 {"error": "Cannot add self to circle"}, status=400
                             )
 
+                    request.data["circle"] = [
+                        User.objects.get(username=uname).id
+                        for uname in request.data["circle"]
+                    ]
+
                     serializer = CircleSerializer(
                         request_user_profile, data=request.data
                     )
@@ -265,40 +270,40 @@ def block(request: Request) -> Response:
 
         case "PATCH":
             request_user_profile = SocialProfile.objects.get(user=request.user)
+            request.data["blocked"] = [
+                User.objects.get(username=uname).id for uname in request.data["blocked"]
+            ]
             serializer = BlockedUsersSerializer(request_user_profile, data=request.data)
-            print(serializer)
             if serializer.is_valid():
-                print(serializer.data)
-                for username in request.data["blocked"]:
-                    user_profile = SocialProfile.objects.get(user__username=username)
-                    print(user_profile)
-                    # if user_profile == request_user_profile:
-                    #     return Response({"error": "Cannot block self"}, status=400)
-                    # user_profile.circle.remove(
-                    #     request_user_profile
-                    #     if request_user_profile in user_profile.circle.all()
-                    #     else None
-                    # )
-                    # user_profile.matches_this_week.remove(
-                    #     request_user_profile
-                    #     if request_user_profile in user_profile.matches_this_week.all()
-                    #     else None
-                    # )
-                    # user_profile.shadowed.remove(
-                    #     request_user_profile
-                    #     if request_user_profile in user_profile.shadowed.all()
-                    #     else None
-                    # )
-                    # user_profile.skipped.remove(
-                    #     request_user_profile
-                    #     if request_user_profile in user_profile.skipped.all()
-                    #     else None
-                    # )
-                    # request_user_profile.circle.remove(
-                    #     user_profile
-                    #     if user_profile in request_user_profile.circle.all()
-                    #     else None
-                    # )
+                for id in request.data["blocked"]:
+                    user_profile = SocialProfile.objects.get(user__id=id)
+                    if user_profile == request_user_profile:
+                        return Response({"error": "Cannot block self"}, status=400)
+                    user_profile.circle.remove(
+                        request_user_profile
+                        if request_user_profile in user_profile.circle.all()
+                        else None
+                    )
+                    user_profile.matches_this_week.remove(
+                        request_user_profile
+                        if request_user_profile in user_profile.matches_this_week.all()
+                        else None
+                    )
+                    user_profile.shadowed.remove(
+                        request_user_profile
+                        if request_user_profile in user_profile.shadowed.all()
+                        else None
+                    )
+                    user_profile.skipped.remove(
+                        request_user_profile
+                        if request_user_profile in user_profile.skipped.all()
+                        else None
+                    )
+                    request_user_profile.circle.remove(
+                        user_profile
+                        if user_profile in request_user_profile.circle.all()
+                        else None
+                    )
                 return Response({"blocked": serializer.data["blocked"]})
             return Response(serializer.errors, status=400)
         case _:
@@ -324,11 +329,15 @@ def shadow(request: Request) -> Response:
 
         case "PATCH":
             request_user_profile = SocialProfile.objects.get(user=request.user)
+            request.data["shadowed"] = [
+                User.objects.get(username=uname).id
+                for uname in request.data["shadowed"]
+            ]
             serializer = ShadowUsersSerializer(request_user_profile, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                for username in request.data["shadowed"]:
-                    user_profile = SocialProfile.objects.get(user__username=username)
+                for id in request.data["shadowed"]:
+                    user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot shadow self"}, status=400)
                     elif (
@@ -373,11 +382,16 @@ def skip(request: Request) -> Response:
 
         case "PATCH":
             request_user_profile = SocialProfile.objects.get(user=request.user)
+
+            request.data["skipped"] = [
+                User.objects.get(username=name).id for name in request.data["skipped"]
+            ]
+
             serializer = SkippedUsersSerializer(request_user_profile, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                for username in request.data["skipped"]:
-                    user_profile = SocialProfile.objects.get(user__username=username)
+                for id in request.data["skipped"]:
+                    user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot skip self"}, status=400)
                     elif (
