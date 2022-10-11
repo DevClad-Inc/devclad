@@ -70,7 +70,7 @@ class SocialProfile(models.Model):
         "self", blank=True, symmetrical=False, related_name="circle_symmetrical"
     )
 
-    def __str__(self):
+    def __str__(self: "SocialProfile") -> str:
         return self.user.username
 
     def get_flat_values(self: "SocialProfile", field: str) -> list:

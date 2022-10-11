@@ -17,7 +17,9 @@ class User(AbstractUser):
         constraints = [UniqueConstraint(Lower("username"), name="unique_username")]
 
 
-def file_size(value):  # add this to some file where you can import it from
+def file_size(
+    value: bytes,
+) -> bytes or None:  # maybe change to "bytes | ValidationError"?
     limit = 8 * 1024 * 1024
     if value.size > limit:
         raise ValidationError("File too large. Size should not exceed 8 MiB.")
@@ -25,7 +27,7 @@ def file_size(value):  # add this to some file where you can import it from
         return value
 
 
-def random_avatar():
+def random_avatar() -> str:
     name = str(uuid.uuid4())[:8]
     with open(f"media/avatars/{name}.png", "wb+") as f:
         url = requests.get("https://userpics.devclad.com/api/getpic")
@@ -54,11 +56,11 @@ class Profile(models.Model):
     linkedin = models.URLField(blank=True)
     calendly = models.URLField(blank=True)
 
-    def __str__(self):
+    def __str__(self: "Profile") -> str:
         return self.user.username
 
     # might not need this if we directly upload to Cloudflare from client
-    def get_avatar_url(self):
+    def get_avatar_url(self: "Profile") -> str:
         return self.avatar.url
 
 
@@ -79,5 +81,5 @@ class UserStatus(models.Model):
         verbose_name = "User Status"
         verbose_name_plural = "User Statuses"
 
-    def __str__(self):
+    def __str__(self: "UserStatus") -> str:
         return self.user.username

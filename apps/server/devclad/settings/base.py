@@ -216,7 +216,7 @@ REST_USE_JWT = True
 SIMPLE_JWT_SIGNING_KEY = config("SIMPLE_JWT_SIGNING_KEY", default="", cast=str)
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,

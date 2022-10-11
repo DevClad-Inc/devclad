@@ -91,6 +91,7 @@ class AddedSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialProfile
         fields = ["circle"]
+        read_only_fields = fields
 
     def get_circle(self, obj):
         sp = SocialProfile.objects.get(user=obj.user)
