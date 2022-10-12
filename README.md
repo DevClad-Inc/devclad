@@ -26,7 +26,7 @@ For instructions on how to run the server, see [server/README.md](apps/server/re
 
 ## Styling
 
-- Tabs not spaces. Tabs are 2 spaces.
+- Tabs not spaces. Tabs are 4 spaces.
 - Use `prettier` for formatting.
 - Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
 
