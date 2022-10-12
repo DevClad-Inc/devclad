@@ -1,19 +1,23 @@
-# DevClad - Social Workspace for Developers
+<div align="center">
+    <img src="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/011da5ea-039b-4be5-8e63-4461fef0cb00/public" width=25%>
+    <h1>DevClad - <i>Network, Build, and Ship rapidly ⚡</i></h1>
+    <p>A social workspace platform for developers to dive in a new realm.</p>
+    <h3>
+    <a href="https://youtube.com/">🎥 Watch Demo</a>
+    </h3>
+    <h3>
+    <a href="https://devclad.com/">🔮 Join or Login</a>
+    </h3>
 
-![devclad](https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/677a1e0a-bd95-4e85-7aa3-86287a865f00/public)
+![Discord](https://img.shields.io/discord/812804160700284958?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff&style=for-the-badge)
+![Website](https://img.shields.io/website?down_color=bloodred&down_message=Systems%20Down&label=DevClad.com&style=for-the-badge&up_color=honeydew&up_message=Running&url=https%3A%2F%2Fdevclad.com)
+![GitHub](https://img.shields.io/github/license/devclad-inc/devclad?color=black&style=for-the-badge)
 
-Uses [Turborepo](https://turborepo.com).
+</div>
 
-## Run in Development
+## Features
 
-> Install `yarn`: `npm install --global yarn`
-
-1. Install packages - `yarn install`
-2. Run dev server - `yarn run dev` (default port is `5173`)
-
-> Run `pre-commit run -a` when running `pre-commit` hooks for the first time.
-
-For instructions on how to run the server, see [server/README.md](apps/server/readme.md).
+## Roadmap
 
 ### Apps
 
@@ -27,6 +31,7 @@ For instructions on how to run the server, see [server/README.md](apps/server/re
 ## Styling
 
 - Tabs not spaces. Tabs are 4 spaces.
+  - (Exception: server code which uses Python with `black` formatting)
 - Use `prettier` for formatting.
 - Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
 
