@@ -1,223 +1,223 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
-  additionalSPQuery,
-  profileUsernameQuery,
-  socialProfileUsernameQuery,
-  socialProfileQuery,
-  userBlockedQuery,
-  userCircleQuery,
-  userMatchesQuery,
-  userShadowedQuery,
-  userSkippedQuery,
-  streamUIDQuery,
-  userAddedQuery,
+	additionalSPQuery,
+	profileUsernameQuery,
+	socialProfileUsernameQuery,
+	socialProfileQuery,
+	userBlockedQuery,
+	userCircleQuery,
+	userMatchesQuery,
+	userShadowedQuery,
+	userSkippedQuery,
+	streamUIDQuery,
+	userAddedQuery,
 } from '@/lib/queriesAndLoaders';
 import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 export const useStreamUID = (username: string) => {
-  const { isSuccess, data } = useQuery(streamUIDQuery(username));
-  if (isSuccess && data) {
-    const { uid } = data as { uid: string };
-    return uid;
-  }
-  return null;
+	const { isSuccess, data } = useQuery(streamUIDQuery(username));
+	if (isSuccess && data) {
+		const { uid } = data as { uid: string };
+		return uid;
+	}
+	return null;
 };
 
 export const useOneOneUsernames = () => {
-  const usernames = [];
-  const matchesQuery = useQuery(userMatchesQuery());
-  if (matchesQuery.isSuccess && matchesQuery.data !== null) {
-    const { data } = matchesQuery.data;
-    for (let i = 0; i < data.matches_this_week.length; i += 1) {
-      usernames.push(data.matches_this_week[i]);
-    }
-  }
-  return { usernames };
+	const usernames = [];
+	const matchesQuery = useQuery(userMatchesQuery());
+	if (matchesQuery.isSuccess && matchesQuery.data !== null) {
+		const { data } = matchesQuery.data;
+		for (let i = 0; i < data.matches_this_week.length; i += 1) {
+			usernames.push(data.matches_this_week[i]);
+		}
+	}
+	return { usernames };
 };
 
 export const useShadowedUsernames = () => {
-  const usernames = [];
-  const shadowedQuery = useQuery(userShadowedQuery());
-  if (shadowedQuery.isSuccess && shadowedQuery.data !== null) {
-    const { data } = shadowedQuery.data;
-    for (let i = 0; i < data.length; i += 1) {
-      usernames.push(data.shadowed[i]);
-    }
-  }
-  return { usernames };
+	const usernames = [];
+	const shadowedQuery = useQuery(userShadowedQuery());
+	if (shadowedQuery.isSuccess && shadowedQuery.data !== null) {
+		const { data } = shadowedQuery.data;
+		for (let i = 0; i < data.length; i += 1) {
+			usernames.push(data.shadowed[i]);
+		}
+	}
+	return { usernames };
 };
 
 export const useSkippedUsernames = () => {
-  const usernames = [];
-  const skippedQuery = useQuery(userSkippedQuery());
-  if (skippedQuery.isSuccess && skippedQuery.data !== null) {
-    const { data } = skippedQuery.data;
-    for (let i = 0; i < data.length; i += 1) {
-      usernames.push(data.skipped[i]);
-    }
-  }
-  return { usernames };
+	const usernames = [];
+	const skippedQuery = useQuery(userSkippedQuery());
+	if (skippedQuery.isSuccess && skippedQuery.data !== null) {
+		const { data } = skippedQuery.data;
+		for (let i = 0; i < data.length; i += 1) {
+			usernames.push(data.skipped[i]);
+		}
+	}
+	return { usernames };
 };
 
 export const useCircleUsernames = () => {
-  const { loggedInUser } = useAuth();
-  const username = loggedInUser?.username;
-  const usernames = [];
-  const circleQuery = useQuery(userCircleQuery(username as string));
-  if (circleQuery.isSuccess && circleQuery.data !== null) {
-    const { data } = circleQuery.data;
-    for (let i = 0; i < data.circle.length; i += 1) {
-      usernames.push(data.circle[i]);
-    }
-  }
-  return { usernames };
+	const { loggedInUser } = useAuth();
+	const username = loggedInUser?.username;
+	const usernames = [];
+	const circleQuery = useQuery(userCircleQuery(username as string));
+	if (circleQuery.isSuccess && circleQuery.data !== null) {
+		const { data } = circleQuery.data;
+		for (let i = 0; i < data.circle.length; i += 1) {
+			usernames.push(data.circle[i]);
+		}
+	}
+	return { usernames };
 };
 
 export const useAddedUsernames = () => {
-  const usernames = [];
-  const addedQuery = useQuery(userAddedQuery());
-  if (addedQuery.isSuccess && addedQuery.data !== null) {
-    const { data } = addedQuery.data;
-    for (let i = 0; i < data.added.length; i += 1) {
-      usernames.push(data.added[i]);
-    }
-  }
-  return { usernames };
+	const usernames = [];
+	const addedQuery = useQuery(userAddedQuery());
+	if (addedQuery.isSuccess && addedQuery.data !== null) {
+		const { data } = addedQuery.data;
+		for (let i = 0; i < data.added.length; i += 1) {
+			usernames.push(data.added[i]);
+		}
+	}
+	return { usernames };
 };
 
 export const useBlockedUsernames = () => {
-  const usernames = [];
-  const blockedQuery = useQuery(userBlockedQuery());
-  if (blockedQuery.isSuccess && blockedQuery.data !== null) {
-    const { data } = blockedQuery.data;
-    for (let i = 0; i < data.blocked.length; i += 1) {
-      usernames.push(data.blocked[i]);
-    }
-  }
-  return { usernames };
+	const usernames = [];
+	const blockedQuery = useQuery(userBlockedQuery());
+	if (blockedQuery.isSuccess && blockedQuery.data !== null) {
+		const { data } = blockedQuery.data;
+		for (let i = 0; i < data.blocked.length; i += 1) {
+			usernames.push(data.blocked[i]);
+		}
+	}
+	return { usernames };
 };
 
 export const useOneOneProfile = (username: string) => {
-  const profileQuery = useQuery({
-    ...profileUsernameQuery(username),
-    enabled: username !== '',
-    staleTime: 1000 * 5 * 60, // 5 minutes
-  });
-  const spUsernameQuery = useQuery({
-    ...socialProfileUsernameQuery(username),
-    enabled: username !== '',
-    staleTime: 1000 * 5 * 60, // 5 minutes
-  });
-  if (
-    profileQuery.isSuccess &&
-    spUsernameQuery.isSuccess &&
-    profileQuery.data !== null &&
-    spUsernameQuery.data !== null
-  ) {
-    const { data: profile } = profileQuery.data;
-    const { data: socialProfile } = spUsernameQuery.data;
-    return { ...profile, ...socialProfile };
-  }
-  return null;
+	const profileQuery = useQuery({
+		...profileUsernameQuery(username),
+		enabled: username !== '',
+		staleTime: 1000 * 5 * 60, // 5 minutes
+	});
+	const spUsernameQuery = useQuery({
+		...socialProfileUsernameQuery(username),
+		enabled: username !== '',
+		staleTime: 1000 * 5 * 60, // 5 minutes
+	});
+	if (
+		profileQuery.isSuccess &&
+		spUsernameQuery.isSuccess &&
+		profileQuery.data !== null &&
+		spUsernameQuery.data !== null
+	) {
+		const { data: profile } = profileQuery.data;
+		const { data: socialProfile } = spUsernameQuery.data;
+		return { ...profile, ...socialProfile };
+	}
+	return null;
 };
 
 export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unknown | null }) => {
-  const spQuery = useQuery({
-    ...socialProfileQuery(),
-    initialData: initialSocialData,
-  });
-  if (spQuery.isSuccess && spQuery.data !== null) {
-    const { data } = spQuery.data as { data: SocialProfile };
-    return data;
-  }
-  return null;
+	const spQuery = useQuery({
+		...socialProfileQuery(),
+		initialData: initialSocialData,
+	});
+	if (spQuery.isSuccess && spQuery.data !== null) {
+		const { data } = spQuery.data as { data: SocialProfile };
+		return data;
+	}
+	return null;
 };
 
 export const useProfile = (username: string) => {
-  const profileRef = React.useRef<Profile | null>(null);
-  const profileQuery = useQuery({
-    ...profileUsernameQuery(username),
-    enabled: username !== '',
-  });
-  if (profileQuery.isSuccess && profileQuery.data !== null) {
-    const { data } = profileQuery.data;
-    profileRef.current = data;
-  }
-  return profileRef.current;
+	const profileRef = React.useRef<Profile | null>(null);
+	const profileQuery = useQuery({
+		...profileUsernameQuery(username),
+		enabled: username !== '',
+	});
+	if (profileQuery.isSuccess && profileQuery.data !== null) {
+		const { data } = profileQuery.data;
+		profileRef.current = data;
+	}
+	return profileRef.current;
 };
 
 export const useAdditionalSP = () => {
-  const additionalSocialProfileQuery = useQuery(additionalSPQuery());
-  if (additionalSocialProfileQuery.isSuccess && additionalSocialProfileQuery.data !== null) {
-    const { data } = additionalSocialProfileQuery.data;
-    return data;
-  }
-  return null;
+	const additionalSocialProfileQuery = useQuery(additionalSPQuery());
+	if (additionalSocialProfileQuery.isSuccess && additionalSocialProfileQuery.data !== null) {
+		const { data } = additionalSocialProfileQuery.data;
+		return data;
+	}
+	return null;
 };
 
 export const useConnected = (otherUser: string): boolean => {
-  const [connected, setConnected] = React.useState(false);
-  const circle = useCircleUsernames();
-  const { usernames } = circle;
-  if (usernames !== undefined) {
-    if (usernames.includes(otherUser) && !connected) {
-      setConnected(true);
-    } else if (!usernames.includes(otherUser) && connected) {
-      setConnected(false);
-    }
-  }
-  return connected;
+	const [connected, setConnected] = React.useState(false);
+	const circle = useCircleUsernames();
+	const { usernames } = circle;
+	if (usernames !== undefined) {
+		if (usernames.includes(otherUser) && !connected) {
+			setConnected(true);
+		} else if (!usernames.includes(otherUser) && connected) {
+			setConnected(false);
+		}
+	}
+	return connected;
 };
 
 export const useAdded = (otherUser: string): boolean => {
-  const [added, setAdded] = React.useState(false);
-  const addedUsers = useAddedUsernames();
-  if (addedUsers.usernames.includes(otherUser) && !added) {
-    setAdded(true);
-  }
-  return added;
+	const [added, setAdded] = React.useState(false);
+	const addedUsers = useAddedUsernames();
+	if (addedUsers.usernames.includes(otherUser) && !added) {
+		setAdded(true);
+	}
+	return added;
 };
 
 export const useBlocked = (username: string): boolean => {
-  const [blocked, setBlocked] = React.useState(false);
-  const blockedUsers = useBlockedUsernames();
-  const { usernames } = blockedUsers;
-  if (usernames !== undefined) {
-    if (usernames.includes(username) && !blocked) {
-      setBlocked(true);
-    } else if (!usernames.includes(username) && blocked) {
-      setBlocked(false);
-    }
-  }
-  return blocked;
+	const [blocked, setBlocked] = React.useState(false);
+	const blockedUsers = useBlockedUsernames();
+	const { usernames } = blockedUsers;
+	if (usernames !== undefined) {
+		if (usernames.includes(username) && !blocked) {
+			setBlocked(true);
+		} else if (!usernames.includes(username) && blocked) {
+			setBlocked(false);
+		}
+	}
+	return blocked;
 };
 
 export const useSkipped = (otherUser: string): boolean => {
-  const [skipped, setSkipped] = React.useState(false);
-  const skippedUsers = useSkippedUsernames();
-  const { usernames } = skippedUsers;
-  if (usernames !== undefined) {
-    if (usernames.includes(otherUser) && !skipped) {
-      setSkipped(true);
-    } else if (!usernames.includes(otherUser) && skipped) {
-      setSkipped(false);
-    }
-  }
-  return skipped;
+	const [skipped, setSkipped] = React.useState(false);
+	const skippedUsers = useSkippedUsernames();
+	const { usernames } = skippedUsers;
+	if (usernames !== undefined) {
+		if (usernames.includes(otherUser) && !skipped) {
+			setSkipped(true);
+		} else if (!usernames.includes(otherUser) && skipped) {
+			setSkipped(false);
+		}
+	}
+	return skipped;
 };
 
 export const useShadowed = (otherUser: string): boolean => {
-  const [shadowed, setShadowed] = React.useState(false);
-  const shadowedUsers = useShadowedUsernames();
-  const { usernames } = shadowedUsers;
-  if (usernames !== undefined) {
-    if (usernames.includes(otherUser) && !shadowed) {
-      setShadowed(true);
-    } else if (!usernames.includes(otherUser) && shadowed) {
-      setShadowed(false);
-    }
-  }
-  return shadowed;
+	const [shadowed, setShadowed] = React.useState(false);
+	const shadowedUsers = useShadowedUsernames();
+	const { usernames } = shadowedUsers;
+	if (usernames !== undefined) {
+		if (usernames.includes(otherUser) && !shadowed) {
+			setShadowed(true);
+		} else if (!usernames.includes(otherUser) && shadowed) {
+			setShadowed(false);
+		}
+	}
+	return shadowed;
 };

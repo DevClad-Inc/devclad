@@ -1,174 +1,174 @@
 [
-  {
-    "name": "Assembly",
-    "id": 1
-  },
-  {
-    "name": "C",
-    "id": 2
-  },
-  {
-    "name": "C#",
-    "id": 3
-  },
-  {
-    "name": "C++",
-    "id": 4
-  },
-  {
-    "name": "Carbon",
-    "id": 5
-  },
-  {
-    "name": "Clojure",
-    "id": 6
-  },
-  {
-    "name": "CoffeeScript",
-    "id": 7
-  },
-  {
-    "name": "Crystal",
-    "id": 8
-  },
-  {
-    "name": "D Lang",
-    "id": 9
-  },
-  {
-    "name": "Dart",
-    "id": 10
-  },
-  {
-    "name": "Elixir",
-    "id": 11
-  },
-  {
-    "name": "Elm",
-    "id": 12
-  },
-  {
-    "name": "Erlang",
-    "id": 13
-  },
-  {
-    "name": "F#",
-    "id": 14
-  },
-  {
-    "name": "Go",
-    "id": 15
-  },
-  {
-    "name": "Groovy",
-    "id": 16
-  },
-  {
-    "name": "Haskell",
-    "id": 17
-  },
-  {
-    "name": "Java",
-    "id": 18
-  },
-  {
-    "name": "JavaScript",
-    "id": 19
-  },
-  {
-    "name": "Julia",
-    "id": 20
-  },
-  {
-    "name": "Kotlin",
-    "id": 21
-  },
-  {
-    "name": "Lisp",
-    "id": 22
-  },
-  {
-    "name": "Lua",
-    "id": 23
-  },
-  {
-    "name": "Nim",
-    "id": 24
-  },
-  {
-    "name": "OCaml",
-    "id": 25
-  },
-  {
-    "name": "Objective-C",
-    "id": 26
-  },
-  {
-    "name": "PHP",
-    "id": 27
-  },
-  {
-    "name": "Perl",
-    "id": 28
-  },
-  {
-    "name": "PureScript",
-    "id": 29
-  },
-  {
-    "name": "Python",
-    "id": 30
-  },
-  {
-    "name": "R",
-    "id": 31
-  },
-  {
-    "name": "Racket",
-    "id": 32
-  },
-  {
-    "name": "Ruby",
-    "id": 33
-  },
-  {
-    "name": "Rust",
-    "id": 34
-  },
-  {
-    "name": "SQL",
-    "id": 35
-  },
-  {
-    "name": "Scala",
-    "id": 36
-  },
-  {
-    "name": "Solidity",
-    "id": 37
-  },
-  {
-    "name": "Swift",
-    "id": 38
-  },
-  {
-    "name": "TypeScript",
-    "id": 39
-  },
-  {
-    "name": "Vala",
-    "id": 40
-  },
-  {
-    "name": "Verilog",
-    "id": 41
-  },
-  {
-    "name": "VimL",
-    "id": 42
-  },
-  {
-    "name": "Zig",
-    "id": 43
-  }
+	{
+		"name": "Assembly",
+		"id": 1
+	},
+	{
+		"name": "C",
+		"id": 2
+	},
+	{
+		"name": "C#",
+		"id": 3
+	},
+	{
+		"name": "C++",
+		"id": 4
+	},
+	{
+		"name": "Carbon",
+		"id": 5
+	},
+	{
+		"name": "Clojure",
+		"id": 6
+	},
+	{
+		"name": "CoffeeScript",
+		"id": 7
+	},
+	{
+		"name": "Crystal",
+		"id": 8
+	},
+	{
+		"name": "D Lang",
+		"id": 9
+	},
+	{
+		"name": "Dart",
+		"id": 10
+	},
+	{
+		"name": "Elixir",
+		"id": 11
+	},
+	{
+		"name": "Elm",
+		"id": 12
+	},
+	{
+		"name": "Erlang",
+		"id": 13
+	},
+	{
+		"name": "F#",
+		"id": 14
+	},
+	{
+		"name": "Go",
+		"id": 15
+	},
+	{
+		"name": "Groovy",
+		"id": 16
+	},
+	{
+		"name": "Haskell",
+		"id": 17
+	},
+	{
+		"name": "Java",
+		"id": 18
+	},
+	{
+		"name": "JavaScript",
+		"id": 19
+	},
+	{
+		"name": "Julia",
+		"id": 20
+	},
+	{
+		"name": "Kotlin",
+		"id": 21
+	},
+	{
+		"name": "Lisp",
+		"id": 22
+	},
+	{
+		"name": "Lua",
+		"id": 23
+	},
+	{
+		"name": "Nim",
+		"id": 24
+	},
+	{
+		"name": "OCaml",
+		"id": 25
+	},
+	{
+		"name": "Objective-C",
+		"id": 26
+	},
+	{
+		"name": "PHP",
+		"id": 27
+	},
+	{
+		"name": "Perl",
+		"id": 28
+	},
+	{
+		"name": "PureScript",
+		"id": 29
+	},
+	{
+		"name": "Python",
+		"id": 30
+	},
+	{
+		"name": "R",
+		"id": 31
+	},
+	{
+		"name": "Racket",
+		"id": 32
+	},
+	{
+		"name": "Ruby",
+		"id": 33
+	},
+	{
+		"name": "Rust",
+		"id": 34
+	},
+	{
+		"name": "SQL",
+		"id": 35
+	},
+	{
+		"name": "Scala",
+		"id": 36
+	},
+	{
+		"name": "Solidity",
+		"id": 37
+	},
+	{
+		"name": "Swift",
+		"id": 38
+	},
+	{
+		"name": "TypeScript",
+		"id": 39
+	},
+	{
+		"name": "Vala",
+		"id": 40
+	},
+	{
+		"name": "Verilog",
+		"id": 41
+	},
+	{
+		"name": "VimL",
+		"id": 42
+	},
+	{
+		"name": "Zig",
+		"id": 43
+	}
 ]

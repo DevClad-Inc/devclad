@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('@devclad/ui/postcss'),
+	...require('@devclad/ui/postcss'),
 };

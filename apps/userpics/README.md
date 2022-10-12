@@ -5,8 +5,8 @@
 ## Features
 
 - [x] 🚀 Generate avatars on the fly
-- [X] 🎨 100 avatars included from [Craftwork.design](https://craftwork.design/) (I'm not affiliated with them, just a fan)
-- [X] 🎨 Abstraction over [Boring Avatars](https://boringavatars.com/) included as well.
+- [x] 🎨 100 avatars included from [Craftwork.design](https://craftwork.design/) (I'm not affiliated with them, just a fan)
+- [x] 🎨 Abstraction over [Boring Avatars](https://boringavatars.com/) included as well.
 - [x] ✨ Tiny as fuck.
 - [x] ✨ Serverless. Configurable. Easily deployable.
 
@@ -46,7 +46,7 @@ All these variants and avatars (under `api/avatar/` route) are from [Boring Avat
 
 - `/api/getpic/` is the endpoint to get a random avatar.
 
-``` python
+```python
 def random_avatar():
     name = str(uuid.uuid4())[:8]
     with open(f"media/avatars/{name}.png", "wb+") as f:
@@ -65,7 +65,7 @@ You can try svg too btw, haven't tested it but it should work.
 
 ## Config
 
-``` go
+```go
 accountId := os.Getenv("ACCOUNT_ID")
 bucketName := os.Getenv("BUCKET_NAME")
 accessKeyId := os.Getenv("API_ACCESS_KEY")
@@ -88,10 +88,10 @@ do the usual. install dependencies via `yarn` and run `yarn run start`/`yarn run
 
 ### Services
 
-| Resource | Service |
-| --- | --- |
-| Storage | Cloudflare R2 (S3 compatible) |
-| Serverless Hosting | Vercel (AWS Lambda) |
+| Resource           | Service                       |
+| ------------------ | ----------------------------- |
+| Storage            | Cloudflare R2 (S3 compatible) |
+| Serverless Hosting | Vercel (AWS Lambda)           |
 
 ---
 

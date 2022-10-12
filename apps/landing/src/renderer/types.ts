@@ -6,15 +6,15 @@ type Page = (pageProps: PageProps) => React.ReactElement;
 type PageProps = { basePath?: string; Page?: Page; pageContext?: PageContext };
 
 export type PageContextCustom = {
-  Page: Page;
-  pageProps?: PageProps;
-  urlPathname: string;
-  exports: {
-    documentProps?: {
-      title?: string;
-      description?: string;
-    };
-  };
+	Page: Page;
+	pageProps?: PageProps;
+	urlPathname: string;
+	exports: {
+		documentProps?: {
+			title?: string;
+			description?: string;
+		};
+	};
 };
 
 type PageContextServer = PageContextBuiltIn<Page> & PageContextCustom;

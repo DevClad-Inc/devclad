@@ -1,7 +1,7 @@
 [
-  { "name": "Networking", "id": 0 },
-  { "name": "This just seems cool", "id": 1 },
-  { "name": "To Find projects to work on", "id": 2 },
-  { "name": "To find developers for an idea I have", "id": 3 },
-  { "name": "To participate in Hackathons", "id": 4 }
+	{ "name": "Networking", "id": 0 },
+	{ "name": "This just seems cool", "id": 1 },
+	{ "name": "To Find projects to work on", "id": 2 },
+	{ "name": "To find developers for an idea I have", "id": 3 },
+	{ "name": "To participate in Hackathons", "id": 4 }
 ]

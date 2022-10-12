@@ -1,5 +1,7 @@
 # DevClad - Social Workspace for Developers
 
+![devclad](https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/677a1e0a-bd95-4e85-7aa3-86287a865f00/public)
+
 Uses [Turborepo](https://turborepo.com).
 
 ## Run in Development
@@ -11,6 +13,8 @@ Uses [Turborepo](https://turborepo.com).
 
 > Run `pre-commit run -a` when running `pre-commit` hooks for the first time.
 
+For instructions on how to run the server, see [server/README.md](apps/server/readme.md).
+
 ### Apps
 
 - [app/landing](https://github.com/DevClad-Inc/devclad-client/tree/main/apps/landing)
@@ -18,19 +22,13 @@ Uses [Turborepo](https://turborepo.com).
 
 ---
 
-## UI
-
-- Using TailwindCSS for styling.
-
-## State Management
-
-- [`useContext`](https://reactjs.org/docs/hooks-reference.html#usecontext) + [`useReducer`](https://reactjs.org/docs/hooks-reference.html#usereducer)
-- [React Query](https://react-query.tanstack.com/) to keep client state and server states in sync.
-- Zustand/Jotai if needed later.
+## Contributing
 
 ## Styling
 
-Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
+- Tabs not spaces. Tabs are 2 spaces.
+- Use `prettier` for formatting.
+- Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
 
 ## Absolute Imports
 

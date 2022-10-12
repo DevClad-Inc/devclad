@@ -1,6 +1,6 @@
 {
-  "extends": "./base.tsconfig.json",
-  "compilerOptions": {
-    "types": ["vite/client"]
-  }
+	"extends": "./base.tsconfig.json",
+	"compilerOptions": {
+		"types": ["vite/client"]
+	}
 }

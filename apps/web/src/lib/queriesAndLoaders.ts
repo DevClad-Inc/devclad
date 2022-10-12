@@ -2,104 +2,104 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import {
-  getAdded,
-  getAdditionalSP,
-  getBlockedUsers,
-  getCircle,
-  getOneOne,
-  getProfile,
-  getShadowUsers,
-  getSkippedUsers,
-  getSocialProfile,
-  getStatus,
-  getUsernameProfile,
-  getUsernameSocialProfile,
+	getAdded,
+	getAdditionalSP,
+	getBlockedUsers,
+	getCircle,
+	getOneOne,
+	getProfile,
+	getShadowUsers,
+	getSkippedUsers,
+	getSocialProfile,
+	getStatus,
+	getUsernameProfile,
+	getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
 
 // ! only using social profile loader rn
 
 export const streamQuery = () => ({
-  queryKey: ['stream'],
-  queryFn: () => getStreamToken(),
-  staleTime: 1000 * 60 * 60 * 24, // 24 hours
-  cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-  refetchOnWindowFocus: false,
+	queryKey: ['stream'],
+	queryFn: () => getStreamToken(),
+	staleTime: 1000 * 60 * 60 * 24, // 24 hours
+	cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+	refetchOnWindowFocus: false,
 });
 
 export const streamUIDQuery = (username: string) => ({
-  queryKey: ['streamUID', username],
-  queryFn: () => getStreamUID(username),
-  staleTime: 1000 * 60 * 60 * 24, //
-  cacheTime: 1000 * 60 * 60 * 24, //
-  refetchOnWindowFocus: false,
+	queryKey: ['streamUID', username],
+	queryFn: () => getStreamUID(username),
+	staleTime: 1000 * 60 * 60 * 24, //
+	cacheTime: 1000 * 60 * 60 * 24, //
+	refetchOnWindowFocus: false,
 });
 
 export const userQuery = () => ({
-  queryKey: ['user'],
-  queryFn: async () => getUser(),
+	queryKey: ['user'],
+	queryFn: async () => getUser(),
 });
 
 export const profileQuery = () => ({
-  queryKey: ['profile'],
-  queryFn: async () => getProfile(),
+	queryKey: ['profile'],
+	queryFn: async () => getProfile(),
 });
 
 export const socialProfileQuery = () => ({
-  queryKey: ['social-profile'],
-  queryFn: async () => getSocialProfile(),
+	queryKey: ['social-profile'],
+	queryFn: async () => getSocialProfile(),
 });
 
 export const additionalSPQuery = () => ({
-  queryKey: ['additional-sprefs'],
-  queryFn: async () => getAdditionalSP(),
+	queryKey: ['additional-sprefs'],
+	queryFn: async () => getAdditionalSP(),
 });
 
 export const statusQuery = () => ({
-  queryKey: ['userStatus'],
-  queryFn: async () => getStatus(),
+	queryKey: ['userStatus'],
+	queryFn: async () => getStatus(),
 });
 
 export const profileUsernameQuery = (username: string) => ({
-  queryKey: ['profile', username],
-  queryFn: async () => getUsernameProfile(username),
+	queryKey: ['profile', username],
+	queryFn: async () => getUsernameProfile(username),
 });
 
 export const socialProfileUsernameQuery = (username: string) => ({
-  queryKey: ['social-profile', username],
-  queryFn: async () => getUsernameSocialProfile(username),
+	queryKey: ['social-profile', username],
+	queryFn: async () => getUsernameSocialProfile(username),
 });
 
 export const userMatchesQuery = () => ({
-  queryKey: ['matches'],
-  queryFn: async () => getOneOne(),
-  staleTime: 1000 * 60 * 60 * 24, // 24 hours
+	queryKey: ['matches'],
+	queryFn: async () => getOneOne(),
+	staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
 export const userCircleQuery = (username: string) => ({
-  queryKey: ['circle', username],
-  enabled: !!username,
-  queryFn: async () => getCircle(username),
+	queryKey: ['circle', username],
+	enabled: !!username,
+	queryFn: async () => getCircle(username),
 });
 
 export const userAddedQuery = () => ({
-  queryKey: ['added'],
-  queryFn: async () => getAdded(),
+	queryKey: ['added'],
+	queryFn: async () => getAdded(),
 });
 
 export const userBlockedQuery = () => ({
-  queryKey: ['blocked'],
-  queryFn: async () => getBlockedUsers(),
+	queryKey: ['blocked'],
+	queryFn: async () => getBlockedUsers(),
 });
 
 export const userShadowedQuery = () => ({
-  queryKey: ['shadowed'],
-  queryFn: async () => getShadowUsers(),
+	queryKey: ['shadowed'],
+	queryFn: async () => getShadowUsers(),
 });
 
 export const userSkippedQuery = () => ({
-  queryKey: ['skipped'],
-  queryFn: async () => getSkippedUsers(),
+	queryKey: ['skipped'],
+	queryFn: async () => getSkippedUsers(),
 });
 
 // profileempty and socialempty query are only used in Onboarding
@@ -107,27 +107,27 @@ export const userSkippedQuery = () => ({
 // so not making a reusable query for them
 
 export const userLoader = (qc: QueryClient) => async () =>
-  qc.getQueryData(userQuery().queryKey) ?? (await qc.fetchQuery(userQuery()));
+	qc.getQueryData(userQuery().queryKey) ?? (await qc.fetchQuery(userQuery()));
 
 export const profileLoader = (qc: QueryClient) => async () => {
-  const query = profileQuery();
-  return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+	const query = profileQuery();
+	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
 export const socialProfileLoader = (qc: QueryClient) => async () => {
-  const query = socialProfileQuery();
-  return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+	const query = socialProfileQuery();
+	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
 export const statusLoader = (qc: QueryClient) => async () =>
-  qc.getQueryData(statusQuery().queryKey) ?? (await qc.fetchQuery(statusQuery()));
+	qc.getQueryData(statusQuery().queryKey) ?? (await qc.fetchQuery(statusQuery()));
 
 export const profileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-  const query = profileUsernameQuery(username);
-  return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+	const query = profileUsernameQuery(username);
+	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
 export const socialProfileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-  const query = socialProfileUsernameQuery(username);
-  return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+	const query = socialProfileUsernameQuery(username);
+	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };

@@ -15,13 +15,15 @@ Built using [Django](https://www.djangoproject.com/).
 
 - **Option 1: Poetry**:
 
-    To use multiple versions of Python, you can use `pyenv`:
-    3.10.6 is an example for our use-case.
+  To use multiple versions of Python, you can use `pyenv`:
+  3.10.6 is an example for our use-case.
+
   - Install `pyenv` using `brew`.
   - `pyenv install 3.10.6`.
   - Launch shell - `pyenv shell 3.10.6`.
 
     Install Poetry: [Read more here](https://python-poetry.org/docs/)
+
     1. `poetry config virtualenvs.in-project true`
     2. `poetry self update` to update to the latest version of Poetry.
     3. If you used, `pyenv shell`, you can now run `poetry env use python3.10.6`.
@@ -36,9 +38,9 @@ Built using [Django](https://www.djangoproject.com/).
     3. `docker-compose up` to start the server.
 
 - **Make sure to use the pre-commit hook**
-    1. Installation - [Read more here](https://pre-commit.com)
-    2. `pre-commit install` to install the pre-commit hooks.
-    3. `pre-commit run -a` to run the pre-commit hooks.
+  1. Installation - [Read more here](https://pre-commit.com)
+  2. `pre-commit install` to install the pre-commit hooks.
+  3. `pre-commit run -a` to run the pre-commit hooks.
 
 ---
 

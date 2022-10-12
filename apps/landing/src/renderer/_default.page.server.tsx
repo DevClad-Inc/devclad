@@ -9,22 +9,22 @@ import { PageContextCustom, PageContextServer } from './types';
 export const passToClient = ['pageProps', 'urlPathname'];
 
 export async function render(pageContext: PageContextServer) {
-  const { Page, pageProps } = pageContext as PageContextCustom;
-  const pageHtml = ReactDOMServer.renderToString(
-    <PageShell pageContext={pageContext}>
-      <Page {...pageProps} />
-    </PageShell>
-  );
+	const { Page, pageProps } = pageContext as PageContextCustom;
+	const pageHtml = ReactDOMServer.renderToString(
+		<PageShell pageContext={pageContext}>
+			<Page {...pageProps} />
+		</PageShell>
+	);
 
-  // See https://vite-plugin-ssr.com/head
-  const { documentProps } = pageContext.exports;
-  const title =
-    (documentProps && documentProps.title) || 'DevClad - Network, Build, and Ship rapidly';
-  const desc =
-    (documentProps && documentProps.description) ||
-    'Social Workspace Platform built for developers. Meet developers 1:1 using AI, build your network, and ship the next best thing.';
+	// See https://vite-plugin-ssr.com/head
+	const { documentProps } = pageContext.exports;
+	const title =
+		(documentProps && documentProps.title) || 'DevClad - Network, Build, and Ship rapidly';
+	const desc =
+		(documentProps && documentProps.description) ||
+		'Social Workspace Platform built for developers. Meet developers 1:1 using AI, build your network, and ship the next best thing.';
 
-  const documentHtml = escapeInject`<!DOCTYPE html>
+	const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en" class="h-full">
       <head>
         <meta charset="UTF-8" />
@@ -68,10 +68,10 @@ export async function render(pageContext: PageContextServer) {
       </body>
     </html>`;
 
-  return {
-    documentHtml,
-    pageContext: {
-      // We can add some `pageContext` here, which is useful if we want to do page redirection https://vite-plugin-ssr.com/page-redirection
-    },
-  };
+	return {
+		documentHtml,
+		pageContext: {
+			// We can add some `pageContext` here, which is useful if we want to do page redirection https://vite-plugin-ssr.com/page-redirection
+		},
+	};
 }

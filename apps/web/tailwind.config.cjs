@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('@devclad/ui/tailwindcss-config'),
+	...require('@devclad/ui/tailwindcss-config'),
 };

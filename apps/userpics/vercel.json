@@ -1,9 +1,9 @@
 {
-  "buildCommand": "yarn build",
-  "outputDirectory": "public",
-  "installCommand": "yarn install",
-  "framework": "remix",
-  "github": {
-    "silent": true
-  }
+	"buildCommand": "yarn build",
+	"outputDirectory": "public",
+	"installCommand": "yarn install",
+	"framework": "remix",
+	"github": {
+		"silent": true
+	}
 }

@@ -1,38 +1,38 @@
 {
-  "name": "userpics",
-  "homepage": "https://userpics.devclad.com",
-  "private": true,
-  "version": "0.0.0",
-  "license": "MIT License",
-  "sideEffects": false,
-  "scripts": {
-    "setup": "yarn vercel login && yarn vercel link",
-    "start": "yarn vercel dev",
-    "build": "yarn run build:css && remix build",
-    "build:css": "tailwindcss -m -i ./styles/tailwind.css -o app/styles/tailwind.css",
-    "dev": "concurrently \"yarn run dev:css\" \"remix dev\"",
-    "dev:css": "tailwindcss -w -i ./styles/tailwind.css -o app/styles/tailwind.css"
-  },
-  "dependencies": {
-    "@heroicons/react": "^2.0.11",
-    "@remix-run/node": "^1.7.2",
-    "@remix-run/react": "^1.7.2",
-    "@remix-run/vercel": "^1.7.2",
-    "@vercel/node": "^2.4.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@remix-run/dev": "^1.7.2",
-    "@remix-run/eslint-config": "^1.7.2",
-    "@remix-run/serve": "^1.7.2",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "autoprefixer": "^10.4.12",
-    "concurrently": "^7.4.0",
-    "eslint": "^8.23.1",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8",
-    "typescript": "^4.7.4"
-  }
+	"name": "userpics",
+	"homepage": "https://userpics.devclad.com",
+	"private": true,
+	"version": "0.0.0",
+	"license": "MIT License",
+	"sideEffects": false,
+	"scripts": {
+		"setup": "yarn vercel login && yarn vercel link",
+		"start": "yarn vercel dev",
+		"build": "yarn run build:css && remix build",
+		"build:css": "tailwindcss -m -i ./styles/tailwind.css -o app/styles/tailwind.css",
+		"dev": "concurrently \"yarn run dev:css\" \"remix dev\"",
+		"dev:css": "tailwindcss -w -i ./styles/tailwind.css -o app/styles/tailwind.css"
+	},
+	"dependencies": {
+		"@heroicons/react": "^2.0.11",
+		"@remix-run/node": "^1.7.2",
+		"@remix-run/react": "^1.7.2",
+		"@remix-run/vercel": "^1.7.2",
+		"@vercel/node": "^2.4.4",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@remix-run/dev": "^1.7.2",
+		"@remix-run/eslint-config": "^1.7.2",
+		"@remix-run/serve": "^1.7.2",
+		"@types/react": "^18.0.15",
+		"@types/react-dom": "^18.0.6",
+		"autoprefixer": "^10.4.12",
+		"concurrently": "^7.4.0",
+		"eslint": "^8.23.1",
+		"postcss": "^8.4.16",
+		"tailwindcss": "^3.1.8",
+		"typescript": "^4.7.4"
+	}
 }

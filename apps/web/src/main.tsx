@@ -31,148 +31,148 @@ import Messages, { MessageChild } from '@/routes/Messages';
 axios.defaults.headers.common.withCredentials = true;
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      networkMode: 'online',
-    },
-  },
+	defaultOptions: {
+		queries: {
+			networkMode: 'online',
+		},
+	},
 });
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    children: [
-      // COMMON FOR ALL AUTHED USERS
-      {
-        path: '/',
-        element: <Home />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'signup',
-        element: <Signup />,
-      },
-      {
-        path: 'auth/registration/account-confirm-email/:key',
-        element: <VerifyEmail />,
-      },
-      {
-        path: 'auth/password/reset/confirm/:uid/:token',
-        element: <PassReset />,
-      },
-      {
-        path: 'forgot-password',
-        hasErrorBoundary: true,
-        element: <ForgotPassword />,
-      },
-      // AUTHED AND UNAPPROVED
-      {
-        path: 'onboarding',
-        element: <Onboarding />,
-        children: [
-          {
-            index: true,
-            hasErrorBoundary: true,
-            element: <StepOne />,
-          },
-          {
-            path: '/onboarding/step-two',
-            element: <StepTwo />,
-            hasErrorBoundary: true,
-            loader: socialProfileLoader(queryClient),
-          },
-        ],
-      },
-      // AUTHED AND APPROVED
-      {
-        path: 'profile/:username',
-        hasErrorBoundary: true,
-        element: <Profile />,
-      },
-      {
-        path: 'social',
-        hasErrorBoundary: true,
-        element: <Social />,
-        children: [
-          {
-            index: true,
-            hasErrorBoundary: true,
-            element: <OneOne />,
-          },
-          {
-            path: '/social/circle',
-            hasErrorBoundary: true,
-            element: <Circle />,
-          },
-        ],
-      },
-      {
-        path: 'messages',
-        hasErrorBoundary: true,
-        element: <Messages />,
-        children: [
-          {
-            index: true,
-            hasErrorBoundary: true,
-            element: <MessagesLoading />,
-          },
-          {
-            path: '/messages/:username',
-            hasErrorBoundary: true,
-            element: <MessageChild />,
-          },
-        ],
-      },
-      {
-        path: 'hackathons',
-        hasErrorBoundary: true,
-        element: <Hackathons />,
-      },
-      {
-        path: 'settings',
-        hasErrorBoundary: true,
-        element: <Settings />,
-        children: [
-          {
-            index: true,
-            hasErrorBoundary: true,
-            element: <AccountProfile />,
-          },
-          {
-            path: '/settings/social',
-            element: <SocialProfile />,
-            hasErrorBoundary: true,
-            loader: socialProfileLoader(queryClient),
-          },
-          {
-            path: '/settings/password',
-            element: <Password />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: '*',
-    element: <FourOFour />,
-  },
+	{
+		path: '/',
+		element: <Root />,
+		children: [
+			// COMMON FOR ALL AUTHED USERS
+			{
+				path: '/',
+				element: <Home />,
+			},
+			{
+				path: 'login',
+				element: <Login />,
+			},
+			{
+				path: 'signup',
+				element: <Signup />,
+			},
+			{
+				path: 'auth/registration/account-confirm-email/:key',
+				element: <VerifyEmail />,
+			},
+			{
+				path: 'auth/password/reset/confirm/:uid/:token',
+				element: <PassReset />,
+			},
+			{
+				path: 'forgot-password',
+				hasErrorBoundary: true,
+				element: <ForgotPassword />,
+			},
+			// AUTHED AND UNAPPROVED
+			{
+				path: 'onboarding',
+				element: <Onboarding />,
+				children: [
+					{
+						index: true,
+						hasErrorBoundary: true,
+						element: <StepOne />,
+					},
+					{
+						path: '/onboarding/step-two',
+						element: <StepTwo />,
+						hasErrorBoundary: true,
+						loader: socialProfileLoader(queryClient),
+					},
+				],
+			},
+			// AUTHED AND APPROVED
+			{
+				path: 'profile/:username',
+				hasErrorBoundary: true,
+				element: <Profile />,
+			},
+			{
+				path: 'social',
+				hasErrorBoundary: true,
+				element: <Social />,
+				children: [
+					{
+						index: true,
+						hasErrorBoundary: true,
+						element: <OneOne />,
+					},
+					{
+						path: '/social/circle',
+						hasErrorBoundary: true,
+						element: <Circle />,
+					},
+				],
+			},
+			{
+				path: 'messages',
+				hasErrorBoundary: true,
+				element: <Messages />,
+				children: [
+					{
+						index: true,
+						hasErrorBoundary: true,
+						element: <MessagesLoading />,
+					},
+					{
+						path: '/messages/:username',
+						hasErrorBoundary: true,
+						element: <MessageChild />,
+					},
+				],
+			},
+			{
+				path: 'hackathons',
+				hasErrorBoundary: true,
+				element: <Hackathons />,
+			},
+			{
+				path: 'settings',
+				hasErrorBoundary: true,
+				element: <Settings />,
+				children: [
+					{
+						index: true,
+						hasErrorBoundary: true,
+						element: <AccountProfile />,
+					},
+					{
+						path: '/settings/social',
+						element: <SocialProfile />,
+						hasErrorBoundary: true,
+						loader: socialProfileLoader(queryClient),
+					},
+					{
+						path: '/settings/password',
+						element: <Password />,
+					},
+				],
+			},
+		],
+	},
+	{
+		path: '*',
+		element: <FourOFour />,
+	},
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <SpeedProvider>
-          <ThemeProvider>
-            <RouterProvider router={router} fallbackElement={<ProfileLoading />} />
-          </ThemeProvider>
-        </SpeedProvider>
-      </UserProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<UserProvider>
+				<SpeedProvider>
+					<ThemeProvider>
+						<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
+					</ThemeProvider>
+				</SpeedProvider>
+			</UserProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
+	</React.StrictMode>
 );
