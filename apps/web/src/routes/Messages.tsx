@@ -4,7 +4,6 @@ import { PaperClipIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Channel, DefaultGenerics, StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
-import Cookies from 'js-cookie';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import {
 	useCircleUsernames,
@@ -129,7 +128,6 @@ export function MessageChild(): JSX.Element {
 			qc.invalidateQueries(['channel', channelRef.current.cid]);
 		}
 	};
-	// todo: context for Streamtoken
 	React.useEffect(() => {
 		if (
 			streamToken !== null &&
@@ -138,51 +136,26 @@ export function MessageChild(): JSX.Element {
 			otherUserUID !== null &&
 			profileData !== null
 		) {
-			const ConnectandCreateChannel = async () => {
-				await client
-					.connectUser(
-						{
-							id: streamToken?.uid as string,
-							first_name: loggedInUser.first_name as string,
-							last_name: loggedInUser.last_name as string,
-							username: loggedInUser.username,
-							email: loggedInUser.email,
-							image: profileData.avatar as string,
-						},
-						streamToken?.token as string
-					)
+			const CreateChannel = async () => {
+				channelRef.current = client.channel('messaging', {
+					members: [currUserUID, otherUserUID],
+				});
+				await channelRef.current
+					.create()
 					.then(async () => {
-						Cookies.set('streamConnected', 'true', {
-							sameSite: 'strict',
-							secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
-						});
-						channelRef.current = client.channel('messaging', {
-							members: [currUserUID, otherUserUID],
-						});
-						await channelRef.current
-							.create()
-							.then(async () => {
-								await fetchMessages(channelRef.current)
-									.then((res) =>
-										qc.setQueryData(['channel', channelRef.current?.cid as string], res)
-									)
-									.then(() => {
-										setReloadFetch(true);
-									});
-							})
-							.catch(() => {
-								toast.custom(<Error error="Error initiating chat." />, {
-									id: 'error-channel-create',
-								});
+						await fetchMessages(channelRef.current)
+							.then((res) => qc.setQueryData(['channel', channelRef.current?.cid as string], res))
+							.then(() => {
+								setReloadFetch(true);
 							});
 					})
 					.catch(() => {
-						toast.custom(<Error error="Cannot connect to Stream. Try refreshing the page." />, {
-							id: 'stream-connect-error',
+						toast.custom(<Error error="Error initiating chat." />, {
+							id: 'error-channel-create',
 						});
 					});
 			};
-			ConnectandCreateChannel();
+			CreateChannel();
 		}
 	}, [client, currUserUID, loggedInUser, otherUserUID, profileData, qc, streamToken]);
 
@@ -272,10 +245,9 @@ export function MessageChild(): JSX.Element {
 								onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
 									e.preventDefault();
 									const text = e.currentTarget.message.value;
-									if (text) {
-										handleSendMessage(text).then(() => {
-											e.currentTarget.value = '';
-										});
+									if (message.length > 0 && text) {
+										e.currentTarget.value = '';
+										handleSendMessage(text);
 									}
 								}}
 							>
@@ -293,10 +265,9 @@ export function MessageChild(): JSX.Element {
 												if (e.key === 'Enter') {
 													e.preventDefault();
 													if (message.length > 0) {
-														handleSendMessage(message).then(() => {
-															const target = e.target as HTMLTextAreaElement;
-															target.value = '';
-														});
+														const target = e.target as HTMLTextAreaElement;
+														target.value = '';
+														handleSendMessage(message);
 													}
 												}
 											}}

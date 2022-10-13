@@ -155,7 +155,6 @@ export async function refreshToken() {
 			delMany(['loggedInUser', 'profile']);
 			Cookies.remove('token');
 			Cookies.remove('refresh');
-			Cookies.remove('streamConnected');
 		});
 }
 
@@ -259,7 +258,6 @@ export async function logOut() {
 				delMany(['loggedInUser', 'profile']);
 				Cookies.remove('token');
 				Cookies.remove('refresh');
-				Cookies.remove('streamConnected');
 			})
 			.catch(() => null);
 		return response;

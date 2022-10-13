@@ -6,7 +6,6 @@ import { updateProfile, updateProfileAvatar } from '@/services/profile.services'
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Profile, initialProfileState, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { Error, Success } from '@/components/Feedback';
-import QueryLoader from '@/lib/QueryLoader.lib';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { profileQuery } from '@/lib/queriesAndLoaders';
@@ -253,7 +252,7 @@ export function AvatarUploadForm() {
 		profileData = profileQueryData.data;
 	}
 	if (profileQueryLoading) {
-		return <QueryLoader />;
+		return <ProfileLoading />;
 	}
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
