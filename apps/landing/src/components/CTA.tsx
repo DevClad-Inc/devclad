@@ -53,9 +53,9 @@ export default function CTA() {
 									id="email"
 									type="email"
 									placeholder="Enter your email"
-									className="block w-full rounded-md border-[1px] border-neutral-800 bg-black bg-transparent
-          px-4 py-3 text-base text-white placeholder-white focus:outline-none
-          focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 focus:ring-offset-neutral-900"
+									className="block w-full rounded-md border-[1px] border-neutral-800 bg-black
+									px-4 py-3 text-base text-white placeholder-white focus:outline-none
+									focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 focus:ring-offset-neutral-900"
 								/>
 							</label>
 						</div>
