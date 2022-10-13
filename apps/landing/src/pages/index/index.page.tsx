@@ -12,7 +12,7 @@ export function Page() {
 				backgroundImage: `url(${GraphTextureSVG})`,
 			}}
 		>
-			<div className="relative bg-gradient-to-b from-black via-black/50 to-black">
+			<div className="relative bg-gradient-to-b from-black via-black/60 to-black">
 				<Toaster />
 				<div
 					className="absolute top-10 -left-2 h-48 w-48 rounded-full bg-sky-900/60
