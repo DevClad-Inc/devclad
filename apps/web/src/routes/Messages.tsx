@@ -89,6 +89,7 @@ export function MessageChild(): JSX.Element {
 	const loggedInUserUserName = loggedInUser.username as string;
 	const currUserUID = useStreamUID(loggedInUserUserName);
 	const [message, setMessage] = React.useState('');
+	const [reloadFetch, setReloadFetch] = React.useState(false);
 
 	const profileData = useProfile(loggedInUserUserName as string) as Profile;
 	// const otherProfile = useProfile(username) as Profile;
@@ -99,23 +100,26 @@ export function MessageChild(): JSX.Element {
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const channelPaginatedQuery = useQuery(
-		['channel', channelRef.current?.cid],
-		async () => {
-			if (channelRef.current) {
-				return channelRef.current.query({
-					messages: {
-						limit: 10,
-					},
-				});
-			}
-			return null;
-		},
-		{
-			enabled: !!channelRef.current,
+	const fetchMessages = async (channelVal: Channel<DefaultGenerics> | undefined) => {
+		if (channelVal) {
+			return channelVal.query({
+				messages: {
+					limit: 10,
+				},
+			});
 		}
-	);
+		return null;
+	};
+
+	const channelQuery = (channelVal: Channel<DefaultGenerics> | undefined, channelCID: string) => ({
+		queryKey: ['channel', channelCID],
+		queryFn: () => fetchMessages(channelVal),
+	});
+
+	const { data: channelQData } = useQuery({
+		...channelQuery(channelRef.current, channelRef.current?.cid as string),
+		enabled: channelRef.current !== undefined,
+	});
 
 	const handleSendMessage = async (text: string) => {
 		if (channelRef.current && message.length > 0) {
@@ -125,6 +129,7 @@ export function MessageChild(): JSX.Element {
 			qc.invalidateQueries(['channel', channelRef.current.cid]);
 		}
 	};
+	// todo: context for Streamtoken
 	React.useEffect(() => {
 		if (
 			streamToken !== null &&
@@ -132,7 +137,6 @@ export function MessageChild(): JSX.Element {
 			currUserUID !== null &&
 			otherUserUID !== null &&
 			profileData !== null
-			// && Cookies.get('streamConnected') !== 'true'
 		) {
 			const ConnectandCreateChannel = async () => {
 				await client
@@ -158,8 +162,13 @@ export function MessageChild(): JSX.Element {
 						await channelRef.current
 							.create()
 							.then(async () => {
-								// console.log(resp);
-								// await channel.watch();
+								await fetchMessages(channelRef.current)
+									.then((res) =>
+										qc.setQueryData(['channel', channelRef.current?.cid as string], res)
+									)
+									.then(() => {
+										setReloadFetch(true);
+									});
 							})
 							.catch(() => {
 								toast.custom(<Error error="Error initiating chat." />, {
@@ -175,65 +184,68 @@ export function MessageChild(): JSX.Element {
 			};
 			ConnectandCreateChannel();
 		}
-	}, [client, currUserUID, loggedInUser, otherUserUID, profileData, streamToken]);
+	}, [client, currUserUID, loggedInUser, otherUserUID, profileData, qc, streamToken]);
 
 	if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
 		return <MessagesLoading />;
 	}
-	return (
-		<div className="space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
-			<div className="shadow sm:overflow-hidden sm:rounded-md">
-				<div className="bg-darkBG2 h-[60vh] space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
-					<div className="flex h-full flex-col">
-						<div className="scrollbar flex-1 overflow-y-auto">
-							<div className="flex flex-col space-y-4">
-								<div className="flex flex-col space-y-6">
-									<div className="flex flex-row items-center space-x-2">
-										<div className="flex-shrink-0">
-											<img
-												className="h-10 w-10 rounded-full"
-												src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-												alt=""
-											/>
-										</div>
-										<div className="flex-row">
-											<div className="flex items-center space-x-2">
-												<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-													<span className="text-orange-400">@</span>
-													<span className="text-orange-400">username</span>
+
+	if (channelQData || reloadFetch) {
+		return (
+			<div className="space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
+				<div className="shadow sm:overflow-hidden sm:rounded-md">
+					<div className="bg-darkBG2 h-[60vh] space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
+						<div className="flex h-full flex-col">
+							<div className="scrollbar flex-1 overflow-y-auto">
+								<div className="flex flex-col space-y-4">
+									<div className="flex flex-col space-y-6">
+										<div className="flex flex-row items-center space-x-2">
+											<div className="flex-shrink-0">
+												<img
+													className="h-10 w-10 rounded-full"
+													src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+													alt=""
+												/>
+											</div>
+											<div className="flex-row">
+												<div className="flex items-center space-x-2">
+													<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+														<span className="text-orange-400">@</span>
+														<span className="text-orange-400">username</span>
+													</div>
+													<div className="text-xs text-neutral-400 dark:text-neutral-600">
+														<span>1h ago</span>
+													</div>
 												</div>
-												<div className="text-xs text-neutral-400 dark:text-neutral-600">
-													<span>1h ago</span>
+												<div className="mt-2 max-w-sm rounded-xl bg-neutral-900 p-3 text-sm text-neutral-100">
+													<span>
+														Message Message Message Message Message Message Message Message Message
+														Message
+													</span>
 												</div>
 											</div>
-											<div className="mt-2 max-w-sm rounded-xl bg-neutral-900 p-3 text-sm text-neutral-100">
-												<span>
-													Message Message Message Message Message Message Message Message Message
-													Message
-												</span>
-											</div>
 										</div>
-									</div>
-									<div className="flex flex-row-reverse items-center space-x-2">
-										<div className="ml-2 flex-shrink-0">
-											<img
-												className="h-10 w-10 rounded-full"
-												src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-												alt=""
-											/>
-										</div>
-										<div className="flex-row-reverse">
-											<div className="flex items-center space-x-2">
-												<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-													<span className="text-orange-400">@</span>
-													<span className="text-orange-400">username</span>
-												</div>
-												<div className="text-xs text-neutral-400 dark:text-neutral-600">
-													<span>1h ago</span>
-												</div>
+										<div className="flex flex-row-reverse items-center space-x-2">
+											<div className="ml-2 flex-shrink-0">
+												<img
+													className="h-10 w-10 rounded-full"
+													src="https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+													alt=""
+												/>
 											</div>
-											<div className="mt-2 max-w-sm rounded-xl bg-neutral-800 p-3 text-sm text-white">
-												<span>Message</span>
+											<div className="flex-row-reverse">
+												<div className="flex items-center space-x-2">
+													<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+														<span className="text-orange-400">@</span>
+														<span className="text-orange-400">username</span>
+													</div>
+													<div className="text-xs text-neutral-400 dark:text-neutral-600">
+														<span>1h ago</span>
+													</div>
+												</div>
+												<div className="mt-2 max-w-sm rounded-xl bg-neutral-800 p-3 text-sm text-white">
+													<span>Message</span>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -242,101 +254,91 @@ export function MessageChild(): JSX.Element {
 						</div>
 					</div>
 				</div>
-			</div>
-			<div className="flex items-start sm:space-x-4">
-				<div className="flex-shrink-0">
-					<img
-						className="bg-linen hidden h-10 w-10 rounded-full object-cover sm:inline-block"
-						src={
-							import.meta.env.VITE_DEVELOPMENT
-								? import.meta.env.VITE_API_URL + profileData.avatar
-								: profileData.avatar
-						}
-						alt=""
-					/>
-				</div>
-				<div className="min-w-0 flex-1">
-					<div className="relative">
-						<form
-							onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
-								e.preventDefault();
-								const text = e.currentTarget.message.value;
-								if (text) {
-									handleSendMessage(text)
-										.then(() => {
+				<div className="flex items-start sm:space-x-4">
+					<div className="flex-shrink-0">
+						<img
+							className="bg-linen hidden h-10 w-10 rounded-full object-cover sm:inline-block"
+							src={
+								import.meta.env.VITE_DEVELOPMENT
+									? import.meta.env.VITE_API_URL + profileData.avatar
+									: profileData.avatar
+							}
+							alt=""
+						/>
+					</div>
+					<div className="min-w-0 flex-1">
+						<div className="relative">
+							<form
+								onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
+									e.preventDefault();
+									const text = e.currentTarget.message.value;
+									if (text) {
+										handleSendMessage(text).then(() => {
 											e.currentTarget.value = '';
-										})
-										.catch(() => {
-											toast.custom(<Error error="Error sending message" />, {
-												id: 'message-send-error',
-											});
 										});
-								}
-							}}
-						>
-							<div className="bg-darkBG2 overflow-hidden rounded-lg border-[1px] border-neutral-800 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
-								<label htmlFor="message">
-									<textarea
-										rows={2}
-										name="message"
-										id="message"
-										className="bg-darkBG block w-full resize-none p-2 py-3 placeholder:text-gray-500 focus:outline-none sm:text-sm"
-										placeholder={`Message ${username}`}
-										defaultValue={message}
-										onChange={(e) => setMessage(e.target.value)}
-										onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-											if (e.key === 'Enter') {
-												e.preventDefault();
-												const text = e.currentTarget.value;
-												if (text) {
-													handleSendMessage(text)
-														.then(() => {
-															e.currentTarget.value = '';
-														})
-														.catch(() => {
-															toast.custom(<Error error="Error sending message" />, {
-																id: 'message-send-error',
-															});
+									}
+								}}
+							>
+								<div className="bg-darkBG2 overflow-hidden rounded-lg border-[1px] border-neutral-800 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+									<label htmlFor="message">
+										<textarea
+											rows={2}
+											name="message"
+											id="message"
+											className="bg-darkBG block w-full resize-none p-2 py-3 placeholder:text-gray-500 focus:outline-none sm:text-sm"
+											placeholder={`Message ${username}`}
+											defaultValue={message}
+											onChange={(e) => setMessage(e.target.value)}
+											onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+												if (e.key === 'Enter') {
+													e.preventDefault();
+													if (message.length > 0) {
+														handleSendMessage(message).then(() => {
+															const target = e.target as HTMLTextAreaElement;
+															target.value = '';
 														});
+													}
 												}
-											}
-										}}
-									/>
-								</label>
-								<div className="py-1" aria-hidden="true">
-									<div className="py-px">
-										<div className="h-9" />
+											}}
+										/>
+									</label>
+									<div className="py-1" aria-hidden="true">
+										<div className="py-px">
+											<div className="h-9" />
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
-								<div className="flex items-center space-x-5">
-									<div className="flex items-center">
+								<div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+									<div className="flex items-center space-x-5">
+										<div className="flex items-center">
+											<button
+												type="submit"
+												className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+											>
+												<PaperClipIcon className="h-5 w-5" aria-hidden="true" />
+												<span className="sr-only">Attach a file</span>
+											</button>
+										</div>
+									</div>
+									<div className="flex-shrink-0">
 										<button
 											type="submit"
-											className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+											className="bg-darkBG2 hover:bg-darkBG inline-flex items-center rounded-md border-[1px] border-neutral-800
+                   px-6 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-600"
 										>
-											<PaperClipIcon className="h-5 w-5" aria-hidden="true" />
-											<span className="sr-only">Attach a file</span>
+											Send
+											<PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
 										</button>
 									</div>
 								</div>
-								<div className="flex-shrink-0">
-									<button
-										type="submit"
-										className="bg-darkBG2 hover:bg-darkBG inline-flex items-center rounded-md border-[1px] border-neutral-800
-                   px-6 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-600"
-									>
-										Send
-										<PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
-									</button>
-								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	);
+		);
+	}
+
+	return <MessagesLoading />;
 }
