@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { PaperClipIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { useQueryClient } from '@tanstack/react-query';
-import { StreamChat } from 'stream-chat';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Channel, DefaultGenerics, StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import { classNames, useDocumentTitle } from '@devclad/lib';
@@ -88,13 +88,43 @@ export function MessageChild(): JSX.Element {
 	const { loggedInUser, streamToken } = useAuth();
 	const loggedInUserUserName = loggedInUser.username as string;
 	const currUserUID = useStreamUID(loggedInUserUserName);
+	const [message, setMessage] = React.useState('');
 
 	const profileData = useProfile(loggedInUserUserName as string) as Profile;
 	// const otherProfile = useProfile(username) as Profile;
 
+	let channel: Channel<DefaultGenerics> | undefined;
+	const channelRef = React.useRef(channel);
+
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const channelPaginatedQuery = useQuery(
+		['channel', channelRef.current?.cid],
+		async () => {
+			if (channelRef.current) {
+				return channelRef.current.query({
+					messages: {
+						limit: 10,
+					},
+				});
+			}
+			return null;
+		},
+		{
+			enabled: !!channelRef.current,
+		}
+	);
+
+	const handleSendMessage = async (text: string) => {
+		if (channelRef.current && message.length > 0) {
+			await channelRef.current.sendMessage({
+				text,
+			});
+			qc.invalidateQueries(['channel', channelRef.current.cid]);
+		}
+	};
 	React.useEffect(() => {
 		if (
 			streamToken !== null &&
@@ -118,9 +148,14 @@ export function MessageChild(): JSX.Element {
 						streamToken?.token as string
 					)
 					.then(async () => {
-						Cookies.set('streamConnected', 'true');
-						const channel = client.channel('messaging', { members: [currUserUID, otherUserUID] });
-						await channel
+						Cookies.set('streamConnected', 'true', {
+							sameSite: 'strict',
+							secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
+						});
+						channelRef.current = client.channel('messaging', {
+							members: [currUserUID, otherUserUID],
+						});
+						await channelRef.current
 							.create()
 							.then(async () => {
 								// console.log(resp);
@@ -222,46 +257,83 @@ export function MessageChild(): JSX.Element {
 				</div>
 				<div className="min-w-0 flex-1">
 					<div className="relative">
-						<div className="bg-darkBG2 overflow-hidden rounded-lg border-[1px] border-neutral-800 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
-							<textarea
-								rows={2}
-								name="comment"
-								id="comment"
-								className="bg-darkBG block w-full resize-none p-2 py-3 placeholder:text-gray-500 focus:outline-none sm:text-sm"
-								placeholder={`Message ${username}`}
-								defaultValue=""
-							/>
-
-							<div className="py-1" aria-hidden="true">
-								<div className="py-px">
-									<div className="h-9" />
+						<form
+							onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
+								e.preventDefault();
+								const text = e.currentTarget.message.value;
+								if (text) {
+									handleSendMessage(text)
+										.then(() => {
+											e.currentTarget.value = '';
+										})
+										.catch(() => {
+											toast.custom(<Error error="Error sending message" />, {
+												id: 'message-send-error',
+											});
+										});
+								}
+							}}
+						>
+							<div className="bg-darkBG2 overflow-hidden rounded-lg border-[1px] border-neutral-800 shadow-sm placeholder:text-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+								<label htmlFor="message">
+									<textarea
+										rows={2}
+										name="message"
+										id="message"
+										className="bg-darkBG block w-full resize-none p-2 py-3 placeholder:text-gray-500 focus:outline-none sm:text-sm"
+										placeholder={`Message ${username}`}
+										defaultValue={message}
+										onChange={(e) => setMessage(e.target.value)}
+										onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+											if (e.key === 'Enter') {
+												e.preventDefault();
+												const text = e.currentTarget.value;
+												if (text) {
+													handleSendMessage(text)
+														.then(() => {
+															e.currentTarget.value = '';
+														})
+														.catch(() => {
+															toast.custom(<Error error="Error sending message" />, {
+																id: 'message-send-error',
+															});
+														});
+												}
+											}
+										}}
+									/>
+								</label>
+								<div className="py-1" aria-hidden="true">
+									<div className="py-px">
+										<div className="h-9" />
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
-							<div className="flex items-center space-x-5">
-								<div className="flex items-center">
+							<div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+								<div className="flex items-center space-x-5">
+									<div className="flex items-center">
+										<button
+											type="submit"
+											className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+										>
+											<PaperClipIcon className="h-5 w-5" aria-hidden="true" />
+											<span className="sr-only">Attach a file</span>
+										</button>
+									</div>
+								</div>
+								<div className="flex-shrink-0">
 									<button
-										type="button"
-										className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+										type="submit"
+										className="bg-darkBG2 hover:bg-darkBG inline-flex items-center rounded-md border-[1px] border-neutral-800
+                   px-6 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-600"
 									>
-										<PaperClipIcon className="h-5 w-5" aria-hidden="true" />
-										<span className="sr-only">Attach a file</span>
+										Send
+										<PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
 									</button>
 								</div>
 							</div>
-							<div className="flex-shrink-0">
-								<button
-									type="submit"
-									className="bg-darkBG2 hover:bg-darkBG inline-flex items-center rounded-md border-[1px] border-neutral-800
-                   px-6 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-600"
-								>
-									Send
-									<PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
-								</button>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
