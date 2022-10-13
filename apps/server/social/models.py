@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -83,3 +84,27 @@ class SocialProfile(models.Model):
             case _:
                 model_field = getattr(self, field)
                 return model_field.all().values_list("user__username", flat=True)
+
+
+class MeetingRoom(models.Model):
+    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    name = models.CharField(max_length=512, default="1:1 Meeting")
+    TYPE = [
+        ("1:1 Match", "1:1 Match"),
+        ("Catch up 1:1", "Catch up 1:1"),
+    ]
+    organizer = models.ForeignKey(User, on_delete=models.CASCADE)
+    invites = models.ManyToManyField(
+        User, default=None, blank=True, related_name="invites"
+    )
+    link = models.CharField(max_length=256, blank=True, null=True)
+    type_of = models.CharField(default="1:1 Match", max_length=128, choices=TYPE)
+    time = models.DateTimeField(default=None)
+    attended = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+    def get_flat_values(self: "MeetingRoom", field: str) -> list:
+        model_field = getattr(self, field)
+        return model_field.all().values_list("username", flat=True)
