@@ -166,11 +166,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<UserProvider>
-				<ThemeProvider>
-					<StreamProvider>
+				<StreamProvider>
+					<ThemeProvider>
 						<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
-					</StreamProvider>
-				</ThemeProvider>
+					</ThemeProvider>
+				</StreamProvider>
 			</UserProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>

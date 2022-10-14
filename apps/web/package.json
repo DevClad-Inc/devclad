@@ -26,8 +26,8 @@
 		"react-dom": "^18.2.0",
 		"react-helmet": "^6.1.0",
 		"react-hot-toast": "^2.3.0",
+		"react-intersection-observer": "^9.4.0",
 		"react-router-dom": "^6.4.0",
-		"satori": "^0.0.38",
 		"stream-chat": "^7.1.0",
 		"vite-plugin-svgr": "^2.2.1"
 	},
