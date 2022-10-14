@@ -12,7 +12,6 @@ import {
 import { checkIOS, checkMacOS, classNames } from '@devclad/lib';
 import { DevCladSVG } from '@devclad/ui';
 import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
-import QueryLoader from '@/lib/QueryLoader.lib';
 import { profileQuery } from '@/lib/queriesAndLoaders';
 import CheckChild from '@/lib/CheckChild.lib';
 import { useAuth } from '@/services/useAuth.services';
@@ -283,10 +282,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 							)}
 						</div>
 						<div className="mx-auto w-auto px-4 sm:px-6 md:px-8">
-							<div className="mb-12 py-4">
-								<QueryLoader />
-								{children}
-							</div>
+							<div className="mb-12 py-4">{children}</div>
 						</div>
 					</div>
 				</main>

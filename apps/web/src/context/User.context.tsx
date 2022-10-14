@@ -60,7 +60,6 @@ export function UserProvider({ children }: UserProviderProps) {
 		delMany(['loggedInUser', 'profile']);
 		Cookies.remove('token');
 		Cookies.remove('refresh');
-		Cookies.remove('streamConnected');
 	}
 	return (
 		<UserContext.Provider value={loggedInUser}>

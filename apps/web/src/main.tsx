@@ -8,7 +8,6 @@ import '@devclad/ui/fontscss';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
-import { SpeedProvider } from '@/context/Speed.context';
 import Root from '@/routes/_root';
 import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
 import VerifyEmail from '@/routes/VerifyEmail';
@@ -27,6 +26,7 @@ import OneOne from '@/routes/social/OneOne';
 import Circle from '@/routes/social/Circle';
 import Profile from '@/routes/Profile';
 import Messages, { MessageChild } from '@/routes/Messages';
+import StreamProvider from '@/context/Stream.context';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -166,11 +166,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<UserProvider>
-				<SpeedProvider>
+				<StreamProvider>
 					<ThemeProvider>
 						<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
 					</ThemeProvider>
-				</SpeedProvider>
+				</StreamProvider>
 			</UserProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
