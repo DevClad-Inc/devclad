@@ -177,6 +177,7 @@ export function MessageChild(): JSX.Element {
 	});
 
 	// todo: create a zustand store (fetch 50; show 5; add infinite scroll)
+	// todo: optimistic update: show message before it is sent
 	const { data: channelQData, isFetching: channelQFetching } = useQuery({
 		...channelQuery(
 			channelRef.current,
@@ -370,10 +371,11 @@ export function MessageChild(): JSX.Element {
 							<form
 								onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
 									e.preventDefault();
-									const text = e.currentTarget.message.value;
-									if (message.length > 0 && text) {
-										e.currentTarget.value = '';
-										handleSendMessage(text);
+									e.target.reset();
+									if (message.length > 0) {
+										handleSendMessage(message).then(() => {
+											setMessage('');
+										});
 									}
 								}}
 							>
