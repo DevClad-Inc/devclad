@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
-import { PaperClipIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import {
+	PaperClipIcon,
+	PaperAirplaneIcon,
+	ChevronDownIcon,
+	ChevronUpIcon,
+} from '@heroicons/react/24/outline';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Channel, DefaultGenerics, StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
@@ -100,9 +105,7 @@ export function Message({ self, username, avatarURL, message }: MessageProps) {
 					<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
 						<span className="text-orange-400">@</span>
 						<span className="text-orange-400">
-							<Link preventScrollReset to={`/profile/${username}`}>
-								{username}
-							</Link>
+							<Link to={`/profile/${username}`}>{username}</Link>
 						</span>
 					</div>
 					<div className="text-xs text-neutral-400 dark:text-neutral-600">
@@ -119,15 +122,16 @@ export function Message({ self, username, avatarURL, message }: MessageProps) {
 
 export function MessageChild(): JSX.Element {
 	const client = StreamChat.getInstance(import.meta.env.VITE_STREAM_API_KEY);
-	const scrollToBottom = React.useRef<HTMLDivElement>(null);
+	const { loggedInUser, streamToken } = useAuth();
 	// UID of the other user
 	const { username } = useParams() as { username: string };
 	const otherUserUID = useStreamUID(username);
 	// UID of logged in user
-	const { loggedInUser, streamToken } = useAuth();
 	const loggedInUserUserName = loggedInUser.username as string;
 	const currUserUID = useStreamUID(loggedInUserUserName);
+	// form state
 	const [message, setMessage] = React.useState('');
+	// reloadFetch is handled in the useeffect hook
 	const [reloadFetch, setReloadFetch] = React.useState(false);
 
 	const [lastMessageID, setlastMessageID] = React.useState<string | undefined>(undefined);
@@ -140,7 +144,7 @@ export function MessageChild(): JSX.Element {
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
-	type LtOrGtType = 'id_lte' | 'id_gt' | undefined;
+	type LtOrGtType = 'id_lte' | 'id_gte' | undefined;
 
 	const fetchMessages = React.useCallback(
 		async (
@@ -152,7 +156,7 @@ export function MessageChild(): JSX.Element {
 				if (ltOrGt === 'id_lte') {
 					return channelVal.query({ messages: { limit: 5, id_lte: lastMessageIDVal } });
 				}
-				return channelVal.query({ messages: { limit: 5, id_gt: lastMessageIDVal } });
+				return channelVal.query({ messages: { limit: 5, id_gte: lastMessageIDVal } });
 			}
 			if (channelVal) {
 				return channelVal.query({ messages: { limit: 5 } });
@@ -172,11 +176,8 @@ export function MessageChild(): JSX.Element {
 		queryFn: () => fetchMessages(channelVal, lastMessageIDVal, ltOrGt),
 	});
 
-	const {
-		data: channelQData,
-		isFetching: channelQFetching,
-		isPreviousData: channelQPreviousData,
-	} = useQuery({
+	// todo: create a zustand store (fetch 50; show 5; add infinite scroll)
+	const { data: channelQData, isFetching: channelQFetching } = useQuery({
 		...channelQuery(
 			channelRef.current,
 			channelRef.current?.cid as string,
@@ -184,7 +185,6 @@ export function MessageChild(): JSX.Element {
 			undefined // defaults to latest messages
 		),
 		enabled: !!channelRef.current,
-		keepPreviousData: true,
 	});
 
 	const handleSendMessage = async (text: string) => {
@@ -275,8 +275,7 @@ export function MessageChild(): JSX.Element {
 				<div className="shadow sm:overflow-hidden sm:rounded-md">
 					<div
 						className="bg-darkBG2 scrollbar flex flex-col space-y-4 overflow-y-scroll
-						rounded-md border-[1px] p-4 py-6 px-4 dark:border-neutral-800 sm:p-6
-					"
+						rounded-md border-[1px] p-4 py-6 px-4 dark:border-neutral-800 sm:p-6"
 					>
 						<div className="flex flex-col justify-end space-y-6 ">
 							<div className="flex flex-row justify-center">
@@ -293,64 +292,44 @@ export function MessageChild(): JSX.Element {
 										);
 									}}
 								>
-									{channelQPreviousData ? (
-										<svg
-											className="h-5 w-5 animate-spin text-neutral-500"
-											viewBox="0 0
-										24 24"
-										/>
-									) : (
-										<svg
-											className="h-6 w-6 text-white"
-											fill="none"
-											viewBox="0
-										0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M5 15l7-7 7 7"
-											/>
-										</svg>
-									)}
+									{channelQData?.messages[4] && <ChevronUpIcon className="h-8 w-8 text-white" />}
 								</button>
 							</div>
 							<div className="flex flex-row justify-center">
-								{channelQData?.messages[4].created_at !==
-									channelRef.current?.data?.last_message_at && (
+								{channelQData?.messages[4] ? (
+									channelQData?.messages[4].created_at !==
+										channelRef.current?.data?.last_message_at && (
+										<button
+											type="button"
+											className="flex flex-row items-center justify-center space-x-2"
+											disabled={channelQFetching}
+											onClick={() => {
+												setlastMessageID(channelQData?.messages[0].id);
+												fetchMessages(
+													channelRef.current,
+													channelQData?.messages[4].id,
+													'id_gte'
+												).then((res) => {
+													qc.setQueryData(['channel', channelRef.current?.cid as string], res);
+												});
+											}}
+										>
+											<ChevronDownIcon className="h-8 w-8 text-white" />
+										</button>
+									)
+								) : (
 									<button
 										type="button"
 										className="flex flex-row items-center justify-center space-x-2"
 										disabled={channelQFetching}
 										onClick={() => {
 											setlastMessageID(channelQData?.messages[0].id);
-											fetchMessages(channelRef.current, channelQData?.messages[3].id, 'id_gt').then(
-												(res) => {
-													qc.setQueryData(['channel', channelRef.current?.cid as string], res);
-												}
-											);
+											fetchMessages(channelRef.current, lastMessageID, 'id_gte').then((res) => {
+												qc.setQueryData(['channel', channelRef.current?.cid as string], res);
+											});
 										}}
 									>
-										{channelQPreviousData ? (
-											<svg className="h-5 w-5 animate-spin text-neutral-500" viewBox="0 0 24 24" />
-										) : (
-											<svg
-												className="h-6 w-6 text-white"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke="currentColor"
-											>
-												<path
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-													d="M19 9
-										l-7 7-7-7"
-												/>
-											</svg>
-										)}
+										<ChevronDownIcon className="h-8 w-8 text-white" />
 									</button>
 								)}
 							</div>
@@ -411,7 +390,6 @@ export function MessageChild(): JSX.Element {
 											onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 												if (e.key === 'Enter') {
 													e.preventDefault();
-													scrollToBottom.current?.scrollIntoView({ behavior: 'smooth' });
 													if (message.length > 0) {
 														const target = e.target as HTMLTextAreaElement;
 														target.value = '';
