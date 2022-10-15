@@ -8,13 +8,7 @@ export default defineConfig({
 	define: {
 		'process.env': process.env,
 	},
-	plugins: [
-		react(),
-		ssr({
-			prerender: true,
-		}),
-		svg(),
-	],
+	plugins: [react(), ssr(), svg()],
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),

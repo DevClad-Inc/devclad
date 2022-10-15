@@ -258,7 +258,8 @@ export function MessageChild(): JSX.Element {
 			onMutate: async (text: string) => {
 				await qc.cancelQueries(['channel', channelRef.current?.cid as string]);
 				const previousMessages = qc.getQueryData(['channel', channelRef.current?.cid as string]);
-				await qc.setQueryData(['channel', channelRef.current?.cid as string], (old: any) => ({
+				// todo: remove any
+				qc.setQueryData(['channel', channelRef.current?.cid as string], (old: any) => ({
 					...old,
 					messages: [...old.messages, { text }],
 				}));
@@ -310,7 +311,7 @@ export function MessageChild(): JSX.Element {
 							{channelQData?.messages.slice(-noOfMessages).map((msg) => (
 								<Message
 									key={msg.id ? msg.id : 'loading'}
-									username={loggedInUserUserName}
+									username={msg.user ? (msg.user.username as string) : loggedInUserUserName}
 									self={msg.user ? msg.user.id === currUserUID : true}
 									avatarURL={
 										// todo: refactor this

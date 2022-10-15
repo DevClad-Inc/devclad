@@ -154,7 +154,6 @@ export async function refreshToken() {
 		.catch(() => {
 			delMany(['loggedInUser', 'profile']);
 			Cookies.remove('token');
-			Cookies.remove('refresh');
 		});
 }
 
