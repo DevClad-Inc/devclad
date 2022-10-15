@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import {
 	PaperClipIcon,
 	PaperAirplaneIcon,
-	ChevronDownIcon,
-	ChevronUpIcon,
+	ChevronDoubleDownIcon,
 } from '@heroicons/react/24/outline';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Channel, DefaultGenerics, StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
 import { classNames, useDocumentTitle } from '@devclad/lib';
@@ -22,6 +21,7 @@ import { Profile } from '@/lib/InterfacesStates.lib';
 import { MessagesLoading } from '@/components/LoadingStates';
 import { Error } from '@/components/Feedback';
 import { useStreamContext } from '@/context/Stream.context';
+import Message from '@/components/Message';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
@@ -85,41 +85,6 @@ export default function Messages() {
 	);
 }
 
-export interface MessageProps {
-	self: boolean;
-	username: string;
-	avatarURL: string;
-	message: string;
-}
-
-export function Message({ self, username, avatarURL, message }: MessageProps) {
-	return (
-		<div className={classNames(self ? 'flex-row-reverse' : '', 'flex items-center space-x-2')}>
-			{!self && (
-				<div className="flex-shrink-0">
-					<img className="h-10 w-10 rounded-full" src={avatarURL} alt="" />
-				</div>
-			)}
-			<div className={classNames(self ? 'flex-row' : 'flex-row-reverse')}>
-				<div className="flex items-center space-x-2">
-					<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-						<span className="text-orange-400">@</span>
-						<span className="text-orange-400">
-							<Link to={`/profile/${username}`}>{username}</Link>
-						</span>
-					</div>
-					<div className="text-xs text-neutral-400 dark:text-neutral-600">
-						<span>1h ago</span>
-					</div>
-				</div>
-				<div className="mt-2 max-w-sm rounded-xl bg-neutral-900 p-3 text-sm text-neutral-100">
-					<span>{message}</span>
-				</div>
-			</div>
-		</div>
-	);
-}
-
 export function MessageChild(): JSX.Element {
 	const client = StreamChat.getInstance(import.meta.env.VITE_STREAM_API_KEY);
 	const { loggedInUser, streamToken } = useAuth();
@@ -133,8 +98,7 @@ export function MessageChild(): JSX.Element {
 	const [message, setMessage] = React.useState('');
 	// reloadFetch is handled in the useeffect hook
 	const [reloadFetch, setReloadFetch] = React.useState(false);
-
-	const [lastMessageID, setlastMessageID] = React.useState<string | undefined>(undefined);
+	const [noOfMessages, setNoOfMessages] = React.useState(6); // 6 is what fits in h-[60vh] and leaves room for infinite scroll
 	const { connected, toggleConnection } = useStreamContext();
 	const profileData = useProfile(loggedInUserUserName as string) as Profile;
 
@@ -154,12 +118,12 @@ export function MessageChild(): JSX.Element {
 		) => {
 			if (channelVal && lastMessageIDVal) {
 				if (ltOrGt === 'id_lte') {
-					return channelVal.query({ messages: { limit: 5, id_lte: lastMessageIDVal } });
+					return channelVal.query({ messages: { limit: 50, id_lte: lastMessageIDVal } });
 				}
-				return channelVal.query({ messages: { limit: 5, id_gte: lastMessageIDVal } });
+				return channelVal.query({ messages: { limit: 50, id_gte: lastMessageIDVal } });
 			}
 			if (channelVal) {
-				return channelVal.query({ messages: { limit: 5 } });
+				return channelVal.query({ messages: { limit: 50 } });
 			}
 			return null;
 		},
@@ -177,12 +141,11 @@ export function MessageChild(): JSX.Element {
 	});
 
 	// todo: create a zustand store (fetch 50; show 5; add infinite scroll)
-	// todo: optimistic update: show message before it is sent
 	const { data: channelQData, isFetching: channelQFetching } = useQuery({
 		...channelQuery(
 			channelRef.current,
 			channelRef.current?.cid as string,
-			lastMessageID,
+			undefined,
 			undefined // defaults to latest messages
 		),
 		enabled: !!channelRef.current,
@@ -196,6 +159,27 @@ export function MessageChild(): JSX.Element {
 			qc.invalidateQueries(['channel', channelRef.current.cid]);
 		}
 	};
+
+	const handleInfiniteScroll = async (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+		if (e.currentTarget.scrollTop === 0 && !channelQFetching) {
+			const lengthOfMessages = channelQData?.messages.length;
+			if (lengthOfMessages && lengthOfMessages < 50) {
+				setNoOfMessages(noOfMessages + 5);
+			} else {
+				setNoOfMessages(noOfMessages + 5);
+				if (noOfMessages > 50) {
+					fetchMessages(channelRef.current, channelQData?.messages[0].id, 'id_lte')
+						.then((res) => {
+							qc.setQueryData(['channel', channelRef.current?.cid as string], res);
+						})
+						.then(() => {
+							setNoOfMessages(6);
+						});
+				}
+			}
+		}
+	};
+
 	React.useEffect(() => {
 		if (
 			streamToken !== null &&
@@ -266,6 +250,33 @@ export function MessageChild(): JSX.Element {
 		streamToken,
 		toggleConnection,
 	]);
+	const mutation = useMutation(
+		async (text: string) => {
+			await handleSendMessage(text);
+		},
+		{
+			onMutate: async (text: string) => {
+				await qc.cancelQueries(['channel', channelRef.current?.cid as string]);
+				const previousMessages = qc.getQueryData(['channel', channelRef.current?.cid as string]);
+				await qc.setQueryData(['channel', channelRef.current?.cid as string], (old: any) => ({
+					...old,
+					messages: [...old.messages, { text }],
+				}));
+				return { previousMessages };
+			},
+			onSettled: () => {
+				qc.invalidateQueries(['channel', channelRef.current?.cid as string]);
+				setMessage('');
+			},
+			onSuccess: () => {
+				setMessage('');
+			},
+			onError: () => {
+				toast.custom(<Error error="Error sending message." />, { id: 'error-message-send' });
+				mutation.reset();
+			},
+		}
+	);
 
 	if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
 		return <MessagesLoading />;
@@ -273,72 +284,34 @@ export function MessageChild(): JSX.Element {
 	if (channelQData || reloadFetch) {
 		return (
 			<div className="container mx-auto space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
-				<div className="shadow sm:overflow-hidden sm:rounded-md">
+				<div className="shadow sm:rounded-md">
 					<div
-						className="bg-darkBG2 scrollbar flex flex-col space-y-4 overflow-y-scroll
+						className="bg-darkBG2 scrollbar flex h-[65vh] flex-col space-y-4 overflow-y-scroll
 						rounded-md border-[1px] p-4 py-6 px-4 dark:border-neutral-800 sm:p-6"
+						onScroll={(e) => handleInfiniteScroll(e)}
 					>
 						<div className="flex flex-col justify-end space-y-6 ">
-							<div className="flex flex-row justify-center">
-								<button
-									type="button"
-									className="flex flex-row items-center justify-center space-x-2"
-									disabled={channelQFetching}
-									onClick={() => {
-										setlastMessageID(channelQData?.messages[0].id);
-										fetchMessages(channelRef.current, channelQData?.messages[0].id, 'id_lte').then(
-											(res) => {
-												qc.setQueryData(['channel', channelRef.current?.cid as string], res);
-											}
-										);
-									}}
-								>
-									{channelQData?.messages[4] && <ChevronUpIcon className="h-8 w-8 text-white" />}
-								</button>
-							</div>
-							<div className="flex flex-row justify-center">
-								{channelQData?.messages[4] ? (
-									channelQData?.messages[4].created_at !==
-										channelRef.current?.data?.last_message_at && (
-										<button
-											type="button"
-											className="flex flex-row items-center justify-center space-x-2"
-											disabled={channelQFetching}
-											onClick={() => {
-												setlastMessageID(channelQData?.messages[0].id);
-												fetchMessages(
-													channelRef.current,
-													channelQData?.messages[4].id,
-													'id_gte'
-												).then((res) => {
-													qc.setQueryData(['channel', channelRef.current?.cid as string], res);
-												});
-											}}
-										>
-											<ChevronDownIcon className="h-8 w-8 text-white" />
-										</button>
-									)
-								) : (
+							{channelQData?.messages.length && channelQData?.messages.length < 50 && (
+								<div className="flex justify-center">
 									<button
 										type="button"
-										className="flex flex-row items-center justify-center space-x-2"
-										disabled={channelQFetching}
 										onClick={() => {
-											setlastMessageID(channelQData?.messages[0].id);
-											fetchMessages(channelRef.current, lastMessageID, 'id_gte').then((res) => {
+											setNoOfMessages(6);
+											fetchMessages(channelRef.current, undefined, undefined).then((res) => {
 												qc.setQueryData(['channel', channelRef.current?.cid as string], res);
 											});
 										}}
 									>
-										<ChevronDownIcon className="h-8 w-8 text-white" />
+										<ChevronDoubleDownIcon className="h-6 w-6 text-white" />
 									</button>
-								)}
-							</div>
-							{channelQData?.messages.map((msg) => (
+								</div>
+							)}
+
+							{channelQData?.messages.slice(-noOfMessages).map((msg) => (
 								<Message
-									key={msg.id}
-									username={msg.user?.username as string}
-									self={msg.user?.id === currUserUID}
+									key={msg.id ? msg.id : 'loading'}
+									username={loggedInUserUserName}
+									self={msg.user ? msg.user.id === currUserUID : true}
 									avatarURL={
 										// todo: refactor this
 										// eslint-disable-next-line no-nested-ternary
@@ -393,9 +366,10 @@ export function MessageChild(): JSX.Element {
 												if (e.key === 'Enter') {
 													e.preventDefault();
 													if (message.length > 0) {
+														setNoOfMessages(6); // to keep the scroll at the bottom
+														mutation.mutate(message);
 														const target = e.target as HTMLTextAreaElement;
 														target.value = '';
-														handleSendMessage(message);
 													}
 												}
 											}}

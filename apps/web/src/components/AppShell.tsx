@@ -207,15 +207,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 													>
 														<path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
 													</svg>
-													<NavLink
-														to={page === '' ? '/' : `/${page}`}
+													<span
 														className="ml-2 font-mono text-sm font-medium text-orange-300
                           duration-300 hover:text-white"
 														aria-current={pathname === page ? 'page' : undefined}
-														end
 													>
 														{page}
-													</NavLink>
+													</span>
 												</div>
 											</li>
 										))}
