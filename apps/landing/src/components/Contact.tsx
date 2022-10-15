@@ -17,8 +17,13 @@ export default function Contact(): JSX.Element {
 						<span className="rounded-full border-[0.5px] border-neutral-500 px-4 py-0.5 font-mono text-xs font-semibold text-orange-300 lg:text-sm">
 							Beta 1.0
 						</span>
-						<span className="ml-4 text-xs font-medium lg:text-sm">Join our Discord</span>
-						<ChevronRightIcon className="ml-2 h-5 w-5 text-neutral-500" aria-hidden="true" />
+						<span className="ml-4 text-xs font-medium lg:text-sm">
+							Join our Discord
+						</span>
+						<ChevronRightIcon
+							className="ml-2 h-5 w-5 text-neutral-500"
+							aria-hidden="true"
+						/>
 					</a>
 				</h2>
 				<p className="mt-2 font-mono text-lg text-neutral-300">

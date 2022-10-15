@@ -231,9 +231,14 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 												<button
 													type="button"
 													className="flex flex-row space-x-1"
-													onClick={() => window.open(profile.calendly, '_blank')}
+													onClick={() =>
+														window.open(profile.calendly, '_blank')
+													}
 												>
-													<CalendarIcon className="h-6 w-5" aria-hidden="true" />
+													<CalendarIcon
+														className="h-6 w-5"
+														aria-hidden="true"
+													/>
 													<span className="">Calendly</span>
 												</button>
 											</div>
@@ -243,7 +248,9 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 												<button
 													type="button"
 													className="flex flex-row"
-													onClick={() => window.open(profile.linkedin, '_blank')}
+													onClick={() =>
+														window.open(profile.linkedin, '_blank')
+													}
 												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -268,7 +275,10 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 								<div className="-ml-4 flex flex-col space-y-2 rounded-md pb-4 pl-4 sm:ml-20">
 									<div className="sm:text-md flex flex-row space-x-2 font-mono text-sm">
 										{profile.languages &&
-											badge(profile.languages, 'bg-darkBG font-medium text-amber-200')}
+											badge(
+												profile.languages,
+												'bg-darkBG font-medium text-amber-200'
+											)}
 									</div>
 
 									{/* TODO: add GITHUB */}
@@ -297,8 +307,15 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 													className="flex rounded-sm
                       bg-black p-2 text-sm"
 												>
-													<ArrowUpRightIcon className="mr-1 h-6 w-4" aria-hidden="true" />
-													<a href={profile.website} target="_blank" rel="noreferrer">
+													<ArrowUpRightIcon
+														className="mr-1 h-6 w-4"
+														aria-hidden="true"
+													/>
+													<a
+														href={profile.website}
+														target="_blank"
+														rel="noreferrer"
+													>
 														Link by {profile.first_name}{' '}
 													</a>
 												</button>
@@ -312,11 +329,12 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 													)}{' '}
 											</span>
 											<span className="block">
-												🧲 Interested in working with {profile.preferred_dev_type} developers.
+												🧲 Interested in working with{' '}
+												{profile.preferred_dev_type} developers.
 											</span>
 											<span className="block">
-												⚒️ Hacking stuff together for {profile.raw_xp && genExp(profile.raw_xp)}{' '}
-												now.
+												⚒️ Hacking stuff together for{' '}
+												{profile.raw_xp && genExp(profile.raw_xp)} now.
 											</span>
 										</div>
 									</div>
@@ -330,8 +348,11 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 										<div className="bg-darkBG space-y-2 italic text-neutral-300">
 											<span className="block">
 												&quot;
-												{profile.idea_status && genIdea(profile.idea_status)}{' '}
-												<span className="lowercase">{profile.idea_status}</span>
+												{profile.idea_status &&
+													genIdea(profile.idea_status)}{' '}
+												<span className="lowercase">
+													{profile.idea_status}
+												</span>
 												&quot;
 											</span>
 										</div>
@@ -346,7 +367,9 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 										<div className="bg-darkBG space-y-2">
 											{profile.purpose && (
 												<span className="block space-y-2">
-													<span className="flex">Why is {profile.first_name} here?</span>
+													<span className="flex">
+														Why is {profile.first_name} here?
+													</span>
 													<span className="block space-x-2 space-y-2">
 														{badge(
 															profile.purpose,
@@ -376,7 +399,10 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 									</div>
 									<div className="flex flex-col">
 										<PrimaryButton>
-											<VideoCameraIcon className="mr-2 h-6 w-6 lg:h-8" aria-hidden="true" />
+											<VideoCameraIcon
+												className="mr-2 h-6 w-6 lg:h-8"
+												aria-hidden="true"
+											/>
 											Schedule
 										</PrimaryButton>
 									</div>

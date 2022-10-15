@@ -47,7 +47,8 @@ export function Features(): JSX.Element {
 			<div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
 				<h2 className="text-lg font-semibold text-neutral-300">Meet developers</h2>
 				<p className="mt-2 text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
-					Build a <span className="font-black text-orange-500">strong</span> network of developers.
+					Build a <span className="font-black text-orange-500">strong</span> network of
+					developers.
 				</p>
 				<p className="mx-auto mt-5 max-w-prose font-mono text-xl text-neutral-300">
 					Weekly 1—⁠on⁠—⁠1 match from a pool of vetted developers 🌎 using ML.
@@ -65,7 +66,9 @@ export function Features(): JSX.Element {
 											>
 												<feature.icon
 													className={classNames(
-														feature.icon === HandRaisedIcon ? '-rotate-[30deg]' : '',
+														feature.icon === HandRaisedIcon
+															? '-rotate-[30deg]'
+															: '',
 														'h-8 w-8'
 													)}
 													aria-hidden="true"
@@ -93,13 +96,16 @@ export function Roadmap(): JSX.Element {
 	return (
 		<div className="animate-fadeIn space-y-16 py-4 sm:py-32">
 			<div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
-				<h2 className="text-lg font-semibold text-neutral-300">Down the roadmap for Beta 2.0</h2>
+				<h2 className="text-lg font-semibold text-neutral-300">
+					Down the roadmap for Beta 2.0
+				</h2>
 				<p className="mt-2 text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
-					<span className="font-black text-fuchsia-500">Team up</span> on Projects and Hackathons
+					<span className="font-black text-fuchsia-500">Team up</span> on Projects and
+					Hackathons
 				</p>
 				<p className="mx-auto mt-5 max-w-prose font-mono text-xl text-neutral-300">
-					Spend less time configuring your workspace and more time building with minimal interfaces
-					that get you to your MVP faster.
+					Spend less time configuring your workspace and more time building with minimal
+					interfaces that get you to your MVP faster.
 				</p>
 				<div className="mt-12 flex justify-center">
 					<div className="grid max-w-prose grid-cols-1 gap-8 sm:grid-cols-2">
@@ -114,7 +120,9 @@ export function Roadmap(): JSX.Element {
 											>
 												<feature.icon
 													className={classNames(
-														feature.icon === HandRaisedIcon ? '-rotate-[30deg]' : '',
+														feature.icon === HandRaisedIcon
+															? '-rotate-[30deg]'
+															: '',
 														'animate-gradient-reverse h-8 w-8'
 													)}
 													aria-hidden="true"

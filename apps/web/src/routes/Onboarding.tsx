@@ -98,7 +98,9 @@ export function StepTwo() {
 					<button
 						type="button"
 						className={classNames(
-							!checkEmpty.profile || !checkEmpty.socialProfile || userStatus.status === 'Submitted'
+							!checkEmpty.profile ||
+								!checkEmpty.socialProfile ||
+								userStatus.status === 'Submitted'
 								? 'cursor-not-allowed'
 								: '',
 							linkClassesString
@@ -177,8 +179,8 @@ export function Onboarding() {
 						Onboarding
 					</h2>
 					<p className="mt-2 p-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-						Hey, {loggedInUser.first_name}. Glad to have you here! {loggedInUser.email} is your
-						associated email address.
+						Hey, {loggedInUser.first_name}. Glad to have you here! {loggedInUser.email}{' '}
+						is your associated email address.
 					</p>
 					<p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
 						Questions?{' '}
@@ -198,7 +200,10 @@ export function Onboarding() {
 							className="bg-mistyRose text-bloodRed dark:bg-bloodRed2 dark:text-mistyRose mt-5 inline-flex items-center rounded-md
               border border-transparent px-4 py-2 text-sm shadow-sm"
 						>
-							<ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+							<ArrowLeftOnRectangleIcon
+								className="-ml-1 mr-2 h-5 w-5"
+								aria-hidden="true"
+							/>
 							Sign Out
 						</button>
 					</div>

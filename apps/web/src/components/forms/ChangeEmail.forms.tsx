@@ -89,8 +89,8 @@ export default function ChangeEmailForm(): JSX.Element {
 						{verified === true ? (
 							<span className="dark:bg-phthaloGreen dark:text-honeyDew inline-flex rounded-md p-2 text-sm">
 								{' '}
-								<ShieldCheckIcon className="mr-2 h-6 w-5 text-green-500" /> {loggedInUser.email} is{' '}
-								verified.
+								<ShieldCheckIcon className="mr-2 h-6 w-5 text-green-500" />{' '}
+								{loggedInUser.email} is verified.
 							</span>
 						) : (
 							<>
@@ -109,7 +109,9 @@ export default function ChangeEmailForm(): JSX.Element {
 								id="email"
 								name="email"
 								type="email"
-								placeholder={loggedInUser.email ? loggedInUser.email : 'cactus@jack.com'}
+								placeholder={
+									loggedInUser.email ? loggedInUser.email : 'cactus@jack.com'
+								}
 								autoComplete="email"
 								required
 								className="dark:bg-darkBG mt-1 block w-full rounded-md border
@@ -126,7 +128,9 @@ export default function ChangeEmailForm(): JSX.Element {
 							<div className="flex justify-center">
 								<button
 									type="button"
-									onClick={() => loggedInUser.email && resendEmail(loggedInUser.email)}
+									onClick={() =>
+										loggedInUser.email && resendEmail(loggedInUser.email)
+									}
 								>
 									<span
 										className="dark:bg-darkBG inline-flex w-full items-center
@@ -136,7 +140,10 @@ export default function ChangeEmailForm(): JSX.Element {
 									>
 										<div className="flex">
 											<div className="flex-shrink-0">
-												<InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
+												<InboxArrowDownIcon
+													className="h-5 w-5"
+													aria-hidden="true"
+												/>
 											</div>
 											<div className="ml-2 text-base font-bold">
 												<span>Resend Email.</span>
@@ -151,7 +158,9 @@ export default function ChangeEmailForm(): JSX.Element {
                 border border-transparent px-4 py-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
 							>
 								<PrimaryButton isSubmitting={isSubmitting}>
-									<span>{isSubmitting ? 'Updating Email...' : 'Update Email ✨'}</span>
+									<span>
+										{isSubmitting ? 'Updating Email...' : 'Update Email ✨'}
+									</span>
 								</PrimaryButton>
 							</div>
 						)}

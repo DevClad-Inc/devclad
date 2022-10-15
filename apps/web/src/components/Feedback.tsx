@@ -14,7 +14,10 @@ export function Success({ success }: { success: string }): JSX.Element {
 		<div className="dark:bg-phthaloGreen mb-4 rounded-md bg-green-50 p-4">
 			<div className="flex">
 				<div className="flex-shrink-0">
-					<CheckIcon className="h-6 w-5 text-green-400 dark:text-green-200" aria-hidden="true" />
+					<CheckIcon
+						className="h-6 w-5 text-green-400 dark:text-green-200"
+						aria-hidden="true"
+					/>
 				</div>
 				<div className="ml-3">
 					<h3 className="text-sm  text-green-800 dark:text-green-200">{success}</h3>
@@ -65,7 +68,10 @@ export function Error({ error }: { error: string }): JSX.Element {
 		<div className="bg-mistyRose dark:bg-bloodRed2 mb-4 rounded-md p-4">
 			<div className="flex">
 				<div className="flex-shrink-0">
-					<XMarkIcon className="text-bloodRed dark:text-mistyRose h-6 w-5" aria-hidden="true" />
+					<XMarkIcon
+						className="text-bloodRed dark:text-mistyRose h-6 w-5"
+						aria-hidden="true"
+					/>
 				</div>
 				<div className="ml-3">
 					<h3 className="text-bloodRed  dark:text-mistyRose text-sm">{error}</h3>
@@ -92,7 +98,12 @@ export function ConfirmDialog({
 }) {
 	return (
 		<Transition.Root show={open} as={Fragment}>
-			<Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+			<Dialog
+				as="div"
+				className="relative z-10"
+				initialFocus={cancelButtonRef}
+				onClose={setOpen}
+			>
 				<Transition.Child
 					as={Fragment}
 					enter="ease-in duration-300"
@@ -130,7 +141,9 @@ export function ConfirmDialog({
 								<div className="sm:flex sm:items-start">
 									<div
 										className={classNames(
-											action === 'warn' ? 'bg-blackChocolate' : 'bg-bloodRed2',
+											action === 'warn'
+												? 'bg-blackChocolate'
+												: 'bg-bloodRed2',
 											'mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10'
 										)}
 									>
@@ -140,7 +153,10 @@ export function ConfirmDialog({
 												aria-hidden="true"
 											/>
 										) : (
-											<XMarkIcon className="text-mistyRose h-6 w-6" aria-hidden="true" />
+											<XMarkIcon
+												className="text-mistyRose h-6 w-6"
+												aria-hidden="true"
+											/>
 										)}
 									</div>
 									<div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">

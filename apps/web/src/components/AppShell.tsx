@@ -79,7 +79,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 								onClick={() => setSidebarExpand(!sidebarExpand)}
 								className="m-auto"
 							>
-								<img className="m-auto h-24 w-auto rounded-full" src={DevCladSVG} alt="DevClad" />
+								<img
+									className="m-auto h-24 w-auto rounded-full"
+									src={DevCladSVG}
+									alt="DevClad"
+								/>
 							</button>
 						</div>
 						<nav
@@ -110,7 +114,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 										)}
 										aria-hidden="true"
 									/>
-									<span className="text-md font-mono font-bold">{sidebarExpand && item.name}</span>
+									<span className="text-md font-mono font-bold">
+										{sidebarExpand && item.name}
+									</span>
 								</NavLink>
 							))}
 						</nav>
@@ -146,7 +152,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 				</div>
 			</div>
 			{/* Main content */}
-			<div className={classNames(sidebarExpand ? 'md:pl-48' : 'md:pl-24', 'flex flex-1 flex-col')}>
+			<div
+				className={classNames(
+					sidebarExpand ? 'md:pl-48' : 'md:pl-24',
+					'flex flex-1 flex-col'
+				)}
+			>
 				<div className="md:hidden">
 					<div className="fixed inset-x-0 bottom-0 z-10 flex flex-shrink">
 						<div className="w-full">
@@ -170,7 +181,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 										}
 										end
 									>
-										<tab.icon className="h-8 w-8 flex-shrink-0" aria-hidden="true" />
+										<tab.icon
+											className="h-8 w-8 flex-shrink-0"
+											aria-hidden="true"
+										/>
 										<span className="sr-only">{tab.name}</span>
 									</NavLink>
 								))}
@@ -189,8 +203,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 									>
 										<li>
 											<div>
-												<Link to="/" className="text-white duration-300 hover:text-orange-300">
-													<HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+												<Link
+													to="/"
+													className="text-white duration-300 hover:text-orange-300"
+												>
+													<HomeIcon
+														className="h-5 w-5 flex-shrink-0"
+														aria-hidden="true"
+													/>
 													<span className="sr-only">Home</span>
 												</Link>
 											</div>
@@ -210,7 +230,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 													<span
 														className="ml-2 font-mono text-sm font-medium text-orange-300
                           duration-300 hover:text-white"
-														aria-current={pathname === page ? 'page' : undefined}
+														aria-current={
+															pathname === page ? 'page' : undefined
+														}
 													>
 														{page}
 													</span>
@@ -272,7 +294,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 							{pageTitle === 'Settings' && (
 								<>
 									<h1 className="text-3xl font-bold">
-										{checkIOS() || checkMacOS() ? '⚙' : ''} {loggedInUser.first_name}
+										{checkIOS() || checkMacOS() ? '⚙' : ''}{' '}
+										{loggedInUser.first_name}
 										&apos;s Settings
 									</h1>
 									<hr className="border-1 my-8 border-neutral-200 dark:border-neutral-800" />

@@ -139,7 +139,9 @@ export async function updateSocialProfile(values: SocialProfile, socialProfileDa
 				timezone,
 				dev_type: dev_type === '' ? socialProfileData.dev_type : dev_type,
 				preferred_dev_type:
-					preferred_dev_type === '' ? socialProfileData.preferred_dev_type : preferred_dev_type,
+					preferred_dev_type === ''
+						? socialProfileData.preferred_dev_type
+						: preferred_dev_type,
 				idea_status: idea_status === '' ? socialProfileData.idea_status : idea_status,
 				raw_xp,
 			},

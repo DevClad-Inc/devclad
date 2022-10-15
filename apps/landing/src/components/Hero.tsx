@@ -57,7 +57,10 @@ export default function Hero(): JSX.Element {
 									Beta 1.0
 								</span>
 								<span className="ml-4 text-xs lg:text-sm">Join our Discord</span>
-								<ChevronRightIcon className="ml-2 h-5 w-5 text-neutral-500" aria-hidden="true" />
+								<ChevronRightIcon
+									className="ml-2 h-5 w-5 text-neutral-500"
+									aria-hidden="true"
+								/>
 							</a>
 							<div className="space-y-4">
 								<div className="flex text-center sm:justify-center">
@@ -68,9 +71,13 @@ export default function Hero(): JSX.Element {
 										<h1 className="text-5xl text-[#fff] sm:text-6xl sm:font-medium md:text-6xl lg:text-6xl xl:text-7xl">
 											<span className="block font-bold">
 												<span className="block">Meet developers</span>
-												<span className="block rounded-xl text-orange-100">one-on-one</span>
+												<span className="block rounded-xl text-orange-100">
+													one-on-one
+												</span>
 											</span>
-											<span className="font-bold text-fuchsia-100">Team up.</span>
+											<span className="font-bold text-fuchsia-100">
+												Team up.
+											</span>
 											<span className="font-bold text-sky-100"> Build.</span>
 										</h1>
 									</div>

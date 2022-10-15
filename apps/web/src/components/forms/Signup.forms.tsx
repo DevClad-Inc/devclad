@@ -299,7 +299,8 @@ export default function SignupForm({
 							<div className="flex justify-center">
 								<PrimaryButton isSubmitting={isSubmitting} wFull>
 									<span className="text-lg font-bold">
-										{isSubmitting ? 'Signing up...' : 'Sign Up'} <span className="text-xs">✨</span>
+										{isSubmitting ? 'Signing up...' : 'Sign Up'}{' '}
+										<span className="text-xs">✨</span>
 									</span>
 								</PrimaryButton>
 							</div>
@@ -313,7 +314,10 @@ export default function SignupForm({
 								>
 									<div className="flex">
 										<div className="flex-shrink-0">
-											<CheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+											<CheckIcon
+												className="h-5 w-5 text-green-400"
+												aria-hidden="true"
+											/>
 										</div>
 										<div className="ml-2 text-base font-bold">
 											<span>Account Created.</span> <span>Check Email.</span>
@@ -327,7 +331,10 @@ export default function SignupForm({
 								>
 									<div className="flex">
 										<div className="flex-shrink-0">
-											<InboxArrowDownIcon className="h-5 w-5" aria-hidden="true" />
+											<InboxArrowDownIcon
+												className="h-5 w-5"
+												aria-hidden="true"
+											/>
 										</div>
 										<div className="ml-2 text-base font-bold">
 											<span>Resend Email.</span>

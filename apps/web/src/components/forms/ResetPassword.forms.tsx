@@ -52,7 +52,10 @@ export default function PasswordResetForm(): JSX.Element {
 					setresetDone(true);
 				})
 				.catch((err) => {
-					toast.custom(<Error error={err} />, { id: 'error-password-reset', duration: 5000 });
+					toast.custom(<Error error={err} />, {
+						id: 'error-password-reset',
+						duration: 5000,
+					});
 				});
 		} else {
 			await passwordChange(password1, password2)
@@ -64,7 +67,10 @@ export default function PasswordResetForm(): JSX.Element {
 					setresetDone(true);
 				})
 				.catch((err) => {
-					toast.custom(<Error error={err} />, { id: 'error-password-change', duration: 5000 });
+					toast.custom(<Error error={err} />, {
+						id: 'error-password-change',
+						duration: 5000,
+					});
 				});
 		}
 		setSubmitting(false);
@@ -145,7 +151,8 @@ export default function PasswordResetForm(): JSX.Element {
 							<div className="flex justify-center text-sm">
 								<PrimaryButton isSubmitting={isSubmitting}>
 									<span>
-										{isSubmitting ? 'Switching Password...' : 'Switch Password'} <span>🔐</span>
+										{isSubmitting ? 'Switching Password...' : 'Switch Password'}{' '}
+										<span>🔐</span>
 									</span>
 								</PrimaryButton>
 							</div>
@@ -158,7 +165,10 @@ export default function PasswordResetForm(): JSX.Element {
 								>
 									<div className="flex">
 										<div className="flex-shrink-0">
-											<ShieldCheckIcon className="h-5 w-5" aria-hidden="true" />
+											<ShieldCheckIcon
+												className="h-5 w-5"
+												aria-hidden="true"
+											/>
 										</div>
 										<div className="ml-2 text-base font-bold">
 											<span>Password Reset Successful</span>

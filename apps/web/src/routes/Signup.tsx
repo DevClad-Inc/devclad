@@ -62,7 +62,10 @@ function Signup() {
 					<div className="sm:mx-auto sm:w-full sm:max-w-md">
 						{signupError && <Error error={signupError} />}
 						<div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
-							<SignupForm signupErrorState={signupError} setSignupErrorState={setSignupError} />
+							<SignupForm
+								signupErrorState={signupError}
+								setSignupErrorState={setSignupError}
+							/>
 						</div>
 					</div>
 				</div>

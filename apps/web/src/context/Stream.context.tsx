@@ -52,9 +52,12 @@ export function StreamProvider({ children }: StreamProviderProps) {
 				.catch(() => {
 					// console.log(err);
 					setConnected(false);
-					toast.custom(<Error error="Cannot connect to Stream. Try refreshing the page." />, {
-						id: 'stream-connect-error',
-					});
+					toast.custom(
+						<Error error="Cannot connect to Stream. Try refreshing the page." />,
+						{
+							id: 'stream-connect-error',
+						}
+					);
 				});
 		};
 		if (connected === false) {
@@ -65,7 +68,10 @@ export function StreamProvider({ children }: StreamProviderProps) {
 	const toggleConnection = (conn: boolean) => {
 		setConnected(conn);
 	};
-	const value = React.useMemo(() => ({ client, connected, toggleConnection }), [client, connected]);
+	const value = React.useMemo(
+		() => ({ client, connected, toggleConnection }),
+		[client, connected]
+	);
 	return <StreamContext.Provider value={value}>{children}</StreamContext.Provider>;
 }
 

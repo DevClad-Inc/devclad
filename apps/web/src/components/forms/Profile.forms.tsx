@@ -117,7 +117,8 @@ export default function UpdateProfileForm(): JSX.Element {
 										className="text-bloodRed dark:text-mistyRose text-sm"
 									/>
 									<p className="mt-2 text-sm text-neutral-500">
-										Tip: Talk about what you like to build and what you are currently working on.
+										Tip: Talk about what you like to build and what you are
+										currently working on.
 									</p>
 								</label>
 							</div>
@@ -189,7 +190,8 @@ export default function UpdateProfileForm(): JSX.Element {
 										className="text-bloodRed dark:text-mistyRose text-sm"
 									/>
 									<p className="mt-2 text-sm text-neutral-500">
-										Tip: Showcase your best build yet if you do not have a website.
+										Tip: Showcase your best build yet if you do not have a
+										website.
 									</p>
 								</label>
 							</div>

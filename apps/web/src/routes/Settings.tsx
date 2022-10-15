@@ -70,7 +70,10 @@ export function Settings() {
 							)}
 							aria-current={pathname === item.href ? 'page' : undefined}
 						>
-							<item.icon className="-ml-1 mr-3 h-6 w-6 flex-shrink-0" aria-hidden="true" />
+							<item.icon
+								className="-ml-1 mr-3 h-6 w-6 flex-shrink-0"
+								aria-hidden="true"
+							/>
 							<span className="truncate">{item.name}</span>
 						</NavLink>
 					))}
@@ -122,8 +125,8 @@ export function SocialProfile() {
 							Social Preferences
 						</h2>
 						<p className="mt-2 text-xs italic text-neutral-600 dark:text-neutral-400">
-							We use your preferences in our ML algorithms to generate the best possible match every
-							week.
+							We use your preferences in our ML algorithms to generate the best
+							possible match every week.
 						</p>
 					</div>
 					<SocialProfileForm initialSocialData={initialSocialData} />

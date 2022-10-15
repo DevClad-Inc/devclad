@@ -7,7 +7,10 @@ export default function Index() {
 			<div className="flex justify-center py-10 font-mono">
 				<span className="block text-amber-300">
 					<span className="flex">
-						<a className="text-blue-300" href="https://github.com/arthtyagi/serverless-userpics">
+						<a
+							className="text-blue-300"
+							href="https://github.com/arthtyagi/serverless-userpics"
+						>
 							View on GitHub
 						</a>
 						<svg

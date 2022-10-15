@@ -87,7 +87,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 	const [selectedLanguages, setSelectedLanguages] = useState<Array<{ name: string; id: number }>>(
 		[]
 	);
-	const [selectedPurposes, setSelectedPurposes] = useState<Array<{ name: string; id: number }>>([]);
+	const [selectedPurposes, setSelectedPurposes] = useState<Array<{ name: string; id: number }>>(
+		[]
+	);
 	const [selectedCountry, setSelectedCountry] = useState<{ name: string; code: string }>();
 	let detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	// this is a hack to get the timezone to display correctly; FUCK YOU CHROMium
@@ -207,7 +209,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 						<div className="col-span-6 sm:col-span-3">
 							<Listbox
 								value={selectedIdeaStatus}
-								onChange={(e: { name: string; id: number }) => setselectedIdeaStatus(e)}
+								onChange={(e: { name: string; id: number }) =>
+									setselectedIdeaStatus(e)
+								}
 							>
 								{({ open }) => (
 									<>
@@ -225,7 +229,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
                       text-left shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 											>
 												<span className="block truncate">
-													{selectedIdeaStatus ? selectedIdeaStatus.name : 'Select'}
+													{selectedIdeaStatus
+														? selectedIdeaStatus.name
+														: 'Select'}
 												</span>
 												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 													<ChevronUpDownIcon
@@ -264,7 +270,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																<>
 																	<span
 																		className={classNames(
-																			selected ? 'font-semibold' : 'font-normal',
+																			selected
+																				? 'font-semibold'
+																				: 'font-normal',
 																			'block truncate'
 																		)}
 																	>
@@ -280,7 +288,10 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																				'absolute inset-y-0 right-0 flex items-center pr-4'
 																			)}
 																		>
-																			<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																			<CheckIcon
+																				className="h-5 w-5"
+																				aria-hidden="true"
+																			/>
 																		</span>
 																	) : null}
 																</>
@@ -334,7 +345,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
                       text-left shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 											>
 												<span className="block truncate">
-													{selectedPrefDevType ? selectedPrefDevType.name : 'Select'}
+													{selectedPrefDevType
+														? selectedPrefDevType.name
+														: 'Select'}
 												</span>
 												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 													<ChevronUpDownIcon
@@ -373,7 +386,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																<>
 																	<span
 																		className={classNames(
-																			selected ? 'font-semibold' : 'font-normal',
+																			selected
+																				? 'font-semibold'
+																				: 'font-normal',
 																			'block truncate'
 																		)}
 																	>
@@ -389,7 +404,10 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																				'absolute inset-y-0 right-0 flex items-center pr-4'
 																			)}
 																		>
-																			<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																			<CheckIcon
+																				className="h-5 w-5"
+																				aria-hidden="true"
+																			/>
 																		</span>
 																	) : null}
 																</>
@@ -453,7 +471,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 											>
 												<span className="block truncate">
 													{selectedDevType[0]
-														? selectedDevType.map(({ name }) => name).join(', ')
+														? selectedDevType
+																.map(({ name }) => name)
+																.join(', ')
 														: 'Select'}
 												</span>
 												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -493,7 +513,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																<>
 																	<span
 																		className={classNames(
-																			selected ? 'font-semibold' : 'font-normal',
+																			selected
+																				? 'font-semibold'
+																				: 'font-normal',
 																			'block truncate'
 																		)}
 																	>
@@ -509,7 +531,10 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																				'absolute inset-y-0 right-0 flex items-center pr-4'
 																			)}
 																		>
-																			<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																			<CheckIcon
+																				className="h-5 w-5"
+																				aria-hidden="true"
+																			/>
 																		</span>
 																	) : null}
 																</>
@@ -570,7 +595,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 											>
 												<span className="block truncate">
 													{selectedLanguages[0]
-														? selectedLanguages.map(({ name }) => name).join(', ')
+														? selectedLanguages
+																.map(({ name }) => name)
+																.join(', ')
 														: 'Select'}
 												</span>
 												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -610,7 +637,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																<>
 																	<span
 																		className={classNames(
-																			selected ? 'font-semibold' : 'font-normal',
+																			selected
+																				? 'font-semibold'
+																				: 'font-normal',
 																			'block truncate'
 																		)}
 																	>
@@ -626,7 +655,10 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																				'absolute inset-y-0 right-0 flex items-center pr-4'
 																			)}
 																		>
-																			<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																			<CheckIcon
+																				className="h-5 w-5"
+																				aria-hidden="true"
+																			/>
 																		</span>
 																	) : null}
 																</>
@@ -683,7 +715,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 											>
 												<span className="block truncate">
 													{selectedPurposes[0]
-														? selectedPurposes.map(({ name }) => name).join(', ')
+														? selectedPurposes
+																.map(({ name }) => name)
+																.join(', ')
 														: 'Select'}
 												</span>
 												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -723,7 +757,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																<>
 																	<span
 																		className={classNames(
-																			selected ? 'font-semibold' : 'font-normal',
+																			selected
+																				? 'font-semibold'
+																				: 'font-normal',
 																			'block truncate'
 																		)}
 																	>
@@ -739,7 +775,10 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																				'absolute inset-y-0 right-0 flex items-center pr-4'
 																			)}
 																		>
-																			<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																			<CheckIcon
+																				className="h-5 w-5"
+																				aria-hidden="true"
+																			/>
 																		</span>
 																	) : null}
 																</>
@@ -759,7 +798,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 									&#34;.
 								</p>
 							)}
-							<p className="mt-2 text-sm text-neutral-500">Choose up to 3 purposes.</p>
+							<p className="mt-2 text-sm text-neutral-500">
+								Choose up to 3 purposes.
+							</p>
 						</div>
 						<div className="col-span-6 sm:col-span-3">
 							<Listbox
@@ -784,7 +825,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
                       text-left shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 											>
 												<span className="block truncate">
-													{selectedCountry ? selectedCountry.name : 'Select'}
+													{selectedCountry
+														? selectedCountry.name
+														: 'Select'}
 												</span>
 												<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 													<ChevronUpDownIcon
@@ -823,7 +866,9 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																<>
 																	<span
 																		className={classNames(
-																			selected ? 'font-semibold' : 'font-normal',
+																			selected
+																				? 'font-semibold'
+																				: 'font-normal',
 																			'block truncate'
 																		)}
 																	>
@@ -839,7 +884,10 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 																				'absolute inset-y-0 right-0 flex items-center pr-4'
 																			)}
 																		>
-																			<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																			<CheckIcon
+																				className="h-5 w-5"
+																				aria-hidden="true"
+																			/>
 																		</span>
 																	) : null}
 																</>
@@ -950,7 +998,9 @@ export function AdditionalSPForm() {
 					<span
 						aria-hidden="true"
 						className={classNames(
-							profile.video_call_friendly ? 'translate-x-6 bg-black' : 'translate-x-0 bg-white',
+							profile.video_call_friendly
+								? 'translate-x-6 bg-black'
+								: 'translate-x-0 bg-white',
 							'pointer-events-none inline-block h-5 w-5 transform rounded-sm shadow ring-0 transition duration-200 ease-in-out'
 						)}
 					/>
@@ -962,7 +1012,9 @@ export function AdditionalSPForm() {
 						<VideoCameraSlashIcon className="mr-2 h-8 w-8 text-neutral-500" />
 					)}
 				</Switch.Label>
-				<span className="text-base">Video Call Friendly{!profile.video_call_friendly && '?'}</span>
+				<span className="text-base">
+					Video Call Friendly{!profile.video_call_friendly && '?'}
+				</span>
 			</Switch.Group>
 			<Switch.Group as="div" className="flex items-center">
 				<Switch
@@ -979,7 +1031,9 @@ export function AdditionalSPForm() {
 					<span
 						aria-hidden="true"
 						className={classNames(
-							availableAlwaysOff ? 'translate-x-0 bg-white' : 'translate-x-6 bg-black',
+							availableAlwaysOff
+								? 'translate-x-0 bg-white'
+								: 'translate-x-6 bg-black',
 							'pointer-events-none inline-block h-5 w-5 transform rounded-sm shadow ring-0 transition duration-200 ease-in-out'
 						)}
 					/>

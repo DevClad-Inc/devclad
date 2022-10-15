@@ -31,10 +31,13 @@ export default function VerifyEmail(): JSX.Element {
 				})
 				.catch(() => {
 					setError(true);
-					toast.custom(<Error error="Invalid verification key OR Email already verified." />, {
-						id: 'verify-email-error',
-						duration: 5000,
-					});
+					toast.custom(
+						<Error error="Invalid verification key OR Email already verified." />,
+						{
+							id: 'verify-email-error',
+							duration: 5000,
+						}
+					);
 				});
 		verification();
 	}, [key]);
@@ -88,7 +91,10 @@ export default function VerifyEmail(): JSX.Element {
 								>
 									<div className="flex">
 										<div className="flex-shrink-0">
-											<ShieldCheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+											<ShieldCheckIcon
+												className="h-5 w-5 text-green-400"
+												aria-hidden="true"
+											/>
 										</div>
 										<div className="ml-2 text-base font-bold">
 											<span>Email Verified successfully</span>
@@ -104,10 +110,15 @@ export default function VerifyEmail(): JSX.Element {
 									>
 										<div className="flex">
 											<div className="flex-shrink-0">
-												<ArrowRightOnRectangleIcon className="h-5 w-5" aria-hidden="true" />
+												<ArrowRightOnRectangleIcon
+													className="h-5 w-5"
+													aria-hidden="true"
+												/>
 											</div>
 											<div className="ml-2 text-base font-bold">
-												<span>{authed ? 'Go to Dashboard' : 'Click to Login'}</span>
+												<span>
+													{authed ? 'Go to Dashboard' : 'Click to Login'}
+												</span>
 											</div>
 										</div>
 									</span>

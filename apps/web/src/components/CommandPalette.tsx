@@ -142,17 +142,20 @@ export default function CommandPalette() {
 														(next as HTMLElement).focus();
 													} else {
 														(
-															e.currentTarget.parentElement?.firstElementChild as HTMLElement
+															e.currentTarget.parentElement
+																?.firstElementChild as HTMLElement
 														).focus();
 													}
 												} else if (e.key === 'ArrowUp') {
 													e.preventDefault();
-													const prev = e.currentTarget.previousElementSibling;
+													const prev =
+														e.currentTarget.previousElementSibling;
 													if (prev !== null) {
 														(prev as HTMLElement).focus();
 													} else {
 														(
-															e.currentTarget.parentElement?.lastElementChild as HTMLElement
+															e.currentTarget.parentElement
+																?.lastElementChild as HTMLElement
 														).focus();
 													}
 												} else if (e.key === 'Enter') {
@@ -168,7 +171,10 @@ export default function CommandPalette() {
 											)}
 											end
 										>
-											<item.icon className="-ml-1 mr-3 h-6 w-6 flex-shrink-0" aria-hidden="true" />
+											<item.icon
+												className="-ml-1 mr-3 h-6 w-6 flex-shrink-0"
+												aria-hidden="true"
+											/>
 											<span className="font-light">{item.name}</span>
 										</NavLink>
 									))}

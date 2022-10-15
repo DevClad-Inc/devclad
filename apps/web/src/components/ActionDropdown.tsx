@@ -58,7 +58,10 @@ export default function ActionDropdown({ items }: ActionDropdownProps): JSX.Elem
 											<span className="flex items-center">
 												<span className="mr-2">
 													{' '}
-													<item.icon className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+													<item.icon
+														className="h-6 w-6 flex-shrink-0"
+														aria-hidden="true"
+													/>
 												</span>
 												{item.name}
 											</span>

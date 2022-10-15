@@ -21,8 +21,8 @@
 
 ### Apps
 
-- [app/landing](https://github.com/DevClad-Inc/devclad-client/tree/main/apps/landing)
-- [app/web](https://github.com/DevClad-Inc/devclad-client/tree/main/apps/web)
+-   [app/landing](https://github.com/DevClad-Inc/devclad-client/tree/main/apps/landing)
+-   [app/web](https://github.com/DevClad-Inc/devclad-client/tree/main/apps/web)
 
 ---
 
@@ -30,10 +30,10 @@
 
 ## Styling
 
-- Tabs not spaces. Tabs are 4 spaces.
-  - (Exception: server code which uses Python with `black` formatting)
-- Use `prettier` for formatting.
-- Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
+-   Tabs not spaces. Tabs are 4 spaces.
+    -   (Exception: server code which uses Python with `black` formatting)
+-   Use `prettier` for formatting.
+-   Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
 
 ## Absolute Imports
 

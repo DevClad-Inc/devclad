@@ -53,7 +53,9 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 						<span className="truncate">{user}</span>
 						<div>
 							<span>{badge('3 unread', 'bg-darkBG')}</span>
-							<span className="ml-2 text-xs text-neutral-400 dark:text-neutral-600">1h ago</span>
+							<span className="ml-2 text-xs text-neutral-400 dark:text-neutral-600">
+								1h ago
+							</span>
 						</div>
 					</div>
 				</div>
@@ -209,9 +211,12 @@ export function MessageChild(): JSX.Element {
 						)
 						.catch(() => {
 							toggleConnection(false);
-							toast.custom(<Error error="Cannot connect to Stream. Try refreshing the page." />, {
-								id: 'stream-connect-error',
-							});
+							toast.custom(
+								<Error error="Cannot connect to Stream. Try refreshing the page." />,
+								{
+									id: 'stream-connect-error',
+								}
+							);
 						})
 						.then(() => {
 							channelRef.current = client.channel('messaging', {
@@ -224,7 +229,12 @@ export function MessageChild(): JSX.Element {
 						.create()
 						.then(async () => {
 							await fetchMessages(channelRef.current, undefined, undefined)
-								.then((res) => qc.setQueryData(['channel', channelRef.current?.cid as string], res))
+								.then((res) =>
+									qc.setQueryData(
+										['channel', channelRef.current?.cid as string],
+										res
+									)
+								)
 								.then(() => {
 									setReloadFetch(true);
 								});
@@ -257,7 +267,10 @@ export function MessageChild(): JSX.Element {
 		{
 			onMutate: async (text: string) => {
 				await qc.cancelQueries(['channel', channelRef.current?.cid as string]);
-				const previousMessages = qc.getQueryData(['channel', channelRef.current?.cid as string]);
+				const previousMessages = qc.getQueryData([
+					'channel',
+					channelRef.current?.cid as string,
+				]);
 				// todo: remove any
 				qc.setQueryData(['channel', channelRef.current?.cid as string], (old: any) => ({
 					...old,
@@ -273,7 +286,9 @@ export function MessageChild(): JSX.Element {
 				setMessage('');
 			},
 			onError: () => {
-				toast.custom(<Error error="Error sending message." />, { id: 'error-message-send' });
+				toast.custom(<Error error="Error sending message." />, {
+					id: 'error-message-send',
+				});
 				mutation.reset();
 			},
 		}
@@ -298,8 +313,15 @@ export function MessageChild(): JSX.Element {
 										type="button"
 										onClick={() => {
 											setNoOfMessages(6);
-											fetchMessages(channelRef.current, undefined, undefined).then((res) => {
-												qc.setQueryData(['channel', channelRef.current?.cid as string], res);
+											fetchMessages(
+												channelRef.current,
+												undefined,
+												undefined
+											).then((res) => {
+												qc.setQueryData(
+													['channel', channelRef.current?.cid as string],
+													res
+												);
 											});
 										}}
 									>
@@ -311,7 +333,11 @@ export function MessageChild(): JSX.Element {
 							{channelQData?.messages.slice(-noOfMessages).map((msg) => (
 								<Message
 									key={msg.id ? msg.id : 'loading'}
-									username={msg.user ? (msg.user.username as string) : loggedInUserUserName}
+									username={
+										msg.user
+											? (msg.user.username as string)
+											: loggedInUserUserName
+									}
 									self={msg.user ? msg.user.id === currUserUID : true}
 									avatarURL={
 										// todo: refactor this
@@ -363,13 +389,16 @@ export function MessageChild(): JSX.Element {
 											placeholder={`Message ${username}`}
 											defaultValue={message}
 											onChange={(e) => setMessage(e.target.value)}
-											onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+											onKeyDown={(
+												e: React.KeyboardEvent<HTMLTextAreaElement>
+											) => {
 												if (e.key === 'Enter') {
 													e.preventDefault();
 													if (message.length > 0) {
 														setNoOfMessages(6); // to keep the scroll at the bottom
 														mutation.mutate(message);
-														const target = e.target as HTMLTextAreaElement;
+														const target =
+															e.target as HTMLTextAreaElement;
 														target.value = '';
 													}
 												}
@@ -390,7 +419,10 @@ export function MessageChild(): JSX.Element {
 												type="submit"
 												className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
 											>
-												<PaperClipIcon className="h-5 w-5" aria-hidden="true" />
+												<PaperClipIcon
+													className="h-5 w-5"
+													aria-hidden="true"
+												/>
 												<span className="sr-only">Attach a file</span>
 											</button>
 										</div>
@@ -402,7 +434,10 @@ export function MessageChild(): JSX.Element {
 											px-6 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-600"
 										>
 											Send
-											<PaperAirplaneIcon className="ml-2 h-5 w-5" aria-hidden="true" />
+											<PaperAirplaneIcon
+												className="ml-2 h-5 w-5"
+												aria-hidden="true"
+											/>
 										</button>
 									</div>
 								</div>

@@ -2314,9 +2314,9 @@ axios@^0.22.0:
     follow-redirects "^1.14.4"
 
 axios@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.1.2.tgz#8b6f6c540abf44ab98d9904e8daf55351ca4a331"
-  integrity sha512-bznQyETwElsXl2RK7HLLwb5GPpOLlycxHCtrpDR/4RqqBzjARaOTo3jz4IgtntWUYee7Ne4S8UHd92VCuzPaWA==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.1.3.tgz#8274250dada2edf53814ed7db644b9c2866c1e35"
+  integrity sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -7412,9 +7412,9 @@ rollup-plugin-terser@^7.0.0:
     terser "^5.0.0"
 
 rollup-plugin-visualizer@^5.8.2:
-  version "5.8.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.8.2.tgz#25a4cc6431aba2eba8ecb7c99d8c3623d493e4bd"
-  integrity sha512-Fh7KoAa7FVVOojmyyX9ro7fBSR7mPG2cgfDbA877HM4IeJJtSZO+I/R3h/u6TB8wVP5J4pXPpTaRMSREyqCS3g==
+  version "5.8.3"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.8.3.tgz#2f002d6e1e38f4d4fb8638fd8d23ec799c3a2060"
+  integrity sha512-QGJk4Bqe4AOat5AjipOh8esZH1nck5X2KFpf4VytUdSUuuuSwvIQZjMGgjcxe/zXexltqaXp5Vx1V3LmnQH15Q==
   dependencies:
     open "^8.4.0"
     source-map "^0.7.4"
@@ -7771,10 +7771,10 @@ statuses@2.0.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"
   integrity sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==
 
-stream-chat@^7.1.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/stream-chat/-/stream-chat-7.2.0.tgz#f08ee0704175a3b8616cc7bd10f997514dfe0215"
-  integrity sha512-hXI0Xz7gRW1Gb8uxIoYZtfUs+1ACWsikpsPvKcfQnbCap1rmUlU8xe90qV75ixeRcZ0K15VO9PLIgzp+GRbwYQ==
+stream-chat@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/stream-chat/-/stream-chat-8.0.0.tgz#c0c7e109471091114d195ac630a53d4a3e036e2c"
+  integrity sha512-E8FYc4AM0h715GEJkZb+xj0yss7V7IQNCQJ5aW1TAc00VxsNQIMZPly6thwlxIrlmHpb3GG787vn/+R53n4eAw==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@types/jsonwebtoken" "^8.5.6"

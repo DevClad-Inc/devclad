@@ -33,7 +33,10 @@ function Home(): JSX.Element {
 			<div className="mx-auto w-3/4 max-w-lg">
 				<div className="text-center text-sm text-neutral-500">
 					<button onClick={handlelogOut} type="button" className={redString}>
-						<ArrowLeftOnRectangleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+						<ArrowLeftOnRectangleIcon
+							className="-ml-1 mr-2 h-5 w-5"
+							aria-hidden="true"
+						/>
 						Sign Out
 					</button>
 				</div>

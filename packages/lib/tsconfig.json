@@ -1,5 +1,5 @@
 {
-  "extends": "../config/interface.tsconfig.json",
+  "extends": "../config/vite.tsconfig.json",
   "compilerOptions": {
     "baseUrl": "."
   },

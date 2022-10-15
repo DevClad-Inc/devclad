@@ -4,11 +4,11 @@
 
 ## Features
 
-- [x] 🚀 Generate avatars on the fly
-- [x] 🎨 100 avatars included from [Craftwork.design](https://craftwork.design/) (I'm not affiliated with them, just a fan)
-- [x] 🎨 Abstraction over [Boring Avatars](https://boringavatars.com/) included as well.
-- [x] ✨ Tiny as fuck.
-- [x] ✨ Serverless. Configurable. Easily deployable.
+-   [x] 🚀 Generate avatars on the fly
+-   [x] 🎨 100 avatars included from [Craftwork.design](https://craftwork.design/) (I'm not affiliated with them, just a fan)
+-   [x] 🎨 Abstraction over [Boring Avatars](https://boringavatars.com/) included as well.
+-   [x] ✨ Tiny as fuck.
+-   [x] ✨ Serverless. Configurable. Easily deployable.
 
 ## Usage (Important)
 
@@ -19,19 +19,19 @@
 
 #### Available Query Params
 
-- `?name=string` - Your username. Defaults to `Cactus Jack`.
-- `?size=int` - Size of the avatar. Default is 128.
-- `?variant=string` - Variant of the avatar. Default is `beam`.
-- `?stream=bool` - Stream the SVG instead of returning a URL. Default is False.
+-   `?name=string` - Your username. Defaults to `Cactus Jack`.
+-   `?size=int` - Size of the avatar. Default is 128.
+-   `?variant=string` - Variant of the avatar. Default is `beam`.
+-   `?stream=bool` - Stream the SVG instead of returning a URL. Default is False.
 
 #### Available Variants
 
-- `marble`
-- `pixel`
-- `beam`
-- `sunset`
-- `ring`
-- `bauhaus`
+-   `marble`
+-   `pixel`
+-   `beam`
+-   `sunset`
+-   `ring`
+-   `bauhaus`
 
 All these variants and avatars (under `api/avatar/` route) are from [Boring Avatars](https://boringavatars.com/).
 
@@ -44,7 +44,7 @@ All these variants and avatars (under `api/avatar/` route) are from [Boring Avat
 
 ### Python Example
 
-- `/api/getpic/` is the endpoint to get a random avatar.
+-   `/api/getpic/` is the endpoint to get a random avatar.
 
 ```python
 def random_avatar():

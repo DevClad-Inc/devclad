@@ -85,14 +85,20 @@ function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 							</div>
 							<div className="flex flex-col">
 								<PrimaryButton>
-									<VideoCameraIcon className="mr-2 h-6 w-6 sm:h-8" aria-hidden="true" />
+									<VideoCameraIcon
+										className="mr-2 h-6 w-6 sm:h-8"
+										aria-hidden="true"
+									/>
 									<span>Schedule</span>
 								</PrimaryButton>
 							</div>
 							<div className="flex flex-col">
 								<PrimaryButton>
 									<Link to={`/profile/${otherUser}`} className="flex">
-										<ArrowUpRightIcon className="mr-2 h-6 w-5 sm:h-8" aria-hidden="true" />
+										<ArrowUpRightIcon
+											className="mr-2 h-6 w-5 sm:h-8"
+											aria-hidden="true"
+										/>
 										Profile
 									</Link>
 								</PrimaryButton>
