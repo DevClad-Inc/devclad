@@ -87,7 +87,11 @@ class SocialProfile(models.Model):
 
 
 class MeetingRoom(models.Model):
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    uid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+    )
     name = models.CharField(max_length=512, default="1:1 Meeting")
     TYPE = [
         ("1:1 Match", "1:1 Match"),

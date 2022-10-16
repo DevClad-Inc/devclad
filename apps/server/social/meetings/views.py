@@ -6,7 +6,7 @@ from django.db.models import Q
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from social.models import SocialProfile, MeetingRoom
+from social.models import MeetingRoom
 from .serializers import MeetingSerializer
 
 User = get_user_model()
@@ -16,7 +16,7 @@ User = get_user_model()
 @permission_classes([IsAuthenticated])
 def meetings(request: Request) -> Response:
     """
-    Get meetings for the week
+    Get meetings for the week; create/update meetings
     """
     match request.method:
         case "GET":
@@ -28,7 +28,21 @@ def meetings(request: Request) -> Response:
 
             return Response({"meetings": serializer.data})
         case "PATCH":
-            # todo: validate number of invites before creating meeting from request.data
-            pass
+            request.data["invites"] = [
+                User.objects.get(username=invite).id
+                for invite in request.data["invites"]
+            ]
+            request.data["organizer"] = User.objects.get(
+                username=request.data["organizer"]
+            ).id
+            serializer = MeetingSerializer(
+                data=request.data, partial=True, context={"request": request}
+            )
+            match serializer.is_valid():
+                case True:
+                    serializer.save()
+                    return Response(serializer.data)
+                case _:
+                    return Response({"message": serializer.errors}, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)
