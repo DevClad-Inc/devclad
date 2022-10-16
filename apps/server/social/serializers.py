@@ -104,19 +104,6 @@ class UIDSerializer(serializers.Serializer):
         fields = ["uid"]
 
 
-class MatchesThisWeekSerializer(serializers.ModelSerializer):
-    matches_this_week = ReadWriteSerializerMethodField()
-
-    class Meta:
-        model = SocialProfile
-        fields = ["matches_this_week"]
-        read_only_fields = ["matches_this_week"]
-
-    def get_matches_this_week(self, obj):
-        sp = SocialProfile.objects.get(user=obj.user)
-        return sp.get_flat_values("matches_this_week")
-
-
 class SkippedUsersSerializer(serializers.ModelSerializer):
     skipped = ReadWriteSerializerMethodField()
 
@@ -150,5 +137,4 @@ class BlockedUsersSerializer(serializers.ModelSerializer):
 
     def get_blocked(self, obj):
         sp = SocialProfile.objects.get(user=obj.user)
-        print(sp.get_flat_values("blocked"), "blocked")
         return sp.get_flat_values("blocked")

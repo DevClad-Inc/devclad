@@ -105,8 +105,7 @@ export function MessageChild(): JSX.Element {
 	const [showScrollDown, setShowScrollDown] = React.useState(false);
 	const profileData = useProfile(loggedInUserUserName as string) as Profile;
 
-	let channel: Channel<DefaultGenerics> | undefined;
-	const channelRef = React.useRef(channel);
+	const channelRef = React.useRef() as React.MutableRefObject<Channel<DefaultGenerics>>;
 
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);

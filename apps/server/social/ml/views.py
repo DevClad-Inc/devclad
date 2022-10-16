@@ -4,11 +4,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from .serializers import MatchesThisWeekSerializer
+from .match import get_one_one_match
+
 from social.models import SocialProfile
-from social.serializers import (
-    MatchesThisWeekSerializer,
-)
-from social.ml.match import get_one_one_match
 
 User = get_user_model()
 

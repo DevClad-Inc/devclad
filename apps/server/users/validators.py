@@ -22,7 +22,8 @@ purpose = [
 countries = [
     "Australia",
     "Canada",
-    "European Union" "Japan",
+    "European Union",
+    "Japan",
     "India",
     "Non EU Europe (excluding UK)",
     "United States of America",

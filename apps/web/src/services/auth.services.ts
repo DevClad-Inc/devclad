@@ -138,7 +138,6 @@ export async function refreshToken() {
 		})
 		.then(async (resp) => {
 			Cookies.set('token', resp.data.access, {
-				expires: 1,
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
 			});
@@ -204,7 +203,6 @@ export async function SignUp(user: NewUser) {
 		})
 		.then((resp) => {
 			Cookies.set('token', resp.data.access_token, {
-				expires: 1,
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
 			});
@@ -229,7 +227,6 @@ export async function logIn(email: string, password: string) {
 		})
 		.then((resp) => {
 			Cookies.set('token', resp.data.access_token, {
-				expires: 1,
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
 			});

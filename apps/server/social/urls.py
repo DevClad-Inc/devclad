@@ -12,8 +12,6 @@ from social.views import (
     profile_is_complete,
 )
 
-from social.ml.views import get_matches_this_week
-
 app_name = "social"
 
 urlpatterns = [
@@ -26,5 +24,6 @@ urlpatterns = [
     path("shadow/", shadow, name="shadow"),
     path("skipped/", skip, name="skip"),
     path("is-complete/", profile_is_complete, name="profile_is_complete"),
-    path("one-one/", get_matches_this_week, name="matches_this_week"),
+    path("one-one/", include("social.ml.urls")),
+    path("meetings/", include("social.meetings.urls")),
 ]
