@@ -68,14 +68,14 @@ def profile(request) -> Response:
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
-    elif request.method == "PUT":
+    if request.method == "PUT":
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
-    elif request.method == "PATCH":
+    if request.method == "PATCH":
         serializer = ProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
