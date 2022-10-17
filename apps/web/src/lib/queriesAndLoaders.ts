@@ -87,7 +87,7 @@ export const userMatchesQuery = () => ({
 
 export const userCircleQuery = (username: string) => ({
 	queryKey: ['circle', username],
-	enabled: !!username,
+	enabled: Boolean(username),
 	queryFn: async () => getCircle(username),
 });
 

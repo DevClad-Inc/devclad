@@ -150,7 +150,7 @@ export function MessageChild(): JSX.Element {
 			undefined,
 			undefined // defaults to latest messages
 		),
-		enabled: !!channelRef.current,
+		enabled: Boolean(channelRef.current),
 	});
 
 	const handleSendMessage = async (text: string) => {
