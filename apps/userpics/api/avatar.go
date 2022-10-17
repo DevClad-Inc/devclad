@@ -10,12 +10,12 @@ import (
 )
 
 type BoringParams struct {
-	size int
-	name string
+	size    int
+	name    string
 	variant string
 }
 
-func Boring (w http.ResponseWriter, r *http.Request) {
+func Boring(w http.ResponseWriter, r *http.Request) {
 
 	base_url := "https://source.boringavatars.com/"
 
@@ -30,9 +30,8 @@ func Boring (w http.ResponseWriter, r *http.Request) {
 		s, err := strconv.Atoi(r.URL.Query().Get("size"))
 		if err != nil {
 			log.Fatal(err)
-		} else {
-			size = s
 		}
+		size = s
 	}
 	if r.URL.Query().Get("name") != "" {
 		name = r.URL.Query().Get("name")
@@ -47,8 +46,8 @@ func Boring (w http.ResponseWriter, r *http.Request) {
 
 	// todo: add color support
 	params := BoringParams{
-		size: size,
-		name: name,
+		size:    size,
+		name:    name,
 		variant: variant,
 	}
 	// why a waitgroup? cause fuck you, i like goroutines
@@ -70,14 +69,14 @@ func Boring (w http.ResponseWriter, r *http.Request) {
 
 }
 
-func FetchBoring (params BoringParams, base_url string) string {
+func FetchBoring(params BoringParams, base_url string) string {
 
 	base_url += params.variant + "/" + strconv.Itoa(params.size) + "/" + params.name
 
 	return base_url
 }
 
-func StreamBoringPic (w http.ResponseWriter, r *http.Request, url string) int64 {
+func StreamBoringPic(w http.ResponseWriter, r *http.Request, url string) int64 {
 	// download the image
 	resp, err := http.Get(url)
 	if err != nil {
@@ -91,9 +90,8 @@ func StreamBoringPic (w http.ResponseWriter, r *http.Request, url string) int64 
 
 	if err != nil {
 		log.Fatal(err)
-	} else {
-		return res
 	}
+	return res
 
 	return res
 }
