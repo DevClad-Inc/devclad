@@ -12,6 +12,7 @@ class MatchesThisWeekSerializer(serializers.ModelSerializer):
         fields = ["matches_this_week"]
         read_only_fields = ["matches_this_week"]
 
-    def get_matches_this_week(self, obj):
+    @staticmethod
+    def get_matches_this_week(obj):
         sp = SocialProfile.objects.get(user=obj.user)
         return sp.get_flat_values("matches_this_week")

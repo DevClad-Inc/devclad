@@ -5,7 +5,8 @@ class SocialConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "social"
 
-    def ready(self):
+    @staticmethod
+    def ready():
         from django_q.tasks import schedule
         from django_q.models import Schedule
 

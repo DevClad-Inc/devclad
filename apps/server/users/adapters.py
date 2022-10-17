@@ -6,7 +6,8 @@ from allauth.account.adapter import DefaultAccountAdapter
 
 # https://github.com/iMerica/dj-rest-auth/issues/17#issuecomment-606161091
 class AccountAdapter(DefaultAccountAdapter):
-    def get_email_confirmation_url(self, request, emailconfirmation):
+    @staticmethod
+    def get_email_confirmation_url(request, emailconfirmation):
         site = get_current_site(request)
         location = reverse("account_confirm_email", args=[emailconfirmation.key])
 

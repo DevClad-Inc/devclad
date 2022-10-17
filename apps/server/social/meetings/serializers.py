@@ -16,7 +16,8 @@ class MeetingSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ["attended"]
 
-    def get_invites(self, obj):
+    @staticmethod
+    def get_invites(obj):
         meeting = MeetingRoom.objects.get(uid=obj.uid)
         return meeting.get_flat_values("invites")
 
@@ -59,7 +60,8 @@ class MeetingSerializer(serializers.ModelSerializer):
                 )
         return value
 
-    def validate_type_of(self, value):
+    @staticmethod
+    def validate_type_of(value):
         TYPES = ["Catch up 1:1", "1:1 Match"]
         if value in TYPES:
             return value

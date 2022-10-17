@@ -80,7 +80,8 @@ class CircleSerializer(serializers.ModelSerializer):
         model = SocialProfile
         fields = ["circle"]
 
-    def get_circle(self, obj):
+    @staticmethod
+    def get_circle(obj):
         sp = SocialProfile.objects.get(user=obj.user)
         return sp.get_flat_values("circle_symmetrical")
 
@@ -93,7 +94,8 @@ class AddedSerializer(serializers.ModelSerializer):
         fields = ["circle"]
         read_only_fields = fields
 
-    def get_circle(self, obj):
+    @staticmethod
+    def get_circle(obj):
         sp = SocialProfile.objects.get(user=obj.user)
         return sp.get_flat_values("circle")
 
@@ -111,7 +113,8 @@ class SkippedUsersSerializer(serializers.ModelSerializer):
         model = SocialProfile
         fields = ["skipped"]
 
-    def get_skipped(self, obj):
+    @staticmethod
+    def get_skipped(obj):
         sp = SocialProfile.objects.get(user=obj.user)
         return sp.get_flat_values("skipped")
 
@@ -123,7 +126,8 @@ class ShadowUsersSerializer(serializers.ModelSerializer):
         model = SocialProfile
         fields = ["shadowed"]
 
-    def get_shadowed(self, obj):
+    @staticmethod
+    def get_shadowed(obj):
         sp = SocialProfile.objects.get(user=obj.user)
         return sp.get_flat_values("shadowed")
 
@@ -135,6 +139,7 @@ class BlockedUsersSerializer(serializers.ModelSerializer):
         model = SocialProfile
         fields = ["blocked"]
 
-    def get_blocked(self, obj):
+    @staticmethod
+    def get_blocked(obj):
         sp = SocialProfile.objects.get(user=obj.user)
         return sp.get_flat_values("blocked")
