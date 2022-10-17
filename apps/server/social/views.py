@@ -137,7 +137,7 @@ def profile_is_complete(request):
                 "languages",
                 "raw_xp",
             ]
-            match_case = all([field in serializer.data for field in required_fields])
+            match_case = all(field in serializer.data for field in required_fields)
             return Response({"is_complete": match_case})
         case _:
             return Response({"error": "Invalid method"}, status=405)
