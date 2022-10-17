@@ -10,7 +10,7 @@ export function MeetingList(): JSX.Element {
 		return <div>Loading...</div>;
 	}
 
-	if (isSuccess && meetingData != null) {
+	if (isSuccess && meetingData !== null) {
 		const { meetings } = meetingData.data as { meetings: Meeting[] };
 		return (
 			<div>
@@ -35,7 +35,7 @@ export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
-	if (isSuccess && meetingData != null) {
+	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
 		return (
 			<div>
