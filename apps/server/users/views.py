@@ -28,10 +28,12 @@ class VerifyEmailView(APIView, ConfirmEmailView):
     permission_classes = (AllowAny,)
     allowed_methods = ("POST", "OPTIONS", "HEAD")
 
-    def get_serializer(self, *args, **kwargs):
+    @staticmethod
+    def get_serializer(*args, **kwargs):
         return VerifyEmailSerializer(*args, **kwargs)
 
-    def get(self, *args, **kwargs):
+    @staticmethod
+    def get(*args, **kwargs):
         raise MethodNotAllowed("GET")
 
     def post(self, request, *args, **kwargs):

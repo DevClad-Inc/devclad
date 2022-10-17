@@ -28,11 +28,13 @@ class RegisterSerializer(serializers.Serializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
-    def validate_username(self, username):
+    @staticmethod
+    def validate_username(username):
         username = get_adapter().clean_username(username)
         return username
 
-    def validate_email(self, email):
+    @staticmethod
+    def validate_email(email):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL and email and email_address_exists(email):
             raise serializers.ValidationError(
@@ -40,10 +42,12 @@ class RegisterSerializer(serializers.Serializer):
             )
         return email
 
-    def validate_password1(self, password):
+    @staticmethod
+    def validate_password1(password):
         return get_adapter().clean_password(password)
 
-    def validate(self, data):
+    @staticmethod
+    def validate(data):
         if data["password1"] != data["password2"]:
             raise serializers.ValidationError(
                 _("The two password fields didn't match.")
