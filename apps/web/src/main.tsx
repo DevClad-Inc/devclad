@@ -27,6 +27,7 @@ import Circle from '@/routes/social/Circle';
 import Profile from '@/routes/Profile';
 import Messages, { MessageChild } from '@/routes/Messages';
 import StreamProvider from '@/context/Stream.context';
+import Meetings, { MeetingDetail, MeetingList } from './routes/Meetings';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -124,6 +125,23 @@ const router = createBrowserRouter([
 						path: '/messages/:username',
 						hasErrorBoundary: true,
 						element: <MessageChild />,
+					},
+				],
+			},
+			{
+				path: 'meetings',
+				hasErrorBoundary: true,
+				element: <Meetings />,
+				children: [
+					{
+						index: true,
+						hasErrorBoundary: true,
+						element: <MeetingList />,
+					},
+					{
+						path: '/meetings/:uid',
+						hasErrorBoundary: true,
+						element: <MeetingDetail uid={null} />,
 					},
 				],
 			},

@@ -16,6 +16,7 @@ import {
 	getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
+import { getMeeting } from '@/services/meetings.services';
 
 // ! only using social profile loader rn
 
@@ -32,6 +33,14 @@ export const streamUIDQuery = (username: string) => ({
 	queryFn: () => getStreamUID(username),
 	staleTime: 1000 * 60 * 60 * 24, //
 	cacheTime: 1000 * 60 * 60 * 24, //
+	refetchOnWindowFocus: false,
+});
+
+export const meetingQuery = (uid: string) => ({
+	queryKey: ['meeting', uid],
+	queryFn: () => getMeeting(uid),
+	staleTime: 1000 * 60 * 5, // 5 minutes
+	cacheTime: 1000 * 60 * 5, // 5 minutes
 	refetchOnWindowFocus: false,
 });
 

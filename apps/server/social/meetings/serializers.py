@@ -14,6 +14,7 @@ class MeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MeetingRoom
+        fields = "__all__"
         read_only_fields = ["attended"]
 
     def get_invites(self, obj):

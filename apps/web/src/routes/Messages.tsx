@@ -273,11 +273,15 @@ export function MessageChild(): JSX.Element {
 					'channel',
 					channelRef.current?.cid as string,
 				]);
-				// todo: remove any
-				qc.setQueryData(['channel', channelRef.current?.cid as string], (old: any) => ({
-					...old,
-					messages: [...old.messages, { text }],
-				}));
+				// todo: remove any; fix this mess
+				qc.setQueryData(
+					['channel', channelRef.current?.cid as string],
+					(old: { messages: any } | undefined) => ({
+						...old,
+						// eslint-disable-next-line no-unsafe-optional-chaining
+						messages: [...old?.messages, { text }],
+					})
+				);
 				return { previousMessages };
 			},
 			onSettled: () => {

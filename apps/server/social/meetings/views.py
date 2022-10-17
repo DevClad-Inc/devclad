@@ -1,4 +1,5 @@
 from urllib.request import Request
+import uuid
 from django.contrib.auth import get_user_model
 
 from django.db.models import Q
@@ -14,18 +15,36 @@ User = get_user_model()
 
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
-def meetings(request: Request) -> Response:
+def meetings(request: Request, uid: str) -> Response:
     """
     Get meetings for the week; create/update meetings
     """
     match request.method:
         case "GET":
-            meetings = MeetingRoom.objects.filter(
-                Q(invites__in=[request.user]) | Q(organizer=request.user)
-            ).distinct()
-
-            serializer = MeetingSerializer(meetings, many=True)
-
+            match (uid):
+                case "all":
+                    meetings = MeetingRoom.objects.filter(
+                        Q(invites__in=[request.user]) | Q(organizer=request.user)
+                    ).distinct()
+                    serializer = MeetingSerializer(meetings, many=True)
+                    for meeting in serializer.data:
+                        meeting["organizer"] = User.objects.get(
+                            id=meeting["organizer"]
+                        ).username
+                case _:
+                    try:
+                        uuid.UUID(uid)
+                    except ValueError:
+                        return Response("Invalid UID", status=400)
+                    try:
+                        meeting = MeetingRoom.objects.get(uid=uid)
+                        serializer = MeetingSerializer(meeting)
+                    except MeetingRoom.DoesNotExist:
+                        return Response("Meeting not found", status=404)
+                    if request.user not in meeting.invites.all():
+                        return Response(
+                            "You are not invited to this meeting", status=403
+                        )
             return Response({"meetings": serializer.data})
         case "PATCH":
             request.data["invites"] = [
