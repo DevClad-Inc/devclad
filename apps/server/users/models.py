@@ -4,7 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_image_file_extension
 from django.core.exceptions import ValidationError
 from django.db.models.functions import Lower
-import uuid, requests
+import uuid
+import requests
 
 
 class User(AbstractUser):
