@@ -22,7 +22,6 @@ from allauth.account.utils import (
     has_verified_email,
     send_email_confirmation,
 )
-from allauth.account.models import EmailAddress
 
 
 class VerifyEmailView(APIView, ConfirmEmailView):
