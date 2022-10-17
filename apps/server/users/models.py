@@ -23,8 +23,7 @@ def file_size(
     limit = 8 * 1024 * 1024
     if value.size > limit:
         raise ValidationError("File too large. Size should not exceed 8 MiB.")
-    else:
-        return value
+    return value
 
 
 def random_avatar() -> str:
