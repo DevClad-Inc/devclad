@@ -23,9 +23,7 @@ User = get_user_model()
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def profile(request):
-    """
-    Determine if the user is authenticated and return their SocialProfile
-    """
+    """Determine if the user is authenticated and return their SocialProfile"""
     match request.method:
         case "GET":
             try:
@@ -61,9 +59,7 @@ def profile(request):
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def additional_preferences(request):
-    """
-    Manage user's additional 1on1 preferences
-    """
+    """Manage user's additional 1on1 preferences"""
     match request.method:
         case "GET":
             try:
@@ -95,9 +91,7 @@ def additional_preferences(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def social_profile(request: Request, username: str) -> Response:
-    """
-    Social Profile of user visible to other users
-    """
+    """Social Profile of user visible to other users"""
     match request.method:
         case "GET":
             try:
@@ -116,9 +110,7 @@ def social_profile(request: Request, username: str) -> Response:
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def profile_is_complete(request):
-    """
-    Determine if social profile of user is complete
-    """
+    """Determine if social profile of user is complete"""
     match request.method:
         case "GET":
             try:
@@ -146,9 +138,7 @@ def profile_is_complete(request):
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def circle(request: Request, username: str, operation: str) -> Response:
-    """
-    Perform operations on a user's circle
-    """
+    """Perform operations on a user's circle"""
     match request.method:
         case "GET":
             match operation:
@@ -235,9 +225,7 @@ def circle(request: Request, username: str, operation: str) -> Response:
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def added(request: Request) -> Response:
-    """
-    List of users that request.user has added to their circle; not necessarily the other way around
-    """
+    """List of users that request.user has added to their circle; not necessarily the other way around"""
     match request.method:
         case "GET":
             try:
@@ -255,9 +243,7 @@ def added(request: Request) -> Response:
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def block(request: Request) -> Response:
-    """
-    Block a user/Get blocked users
-    """
+    """Block a user/Get blocked users"""
     match request.method:
         case "GET":
             try:
@@ -315,9 +301,7 @@ def block(request: Request) -> Response:
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def shadow(request: Request) -> Response:
-    """
-    Shadow a user/Get shadowed users
-    """
+    """Shadow a user/Get shadowed users"""
     match request.method:
         case "GET":
             try:
@@ -368,9 +352,7 @@ def shadow(request: Request) -> Response:
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def skip(request: Request) -> Response:
-    """
-    Skip a user/Get skipped users
-    """
+    """Skip a user/Get skipped users"""
     match request.method:
         case "GET":
             try:

@@ -24,9 +24,7 @@ Returns: list of user ids
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_matches_this_week(request):
-    """
-    Determine if the user is authenticated and return their SocialProfile
-    """
+    """Determine if the user is authenticated and return their SocialProfile"""
     match request.method:
         case "GET":
             try:

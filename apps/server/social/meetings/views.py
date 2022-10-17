@@ -16,9 +16,7 @@ User = get_user_model()
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def meetings(request: Request, uid: str) -> Response:
-    """
-    Get meetings for the week; create/update meetings
-    """
+    """Get meetings for the week; create/update meetings"""
     match request.method:
         case "GET":
             match (uid):
