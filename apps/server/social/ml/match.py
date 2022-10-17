@@ -76,8 +76,6 @@ def transform_variables_profile(social_profile):
             )
         le.fit(new_list)
         transformed_profile.append(le.transform([str(social_profile[5]).split("/")[0]]))
-        # le.fit(list_of_timezones)
-        # transformed_profile.append(le.transform([social_profile[5]])[0])
     else:
         transformed_profile.append(0)
 

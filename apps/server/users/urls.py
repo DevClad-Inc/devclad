@@ -1,7 +1,5 @@
 from django.urls import path
 
-# from strawberry.django.views import AsyncGraphQLView
-# from .schema import schema
 
 from users.views import (
     profile,
@@ -19,5 +17,4 @@ urlpatterns = [
     path("is-complete/", profile_is_complete, name="profile_is_complete"),
     path("status/", user_status, name="user_status"),
     path("change-email/", change_email, name="change_email"),
-    # path('graphql/', AsyncGraphQLView.as_view(schema=schema)),
 ]

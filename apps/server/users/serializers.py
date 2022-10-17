@@ -22,11 +22,6 @@ User = get_user_model()
 # Custom RegistrationSerializer; with first and last name + possible future changes.
 # From https://github.com/iMerica/dj-rest-auth/blob/master/dj_rest_auth/registration/serializers.py#L197
 class RegisterSerializer(serializers.Serializer):
-    # username = serializers.CharField(
-    #     max_length=get_username_max_length(),
-    #     min_length=allauth_settings.USERNAME_MIN_LENGTH,
-    #     required=allauth_settings.USERNAME_REQUIRED,
-    # )
     first_name = serializers.CharField(max_length=30, required=True, write_only=True)
     last_name = serializers.CharField(max_length=30, required=True, write_only=True)
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
