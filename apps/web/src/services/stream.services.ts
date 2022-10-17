@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { API_URL } from './auth.services';
 
-export const getStreamToken = async () => {
+export const getStreamToken = () => {
 	const url = `${API_URL}/stream/token/`;
 	const token = Cookies.get('token');
 
@@ -24,7 +24,7 @@ export const getStreamToken = async () => {
 
 // meant to be used for other users
 // token/ already returns uid and token for current user
-export const getStreamUID = async (username: string) => {
+export const getStreamUID = (username: string) => {
 	const url = `${API_URL}/stream/uid/${username}/`;
 	const token = Cookies.get('token');
 

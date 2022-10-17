@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { API_URL } from '@/services/auth.services';
 import { Meeting } from '@/lib/InterfacesStates.lib';
 
-export const getMeetings = async (uid: string) => {
+export const getMeetings = (uid: string) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/meetings/${uid}/`; // either "all" or uid
 	if (token) {
@@ -16,7 +16,7 @@ export const getMeetings = async (uid: string) => {
 	return null;
 };
 
-export const getMeeting = async (id: string) => {
+export const getMeeting = (id: string) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/meetings/${id}/`;
 
@@ -30,7 +30,7 @@ export const getMeeting = async (id: string) => {
 	return null;
 };
 
-export const createUpdateMeeting = async (data: Meeting) => {
+export const createUpdateMeeting = (data: Meeting) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/meetings/`;
 

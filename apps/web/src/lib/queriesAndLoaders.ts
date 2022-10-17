@@ -46,69 +46,69 @@ export const meetingQuery = (uid: string) => ({
 
 export const userQuery = () => ({
 	queryKey: ['user'],
-	queryFn: async () => getUser(),
+	queryFn: () => getUser(),
 });
 
 export const profileQuery = () => ({
 	queryKey: ['profile'],
-	queryFn: async () => getProfile(),
+	queryFn: () => getProfile(),
 });
 
 export const socialProfileQuery = () => ({
 	queryKey: ['social-profile'],
-	queryFn: async () => getSocialProfile(),
+	queryFn: () => getSocialProfile(),
 });
 
 export const additionalSPQuery = () => ({
 	queryKey: ['additional-sprefs'],
-	queryFn: async () => getAdditionalSP(),
+	queryFn: () => getAdditionalSP(),
 });
 
 export const statusQuery = () => ({
 	queryKey: ['userStatus'],
-	queryFn: async () => getStatus(),
+	queryFn: () => getStatus(),
 });
 
 export const profileUsernameQuery = (username: string) => ({
 	queryKey: ['profile', username],
-	queryFn: async () => getUsernameProfile(username),
+	queryFn: () => getUsernameProfile(username),
 });
 
 export const socialProfileUsernameQuery = (username: string) => ({
 	queryKey: ['social-profile', username],
-	queryFn: async () => getUsernameSocialProfile(username),
+	queryFn: () => getUsernameSocialProfile(username),
 });
 
 export const userMatchesQuery = () => ({
 	queryKey: ['matches'],
-	queryFn: async () => getOneOne(),
+	queryFn: () => getOneOne(),
 	staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
 export const userCircleQuery = (username: string) => ({
 	queryKey: ['circle', username],
 	enabled: Boolean(username),
-	queryFn: async () => getCircle(username),
+	queryFn: () => getCircle(username),
 });
 
 export const userAddedQuery = () => ({
 	queryKey: ['added'],
-	queryFn: async () => getAdded(),
+	queryFn: () => getAdded(),
 });
 
 export const userBlockedQuery = () => ({
 	queryKey: ['blocked'],
-	queryFn: async () => getBlockedUsers(),
+	queryFn: () => getBlockedUsers(),
 });
 
 export const userShadowedQuery = () => ({
 	queryKey: ['shadowed'],
-	queryFn: async () => getShadowUsers(),
+	queryFn: () => getShadowUsers(),
 });
 
 export const userSkippedQuery = () => ({
 	queryKey: ['skipped'],
-	queryFn: async () => getSkippedUsers(),
+	queryFn: () => getSkippedUsers(),
 });
 
 // profileempty and socialempty query are only used in Onboarding

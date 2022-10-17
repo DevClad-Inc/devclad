@@ -52,12 +52,12 @@ export function StepTwo() {
 		profile: boolean;
 		socialProfile: boolean;
 	} = { profile: false, socialProfile: false };
-	const profileEmptyQuery = useQuery(['profile-empty'], async () => checkProfileEmpty());
-	const socialEmptyQuery = useQuery(['social-profile-empty'], async () =>
+	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty());
+	const socialEmptyQuery = useQuery(['social-profile-empty'], () =>
 		checkSocialProfileEmpty()
 	);
 	let userStatus: UserStatus = { ...initialUserStatus };
-	const statusQuery = useQuery(['userStatus'], async () => getStatus());
+	const statusQuery = useQuery(['userStatus'], () => getStatus());
 	if (statusQuery.isSuccess && statusQuery.data !== null) {
 		const { data } = statusQuery;
 		userStatus = data.data;
@@ -150,7 +150,7 @@ export function Onboarding() {
 		loggedInUser = userQueryData.data;
 	}
 	let userStatus: UserStatus = { ...initialUserStatus };
-	const statusQuery = useQuery(['userStatus'], async () => getStatus());
+	const statusQuery = useQuery(['userStatus'], () => getStatus());
 	if (
 		statusQuery.isSuccess &&
 		statusQuery.data !== null &&

@@ -61,7 +61,7 @@ export const passwordChange = async (password1: string, password2: string) => {
 	return response;
 };
 
-export const changeEmail = async (email: string) => {
+export const changeEmail = (email: string) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/users/change-email/`;
 	if (token) {
@@ -79,7 +79,7 @@ export const changeEmail = async (email: string) => {
 	return null;
 };
 
-export const checkVerified = async () => {
+export const checkVerified = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/users/change-email/`;
 	if (token) {
@@ -108,7 +108,7 @@ export const resendEmail = async (email: string) => {
 	return response.data;
 };
 
-export async function verifyToken(token: string): Promise<boolean> {
+export function verifyToken(token: string): Promise<boolean> {
 	const url = `${API_URL}/auth/token/verify/`;
 	return axios({
 		method: 'POST',
@@ -125,7 +125,7 @@ export async function verifyToken(token: string): Promise<boolean> {
 		.catch(() => false);
 }
 
-export async function refreshToken() {
+export function refreshToken() {
 	const url = `${API_URL}/auth/token/refresh/`;
 	const token = Cookies.get('token');
 	return axios
@@ -136,7 +136,7 @@ export async function refreshToken() {
 			},
 			credentials: 'same-origin',
 		})
-		.then(async (resp) => {
+		.then( (resp) => {
 			Cookies.set('token', resp.data.access, {
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
@@ -179,7 +179,7 @@ export async function getUser() {
 	return null;
 }
 
-export async function updateUser(first_name?: string, last_name?: string, username?: string) {
+export function updateUser(first_name?: string, last_name?: string, username?: string) {
 	const token = Cookies.get('token');
 	if (token) {
 		return axios.patch(
@@ -191,7 +191,7 @@ export async function updateUser(first_name?: string, last_name?: string, userna
 	return null;
 }
 
-export async function SignUp(user: NewUser) {
+export function SignUp(user: NewUser) {
 	return axios
 		.post(`${API_URL}/auth/registration/`, {
 			first_name: user.firstName,

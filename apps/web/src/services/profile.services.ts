@@ -27,7 +27,7 @@ export async function getProfile() {
 	return null;
 }
 
-export async function getUsernameProfile(username: string) {
+export function getUsernameProfile(username: string) {
 	const url = `${API_URL}/users/profile/${username}/`;
 	const token = Cookies.get('token');
 	if (token) {
@@ -43,7 +43,7 @@ export async function getUsernameProfile(username: string) {
 	return null;
 }
 
-export async function updateProfile(values: Profile, profileData: Profile) {
+export function updateProfile(values: Profile, profileData: Profile) {
 	const { pronouns, about, website, linkedin, calendly } = values;
 	const token = Cookies.get('token');
 	if (token && profileData) {
@@ -65,7 +65,7 @@ export async function updateProfile(values: Profile, profileData: Profile) {
 	return null;
 }
 
-export async function updateProfileAvatar(avatar: File) {
+export function updateProfileAvatar(avatar: File) {
 	const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
 	const token = Cookies.get('token');
 	const formData = new FormData();
@@ -83,7 +83,7 @@ export async function updateProfileAvatar(avatar: File) {
 	return null;
 }
 
-export async function getSocialProfile() {
+export function getSocialProfile() {
 	const url = `${API_URL}/social/profile/`;
 	const token = Cookies.get('token');
 	if (token) {
@@ -98,7 +98,7 @@ export async function getSocialProfile() {
 	return null;
 }
 
-export async function getUsernameSocialProfile(username: string) {
+export function getUsernameSocialProfile(username: string) {
 	const url = `${API_URL}/social/profile/${username}/`;
 	const token = Cookies.get('token');
 	if (token) {
@@ -113,7 +113,7 @@ export async function getUsernameSocialProfile(username: string) {
 	return null;
 }
 
-export async function updateSocialProfile(values: SocialProfile, socialProfileData: SocialProfile) {
+export function updateSocialProfile(values: SocialProfile, socialProfileData: SocialProfile) {
 	const {
 		preferred_dev_type,
 		idea_status,
@@ -150,7 +150,7 @@ export async function updateSocialProfile(values: SocialProfile, socialProfileDa
 	return null;
 }
 
-export async function getAdditionalSP() {
+export function getAdditionalSP() {
 	const url = `${API_URL}/social/additional-prefs/`;
 	const token = Cookies.get('token');
 	if (token) {
@@ -163,7 +163,7 @@ export async function getAdditionalSP() {
 	return null;
 }
 
-export async function updateAdditionalSP(values: AdditionalSP) {
+export function updateAdditionalSP(values: AdditionalSP) {
 	const { video_call_friendly, available_always_off } = values;
 	const token = Cookies.get('token');
 	if (token) {
@@ -182,7 +182,7 @@ export async function updateAdditionalSP(values: AdditionalSP) {
 	return null;
 }
 
-export async function checkProfileEmpty() {
+export function checkProfileEmpty() {
 	const url = `${API_URL}/users/is-complete/`;
 	const token = Cookies.get('token');
 	if (token) {
@@ -197,7 +197,7 @@ export async function checkProfileEmpty() {
 	return null;
 }
 
-export async function checkSocialProfileEmpty() {
+export function checkSocialProfileEmpty() {
 	const url = `${API_URL}/social/is-complete/`;
 	const token = Cookies.get('token');
 	if (token) {
@@ -217,7 +217,7 @@ This deals with UserStatus Model.
 getStatus() - This is to check "approved" field.
 setSubmittedStatus() - This is to set the "status" field to "Submitted".
 */
-export const getStatus = async () => {
+export const getStatus = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/users/status/`;
 	if (token) {
@@ -234,7 +234,7 @@ export const getStatus = async () => {
 	return null;
 };
 
-export const setSubmittedStatus = async () => {
+export const setSubmittedStatus = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/users/status/`;
 	if (token) {
@@ -250,7 +250,7 @@ export const setSubmittedStatus = async () => {
 
 // =================== ONE-ONE ML ===================
 
-export const getOneOne = async () => {
+export const getOneOne = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/one-one/`;
 	if (token) {
@@ -267,7 +267,7 @@ export const getOneOne = async () => {
 	return null;
 };
 
-export const getShadowUsers = async () => {
+export const getShadowUsers = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/shadow/`;
 	if (token) {
@@ -284,7 +284,7 @@ export const getShadowUsers = async () => {
 	return null;
 };
 
-export const shadowUser = async (username: string, shadowed: string[], shadow: boolean) => {
+export const shadowUser = (username: string, shadowed: string[], shadow: boolean) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/shadow/`;
 
@@ -307,7 +307,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
 	return null;
 };
 
-export const getSkippedUsers = async () => {
+export const getSkippedUsers = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/skipped/`;
 	if (token) {
@@ -324,7 +324,7 @@ export const getSkippedUsers = async () => {
 	return null;
 };
 
-export const skipUser = async (username: string, skipped: string[], skip: boolean) => {
+export const skipUser = (username: string, skipped: string[], skip: boolean) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/skipped/`;
 
@@ -350,7 +350,7 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
 };
 
 // =================== circle ===================
-export const getAdded = async () => {
+export const getAdded = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/added/`;
 	if (token) {
@@ -367,7 +367,7 @@ export const getAdded = async () => {
 	return null;
 };
 
-export const getCircle = async (username: string) => {
+export const getCircle = (username: string) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/circle/${username}/get/`;
 	if (token) {
@@ -385,7 +385,7 @@ export const getCircle = async (username: string) => {
 };
 
 // Add is only for One-One
-export const PatchCircle = async (
+export const PatchCircle = (
 	operationUsername: string,
 	circle: string[],
 	operation: string
@@ -420,7 +420,7 @@ export const PatchCircle = async (
 	return null;
 };
 
-export const getBlockedUsers = async () => {
+export const getBlockedUsers = () => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/block/`;
 	if (token) {
@@ -433,7 +433,7 @@ export const getBlockedUsers = async () => {
 	return null;
 };
 
-export const blockUser = async (
+export const blockUser = (
 	operationUsername: string,
 	blocked: string[],
 	operation: string
