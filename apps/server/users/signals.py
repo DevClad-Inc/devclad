@@ -6,8 +6,6 @@ from social.models import SocialProfile
 from work.models import ProjectProfile, HackathonProfile
 from stream.models import StreamUser
 
-from django.conf import settings
-
 User = get_user_model()
 
 

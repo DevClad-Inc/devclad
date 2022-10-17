@@ -1,5 +1,3 @@
-from django_q.tasks import schedule
-from django_q.models import Schedule
 
 from django.contrib.auth import get_user_model
 

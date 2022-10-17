@@ -1,6 +1,5 @@
 from datetime import timedelta
 from pathlib import Path
-from re import S
 from decouple import config
 from corsheaders.defaults import default_headers
 
