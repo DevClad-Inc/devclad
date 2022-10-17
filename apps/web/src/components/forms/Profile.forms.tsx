@@ -53,27 +53,27 @@ export default function UpdateProfileForm(): JSX.Element {
 		values: UpdateProfileFormValues,
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
-		try {
-			setSubmitting(true);
-			await updateProfile(values, profileData).then( () => {
+		setSubmitting(true);
+		await updateProfile(values, profileData)
+			?.then(() => {
 				setSubmitting(false);
 				invalidateAndStoreIDB(qc, 'profile');
 				toast.custom(<Success success="Profile updated successfully" />, {
 					id: 'profile-update-success',
 				});
+			})
+			.catch((error: any) => {
+				const { data } = error.response;
+				if (data.calendly) {
+					toast.custom(<Error error={data.calendly} />, { id: 'social-update-error' });
+				} else {
+					toast.custom(
+						<Error error="Languages, Development Type, and What makes you want to use this should be filled." />,
+						{ id: 'profile-update-error-unknown' }
+					);
+				}
+				setSubmitting(false);
 			});
-		} catch (error: any) {
-			const { data } = error.response;
-			if (data.calendly) {
-				toast.custom(<Error error={data.calendly} />, { id: 'social-update-error' });
-			} else {
-				toast.custom(
-					<Error error="Languages, Development Type, and What makes you want to use this should be filled." />,
-					{ id: 'profile-update-error-unknown' }
-				);
-			}
-			setSubmitting(false);
-		}
 	};
 
 	if (profileQuerySuccess && profileQueryData !== null) {
@@ -88,7 +88,9 @@ export default function UpdateProfileForm(): JSX.Element {
 				}}
 				validate={validate}
 				onSubmit={(values, { setSubmitting }) => {
-					handleSubmit(values, { setSubmitting });
+					if (values !== null && profileData !== null) {
+						handleSubmit(values, { setSubmitting });
+					}
 				}}
 			>
 				{({ isSubmitting }) => (
@@ -268,7 +270,7 @@ export function AvatarUploadForm() {
 				},
 			});
 			updateProfileAvatar(file)
-				.then( () => {
+				?.then(() => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);
 				})
@@ -286,7 +288,7 @@ export function AvatarUploadForm() {
 		const avatar = e.target.files && e.target.files[0];
 		if (avatar) {
 			updateProfileAvatar(avatar)
-				.then( () => {
+				?.then(() => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);
 				})

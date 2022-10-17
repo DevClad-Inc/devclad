@@ -1,4 +1,3 @@
-
 # Create your tests here.
 
 # Test [Skip, Block, Shadow, Circle] functionality

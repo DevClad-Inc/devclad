@@ -25,7 +25,7 @@ import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { genExp, genIdea } from '@/routes/Profile';
 import { useAuth } from '@/services/useAuth.services';
-import { PatchCircle, shadowUser, skipUser } from '@/services/profile.services';
+import { patchCircle, shadowUser, skipUser } from '@/services/profile.services';
 import { Success, Error, ConfirmDialog } from '@/components/Feedback';
 
 function MatchCard({ username }: { username: string }): JSX.Element {
@@ -46,7 +46,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
 	const handleAdd = async () => {
-		await PatchCircle(username, circle, 'add')
+		await patchCircle(username, circle, 'add')
 			.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
 					id: 'connect-profile-success',

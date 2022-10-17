@@ -47,7 +47,7 @@ export default function UpdateUserForm(): JSX.Element {
 			if (username === loggedInUser.username) {
 				username = undefined;
 			}
-			await updateUser(firstName, lastName, username).then( () => {
+			await updateUser(firstName, lastName, username).then(() => {
 				del('loggedInUser');
 				if (username === undefined) {
 					username = loggedInUser.username;

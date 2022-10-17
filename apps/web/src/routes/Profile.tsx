@@ -23,7 +23,7 @@ import {
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import ActionDropdown from '@/components/ActionDropdown';
-import { blockUser, PatchCircle } from '@/services/profile.services';
+import { blockUser, patchCircle } from '@/services/profile.services';
 import { useAuth } from '@/services/useAuth.services';
 import { Success, Error } from '@/components/Feedback';
 
@@ -59,7 +59,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 		return <ProfileLoading />;
 	}
 	const handleAdd = async () => {
-		await PatchCircle(username, circle, 'add')
+		await patchCircle(username, circle, 'add')
 			.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
 					id: 'connect-profile-success',
@@ -81,7 +81,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 			icon: XMarkIcon,
 			alt: 'Disconnect',
 			onClick: async () => {
-				await PatchCircle(username, circle, 'remove')
+				await patchCircle(username, circle, 'remove')
 					.then(async () => {
 						toast.custom(<Success success="Disconnected successfully" />, {
 							id: 'disconnect-profile-success',

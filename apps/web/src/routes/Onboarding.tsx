@@ -53,9 +53,7 @@ export function StepTwo() {
 		socialProfile: boolean;
 	} = { profile: false, socialProfile: false };
 	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty());
-	const socialEmptyQuery = useQuery(['social-profile-empty'], () =>
-		checkSocialProfileEmpty()
-	);
+	const socialEmptyQuery = useQuery(['social-profile-empty'], () => checkSocialProfileEmpty());
 	let userStatus: UserStatus = { ...initialUserStatus };
 	const statusQuery = useQuery(['userStatus'], () => getStatus());
 	if (statusQuery.isSuccess && statusQuery.data !== null) {

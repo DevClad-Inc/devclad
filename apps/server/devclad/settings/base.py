@@ -227,7 +227,6 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 
-
 UPLOADED_FILES_USE_URL = True
 
 # ===== EMAIL =====
@@ -271,5 +270,3 @@ STREAM_API_KEY = config("STREAM_API_KEY")
 STREAM_API_SECRET = config("STREAM_API_SECRET")
 
 # ==================================== GRAPHQL ========================================== #
-
-

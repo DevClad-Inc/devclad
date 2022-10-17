@@ -93,5 +93,4 @@ func StreamBoringPic(w http.ResponseWriter, _ *http.Request, url string) int64 {
 	}
 	return res
 
-	return res
 }

@@ -136,7 +136,7 @@ export function refreshToken() {
 			},
 			credentials: 'same-origin',
 		})
-		.then( (resp) => {
+		.then((resp) => {
 			Cookies.set('token', resp.data.access, {
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',

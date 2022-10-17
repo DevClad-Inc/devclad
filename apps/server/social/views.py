@@ -326,9 +326,7 @@ def shadow(request: Request) -> Response:
                     user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot shadow self"}, status=400)
-                    if (
-                        user_profile not in request_user_profile.matches_this_week.all()
-                    ):
+                    if user_profile not in request_user_profile.matches_this_week.all():
                         return Response(
                             {"error": "Cannot shadow a user not your match this week"},
                             status=400,
@@ -378,9 +376,7 @@ def skip(request: Request) -> Response:
                     user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot skip self"}, status=400)
-                    if (
-                        user_profile not in request_user_profile.matches_this_week.all()
-                    ):
+                    if user_profile not in request_user_profile.matches_this_week.all():
                         return Response(
                             {"error": "Cannot skip a user not your match this week"},
                             status=400,

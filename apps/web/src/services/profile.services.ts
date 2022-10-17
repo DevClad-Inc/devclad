@@ -385,11 +385,7 @@ export const getCircle = (username: string) => {
 };
 
 // Add is only for One-One
-export const PatchCircle = (
-	operationUsername: string,
-	circle: string[],
-	operation: string
-) => {
+export const patchCircle = (operationUsername: string, circle: string[], operation: string) => {
 	const token = Cookies.get('token');
 	let url = `${API_URL}/social/circle/`;
 	if (operation === 'add') {
@@ -433,11 +429,7 @@ export const getBlockedUsers = () => {
 	return null;
 };
 
-export const blockUser = (
-	operationUsername: string,
-	blocked: string[],
-	operation: string
-) => {
+export const blockUser = (operationUsername: string, blocked: string[], operation: string) => {
 	const token = Cookies.get('token');
 	const url = `${API_URL}/social/block/`;
 
