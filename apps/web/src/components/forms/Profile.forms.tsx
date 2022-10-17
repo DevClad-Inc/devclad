@@ -55,7 +55,7 @@ export default function UpdateProfileForm(): JSX.Element {
 	) => {
 		try {
 			setSubmitting(true);
-			await updateProfile(values, profileData).then(async () => {
+			await updateProfile(values, profileData).then( () => {
 				setSubmitting(false);
 				invalidateAndStoreIDB(qc, 'profile');
 				toast.custom(<Success success="Profile updated successfully" />, {
@@ -268,7 +268,7 @@ export function AvatarUploadForm() {
 				},
 			});
 			updateProfileAvatar(file)
-				.then(async () => {
+				.then( () => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);
 				})
@@ -286,7 +286,7 @@ export function AvatarUploadForm() {
 		const avatar = e.target.files && e.target.files[0];
 		if (avatar) {
 			updateProfileAvatar(avatar)
-				.then(async () => {
+				.then( () => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);
 				})

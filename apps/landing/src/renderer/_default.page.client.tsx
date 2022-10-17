@@ -4,7 +4,7 @@ import { hydrateRoot } from 'react-dom/client';
 import PageShell from './PageShell';
 import type { PageContextClient, PageContextCustom } from './types';
 
-async function render(pageContext: PageContextClient) {
+function render(pageContext: PageContextClient) {
 	const { Page, pageProps } = pageContext as PageContextCustom;
 	hydrateRoot(
 		document.getElementById('page-view')!,
