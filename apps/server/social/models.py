@@ -58,7 +58,9 @@ class SocialProfile(models.Model):
         max_length=64, blank=True, choices=IDEA_STATUS_CHOICES
     )
     # CALCULATION PURPOSE FIELDS:
-    available_this_week = models.BooleanField(default=False)
+    available_this_week = models.BooleanField(
+        default=True
+    )  # keep to True for now | change to False after hitting 1000 users
     available_always_off = models.BooleanField(
         default=False
     )  # if this is true, the user is not available this week until they change it

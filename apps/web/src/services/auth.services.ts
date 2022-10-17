@@ -149,11 +149,11 @@ export async function refreshToken() {
 		})
 		.then(async () => {
 			await qc.invalidateQueries();
-		})
-		.catch(() => {
-			delMany(['loggedInUser', 'profile']);
-			Cookies.remove('token');
 		});
+	// .catch(() => {
+	// 	delMany(['loggedInUser', 'profile']);
+	// 	Cookies.remove('token');
+	// });
 }
 
 export async function getUser() {

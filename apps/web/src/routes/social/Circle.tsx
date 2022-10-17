@@ -73,15 +73,15 @@ function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 						</div>
 						<div className="flex space-x-2 text-sm sm:ml-24 sm:text-lg">
 							<div className="flex flex-col">
-								<PrimaryButton>
-									<Link className="flex" to={`/messages/${otherUser}/`}>
+								<Link className="flex" to={`/messages/${otherUser}/`}>
+									<PrimaryButton>
 										<ChatBubbleBottomCenterIcon
 											className="mr-2 h-6 w-6 sm:h-8"
 											aria-hidden="true"
 										/>
 										Chat
-									</Link>
-								</PrimaryButton>
+									</PrimaryButton>
+								</Link>
 							</div>
 							<div className="flex flex-col">
 								<PrimaryButton>

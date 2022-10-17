@@ -387,15 +387,15 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 							{!blocked && (
 								<>
 									<div className="flex flex-col">
-										<PrimaryButton>
-											<Link className="flex" to={`/messages/${username}/`}>
+										<Link className="flex" to={`/messages/${username}/`}>
+											<PrimaryButton>
 												<ChatBubbleBottomCenterIcon
 													className="mr-2 h-6 w-6 lg:h-8"
 													aria-hidden="true"
 												/>
 												Chat
-											</Link>
-										</PrimaryButton>
+											</PrimaryButton>
+										</Link>
 									</div>
 									<div className="flex flex-col">
 										<PrimaryButton>
