@@ -1,4 +1,3 @@
-# import contextlib
 from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
@@ -7,7 +6,6 @@ from social.models import SocialProfile
 from work.models import ProjectProfile, HackathonProfile
 from stream.models import StreamUser
 
-# from twilio.rest import Client
 from django.conf import settings
 
 User = get_user_model()

@@ -12,9 +12,6 @@ DATABASES = {
 
 CSRF_COOKIE_SAMESITE = "strict"
 
-# JWT_AUTH_SECURE = True
-# JWT_AUTH_SAMESITE = "strict"
-# JWT_AUTH_COOKIE_USE_CSRF = True
 
 ACCOUNT_EMAIL_VERIFICATION = config(
     "ACCOUNT_EMAIL_VERIFICATION", default="mandatory", cast=str

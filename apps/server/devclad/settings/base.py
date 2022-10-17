@@ -177,18 +177,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # # Provider specific settings
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#         # For each OAuth based provider, either add a ``SocialApp``
-#         # (``socialaccount`` app) containing the required client
-#         # credentials, or list them here:
-#         'APP': {
-#             'client_id': '123',
-#             'secret': '456',
-#             'key': ''
-#         }
-#     }
-# }
 
 ACCOUNT_ADAPTER = "users.adapters.AccountAdapter"
 
@@ -224,8 +212,6 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SIMPLE_JWT_SIGNING_KEY,
 }
 
-# JWT_AUTH_COOKIE = "token"
-# JWT_AUTH_REFRESH_COOKIE = "refresh"
 
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
@@ -241,13 +227,6 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     "withCredentials",
 ]
 
-# CSRF_TRUSTED_ORIGINS = config(
-#     "CORS_ALLOWED_ORIGINS",
-#     default="",
-#     cast=lambda allowed_origins: [
-#         origin.strip() for origin in allowed_origins.split(" ")
-#     ],
-# )
 
 
 UPLOADED_FILES_USE_URL = True
@@ -294,13 +273,4 @@ STREAM_API_SECRET = config("STREAM_API_SECRET")
 
 # ==================================== GRAPHQL ========================================== #
 
-# GRAPHENE = {
-#     "SCHEMA": "devclad.schema.schema",
-#     "MIDDLEWARE": [
-#         "graphql_jwt.middleware.JSONWebTokenMiddleware",
-#     ],
-# }
 
-# GRAPHQL_JWT = {
-#     "JWT_ALLOW_ARGUMENT": True,
-# }

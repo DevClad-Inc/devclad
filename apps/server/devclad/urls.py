@@ -24,12 +24,8 @@ urlpatterns = [
     path("stream/", include("stream.urls")),
     path("users/", include("users.urls")),
     path("social/", include("social.urls")),
-    # path("graphql", (GraphQLView.as_view(graphiql=settings.DEBUG))),
 ]
 
-# urlpatterns += [
-#     path('auth/twitter/', TwitterLogin.as_view(), name='twitter_login')
-# ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
