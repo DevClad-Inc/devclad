@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from social.models import SocialProfile, MeetingRoom
-from timezone_field.rest_framework import TimeZoneSerializerField
+from social.models import MeetingRoom
 from django.contrib.auth import get_user_model
 
 from social.serializers import ReadWriteSerializerMethodField

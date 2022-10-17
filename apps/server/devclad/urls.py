@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.conf import settings
-from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.urls import path, include
-from users.views import TwitterLogin, VerifyEmailView
+from users.views import VerifyEmailView
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
 urlpatterns = [
