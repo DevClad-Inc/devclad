@@ -3,14 +3,13 @@ from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth.password_validation import validate_password
 from allauth.account import app_settings as allauth_settings
 from allauth.utils import email_address_exists
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from dj_rest_auth.serializers import PasswordResetSerializer
-
-from django.contrib.auth.password_validation import validate_password
-from django.conf import settings
 
 from users.models import Profile, UserStatus, User
 from users.forms import CustomAllAuthPasswordResetForm

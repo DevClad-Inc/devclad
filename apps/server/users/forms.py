@@ -1,11 +1,11 @@
 from dj_rest_auth.forms import AllAuthPasswordResetForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
-from allauth.account.forms import default_token_generator
 from django.urls import reverse
-from allauth.account.utils import user_pk_to_url_str, user_username
+from allauth.account.forms import default_token_generator
 from allauth.account import app_settings
 from allauth.account.adapter import get_adapter
+from allauth.account.utils import user_pk_to_url_str, user_username
 
 
 class CustomAllAuthPasswordResetForm(AllAuthPasswordResetForm):

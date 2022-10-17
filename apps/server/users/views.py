@@ -1,4 +1,7 @@
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+from allauth.account.models import EmailAddress
+from allauth.account.utils import has_verified_email, send_email_confirmation
+from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.views import SocialLoginView
 from dj_rest_auth.social_serializers import TwitterLoginSerializer
 from dj_rest_auth.registration.serializers import VerifyEmailSerializer
@@ -6,6 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.exceptions import MethodNotAllowed
 from users.serializers import (
     DisplayProfileSerializer,
     ProfileSerializer,
@@ -13,15 +18,7 @@ from users.serializers import (
     UserEmailSerializer,
 )
 from users.models import Profile, UserStatus, User
-from rest_framework import status
-from rest_framework.exceptions import MethodNotAllowed
 from django.utils.translation import gettext_lazy as _
-from allauth.account.views import ConfirmEmailView
-from allauth.account.models import EmailAddress
-from allauth.account.utils import (
-    has_verified_email,
-    send_email_confirmation,
-)
 
 
 class VerifyEmailView(APIView, ConfirmEmailView):

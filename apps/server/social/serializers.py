@@ -1,7 +1,7 @@
 from users.models import Profile
+from users.validators import devType_validator, location_validator, purpose_validator
 from rest_framework import serializers
 from social.models import SocialProfile
-from users.validators import devType_validator, location_validator, purpose_validator
 from timezone_field.rest_framework import TimeZoneSerializerField
 
 
