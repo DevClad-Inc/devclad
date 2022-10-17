@@ -57,9 +57,7 @@ class TwitterLogin(SocialLoginView):
 @api_view(["GET", "PUT", "PATCH"])
 @permission_classes([IsAuthenticated])
 def profile(request) -> Response:
-    """
-    Determine if the user is authenticated and return their profile
-    """
+    """Determine if the user is authenticated and return their profile"""
     try:
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
@@ -92,9 +90,7 @@ def profile(request) -> Response:
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def user_profile(request, username) -> Response:
-    """
-    Determine if profile for username exists
-    """
+    """Determine if profile for username exists"""
     try:
         profile = Profile.objects.get(user__username=username)
     except Profile.DoesNotExist:
@@ -113,9 +109,7 @@ def user_profile(request, username) -> Response:
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def profile_is_complete(request) -> Response:
-    """
-    Determine if the user is authenticated and return their SocialProfile
-    """
+    """Determine if the user is authenticated and return their SocialProfile"""
     try:
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
@@ -137,9 +131,7 @@ def profile_is_complete(request) -> Response:
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def user_status(request) -> Response:
-    """
-    Determine if the user is authenticated and return their UserStatus
-    """
+    """Determine if the user is authenticated and return their UserStatus"""
     match request.method:
         case "GET":
             try:
