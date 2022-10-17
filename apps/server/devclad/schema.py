@@ -4,9 +4,6 @@ from graphene_django import DjangoObjectType
 import graphql_jwt
 
 from django.contrib.auth import get_user_model
-from stream.models import StreamUser
-from social.models import SocialProfile
-from users.models import Profile, UserStatus
 
 User = get_user_model()
 
