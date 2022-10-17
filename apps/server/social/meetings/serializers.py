@@ -64,5 +64,4 @@ class MeetingSerializer(serializers.ModelSerializer):
         TYPES = ["Catch up 1:1", "1:1 Match"]
         if value in TYPES:
             return value
-        else:
-            raise serializers.ValidationError("Invalid meeting type")
+        raise serializers.ValidationError("Invalid meeting type")

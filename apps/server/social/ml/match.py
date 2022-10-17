@@ -189,5 +189,4 @@ def get_one_one_match(user, number_of_matches_to_make=1):
         user_list.append(user)
     if indirect_matching:
         return [indirect_all_profiles[nbr][0] for nbr in nbrs[0]]
-    else:
-        return [all_profiles[nbr][0] for nbr in nbrs[0]]
+    return [all_profiles[nbr][0] for nbr in nbrs[0]]

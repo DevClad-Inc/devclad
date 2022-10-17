@@ -342,7 +342,7 @@ def shadow(request: Request) -> Response:
                     user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot shadow self"}, status=400)
-                    elif (
+                    if (
                         user_profile not in request_user_profile.matches_this_week.all()
                     ):
                         return Response(
@@ -396,7 +396,7 @@ def skip(request: Request) -> Response:
                     user_profile = SocialProfile.objects.get(user__id=id)
                     if user_profile == request_user_profile:
                         return Response({"error": "Cannot skip self"}, status=400)
-                    elif (
+                    if (
                         user_profile not in request_user_profile.matches_this_week.all()
                     ):
                         return Response(
@@ -404,7 +404,7 @@ def skip(request: Request) -> Response:
                             status=400,
                         )
                     # this won't happen but this is fail safe for users trying to use the API directly
-                    elif user_profile in request_user_profile.shadowed.all():
+                    if user_profile in request_user_profile.shadowed.all():
                         return Response(
                             {"error": "Cannot skip a shadowed user"}, status=400
                         )
