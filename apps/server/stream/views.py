@@ -16,9 +16,7 @@ import datetime
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def token(request):
-    """
-    Generate a token for a user/ upsert a user
-    """
+    """Generate a token for a user/ upsert a user"""
     match request.method:
         case "GET":
             try:

@@ -15,9 +15,7 @@ User = get_user_model()
 
 # substantial ML functionality lifted from connectdome's existing codebase and modified
 def transform_variables_profile(social_profile):
-    """
-    Transforms the variables so that they work well on knn for 1:1
-    """
+    """Transforms the variables so that they work well on knn for 1:1"""
     # idea_status
     idea = 0
     if social_profile[1] is None or social_profile[1] == "Open to exploring ideas.":
