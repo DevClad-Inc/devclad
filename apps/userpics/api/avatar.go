@@ -76,7 +76,7 @@ func FetchBoring(params BoringParams, base_url string) string {
 	return base_url
 }
 
-func StreamBoringPic(w http.ResponseWriter, r *http.Request, url string) int64 {
+func StreamBoringPic(w http.ResponseWriter, _ *http.Request, url string) int64 {
 	// download the image
 	resp, err := http.Get(url)
 	if err != nil {
