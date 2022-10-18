@@ -24,8 +24,8 @@ export const verifyEmail = async (key: string) => {
 export const passwordReset = async (
 	password1: string,
 	password2: string,
-	uid?: string,
-	token?: string
+	uid: string,
+	token: string
 ) => {
 	const url = `${API_URL}/auth/password/reset/confirm/`;
 	const response = await axios.post(
@@ -162,6 +162,7 @@ export async function getUser() {
 	let isVerified = false;
 	if (token) {
 		isVerified = await verifyToken(token);
+		console.log(Cookies.get('devclad-auth'));
 	}
 	if (isVerified) {
 		return axios
@@ -223,9 +224,9 @@ export async function logIn(email: string, password: string) {
 			email,
 			password,
 			headers,
-			credentials: 'same-origin',
+			credentials: 'include',
 		})
-		.then((resp) => {
+		.then(async (resp) => {
 			Cookies.set('token', resp.data.access_token, {
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
@@ -235,7 +236,9 @@ export async function logIn(email: string, password: string) {
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
 			});
+			window.location.href = `${API_URL}/auth-redirect/?token=${resp.data.access_token}&refresh=${resp.data.refresh_token}`;
 		});
+
 	return response;
 }
 
@@ -250,10 +253,11 @@ export async function logOut() {
 				headers,
 				credentials: 'same-origin',
 			})
-			.then(() => {
-				delMany(['loggedInUser', 'profile']);
-				Cookies.remove('token');
-				Cookies.remove('refresh');
+			.then(async () => {
+				await delMany(['loggedInUser', 'profile']).then(() => {
+					Cookies.remove('token');
+					Cookies.remove('refresh');
+				});
 			})
 			.catch(() => null);
 		return response;

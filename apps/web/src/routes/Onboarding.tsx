@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLoaderData } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
@@ -8,7 +8,7 @@ import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
-import { logOut } from '@/services/auth.services';
+import { API_URL, logOut } from '@/services/auth.services';
 import { UserStatus, initialUserStatus, initialUserState, User } from '@/lib/InterfacesStates.lib';
 import {
 	checkProfileEmpty,
@@ -110,7 +110,7 @@ export function StepTwo() {
 								userStatus.status !== 'Submitted'
 							) {
 								await setSubmittedStatus()
-									.then(async () => {
+									?.then(async () => {
 										toast.custom(<Success success="Submitted request!" />);
 										await qc.refetchQueries(['userStatus']);
 									})
@@ -132,10 +132,9 @@ export function StepTwo() {
 
 export function Onboarding() {
 	useDocumentTitle('Onboarding');
-	const navigate = useNavigate();
 	const handlelogOut = async () => {
 		await logOut().then(() => {
-			navigate('/login');
+			window.location.href = `${API_URL}/logout-redirect/`;
 		});
 	};
 	let loggedInUser: User = { ...initialUserState };
