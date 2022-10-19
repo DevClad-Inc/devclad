@@ -139,7 +139,7 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 				.sort()
 				.join(', ');
 			setSubmitting(true);
-			await updateSocialProfile(values, spData).then(async () => {
+			await updateSocialProfile(values, spData)?.then(async () => {
 				setSubmitting(false);
 				await qc.invalidateQueries();
 				toast.custom(<Success success="Preferences updated successfully" />, {
@@ -966,7 +966,7 @@ export function AdditionalSPForm() {
 
 	const handleSubmit = async (values: AdditionalSP) => {
 		await updateAdditionalSP(values)
-			.then(async () => {
+			?.then(async () => {
 				toast.custom(<Success success="Preferences saved successfully" />, {
 					id: 'ad-prefs-success',
 					duration: 3000,

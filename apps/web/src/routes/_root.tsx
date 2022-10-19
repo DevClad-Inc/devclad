@@ -70,6 +70,13 @@ export default function Root(): JSX.Element {
 			document.getElementById('body')?.classList.add('bg-black');
 		}
 	}, [darkMode]);
+	// const initialData = useLoaderData() as Awaited<
+	// 	ReturnType<ReturnType<typeof initialDataLoader>>
+	// >;
+	// React.useEffect(() => {
+	// 	qc.setQueryData(['initialData'], initialData);
+	// 	console.log('initialData', initialData);
+	// }, [initialData, qc]);
 	return (
 		<div style={{ backgroundImage: `url(${GraphTextureSVG})` }}>
 			<div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>

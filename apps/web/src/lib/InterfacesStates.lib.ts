@@ -177,3 +177,8 @@ export interface Meeting extends MeetingCreateUpdate {
 	attended: boolean;
 	organizer: string | number; // username when fetching all meetings, id when fetching individual meeting
 }
+
+export interface InitialData {
+	token: string;
+	refresh: string;
+}

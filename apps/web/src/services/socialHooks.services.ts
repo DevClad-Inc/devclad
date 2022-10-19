@@ -61,7 +61,7 @@ export const useSkippedUsernames = () => {
 	return { usernames };
 };
 
-export const useCircleUsernames = () => {
+export const useCircle = () => {
 	const { loggedInUser } = useAuth();
 	const username = loggedInUser?.username;
 	const usernames = [];
@@ -159,7 +159,7 @@ export const useAdditionalSP = () => {
 
 export const useConnected = (otherUser: string): boolean => {
 	const [connected, setConnected] = React.useState(false);
-	const circle = useCircleUsernames();
+	const circle = useCircle();
 	const { usernames } = circle;
 	if (usernames !== undefined) {
 		if (usernames.includes(otherUser) && !connected) {

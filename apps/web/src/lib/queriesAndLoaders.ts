@@ -36,6 +36,15 @@ export const streamUIDQuery = (username: string) => ({
 	refetchOnWindowFocus: false,
 });
 
+// export const initialDataQuery = () => ({
+// 	queryKey: ['initialData'],
+// 	queryFn: () => getInitialData(),
+// 	// keep fresh forever
+// 	staleTime: 1000 * 60 * 60 * 365,
+// 	cacheTime: 1000 * 60 * 60 * 365,
+// 	refetchOnWindowFocus: false,
+// });
+
 export const meetingQuery = (uid: string) => ({
 	queryKey: ['meeting', uid],
 	queryFn: () => getMeeting(uid),
@@ -114,6 +123,11 @@ export const userSkippedQuery = () => ({
 // profileempty and socialempty query are only used in Onboarding
 // verified query is only used in ChangeEmail
 // so not making a reusable query for them
+
+// export const initialDataLoader = (qc: QueryClient) => async () => {
+// 	const query = initialDataQuery();
+// 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+// };
 
 export const userLoader = (qc: QueryClient) => async () =>
 	qc.getQueryData(userQuery().queryKey) ?? (await qc.fetchQuery(userQuery()));

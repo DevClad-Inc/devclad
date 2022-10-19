@@ -13,12 +13,11 @@ import toast from 'react-hot-toast';
 import { useDocumentTitle } from '@devclad/lib';
 import { badge, PrimaryButton } from '@/lib/Buttons.lib';
 import {
-	useCircleUsernames,
+	useCircle,
 	useOneOneProfile,
 	useConnected,
 	useBlocked,
 	useBlockedUsernames,
-	useAdded,
 } from '@/services/socialHooks.services';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
@@ -49,10 +48,9 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 	const { loggedInUser } = useAuth();
 	const loggedInUserUserName = loggedInUser.username;
 	const connected = useConnected(username);
-	const added = useAdded(username);
 	const blocked = useBlocked(username);
 	// logged in username and connection check
-	const { usernames: circle } = useCircleUsernames();
+	const { usernames: circle } = useCircle();
 	const { usernames: blockedUsers } = useBlockedUsernames();
 
 	if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
@@ -60,13 +58,12 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 	}
 	const handleAdd = async () => {
 		await patchCircle(username, circle, 'add')
-			.then(async () => {
+			?.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
 					id: 'connect-profile-success',
 					duration: 3000,
 				});
 				await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
-				await qc.invalidateQueries(['circle', username]);
 			})
 			.catch(() => {
 				toast.custom(<Error error="User not in matches this week." />, {
@@ -75,28 +72,30 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 				});
 			});
 	};
+
+	const handleDisconnect = async () => {
+		await patchCircle(username, circle, 'remove')
+			?.then(async () => {
+				toast.custom(<Success success="Removed from circle" />, {
+					id: 'disconnect-profile-success',
+					duration: 3000,
+				});
+				await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
+			})
+			.catch(() => {
+				toast.custom(<Error error="Something went wrong." />, {
+					id: 'error-disconnect-profile',
+					duration: 5000,
+				});
+			});
+	};
+
 	const connectedOnlyItems = [
 		{
 			name: 'Disconnect',
 			icon: XMarkIcon,
 			alt: 'Disconnect',
-			onClick: async () => {
-				await patchCircle(username, circle, 'remove')
-					.then(async () => {
-						toast.custom(<Success success="Disconnected successfully" />, {
-							id: 'disconnect-profile-success',
-							duration: 3000,
-						});
-						await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
-						await qc.invalidateQueries(['circle', username]);
-					})
-					.catch(() => {
-						toast.custom(<Error error="Something went wrong." />, {
-							id: 'error-disconnect-profile',
-							duration: 5000,
-						});
-					});
-			},
+			onClick: handleDisconnect,
 		},
 	];
 	let dropdownItems = [
@@ -106,7 +105,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 			alt: 'Block',
 			onClick: async () => {
 				await blockUser(username, blockedUsers, 'block')
-					.then(async () => {
+					?.then(async () => {
 						toast.custom(<Success success="Blocked user successfully" />, {
 							id: 'block-profile-success',
 							duration: 3000,
@@ -127,9 +126,6 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 		case connected:
 			dropdownItems = [...connectedOnlyItems, ...dropdownItems];
 			break;
-		case added && loggedInUserUserName !== username:
-			dropdownItems = [...connectedOnlyItems];
-			break;
 		case blocked && loggedInUserUserName !== username:
 			dropdownItems = [
 				{
@@ -138,7 +134,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 					alt: 'Unblock',
 					onClick: async () => {
 						await blockUser(username, blockedUsers, 'unblock')
-							.then(async () => {
+							?.then(async () => {
 								toast.custom(<Success success="Unblocked user successfully" />, {
 									id: 'unblock-profile-success',
 									duration: 3000,

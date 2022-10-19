@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { NewUser } from '@/lib/InterfacesStates.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
+export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
 
 const headers = {
 	'Content-Type': 'application/json',
@@ -127,12 +128,12 @@ export function verifyToken(token: string): Promise<boolean> {
 
 export function refreshToken() {
 	const url = `${API_URL}/auth/token/refresh/`;
-	const token = Cookies.get('token');
+	const refresh = Cookies.get('refresh');
 	return axios
 		.post(url, {
 			refresh: Cookies.get('refresh'),
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${refresh}`,
 			},
 			credentials: 'same-origin',
 		})
@@ -162,7 +163,6 @@ export async function getUser() {
 	let isVerified = false;
 	if (token) {
 		isVerified = await verifyToken(token);
-		console.log(Cookies.get('devclad-auth'));
 	}
 	if (isVerified) {
 		return axios
@@ -237,7 +237,8 @@ export async function logIn(email: string, password: string) {
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
 			});
 			window.location.href = `${API_URL}/auth-redirect/?token=${resp.data.access_token}&refresh=${resp.data.refresh_token}`;
-		});
+		})
+		.catch((err) => err);
 
 	return response;
 }

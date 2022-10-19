@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
 import { greenString, redString, warningString, badge, PrimaryButton } from '@/lib/Buttons.lib';
 import {
-	useCircleUsernames,
+	useCircle,
 	useOneOneProfile,
 	useOneOneUsernames,
 	useSkippedUsernames,
@@ -39,7 +39,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	// logged in username and connection check
 	const { usernames: skippedUsers } = useSkippedUsernames();
 	const { usernames: shadowedUsers } = useShadowedUsernames();
-	const { usernames: circle } = useCircleUsernames();
+	const { usernames: circle } = useCircle();
 
 	const [open, setOpen] = React.useState(false);
 	const [action, setAction] = React.useState('');
@@ -47,7 +47,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 
 	const handleAdd = async () => {
 		await patchCircle(username, circle, 'add')
-			.then(async () => {
+			?.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
 					id: 'connect-profile-success',
 					duration: 3000,
@@ -65,7 +65,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 
 	const handleSkip = async () => {
 		await skipUser(username, skippedUsers, true)
-			.then(async () => {
+			?.then(async () => {
 				toast.custom(<Success success="Skipped successfully" />, {
 					id: 'skip-profile-success',
 					duration: 3000,
@@ -83,7 +83,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 
 	const handleShadow = async () => {
 		await shadowUser(username, shadowedUsers, true)
-			.then(async () => {
+			?.then(async () => {
 				toast.custom(<Success success="Shadowed successfully" />, {
 					id: 'shadow-profile-success',
 					duration: 3000,

@@ -226,10 +226,6 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     "withCredentials",
 ]
 
-JWT_AUTH_COOKIE = "devclad-auth"
-JWT_AUTH_REFRESH_COOKIE = "devclad-refresh"
-
-
 UPLOADED_FILES_USE_URL = True
 
 # ===== EMAIL =====

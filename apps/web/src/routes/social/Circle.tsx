@@ -10,11 +10,7 @@ import { useDocumentTitle } from '@devclad/lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
-import {
-	useCircleUsernames,
-	useOneOneProfile,
-	useConnected,
-} from '@/services/socialHooks.services';
+import { useCircle, useOneOneProfile, useConnected } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 
 function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
@@ -117,7 +113,7 @@ export default function Circle(): JSX.Element {
 	const qc = useQueryClient();
 	const { loggedInUser } = useAuth();
 	const loggedInUserUserName = loggedInUser.username;
-	const { usernames } = useCircleUsernames();
+	const { usernames } = useCircle();
 	const state = qc.getQueryState(['circle', loggedInUserUserName as string]);
 	return (
 		<>

@@ -49,7 +49,7 @@ export default function ChangeEmailForm(): JSX.Element {
 		setSubmitting(true);
 		const { email } = values;
 		await changeEmail(email)
-			.then(async () => {
+			?.then(async () => {
 				await qc.invalidateQueries(['user']);
 				await qc.invalidateQueries(['verified']);
 				toast.custom(<Success success="Verification Email Sent." />, {
