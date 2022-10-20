@@ -8,6 +8,7 @@ export default {
 		};
 
 		function handleOptions(req: Request) {
+			console.log(req.headers);
 			if (
 				req.headers.get('Origin') !== null &&
 				req.headers.get('Access-Control-Request-Method') !== null &&
@@ -41,12 +42,12 @@ export default {
 			return null;
 		};
 
-		// const DOMAIN = 'https://auth.devclad.com';
+		const DOMAIN = 'https://auth.devclad.com';
 		const { pathname } = new URL(request.url);
 
 		switch (pathname) {
-			case '/__auth__/setCookie': {
-				if (request.method !== 'GET' && request.method !== 'OPTIONS') {
+			case '/setCookie/accessToken/': {
+				if (request.method !== 'POST' && request.method !== 'OPTIONS') {
 					return new Response(
 						JSON.stringify({ message: 'Invalid request method' }, null, 2),
 						{
@@ -56,29 +57,53 @@ export default {
 						}
 					);
 				}
-				const { searchParams } = new URL(request.url);
-				const accessToken = searchParams.get('accessToken');
-				if (!accessToken) {
-					return new Response(
-						JSON.stringify({ message: 'Missing accessToken' }, null, 2),
-						{ headers: { 'Content-Type': 'application/json' }, status: 400 }
-					);
-				}
-				const cookieString = request.headers.get('set-cookie') as string;
-				const accessCookie = `accessToken=${accessToken}; Path=/; SameSite=None; secure; domain=.devclad.com`;
-				const payload = {
-					accessToken,
-					accessCookie: getCookie(cookieString, 'accessToken'),
-					message: 'Cookie set',
-				};
-				const response = new Response(JSON.stringify(payload, null, 2), {
-					headers: { 'Content-Type': 'application/json' },
-				});
+				const { accessToken } = (await request.json()) as { accessToken: string };
+				const accessCookie = `accessToken=${accessToken}; Max-Age=3600; Path=/; SameSite=None; HttpOnly`;
+				const response = new Response(
+					JSON.stringify(
+						{
+							message: 'Refresh token set',
+							fetchURL: `${DOMAIN}/getCookie/?key=accessToken`,
+						},
+						null,
+						2
+					)
+				);
 				response.headers.set('Set-Cookie', accessCookie);
 				response.headers.set('Access-Control-Allow-Origin', '*');
 				return response;
 			}
-			case '/__auth__/getCookie': {
+			case '/setCookie/refreshToken/': {
+				if (request.method !== 'POST' && request.method !== 'OPTIONS') {
+					return new Response(
+						JSON.stringify({ message: 'Invalid request method' }, null, 2),
+						{
+							headers: { 'Content-Type': 'application/json' },
+							status: 405,
+							statusText: 'Method Not Allowed',
+						}
+					);
+				}
+				const { refreshToken } = (await request.json()) as { refreshToken: string };
+				const refreshCookie = `refreshToken=${refreshToken}; Max-Age=86400; Path=/; SameSite=Lax; HttpOnly`;
+				return new Response(
+					JSON.stringify(
+						{
+							message: 'Refresh token set',
+							fetchURL: `${DOMAIN}/getCookie/?key=refreshToken`,
+						},
+						null,
+						2
+					),
+					{
+						headers: {
+							'Set-Cookie': refreshCookie,
+							'Content-Type': 'application/json',
+						},
+					}
+				);
+			}
+			case '/getCookie': {
 				if (request.method !== 'GET' && request.method !== 'OPTIONS') {
 					return new Response(
 						JSON.stringify({ message: 'Invalid request method' }, null, 2),
@@ -110,7 +135,6 @@ export default {
 						{ headers: { 'Content-Type': 'application/json' } }
 					);
 					response.headers.set('Access-Control-Allow-Origin', '*');
-					return response;
 				}
 				break;
 			}
