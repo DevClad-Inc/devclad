@@ -84,9 +84,13 @@ export async function invalidateAndStoreIDB(qc: QueryClient, key: string) {
 	await qc.refetchQueries([key]);
 	if (key === 'user') {
 		const cacheUserData = qc.getQueryData([key]) as { data: User };
-		getsetIndexedDB<User>('loggedInUser', 'set', cacheUserData.data);
+		if (cacheUserData) {
+			getsetIndexedDB<User>('loggedInUser', 'set', cacheUserData.data);
+		}
 	} else if (key === 'profile') {
 		const cacheProfileData = qc.getQueryData([key]) as { data: Profile };
-		getsetIndexedDB<Profile>('profile', 'set', cacheProfileData.data);
+		if (cacheProfileData) {
+			getsetIndexedDB<Profile>('profile', 'set', cacheProfileData.data);
+		}
 	}
 }

@@ -236,10 +236,7 @@ export async function logIn(email: string, password: string) {
 				sameSite: 'strict',
 				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
 			});
-			window.location.href = `${API_URL}/auth-redirect/?token=${resp.data.access_token}&refresh=${resp.data.refresh_token}`;
-		})
-		.catch((err) => err);
-
+		});
 	return response;
 }
 

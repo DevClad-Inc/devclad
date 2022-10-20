@@ -18,6 +18,7 @@ import Home from '@/routes/Home';
 import { socialProfileLoader } from '@/lib/queriesAndLoaders';
 import Login from '@/routes/Login';
 import Signup from '@/routes/Signup';
+import FourOFour from '@/routes/404';
 import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
 // SOCIAL
 import Social from '@/routes/social/Social';
@@ -172,6 +173,10 @@ const router = createBrowserRouter([
 				],
 			},
 		],
+	},
+	{
+		path: '*',
+		element: <FourOFour />,
 	},
 ]);
 
