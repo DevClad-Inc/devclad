@@ -60,7 +60,7 @@ export async function updateProfileAvatar(avatar: File) {
 	const token = await serverlessCookie<string>('token');
 	const formData = new FormData();
 	formData.append('avatar', avatar);
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -76,7 +76,7 @@ export async function updateProfileAvatar(avatar: File) {
 export async function getSocialProfile() {
 	const url = `${API_URL}/social/profile/`;
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -91,7 +91,7 @@ export async function getSocialProfile() {
 export async function getUsernameSocialProfile(username: string) {
 	const url = `${API_URL}/social/profile/${username}/`;
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -143,7 +143,7 @@ export async function updateSocialProfile(values: SocialProfile, socialProfileDa
 export async function getAdditionalSP() {
 	const url = `${API_URL}/social/additional-prefs/`;
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -156,7 +156,7 @@ export async function getAdditionalSP() {
 export async function updateAdditionalSP(values: AdditionalSP) {
 	const { video_call_friendly, available_always_off } = values;
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url: `${API_URL}/social/additional-prefs/`,
@@ -175,7 +175,7 @@ export async function updateAdditionalSP(values: AdditionalSP) {
 export async function checkProfileEmpty() {
 	const url = `${API_URL}/users/is-complete/`;
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -190,7 +190,7 @@ export async function checkProfileEmpty() {
 export async function checkSocialProfileEmpty() {
 	const url = `${API_URL}/social/is-complete/`;
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -226,7 +226,7 @@ export const getStatus = async (token: string | undefined) => {
 export const setSubmittedStatus = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/users/status/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -242,7 +242,7 @@ export const setSubmittedStatus = async () => {
 export const getOneOne = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/one-one/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -259,7 +259,7 @@ export const getOneOne = async () => {
 export const getShadowUsers = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/shadow/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -285,7 +285,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
 			shadowed.splice(index, 1);
 		}
 	}
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -299,7 +299,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
 export const getSkippedUsers = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/skipped/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -327,7 +327,7 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
 			skipped.splice(index, 1);
 		}
 	}
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -342,7 +342,7 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
 export const getAdded = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/added/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -359,7 +359,7 @@ export const getAdded = async () => {
 export const getCircle = async (username: string) => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/circle/${username}/get/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -394,7 +394,7 @@ export const patchCircle = async (
 		}
 	}
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -412,7 +412,7 @@ export const patchCircle = async (
 export const getBlockedUsers = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/block/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -441,7 +441,7 @@ export const blockUser = async (
 		}
 	}
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,

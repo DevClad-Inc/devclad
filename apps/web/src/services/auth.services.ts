@@ -82,7 +82,7 @@ export const passwordChange = async (
 export const changeEmail = async (email: string) => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/users/change-email/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -100,7 +100,7 @@ export const changeEmail = async (email: string) => {
 export const checkVerified = async () => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/users/change-email/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -199,7 +199,7 @@ export async function getUser(token: string): Promise<AxiosResponse<User> | null
 
 export async function updateUser(first_name?: string, last_name?: string, username?: string) {
 	const token = await serverlessCookie<string>('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios.patch(
 			`${API_URL}/auth/user/`,
 			{ first_name, last_name, username },

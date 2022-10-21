@@ -42,7 +42,8 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 				setLoginError(false);
 			}
 			if (token) {
-				await getUser(token || '') // type is checked in checkTokenType within getUser, dw
+				// only exception to checkTokenType; type is checked in checkTokenType within getUser tho
+				await getUser(token || '')
 					?.then(() => {
 						invalidateAndStoreIDB(qc, 'user');
 						qc.refetchQueries();
