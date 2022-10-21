@@ -22,7 +22,9 @@ export function StreamProvider({ children }: StreamProviderProps) {
 	const client = StreamChat.getInstance(import.meta.env.VITE_STREAM_API_KEY as string);
 	const [connected, setConnected] = React.useState(false);
 	const { loggedInUser, streamToken } = useAuth();
-	const profileData = useProfile(loggedInUser.username as string) as Profile;
+	const profileData = useProfile(
+		loggedInUser.username !== undefined ? loggedInUser.username : ''
+	) as Profile;
 
 	if (loggedInUser && streamToken && !connected) {
 		const connect = async () => {

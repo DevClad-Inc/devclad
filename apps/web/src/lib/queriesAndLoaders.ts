@@ -1,4 +1,3 @@
-// import { QueryClient } from '@tanstack/react-query';
 import { QueryClient } from '@tanstack/react-query';
 import { getUser } from '@/services/auth.services';
 import {
@@ -40,17 +39,13 @@ export const streamUIDQuery = (username: string) => ({
 export const tokenQuery = () => ({
 	queryKey: ['token'],
 	queryFn: () => serverlessCookie<string>('token'),
-	placeholderData: '',
 	staleTime: 1000 * 60 * 60 * 12, // 12 hours
-	refetchOnWindowFocus: true, // explicitly stating for clarity
 });
 
 export const refreshQuery = () => ({
 	queryKey: ['refresh'],
 	queryFn: () => serverlessCookie<string>('refresh'),
-	placeholderData: '',
 	staleTime: 1000 * 60 * 60 * 24 * 14, // 14 days
-	refetchOnWindowFocus: true, // explicitly stating for clarity
 });
 
 export const meetingQuery = (uid: string) => ({
@@ -61,16 +56,16 @@ export const meetingQuery = (uid: string) => ({
 	refetchOnWindowFocus: false,
 });
 
-export const userQuery = (token: string | undefined) => ({
+export const userQuery = (token: string) => ({
 	queryKey: ['user'],
 	queryFn: () => getUser(token),
-	enabled: token !== undefined,
+	enabled: Boolean(token),
 });
 
-export const profileQuery = (token: string | undefined) => ({
+export const profileQuery = (token: string) => ({
 	queryKey: ['profile'],
 	queryFn: () => getProfile(token),
-	enabled: token !== undefined,
+	enabled: Boolean(token),
 });
 
 export const socialProfileQuery = () => ({
@@ -83,7 +78,7 @@ export const additionalSPQuery = () => ({
 	queryFn: () => getAdditionalSP(),
 });
 
-export const statusQuery = (token: string | undefined) => ({
+export const statusQuery = (token: string) => ({
 	queryKey: ['userStatus'],
 	queryFn: () => getStatus(token),
 });

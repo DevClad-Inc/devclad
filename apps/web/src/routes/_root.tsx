@@ -38,7 +38,7 @@ function Routing(): JSX.Element {
 	}, [qc, authed, token, refresh]);
 
 	// UNAUTHED
-	if (qc.getQueryData(['user']) === null) {
+	if (qc.getQueryData(['user']) === (null || undefined)) {
 		if (!allowedPaths.includes(pathname)) {
 			return <Navigate to="/login" />;
 		}

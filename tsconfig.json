@@ -11,9 +11,6 @@
 			"path": "apps/userpics"
 		},
 		{
-			"path": "apps/auth"
-		},
-		{
 			"path": "packages/lib"
 		},
 		{

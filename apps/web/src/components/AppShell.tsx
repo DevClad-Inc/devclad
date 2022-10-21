@@ -52,7 +52,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
 	// user logic
 	const { loggedInUser } = useAuth();
-	const profileData = useProfile(loggedInUser.username as string) as Profile;
+	const profileData = useProfile(
+		loggedInUser.username !== undefined ? loggedInUser.username : ''
+	) as Profile;
 
 	// sidebar logic
 	const [sidebarExpand, setSidebarExpand] = React.useState(false);

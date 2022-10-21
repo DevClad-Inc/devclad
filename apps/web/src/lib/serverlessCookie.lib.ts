@@ -18,7 +18,7 @@ export default async function serverlessCookie<TState>(
 				secure,
 			},
 			headers: { 'Content-Type': 'application/json' },
-		}).then((response) => response.data);
+		}).then((response) => response.data.value);
 	}
 	return axios({
 		method: 'GET',
@@ -27,5 +27,7 @@ export default async function serverlessCookie<TState>(
 			key,
 		},
 		headers: { 'Content-Type': 'application/json' },
-	}).then((response) => response.data.value);
+	})
+		.then((response) => response.data.value)
+		.catch(() => null);
 }

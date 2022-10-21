@@ -15,7 +15,9 @@ import { useProfile } from '@/services/socialHooks.services';
 export default function UpdateProfileForm(): JSX.Element {
 	const qc = useQueryClient();
 	const { loggedInUser } = useAuth();
-	const profileData = useProfile(loggedInUser.username as string) as Profile;
+	const profileData = useProfile(
+		loggedInUser.username !== undefined ? loggedInUser.username : ''
+	) as Profile;
 	const validate = (values: UpdateProfileFormValues) => {
 		const errors: UpdateProfileFormValues['errors'] = {};
 		// ABOUT
@@ -245,7 +247,9 @@ export function AvatarUploadForm() {
 	const { darkMode } = useContext(ThemeContext);
 	const qc = useQueryClient();
 	const { loggedInUser } = useAuth();
-	const profileData = useProfile(loggedInUser.username as string) as Profile;
+	const profileData = useProfile(
+		loggedInUser.username !== undefined ? loggedInUser.username : ''
+	) as Profile;
 	if (qc.getQueryState(['profile', loggedInUser.username as string])?.status === 'loading') {
 		return <ProfileLoading />;
 	}

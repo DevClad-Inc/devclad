@@ -4,6 +4,7 @@ import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import { NewUser } from '@/lib/InterfacesStates.lib';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
+import { tokenQuery } from '@/lib/queriesAndLoaders';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
@@ -158,10 +159,10 @@ export function refreshToken() {
 	// });
 }
 
-export async function getUser(token: string | undefined) {
+export async function getUser(token: string) {
 	const url = `${API_URL}/auth/user/`;
 	let isVerified = false;
-	if (token !== undefined && token !== '') {
+	if (token !== '') {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {
@@ -174,7 +175,7 @@ export async function getUser(token: string | undefined) {
 			.then((resp) => resp)
 			.catch(() => null);
 	}
-	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
+	if ((token === '' || !isVerified) && Cookies.get('refresh')) {
 		await refreshToken();
 	}
 	return null;
@@ -237,7 +238,7 @@ export async function logIn(email: string, password: string) {
 				sameSite: 'strict',
 				secure: !import.meta.env.VITE_DEVELOPMENT,
 			});
-			token = await serverlessCookie<string>('token');
+			token = qc.refetchQueries(tokenQuery().queryKey);
 		});
 	return { response, token };
 }
@@ -257,6 +258,7 @@ export async function logOut() {
 				await delMany(['loggedInUser', 'profile']).then(() => {
 					Cookies.remove('token');
 					Cookies.remove('refresh');
+					qc.invalidateQueries();
 				});
 			})
 			.catch(() => null);
