@@ -40,7 +40,7 @@ export function UserProvider({ children }: UserProviderProps) {
 	const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialUserState });
 	const { data: tokenData } = useQuery(tokenQuery());
 	const { data, isError, isSuccess } = useQuery({
-		...userQuery(tokenData !== undefined ? tokenData : ''),
+		...userQuery(tokenData || ''),
 		enabled: !!tokenData,
 	});
 	if (Object.values(loggedInUser).every((v) => v === undefined)) {
