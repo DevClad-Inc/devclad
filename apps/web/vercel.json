@@ -1,5 +1,5 @@
 {
-	"buildCommand": "vite build",
+	"buildCommand": "tsc && vite build",
 	"outputDirectory": "dist",
 	"installCommand": "yarn install",
 	"framework": "vite",
