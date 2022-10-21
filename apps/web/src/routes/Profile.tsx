@@ -45,7 +45,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', username]);
 	// logged in username and connection check
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const loggedInUserUserName = loggedInUser.username;
 	const connected = useConnected(username);
 	const blocked = useBlocked(username);
@@ -57,7 +57,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 		return <ProfileLoading />;
 	}
 	const handleAdd = async () => {
-		await patchCircle(username, circle, 'add')
+		await patchCircle(token, username, circle, 'add')
 			?.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
 					id: 'connect-profile-success',
@@ -74,7 +74,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 	};
 
 	const handleDisconnect = async () => {
-		await patchCircle(username, circle, 'remove')
+		await patchCircle(token, username, circle, 'remove')
 			?.then(async () => {
 				toast.custom(<Success success="Removed from circle" />, {
 					id: 'disconnect-profile-success',
@@ -104,7 +104,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 			icon: NoSymbolIcon,
 			alt: 'Block',
 			onClick: async () => {
-				await blockUser(username, blockedUsers, 'block')
+				await blockUser(token, username, blockedUsers, 'block')
 					?.then(async () => {
 						toast.custom(<Success success="Blocked user successfully" />, {
 							id: 'block-profile-success',
@@ -133,7 +133,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 					icon: NoSymbolIcon,
 					alt: 'Unblock',
 					onClick: async () => {
-						await blockUser(username, blockedUsers, 'unblock')
+						await blockUser(token, username, blockedUsers, 'unblock')
 							?.then(async () => {
 								toast.custom(<Success success="Unblocked user successfully" />, {
 									id: 'unblock-profile-success',

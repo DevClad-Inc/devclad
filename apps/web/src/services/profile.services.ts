@@ -3,7 +3,6 @@ import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
 import { refreshToken, API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
-import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export async function getProfile(
 	token: string,
@@ -22,10 +21,7 @@ export async function getProfile(
 				},
 			})
 			.then((resp) => resp)
-			.catch((error) => {
-				console.log(error);
-				return null;
-			});
+			.catch(() => null);
 	}
 	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
 		await refreshToken();
@@ -33,10 +29,9 @@ export async function getProfile(
 	return null;
 }
 
-export async function updateProfile(values: Profile, profileData: Profile) {
+export async function updateProfile(token: string, values: Profile, profileData: Profile) {
 	const { pronouns, about, website, linkedin, calendly } = values;
-	const token = await serverlessCookie<string>('token');
-	if (token && profileData) {
+	if (checkTokenType(token) && profileData) {
 		return axios({
 			method: 'PATCH',
 			url: `${API_URL}/users/profile/`,
@@ -55,9 +50,8 @@ export async function updateProfile(values: Profile, profileData: Profile) {
 	return null;
 }
 
-export async function updateProfileAvatar(avatar: File) {
+export async function updateProfileAvatar(token: string, avatar: File) {
 	const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
-	const token = await serverlessCookie<string>('token');
 	const formData = new FormData();
 	formData.append('avatar', avatar);
 	if (checkTokenType(token)) {
@@ -73,9 +67,8 @@ export async function updateProfileAvatar(avatar: File) {
 	return null;
 }
 
-export async function getSocialProfile() {
+export async function getSocialProfile(token: string) {
 	const url = `${API_URL}/social/profile/`;
-	const token = await serverlessCookie<string>('token');
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
@@ -88,9 +81,8 @@ export async function getSocialProfile() {
 	return null;
 }
 
-export async function getUsernameSocialProfile(username: string) {
+export async function getUsernameSocialProfile(token: string, username: string) {
 	const url = `${API_URL}/social/profile/${username}/`;
-	const token = await serverlessCookie<string>('token');
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
@@ -103,7 +95,11 @@ export async function getUsernameSocialProfile(username: string) {
 	return null;
 }
 
-export async function updateSocialProfile(values: SocialProfile, socialProfileData: SocialProfile) {
+export async function updateSocialProfile(
+	token: string,
+	values: SocialProfile,
+	socialProfileData: SocialProfile
+) {
 	const {
 		preferred_dev_type,
 		idea_status,
@@ -114,7 +110,6 @@ export async function updateSocialProfile(values: SocialProfile, socialProfileDa
 		location,
 		timezone,
 	} = values;
-	const token = await serverlessCookie<string>('token');
 	if (token && socialProfileData) {
 		return axios({
 			method: 'PATCH',
@@ -140,9 +135,8 @@ export async function updateSocialProfile(values: SocialProfile, socialProfileDa
 	return null;
 }
 
-export async function getAdditionalSP() {
+export async function getAdditionalSP(token: string) {
 	const url = `${API_URL}/social/additional-prefs/`;
-	const token = await serverlessCookie<string>('token');
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
@@ -153,9 +147,8 @@ export async function getAdditionalSP() {
 	return null;
 }
 
-export async function updateAdditionalSP(values: AdditionalSP) {
+export async function updateAdditionalSP(token: string, values: AdditionalSP) {
 	const { video_call_friendly, available_always_off } = values;
-	const token = await serverlessCookie<string>('token');
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
@@ -172,9 +165,8 @@ export async function updateAdditionalSP(values: AdditionalSP) {
 	return null;
 }
 
-export async function checkProfileEmpty() {
+export async function checkProfileEmpty(token: string) {
 	const url = `${API_URL}/users/is-complete/`;
-	const token = await serverlessCookie<string>('token');
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
@@ -187,9 +179,8 @@ export async function checkProfileEmpty() {
 	return null;
 }
 
-export async function checkSocialProfileEmpty() {
+export async function checkSocialProfileEmpty(token: string) {
 	const url = `${API_URL}/social/is-complete/`;
-	const token = await serverlessCookie<string>('token');
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
@@ -223,8 +214,7 @@ export const getStatus = async (token: string | undefined) => {
 	return null;
 };
 
-export const setSubmittedStatus = async () => {
-	const token = await serverlessCookie<string>('token');
+export const setSubmittedStatus = async (token: string) => {
 	const url = `${API_URL}/users/status/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -239,8 +229,7 @@ export const setSubmittedStatus = async () => {
 
 // =================== ONE-ONE ML ===================
 
-export const getOneOne = async () => {
-	const token = await serverlessCookie<string>('token');
+export const getOneOne = async (token: string) => {
 	const url = `${API_URL}/social/one-one/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -256,8 +245,7 @@ export const getOneOne = async () => {
 	return null;
 };
 
-export const getShadowUsers = async () => {
-	const token = await serverlessCookie<string>('token');
+export const getShadowUsers = async (token: string) => {
 	const url = `${API_URL}/social/shadow/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -273,8 +261,12 @@ export const getShadowUsers = async () => {
 	return null;
 };
 
-export const shadowUser = async (username: string, shadowed: string[], shadow: boolean) => {
-	const token = await serverlessCookie<string>('token');
+export const shadowUser = async (
+	token: string,
+	username: string,
+	shadowed: string[],
+	shadow: boolean
+) => {
 	const url = `${API_URL}/social/shadow/`;
 
 	if (shadow) {
@@ -296,8 +288,7 @@ export const shadowUser = async (username: string, shadowed: string[], shadow: b
 	return null;
 };
 
-export const getSkippedUsers = async () => {
-	const token = await serverlessCookie<string>('token');
+export const getSkippedUsers = async (token: string) => {
 	const url = `${API_URL}/social/skipped/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -313,8 +304,12 @@ export const getSkippedUsers = async () => {
 	return null;
 };
 
-export const skipUser = async (username: string, skipped: string[], skip: boolean) => {
-	const token = await serverlessCookie<string>('token');
+export const skipUser = async (
+	token: string,
+	username: string,
+	skipped: string[],
+	skip: boolean
+) => {
 	const url = `${API_URL}/social/skipped/`;
 
 	if (skip) {
@@ -339,8 +334,7 @@ export const skipUser = async (username: string, skipped: string[], skip: boolea
 };
 
 // =================== circle ===================
-export const getAdded = async () => {
-	const token = await serverlessCookie<string>('token');
+export const getAdded = async (token: string) => {
 	const url = `${API_URL}/social/added/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -356,8 +350,7 @@ export const getAdded = async () => {
 	return null;
 };
 
-export const getCircle = async (username: string) => {
-	const token = await serverlessCookie<string>('token');
+export const getCircle = async (token: string, username: string) => {
 	const url = `${API_URL}/social/circle/${username}/get/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -375,11 +368,11 @@ export const getCircle = async (username: string) => {
 
 // Add is only for One-One
 export const patchCircle = async (
+	token: string,
 	operationUsername: string,
 	circle: string[],
 	operation: string
 ) => {
-	const token = await serverlessCookie<string>('token');
 	let url = `${API_URL}/social/circle/`;
 	if (operation === 'add') {
 		url += `${operationUsername}/add/`;
@@ -409,8 +402,7 @@ export const patchCircle = async (
 	return null;
 };
 
-export const getBlockedUsers = async () => {
-	const token = await serverlessCookie<string>('token');
+export const getBlockedUsers = async (token: string) => {
 	const url = `${API_URL}/social/block/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -423,11 +415,11 @@ export const getBlockedUsers = async () => {
 };
 
 export const blockUser = async (
+	token: string,
 	operationUsername: string,
 	blocked: string[],
 	operation: string
 ) => {
-	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/block/`;
 
 	if (operation === 'block') {

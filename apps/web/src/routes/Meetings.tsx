@@ -3,9 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { meetingQuery } from '@/lib/queriesAndLoaders';
 import { Meeting } from '@/lib/InterfacesStates.lib';
+import { useAuth } from '@/services/useAuth.services';
 
 export function MeetingList(): JSX.Element {
-	const { data: meetingData, isLoading, isSuccess } = useQuery(meetingQuery('all'));
+	const { token } = useAuth();
+	const { data: meetingData, isLoading, isSuccess } = useQuery({ ...meetingQuery(token, 'all') });
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
@@ -30,7 +32,14 @@ export function MeetingList(): JSX.Element {
 }
 
 export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
-	const { data: meetingData, isLoading, isSuccess } = useQuery(meetingQuery(uid as string));
+	const { token } = useAuth();
+	const {
+		data: meetingData,
+		isLoading,
+		isSuccess,
+	} = useQuery({
+		...meetingQuery(token, uid as string),
+	});
 
 	if (isLoading) {
 		return <div>Loading...</div>;

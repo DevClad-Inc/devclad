@@ -14,7 +14,7 @@ import {
 	getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
-import { getMeeting } from '@/services/meetings.services';
+import { getMeeting, idTypeCheck } from '@/services/meetings.services';
 import serverlessCookie from './serverlessCookie.lib';
 
 // ! only using social profile loader rn
@@ -47,12 +47,13 @@ export const refreshQuery = () => ({
 	staleTime: 1000 * 60 * 10, // 10 minutes; sort of like a connection check
 });
 
-export const meetingQuery = (uid: string) => ({
+export const meetingQuery = (token: string, uid: string) => ({
 	queryKey: ['meeting', uid],
-	queryFn: () => getMeeting(uid),
+	queryFn: () => getMeeting(token, uid),
 	staleTime: 1000 * 60 * 5, // 5 minutes
 	cacheTime: 1000 * 60 * 5, // 5 minutes
 	refetchOnWindowFocus: false,
+	enabled: idTypeCheck(uid),
 });
 
 export const userQuery = (token: string) => ({
@@ -61,19 +62,20 @@ export const userQuery = (token: string) => ({
 	enabled: checkTokenType(token),
 });
 
-export const socialProfileQuery = () => ({
+export const socialProfileQuery = (token: string) => ({
 	queryKey: ['social-profile'],
-	queryFn: () => getSocialProfile(),
+	queryFn: () => getSocialProfile(token),
 });
 
-export const additionalSPQuery = () => ({
+export const additionalSPQuery = (token: string) => ({
 	queryKey: ['additional-sprefs'],
-	queryFn: () => getAdditionalSP(),
+	queryFn: () => getAdditionalSP(token),
 });
 
 export const statusQuery = (token: string) => ({
 	queryKey: ['userStatus'],
 	queryFn: () => getStatus(token),
+	enabled: checkTokenType(token),
 });
 
 export const profileQuery = (token: string, username: string) => ({
@@ -82,41 +84,42 @@ export const profileQuery = (token: string, username: string) => ({
 	enabled: Boolean(username) && username !== '',
 });
 
-export const socialProfileUsernameQuery = (username: string) => ({
+export const socialProfileUsernameQuery = (token: string, username: string) => ({
 	queryKey: ['social-profile', username],
-	queryFn: () => getUsernameSocialProfile(username),
+	queryFn: () => getUsernameSocialProfile(token, username),
+	enabled: Boolean(username) && username !== '' && checkTokenType(token),
 });
 
-export const userMatchesQuery = () => ({
+export const userMatchesQuery = (token: string) => ({
 	queryKey: ['matches'],
-	queryFn: () => getOneOne(),
+	queryFn: () => getOneOne(token),
 	staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
-export const userCircleQuery = (username: string) => ({
+export const userCircleQuery = (token: string, username: string) => ({
 	queryKey: ['circle', username],
-	enabled: Boolean(username),
-	queryFn: () => getCircle(username),
+	enabled: Boolean(username) && username !== '',
+	queryFn: () => getCircle(token, username),
 });
 
-export const userAddedQuery = () => ({
+export const userAddedQuery = (token: string) => ({
 	queryKey: ['added'],
-	queryFn: () => getAdded(),
+	queryFn: () => getAdded(token),
 });
 
-export const userBlockedQuery = () => ({
+export const userBlockedQuery = (token: string) => ({
 	queryKey: ['blocked'],
-	queryFn: () => getBlockedUsers(),
+	queryFn: () => getBlockedUsers(token),
 });
 
-export const userShadowedQuery = () => ({
+export const userShadowedQuery = (token: string) => ({
 	queryKey: ['shadowed'],
-	queryFn: () => getShadowUsers(),
+	queryFn: () => getShadowUsers(token),
 });
 
-export const userSkippedQuery = () => ({
+export const userSkippedQuery = (token: string) => ({
 	queryKey: ['skipped'],
-	queryFn: () => getSkippedUsers(),
+	queryFn: () => getSkippedUsers(token),
 });
 
 // profileempty and socialempty query are only used in Onboarding
@@ -128,23 +131,32 @@ export const userSkippedQuery = () => ({
 // 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 // };
 
-export const userLoader = (qc: QueryClient, token: string) => async () =>
-	qc.getQueryData(userQuery(token).queryKey) ?? (await qc.fetchQuery(userQuery(token)));
-
-export const socialProfileLoader = (qc: QueryClient) => async () => {
-	const query = socialProfileQuery();
+export const userLoader = (qc: QueryClient) => async () => {
+	const token = await serverlessCookie<string>('token');
+	const query = userQuery(token);
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
-export const statusLoader = (qc: QueryClient, token: string) => async () =>
-	qc.getQueryData(statusQuery(token).queryKey) ?? (await qc.fetchQuery(statusQuery(token)));
+export const socialProfileLoader = (qc: QueryClient) => async () => {
+	const token = await serverlessCookie<string>('token');
+	const query = socialProfileQuery(token);
+	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+};
 
-export const profileLoader = (qc: QueryClient, token: string) => async (username: string) => {
-	const query = profileQuery(username, token);
+export const statusLoader = (qc: QueryClient) => async () => {
+	const token = await serverlessCookie<string>('token');
+	const query = statusQuery(token);
+	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
+};
+
+export const profileLoader = (qc: QueryClient) => async (username: string) => {
+	const token = await serverlessCookie<string>('token');
+	const query = profileQuery(token, username);
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
 export const socialProfileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-	const query = socialProfileUsernameQuery(username);
+	const token = await serverlessCookie<string>('token');
+	const query = socialProfileUsernameQuery(token, username);
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };

@@ -8,7 +8,7 @@ import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
-import { logOut } from '@/services/auth.services';
+import { checkTokenType, logOut } from '@/services/auth.services';
 import {
 	checkProfileEmpty,
 	checkSocialProfileEmpty,
@@ -23,6 +23,7 @@ duration-500 rounded-md py-1 px-6 inline-flex justify-center text-md dark:text-o
 
 export function StepOne() {
 	const qc = useQueryClient();
+	const { token } = useAuth();
 	return (
 		<div className="max-w-prose">
 			<UpdateProfileForm />
@@ -32,7 +33,7 @@ export function StepOne() {
 					className={linkClassesString}
 					to="/onboarding/step-two"
 					onMouseEnter={() => {
-						qc.prefetchQuery(socialProfileQuery());
+						qc.prefetchQuery(socialProfileQuery(token));
 					}}
 				>
 					Proceed to Step 2
@@ -51,8 +52,17 @@ export function StepTwo() {
 		profile: boolean;
 		socialProfile: boolean;
 	} = { profile: false, socialProfile: false };
-	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty());
-	const socialEmptyQuery = useQuery(['social-profile-empty'], () => checkSocialProfileEmpty());
+	const { token } = useAuth();
+	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty(token), {
+		enabled: checkTokenType(token),
+	});
+	const socialEmptyQuery = useQuery(
+		['social-profile-empty'],
+		() => checkSocialProfileEmpty(token),
+		{
+			enabled: checkTokenType(token),
+		}
+	);
 	const { status } = useApproved();
 	if (profileEmptyQuery.isLoading || socialEmptyQuery.isLoading) {
 		return <ProfileLoading />;
@@ -103,7 +113,7 @@ export function StepTwo() {
 								checkEmpty.socialProfile &&
 								status !== 'Submitted'
 							) {
-								await setSubmittedStatus()
+								await setSubmittedStatus(token)
 									?.then(async () => {
 										toast.custom(<Success success="Submitted request!" />);
 										await qc.refetchQueries(['userStatus']);

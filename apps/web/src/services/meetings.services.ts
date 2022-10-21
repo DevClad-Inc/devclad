@@ -1,26 +1,17 @@
 import axios from 'axios';
 import { API_URL, checkTokenType } from '@/services/auth.services';
 import { Meeting } from '@/lib/InterfacesStates.lib';
-import serverlessCookie from '@/lib/serverlessCookie.lib';
 
-export const getMeetings = async (uid: string) => {
-	const token = await serverlessCookie<string>('token');
-	const url = `${API_URL}/social/meetings/${uid}/`; // either "all" or uid
-	if (checkTokenType(token)) {
-		return axios({
-			method: 'GET',
-			url,
-			headers: { Authorization: `Bearer ${token}` },
-		});
+export const idTypeCheck = (id: string | undefined | null) => {
+	if (typeof id === 'string' && id.length > 0 && id !== 'undefined' && id !== 'null') {
+		return true;
 	}
-	return null;
+	return false;
 };
 
-export const getMeeting = async (id: string) => {
-	const token = await serverlessCookie<string>('token');
+export const getMeeting = async (token: string, id: string) => {
 	const url = `${API_URL}/social/meetings/${id}/`;
-
-	if (checkTokenType(token)) {
+	if (checkTokenType(token) && idTypeCheck(id)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -30,8 +21,7 @@ export const getMeeting = async (id: string) => {
 	return null;
 };
 
-export const createUpdateMeeting = async (data: Meeting) => {
-	const token = await serverlessCookie<string>('token');
+export const createUpdateMeeting = async (token: string, data: Meeting) => {
 	const url = `${API_URL}/social/meetings/`;
 
 	if (checkTokenType(token)) {

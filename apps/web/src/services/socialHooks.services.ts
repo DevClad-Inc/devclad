@@ -31,8 +31,9 @@ export const useStreamUID = (username: string) => {
 };
 
 export const useOneOneUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const matchesQuery = useQuery(userMatchesQuery());
+	const matchesQuery = useQuery(userMatchesQuery(token));
 	if (matchesQuery.isSuccess && matchesQuery.data !== null) {
 		const { data } = matchesQuery.data;
 		for (let i = 0; i < data.matches_this_week.length; i += 1) {
@@ -43,8 +44,9 @@ export const useOneOneUsernames = () => {
 };
 
 export const useShadowedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const shadowedQuery = useQuery(userShadowedQuery());
+	const shadowedQuery = useQuery(userShadowedQuery(token));
 	if (shadowedQuery.isSuccess && shadowedQuery.data !== null) {
 		const { data } = shadowedQuery.data;
 		for (let i = 0; i < data.length; i += 1) {
@@ -55,8 +57,9 @@ export const useShadowedUsernames = () => {
 };
 
 export const useSkippedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const skippedQuery = useQuery(userSkippedQuery());
+	const skippedQuery = useQuery(userSkippedQuery(token));
 	if (skippedQuery.isSuccess && skippedQuery.data !== null) {
 		const { data } = skippedQuery.data;
 		for (let i = 0; i < data.length; i += 1) {
@@ -67,10 +70,10 @@ export const useSkippedUsernames = () => {
 };
 
 export const useCircle = () => {
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const { username } = loggedInUser;
 	const usernames = [];
-	const circleQuery = useQuery(userCircleQuery(username as string));
+	const circleQuery = useQuery(userCircleQuery(token, username as string));
 	if (circleQuery.isSuccess && circleQuery.data !== null) {
 		const { data } = circleQuery.data;
 		for (let i = 0; i < data.circle.length; i += 1) {
@@ -81,8 +84,9 @@ export const useCircle = () => {
 };
 
 export const useAddedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const addedQuery = useQuery(userAddedQuery());
+	const addedQuery = useQuery(userAddedQuery(token));
 	if (addedQuery.isSuccess && addedQuery.data !== null) {
 		const { data } = addedQuery.data;
 		for (let i = 0; i < data.added.length; i += 1) {
@@ -93,8 +97,9 @@ export const useAddedUsernames = () => {
 };
 
 export const useBlockedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const blockedQuery = useQuery(userBlockedQuery());
+	const blockedQuery = useQuery(userBlockedQuery(token));
 	if (blockedQuery.isSuccess && blockedQuery.data !== null) {
 		const { data } = blockedQuery.data;
 		for (let i = 0; i < data.blocked.length; i += 1) {
@@ -112,7 +117,7 @@ export const useOneOneProfile = (username: string) => {
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 	const spUsernameQuery = useQuery({
-		...socialProfileUsernameQuery(username),
+		...socialProfileUsernameQuery(token, username),
 		enabled: username !== '',
 		staleTime: 1000 * 5 * 60, // 5 minutes
 	});
@@ -130,8 +135,9 @@ export const useOneOneProfile = (username: string) => {
 };
 
 export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unknown | null }) => {
+	const { token } = useAuth();
 	const spQuery = useQuery({
-		...socialProfileQuery(),
+		...socialProfileQuery(token),
 		initialData: initialSocialData,
 	});
 	if (spQuery.isSuccess && spQuery.data !== null) {
@@ -156,7 +162,8 @@ export const useProfile = (username: string) => {
 };
 
 export const useAdditionalSP = () => {
-	const additionalSocialProfileQuery = useQuery(additionalSPQuery());
+	const { token } = useAuth();
+	const additionalSocialProfileQuery = useQuery(additionalSPQuery(token));
 	if (additionalSocialProfileQuery.isSuccess && additionalSocialProfileQuery.data !== null) {
 		const { data } = additionalSocialProfileQuery.data;
 		return data;

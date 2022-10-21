@@ -14,7 +14,7 @@ import { useProfile } from '@/services/socialHooks.services';
 
 export default function UpdateProfileForm(): JSX.Element {
 	const qc = useQueryClient();
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const profileData = useProfile(
 		loggedInUser.username !== undefined ? loggedInUser.username : ''
 	) as Profile;
@@ -54,7 +54,7 @@ export default function UpdateProfileForm(): JSX.Element {
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
 		setSubmitting(true);
-		await updateProfile(values, profileData)
+		await updateProfile(token, values, profileData)
 			?.then(() => {
 				setSubmitting(false);
 				invalidateAndStoreIDB(qc, 'profile');
@@ -246,7 +246,7 @@ const enableDropping = (event: React.DragEvent<HTMLDivElement>) => {
 export function AvatarUploadForm() {
 	const { darkMode } = useContext(ThemeContext);
 	const qc = useQueryClient();
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const profileData = useProfile(
 		loggedInUser.username !== undefined ? loggedInUser.username : ''
 	) as Profile;
@@ -264,7 +264,7 @@ export function AvatarUploadForm() {
 					color: darkMode ? '#f0abfc' : '#1f2937',
 				},
 			});
-			updateProfileAvatar(file)
+			updateProfileAvatar(token, file)
 				?.then(() => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);
@@ -282,7 +282,7 @@ export function AvatarUploadForm() {
 	const handleonChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const avatar = e.target.files && e.target.files[0];
 		if (avatar) {
-			updateProfileAvatar(avatar)
+			updateProfileAvatar(token, avatar)
 				?.then(() => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);

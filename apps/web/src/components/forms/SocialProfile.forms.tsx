@@ -19,6 +19,7 @@ import Purposes from '@/lib/list/Purpose.list.json';
 import { ProfileLoading } from '../LoadingStates';
 
 import { useAdditionalSP, useSocialProfile } from '@/services/socialHooks.services';
+import { useAuth } from '@/services/useAuth.services';
 
 export const devType = [
 	{ name: 'AI', id: 0 },
@@ -73,6 +74,7 @@ interface InitialSocialDataProps {
 
 export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps): JSX.Element {
 	const spData = useSocialProfile({ initialSocialData }) as SocialProfile;
+	const { token } = useAuth();
 
 	// ============= FORM value states for multi-selects =============
 
@@ -139,7 +141,7 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 				.sort()
 				.join(', ');
 			setSubmitting(true);
-			await updateSocialProfile(values, spData)?.then(async () => {
+			await updateSocialProfile(token, values, spData)?.then(async () => {
 				setSubmitting(false);
 				await qc.invalidateQueries();
 				toast.custom(<Success success="Preferences updated successfully" />, {
@@ -945,6 +947,7 @@ export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps)
 }
 
 export function AdditionalSPForm() {
+	const { token } = useAuth();
 	const profile = useAdditionalSP() as AdditionalSP;
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['additional-sprefs']);
@@ -965,7 +968,7 @@ export function AdditionalSPForm() {
 	}
 
 	const handleSubmit = async (values: AdditionalSP) => {
-		await updateAdditionalSP(values)
+		await updateAdditionalSP(token, values)
 			?.then(async () => {
 				toast.custom(<Success success="Preferences saved successfully" />, {
 					id: 'ad-prefs-success',
