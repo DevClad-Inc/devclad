@@ -134,11 +134,10 @@ export const useOneOneProfile = (username: string) => {
 	return null;
 };
 
-export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unknown | null }) => {
+export const useSocialProfile = () => {
 	const { token } = useAuth();
 	const spQuery = useQuery({
 		...socialProfileQuery(token),
-		initialData: initialSocialData,
 	});
 	if (spQuery.isSuccess && spQuery.data !== null) {
 		const { data } = spQuery.data as { data: SocialProfile };

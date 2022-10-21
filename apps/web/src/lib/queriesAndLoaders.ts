@@ -22,9 +22,6 @@ import serverlessCookie from './serverlessCookie.lib';
 export const streamQuery = (token: string) => ({
 	queryKey: ['stream'],
 	queryFn: () => getStreamToken(token),
-	staleTime: 1000 * 60 * 60 * 24, // 24 hours
-	cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-	refetchOnWindowFocus: false,
 });
 
 export const streamUIDQuery = (token: string, username: string) => ({
@@ -38,13 +35,11 @@ export const streamUIDQuery = (token: string, username: string) => ({
 export const tokenQuery = () => ({
 	queryKey: ['token'],
 	queryFn: () => serverlessCookie<string>('token'),
-	staleTime: 1000 * 60 * 10, // 10 minutes; sort of like a connection check
 });
 
 export const refreshQuery = () => ({
 	queryKey: ['refresh'],
 	queryFn: () => serverlessCookie<string>('refresh'),
-	staleTime: 1000 * 60 * 10, // 10 minutes; sort of like a connection check
 });
 
 export const meetingQuery = (token: string, uid: string) => ({
@@ -122,14 +117,10 @@ export const userSkippedQuery = (token: string) => ({
 	queryFn: () => getSkippedUsers(token),
 });
 
-// profileempty and socialempty query are only used in Onboarding
 // verified query is only used in ChangeEmail
 // so not making a reusable query for them
 
-// export const initialDataLoader = (qc: QueryClient) => async () => {
-// 	const query = initialDataQuery();
-// 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-// };
+// loaders are unused rn
 
 export const userLoader = (qc: QueryClient) => async () => {
 	const token = await serverlessCookie<string>('token');

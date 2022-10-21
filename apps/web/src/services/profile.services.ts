@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios, { AxiosResponse } from 'axios';
-import Cookies from 'js-cookie';
 import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
 import { refreshToken, API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
+import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export async function getProfile(
 	token: string,
 	username: string
 ): Promise<AxiosResponse<Profile> | null> {
 	const url = `${API_URL}/users/profile/${username}/`;
+	const refresh = await serverlessCookie<string>('refresh');
 	let isVerified = false;
 	if (checkTokenType(token)) {
 		isVerified = await verifyToken(token);
@@ -23,7 +24,7 @@ export async function getProfile(
 			.then((resp) => resp)
 			.catch(() => null);
 	}
-	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
+	if ((token === undefined || !isVerified) && refresh) {
 		await refreshToken();
 	}
 	return null;

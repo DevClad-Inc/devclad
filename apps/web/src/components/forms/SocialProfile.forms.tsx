@@ -68,12 +68,8 @@ const languages = Languages.map((language) => ({ language })) as {
 	};
 }[];
 
-interface InitialSocialDataProps {
-	initialSocialData: unknown | null;
-}
-
-export function SocialProfileForm({ initialSocialData }: InitialSocialDataProps): JSX.Element {
-	const spData = useSocialProfile({ initialSocialData }) as SocialProfile;
+export function SocialProfileForm(): JSX.Element {
+	const spData = useSocialProfile() as SocialProfile;
 	const { token } = useAuth();
 
 	// ============= FORM value states for multi-selects =============

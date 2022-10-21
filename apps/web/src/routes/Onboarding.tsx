@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
@@ -14,7 +14,7 @@ import {
 	checkSocialProfileEmpty,
 	setSubmittedStatus,
 } from '@/services/profile.services';
-import { socialProfileLoader, socialProfileQuery } from '@/lib/queriesAndLoaders';
+import { socialProfileQuery } from '@/lib/queriesAndLoaders';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { useApproved, useAuth } from '@/services/useAuth.services';
 
@@ -44,9 +44,6 @@ export function StepOne() {
 }
 
 export function StepTwo() {
-	const initialSocialData = useLoaderData() as Awaited<
-		ReturnType<ReturnType<typeof socialProfileLoader>>
-	>;
 	const qc = useQueryClient();
 	const checkEmpty: {
 		profile: boolean;
@@ -88,7 +85,7 @@ export function StepTwo() {
 
 	return (
 		<div className="max-w-5xl">
-			<SocialProfileForm initialSocialData={initialSocialData} />
+			<SocialProfileForm />
 			<div className="mt-10 flex justify-between p-2">
 				<div className="inline-flex justify-start">
 					<Link className={linkClassesString} to="/onboarding/">

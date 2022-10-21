@@ -4,6 +4,7 @@ import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import { NewUser, User } from '@/lib/InterfacesStates.lib';
 import { tokenQuery } from '@/lib/queriesAndLoaders';
+import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
@@ -139,31 +140,34 @@ export function verifyToken(token: string): Promise<boolean> {
 		.catch(() => false);
 }
 
-export function refreshToken() {
+export async function refreshToken() {
 	const url = `${API_URL}/auth/token/refresh/`;
-	const refresh = Cookies.get('refresh');
-	return axios
-		.post(url, {
-			refresh: Cookies.get('refresh'),
-			headers: {
-				Authorization: `Bearer ${refresh}`,
-			},
-			credentials: 'same-origin',
-		})
-		.then((resp) => {
-			Cookies.set('token', resp.data.access, {
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
+	const refresh = await serverlessCookie<string>('refresh');
+	if (checkTokenType(refresh)) {
+		return axios
+			.post(url, {
+				refresh,
+				headers: {
+					Authorization: `Bearer ${refresh}`,
+				},
+				credentials: 'same-origin',
+			})
+			.then((resp) => {
+				Cookies.set('token', resp.data.access, {
+					sameSite: 'strict',
+					secure: !import.meta.env.VITE_DEVELOPMENT,
+				});
+				Cookies.set('refresh', resp.data.refresh, {
+					expires: 14, // 2 weeks
+					sameSite: 'strict',
+					secure: !import.meta.env.VITE_DEVELOPMENT,
+				});
+			})
+			.then(async () => {
+				await qc.invalidateQueries();
 			});
-			Cookies.set('refresh', resp.data.refresh, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-		})
-		.then(async () => {
-			await qc.invalidateQueries();
-		});
+	}
+	return null;
 	// .catch(() => {
 	// 	delMany(['loggedInUser', 'profile']);
 	// 	Cookies.remove('token');
@@ -172,9 +176,11 @@ export function refreshToken() {
 
 export async function getUser(token: string): Promise<AxiosResponse<User> | null> {
 	const url = `${API_URL}/auth/user/`;
+	// todo: store this in jotai instead of passing props
+	const refresh = await serverlessCookie<string>('refresh');
 	let isVerified = false;
 	// check if token is a string
-	if (typeof token === 'string' && token.length > 0) {
+	if (checkTokenType(token) && checkTokenType(refresh)) {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {
@@ -187,7 +193,7 @@ export async function getUser(token: string): Promise<AxiosResponse<User> | null
 			.then((resp) => resp)
 			.catch(() => null);
 	}
-	if ((token === '' || !isVerified) && Cookies.get('refresh')) {
+	if ((!checkTokenType(token) || !isVerified) && checkTokenType(refresh)) {
 		await refreshToken();
 	}
 	return null;
@@ -260,7 +266,7 @@ export async function logIn(email: string, password: string) {
 }
 
 export async function logOut() {
-	const refresh = Cookies.get('refresh');
+	const refresh = await serverlessCookie<string>('refresh');
 	const url = `${API_URL}/auth/logout/`;
 
 	if (refresh) {
