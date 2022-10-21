@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { checkTokenType, getUser } from '@/services/auth.services';
 import {
 	getAdded,
@@ -34,11 +35,15 @@ export const streamUIDQuery = (token: string, username: string) => ({
 export const tokenQuery = () => ({
 	queryKey: ['token'],
 	queryFn: () => serverlessCookie<string>('token'),
+	staleTime: 1000 * 60 * 60 * 24, // 24 hours
+	enabled: Cookies.get('loggedIn') === 'true',
 });
 
 export const refreshQuery = () => ({
 	queryKey: ['refresh'],
 	queryFn: () => serverlessCookie<string>('refresh'),
+	staleTime: 1000 * 60 * 60 * 24 * 14, // 14 days
+	enabled: Cookies.get('loggedIn') === 'true',
 });
 
 export const meetingQuery = (token: string, uid: string) => ({

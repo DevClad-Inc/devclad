@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { NewUser, User } from '@/lib/InterfacesStates.lib';
@@ -244,6 +245,10 @@ export async function logIn(email: string, password: string) {
 			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
 			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
 			token = qc.refetchQueries(tokenQuery().queryKey);
+			Cookies.set('loggedIn', 'true', {
+				path: '/',
+				sameSite: 'Strict',
+			});
 		});
 	return { response, token };
 }
@@ -253,8 +258,12 @@ export async function logOut() {
 	const url = `${API_URL}/auth/logout/`;
 
 	if (refresh) {
-		const response = serverlessCookie<string>('token', '', 0, true).then(() =>
-			serverlessCookie<string>('refresh', '', 0, true).then(async () => {
+		const response = serverlessCookie<string>('token', '', 0, true)
+			.then(() => {
+				Cookies.remove('loggedIn');
+				serverlessCookie<string>('refresh', '', 0, true);
+			})
+			.then(async () => {
 				await axios
 					.post(url, {
 						refresh,
@@ -267,12 +276,11 @@ export async function logOut() {
 								qc.invalidateQueries();
 							})
 							.then(() => {
-								window.location.href = '/';
+								window.location.reload();
 							});
 					})
 					.catch(() => null);
-			})
-		);
+			});
 		return response;
 	}
 	return null;

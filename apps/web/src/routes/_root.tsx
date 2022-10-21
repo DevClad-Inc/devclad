@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
+import Cookies from 'js-cookie';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
@@ -25,6 +26,7 @@ function Routing(): JSX.Element {
 	const { authed } = useAuth();
 	const { approved } = useApproved();
 	const { token, refresh } = useAuth();
+	const loggedInCookie = Cookies.get('loggedIn');
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
 		if (checkTokenType(token) && checkTokenType(refresh)) {
@@ -39,10 +41,7 @@ function Routing(): JSX.Element {
 	}, [qc, authed, token, refresh]);
 
 	// UNAUTHED
-	if (
-		(qc.getQueryData(['user']) === null || qc.getQueryData(['user']) === undefined) &&
-		qc.getQueryData(['token']) === null
-	) {
+	if (!authed && !loggedInCookie) {
 		if (!allowedPaths.includes(pathname)) {
 			return <Navigate to="/login" />;
 		}
