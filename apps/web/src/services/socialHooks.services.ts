@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
 	additionalSPQuery,
-	profileUsernameQuery,
+	profileQuery,
 	socialProfileUsernameQuery,
 	socialProfileQuery,
 	userBlockedQuery,
@@ -100,10 +100,11 @@ export const useBlockedUsernames = () => {
 };
 
 export const useOneOneProfile = (username: string) => {
-	const profileQuery = useQuery({
-		...profileUsernameQuery(username),
-		enabled: Boolean(username),
-		staleTime: 1000 * 5 * 60, // 5 minutes
+	const { token } = useAuth();
+	const profileQ = useQuery({
+		...profileQuery(token, username),
+		enabled: Boolean(username) && Boolean(token),
+		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 	const spUsernameQuery = useQuery({
 		...socialProfileUsernameQuery(username),
@@ -111,12 +112,12 @@ export const useOneOneProfile = (username: string) => {
 		staleTime: 1000 * 5 * 60, // 5 minutes
 	});
 	if (
-		profileQuery.isSuccess &&
+		profileQ.isSuccess &&
 		spUsernameQuery.isSuccess &&
-		profileQuery.data !== null &&
+		profileQ.data !== null &&
 		spUsernameQuery.data !== null
 	) {
-		const { data: profile } = profileQuery.data;
+		const { data: profile } = profileQ.data;
 		const { data: socialProfile } = spUsernameQuery.data;
 		return { ...profile, ...socialProfile };
 	}
@@ -137,12 +138,13 @@ export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unk
 
 export const useProfile = (username: string) => {
 	const profileRef = React.useRef<Profile | null>(null);
-	const profileQuery = useQuery({
-		...profileUsernameQuery(username),
-		enabled: Boolean(username),
+	const { token } = useAuth();
+	const profileQ = useQuery({
+		...profileQuery(token, username),
+		enabled: Boolean(username) && Boolean(token),
 	});
-	if (profileQuery.isSuccess && profileQuery.data !== null) {
-		const { data } = profileQuery.data;
+	if (profileQ.isSuccess && profileQ.data !== null) {
+		const { data } = profileQ.data;
 		profileRef.current = data;
 	}
 	return profileRef.current;

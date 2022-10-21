@@ -6,12 +6,11 @@ import {
 	getBlockedUsers,
 	getCircle,
 	getOneOne,
-	getProfile,
 	getShadowUsers,
 	getSkippedUsers,
 	getSocialProfile,
 	getStatus,
-	getUsernameProfile,
+	getProfile,
 	getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
@@ -62,12 +61,6 @@ export const userQuery = (token: string) => ({
 	enabled: Boolean(token),
 });
 
-export const profileQuery = (token: string) => ({
-	queryKey: ['profile'],
-	queryFn: () => getProfile(token),
-	enabled: Boolean(token),
-});
-
 export const socialProfileQuery = () => ({
 	queryKey: ['social-profile'],
 	queryFn: () => getSocialProfile(),
@@ -83,9 +76,10 @@ export const statusQuery = (token: string) => ({
 	queryFn: () => getStatus(token),
 });
 
-export const profileUsernameQuery = (username: string) => ({
+export const profileQuery = (token: string, username: string) => ({
 	queryKey: ['profile', username],
-	queryFn: () => getUsernameProfile(username),
+	queryFn: () => getProfile(token, username),
+	enabled: Boolean(username) && username !== '',
 });
 
 export const socialProfileUsernameQuery = (username: string) => ({
@@ -137,11 +131,6 @@ export const userSkippedQuery = () => ({
 export const userLoader = (qc: QueryClient, token: string) => async () =>
 	qc.getQueryData(userQuery(token).queryKey) ?? (await qc.fetchQuery(userQuery(token)));
 
-export const profileLoader = (qc: QueryClient, token: string) => async () => {
-	const query = profileQuery(token);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
 export const socialProfileLoader = (qc: QueryClient) => async () => {
 	const query = socialProfileQuery();
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
@@ -150,8 +139,8 @@ export const socialProfileLoader = (qc: QueryClient) => async () => {
 export const statusLoader = (qc: QueryClient, token: string) => async () =>
 	qc.getQueryData(statusQuery(token).queryKey) ?? (await qc.fetchQuery(statusQuery(token)));
 
-export const profileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-	const query = profileUsernameQuery(username);
+export const profileLoader = (qc: QueryClient, token: string) => async (username: string) => {
+	const query = profileQuery(username, token);
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 

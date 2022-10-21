@@ -5,8 +5,11 @@ import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib
 import { refreshToken, API_URL, verifyToken } from '@/services/auth.services';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
-export async function getProfile(token: string): Promise<AxiosResponse<Profile> | null> {
-	const url = `${API_URL}/users/profile/`;
+export async function getProfile(
+	token: string,
+	username: string
+): Promise<AxiosResponse<Profile> | null> {
+	const url = `${API_URL}/users/profile/${username}/`;
 	let isVerified = false;
 	if (typeof token === 'string' && token.length > 0) {
 		isVerified = await verifyToken(token);
@@ -19,26 +22,13 @@ export async function getProfile(token: string): Promise<AxiosResponse<Profile> 
 				},
 			})
 			.then((resp) => resp)
-			.catch(() => null);
+			.catch((error) => {
+				console.log(error);
+				return null;
+			});
 	}
 	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
 		await refreshToken();
-	}
-	return null;
-}
-
-export async function getUsernameProfile(username: string) {
-	const url = `${API_URL}/users/profile/${username}/`;
-	const token = await serverlessCookie<string>('token');
-	if (token) {
-		return axios
-			.get(url, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			.then((resp) => resp)
-			.catch(() => null);
 	}
 	return null;
 }
