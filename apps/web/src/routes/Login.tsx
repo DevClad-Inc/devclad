@@ -57,7 +57,7 @@ function Login() {
 							<div className="mt-6">
 								<PrimaryButton wFull>
 									<svg
-										className="mr-2 h-8 w-5"
+										className="mr-2 h-6 w-4 sm:h-8 sm:w-5"
 										aria-hidden="true"
 										fill="currentColor"
 										viewBox="0 0 20 20"
@@ -68,7 +68,7 @@ function Login() {
 											clipRule="evenodd"
 										/>
 									</svg>
-									<span>GitHub</span>
+									<span className="text-sm sm:text-lg">GitHub</span>
 								</PrimaryButton>
 							</div>
 						</div>

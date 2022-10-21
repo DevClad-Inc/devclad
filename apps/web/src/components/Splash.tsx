@@ -16,11 +16,11 @@ export default function SplashScreen() {
 				/>
 				<div className="relative z-10">
 					<div className="flex h-screen items-center justify-center">
-						<div className="flex flex-col items-center justify-center">
+						<div className="flex animate-pulse flex-col items-center justify-center">
 							<img
 								src={DevCladSVG}
 								alt="DevClad Logo"
-								className="h-64 w-64 animate-pulse sm:h-72 sm:w-72 lg:h-96 lg:w-96 xl:h-[36rem] xl:w-[36rem]"
+								className="h-64 w-64 sm:h-72 sm:w-72 lg:h-96 lg:w-96 xl:h-[36rem] xl:w-[36rem]"
 							/>
 							<h1 className="xl:8xl lg:7xl sm:6xl text-5xl font-black text-white">
 								DevClad

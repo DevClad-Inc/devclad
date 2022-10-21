@@ -153,16 +153,18 @@ export async function refreshToken() {
 				credentials: 'same-origin',
 			})
 			.then((resp) => {
-				serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
-				serverlessCookie<string>(
-					'refresh',
-					resp.data.refresh_token,
-					60 * 60 * 24 * 14,
-					false
-				);
-			})
-			.then(async () => {
-				await qc.invalidateQueries();
+				serverlessCookie<string>('token', resp.data.access, 60 * 60 * 36, false)
+					.then(() => {
+						serverlessCookie<string>(
+							'refresh',
+							resp.data.refresh,
+							60 * 60 * 24 * 28,
+							false
+						);
+					})
+					.then(() => {
+						window.location.reload();
+					});
 			});
 	}
 	return null;
@@ -224,8 +226,8 @@ export function SignUp(user: NewUser) {
 			headers,
 		})
 		.then((resp) => {
-			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
-			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
+			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 36, false);
+			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 28, false);
 			return resp;
 		})
 		.catch((err) => err);
@@ -279,7 +281,7 @@ export async function logOut() {
 								window.location.reload();
 							});
 					})
-					.catch(() => null);
+					.catch(() => window.location.reload());
 			});
 		return response;
 	}
