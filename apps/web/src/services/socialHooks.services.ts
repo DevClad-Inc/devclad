@@ -17,7 +17,11 @@ import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 export const useStreamUID = (username: string) => {
-	const { isSuccess, data } = useQuery(streamUIDQuery(username));
+	const { token } = useAuth();
+	const { isSuccess, data } = useQuery({
+		...streamUIDQuery(token, username),
+		enabled: Boolean(token) && Boolean(username),
+	});
 	if (isSuccess && data) {
 		const { uid } = data as { uid: string };
 		return uid;

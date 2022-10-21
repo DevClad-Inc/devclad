@@ -42,15 +42,15 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 				setLoginError(false);
 			}
 			if (token) {
-				await getUser(token)
-					.then(() => {
+				await getUser(token || '') // type is checked in checkTokenType within getUser, dw
+					?.then(() => {
 						invalidateAndStoreIDB(qc, 'user');
 						qc.refetchQueries();
 					})
 					.catch(() => {
 						delMany(['loggedInUser', 'profile']);
 					});
-				qc.fetchQuery(streamQuery());
+				qc.fetchQuery(streamQuery(token || ''));
 			}
 		} catch (error) {
 			setLoginError(true);

@@ -19,17 +19,17 @@ import serverlessCookie from './serverlessCookie.lib';
 
 // ! only using social profile loader rn
 
-export const streamQuery = () => ({
+export const streamQuery = (token: string) => ({
 	queryKey: ['stream'],
-	queryFn: () => getStreamToken(),
+	queryFn: () => getStreamToken(token),
 	staleTime: 1000 * 60 * 60 * 24, // 24 hours
 	cacheTime: 1000 * 60 * 60 * 24, // 24 hours
 	refetchOnWindowFocus: false,
 });
 
-export const streamUIDQuery = (username: string) => ({
+export const streamUIDQuery = (token: string, username: string) => ({
 	queryKey: ['streamUID', username],
-	queryFn: () => getStreamUID(username),
+	queryFn: () => getStreamUID(token, username),
 	staleTime: 1000 * 60 * 60 * 24, //
 	cacheTime: 1000 * 60 * 60 * 24, //
 	refetchOnWindowFocus: false,

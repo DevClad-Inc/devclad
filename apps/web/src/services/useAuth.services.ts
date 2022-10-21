@@ -40,7 +40,7 @@ export function useAuth() {
 		enabled: Boolean(tokenData),
 	});
 	const { isSuccess: streamSuccess, data: streamData } = useQuery({
-		...streamQuery(),
+		...streamQuery(tokenRef.current ? tokenRef.current : ''),
 		enabled: Boolean(userData),
 	});
 

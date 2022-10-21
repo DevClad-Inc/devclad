@@ -2,7 +2,7 @@
 import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
-import { refreshToken, API_URL, verifyToken } from '@/services/auth.services';
+import { refreshToken, API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export async function getProfile(
@@ -11,7 +11,7 @@ export async function getProfile(
 ): Promise<AxiosResponse<Profile> | null> {
 	const url = `${API_URL}/users/profile/${username}/`;
 	let isVerified = false;
-	if (typeof token === 'string' && token.length > 0) {
+	if (checkTokenType(token)) {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {

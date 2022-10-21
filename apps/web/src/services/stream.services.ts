@@ -1,12 +1,10 @@
 import axios from 'axios';
-import serverlessCookie from '@/lib/serverlessCookie.lib';
-import { API_URL } from './auth.services';
+import { API_URL, checkTokenType } from '@/services/auth.services';
 
-export const getStreamToken = async () => {
+export const getStreamToken = async (token: string) => {
 	const url = `${API_URL}/stream/token/`;
-	const token = await serverlessCookie<string>('token');
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -24,11 +22,10 @@ export const getStreamToken = async () => {
 
 // meant to be used for other users
 // token/ already returns uid and token for current user
-export const getStreamUID = async (username: string) => {
+export const getStreamUID = async (token: string, username: string) => {
 	const url = `${API_URL}/stream/uid/${username}/`;
-	const token = await serverlessCookie<string>('token');
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,

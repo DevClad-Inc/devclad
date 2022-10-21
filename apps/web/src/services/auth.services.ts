@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
-import { NewUser } from '@/lib/InterfacesStates.lib';
+import { NewUser, User } from '@/lib/InterfacesStates.lib';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 import { tokenQuery } from '@/lib/queriesAndLoaders';
 
@@ -17,6 +17,18 @@ const headers = {
 const qc = new QueryClient();
 
 // const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
+
+export const checkTokenType = (token: string | undefined | null) => {
+	if (
+		typeof token === 'string' &&
+		token.length > 0 &&
+		token !== 'undefined' &&
+		token !== 'null'
+	) {
+		return true;
+	}
+	return false;
+};
 
 export const verifyEmail = async (key: string) => {
 	const url = `${API_URL}/auth/registration/verify-email/`;
@@ -44,7 +56,10 @@ export const passwordReset = async (
 	return response.data;
 };
 
-export const passwordChange = async (password1: string, password2: string) => {
+export const passwordChange = async (
+	password1: string,
+	password2: string
+): Promise<AxiosResponse> => {
 	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/auth/password/change/`;
 	const response = await axios.post(
@@ -159,7 +174,7 @@ export function refreshToken() {
 	// });
 }
 
-export async function getUser(token: string) {
+export async function getUser(token: string): Promise<AxiosResponse<User> | null> {
 	const url = `${API_URL}/auth/user/`;
 	let isVerified = false;
 	// check if token is a string
@@ -259,6 +274,7 @@ export async function logOut() {
 				await delMany(['loggedInUser', 'profile']).then(() => {
 					Cookies.remove('token');
 					Cookies.remove('refresh');
+					qc.invalidateQueries();
 				});
 			})
 			.catch(() => null);
