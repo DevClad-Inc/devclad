@@ -5,6 +5,7 @@ import { delMany } from 'idb-keyval';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
 import { initialUserState, Profile, User } from '@/lib/InterfacesStates.lib';
 import { tokenQuery, userQuery } from '@/lib/queriesAndLoaders';
+import { checkTokenType } from '@/services/auth.services';
 
 export enum UserReducerActionTypes {
 	SET_USER_DATA = 'SET_USER_DATA',
@@ -38,10 +39,10 @@ interface UserProviderProps {
 
 export function UserProvider({ children }: UserProviderProps) {
 	const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialUserState });
-	const { data: tokenData } = useQuery(tokenQuery());
+	const { data: token } = useQuery(tokenQuery());
 	const { data, isError, isSuccess } = useQuery({
-		...userQuery(tokenData || ''),
-		enabled: Boolean(tokenData),
+		...userQuery(token || ''),
+		enabled: checkTokenType(token),
 	});
 	if (Object.values(loggedInUser).every((v) => v === undefined)) {
 		getsetIndexedDB('loggedInUser', 'get').then((localUser) => {

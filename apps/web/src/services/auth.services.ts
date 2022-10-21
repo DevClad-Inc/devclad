@@ -243,7 +243,7 @@ export async function logIn(email: string, password: string) {
 			headers,
 			credentials: 'include',
 		})
-		.then( (resp) => {
+		.then((resp) => {
 			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
 			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
 			token = qc.refetchQueries(tokenQuery().queryKey);
