@@ -6,8 +6,6 @@ from users.views import (
     VerifyEmailView,
     Login,
     RefreshToken,
-    set_cookie_and_redirect,
-    delete_cookie_and_redirect,
 )
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
@@ -31,8 +29,6 @@ urlpatterns = [
     path("stream/", include("stream.urls")),
     path("users/", include("users.urls")),
     path("social/", include("social.urls")),
-    path("auth-redirect/", set_cookie_and_redirect, name="set_cookie"),
-    path("logout-redirect/", delete_cookie_and_redirect, name="logout_redirect"),
 ]
 
 

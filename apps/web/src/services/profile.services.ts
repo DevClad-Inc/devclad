@@ -5,12 +5,10 @@ import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib
 import { refreshToken, API_URL, verifyToken } from '@/services/auth.services';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
-export async function getProfile(
-	token: string | undefined
-): Promise<AxiosResponse<Profile> | null> {
+export async function getProfile(token: string): Promise<AxiosResponse<Profile> | null> {
 	const url = `${API_URL}/users/profile/`;
 	let isVerified = false;
-	if (token !== undefined && token !== '') {
+	if (typeof token === 'string' && token.length > 0) {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {

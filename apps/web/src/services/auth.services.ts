@@ -162,7 +162,8 @@ export function refreshToken() {
 export async function getUser(token: string) {
 	const url = `${API_URL}/auth/user/`;
 	let isVerified = false;
-	if (token !== '') {
+	// check if token is a string
+	if (typeof token === 'string' && token.length > 0) {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {
