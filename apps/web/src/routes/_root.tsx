@@ -26,7 +26,7 @@ function Routing(): JSX.Element {
 	const { token, refresh } = useAuth();
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
-		if (token !== undefined && refresh !== undefined) {
+		if (token && refresh) {
 			qc.setQueryData(['token'], token); // setting data on first load to use in functions
 			qc.setQueryData(['refresh'], refresh);
 		}
@@ -38,7 +38,11 @@ function Routing(): JSX.Element {
 	}, [qc, authed, token, refresh]);
 
 	// UNAUTHED
-	if (qc.getQueryData(['user']) === (null || undefined)) {
+	if (
+		(qc.getQueryData(['user']) === null || qc.getQueryData(['user']) === undefined) &&
+		qc.getQueryData(['token']) === null
+	) {
+		console.log(qc.getQueryData(['token']));
 		if (!allowedPaths.includes(pathname)) {
 			return <Navigate to="/login" />;
 		}
