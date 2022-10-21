@@ -39,13 +39,13 @@ export const streamUIDQuery = (username: string) => ({
 export const tokenQuery = () => ({
 	queryKey: ['token'],
 	queryFn: () => serverlessCookie<string>('token'),
-	staleTime: 1000 * 60 * 60 * 12, // 12 hours
+	staleTime: 1000 * 60 * 10, // 10 minutes; sort of like a connection check
 });
 
 export const refreshQuery = () => ({
 	queryKey: ['refresh'],
 	queryFn: () => serverlessCookie<string>('refresh'),
-	staleTime: 1000 * 60 * 60 * 24 * 14, // 14 days
+	staleTime: 1000 * 60 * 10, // 10 minutes; sort of like a connection check
 });
 
 export const meetingQuery = (uid: string) => ({
