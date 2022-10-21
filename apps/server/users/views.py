@@ -35,9 +35,6 @@ class Login(LoginView):
         serializer_class = self.get_response_serializer()
 
         if getattr(settings, "REST_USE_JWT", False):
-            from rest_framework_simplejwt.settings import (
-                api_settings as jwt_settings,
-            )
 
             access_token_expiration = (
                 timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
