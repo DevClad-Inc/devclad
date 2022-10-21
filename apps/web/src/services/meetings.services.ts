@@ -9,7 +9,7 @@ export const idTypeCheck = (id: string | undefined | null) => {
 	return false;
 };
 
-export const getMeeting = async (token: string, id: string) => {
+export const getMeeting = (token: string, id: string) => {
 	const url = `${API_URL}/social/meetings/${id}/`;
 	if (checkTokenType(token) && idTypeCheck(id)) {
 		return axios({
@@ -21,7 +21,7 @@ export const getMeeting = async (token: string, id: string) => {
 	return null;
 };
 
-export const createUpdateMeeting = async (token: string, data: Meeting) => {
+export const createUpdateMeeting = (token: string, data: Meeting) => {
 	const url = `${API_URL}/social/meetings/`;
 
 	if (checkTokenType(token)) {

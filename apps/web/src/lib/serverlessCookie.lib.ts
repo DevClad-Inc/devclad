@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { checkTokenType } from '@/services/auth.services';
 
-export default async function serverlessCookie<TState>(
+export default function serverlessCookie<TState>(
 	key: string,
 	value?: string,
 	maxAge?: number,

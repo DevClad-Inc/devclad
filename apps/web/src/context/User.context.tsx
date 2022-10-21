@@ -41,7 +41,7 @@ export function UserProvider({ children }: UserProviderProps) {
 	const { data: tokenData } = useQuery(tokenQuery());
 	const { data, isError, isSuccess } = useQuery({
 		...userQuery(tokenData || ''),
-		enabled: !!tokenData,
+		enabled: Boolean(tokenData),
 	});
 	if (Object.values(loggedInUser).every((v) => v === undefined)) {
 		getsetIndexedDB('loggedInUser', 'get').then((localUser) => {

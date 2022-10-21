@@ -78,7 +78,7 @@ export const passwordChange = async (token: string, password1: string, password2
 	return null;
 };
 
-export const changeEmail = async (token: string, email: string) => {
+export const changeEmail = (token: string, email: string) => {
 	const url = `${API_URL}/users/change-email/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -95,7 +95,7 @@ export const changeEmail = async (token: string, email: string) => {
 	return null;
 };
 
-export const checkVerified = async (token: string) => {
+export const checkVerified = (token: string) => {
 	const url = `${API_URL}/users/change-email/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -199,7 +199,7 @@ export async function getUser(token: string): Promise<AxiosResponse<User> | null
 	return null;
 }
 
-export async function updateUser(
+export function updateUser(
 	token: string,
 	first_name?: string,
 	last_name?: string,
@@ -243,7 +243,7 @@ export async function logIn(email: string, password: string) {
 			headers,
 			credentials: 'include',
 		})
-		.then(async (resp) => {
+		.then( (resp) => {
 			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
 			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
 			token = qc.refetchQueries(tokenQuery().queryKey);

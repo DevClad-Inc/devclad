@@ -30,7 +30,7 @@ export async function getProfile(
 	return null;
 }
 
-export async function updateProfile(token: string, values: Profile, profileData: Profile) {
+export function updateProfile(token: string, values: Profile, profileData: Profile) {
 	const { pronouns, about, website, linkedin, calendly } = values;
 	if (checkTokenType(token) && profileData) {
 		return axios({
@@ -51,7 +51,7 @@ export async function updateProfile(token: string, values: Profile, profileData:
 	return null;
 }
 
-export async function updateProfileAvatar(token: string, avatar: File) {
+export function updateProfileAvatar(token: string, avatar: File) {
 	const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
 	const formData = new FormData();
 	formData.append('avatar', avatar);
@@ -68,7 +68,7 @@ export async function updateProfileAvatar(token: string, avatar: File) {
 	return null;
 }
 
-export async function getSocialProfile(token: string) {
+export function getSocialProfile(token: string) {
 	const url = `${API_URL}/social/profile/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -82,7 +82,7 @@ export async function getSocialProfile(token: string) {
 	return null;
 }
 
-export async function getUsernameSocialProfile(token: string, username: string) {
+export function getUsernameSocialProfile(token: string, username: string) {
 	const url = `${API_URL}/social/profile/${username}/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -96,7 +96,7 @@ export async function getUsernameSocialProfile(token: string, username: string) 
 	return null;
 }
 
-export async function updateSocialProfile(
+export function updateSocialProfile(
 	token: string,
 	values: SocialProfile,
 	socialProfileData: SocialProfile
@@ -136,7 +136,7 @@ export async function updateSocialProfile(
 	return null;
 }
 
-export async function getAdditionalSP(token: string) {
+export function getAdditionalSP(token: string) {
 	const url = `${API_URL}/social/additional-prefs/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -148,7 +148,7 @@ export async function getAdditionalSP(token: string) {
 	return null;
 }
 
-export async function updateAdditionalSP(token: string, values: AdditionalSP) {
+export function updateAdditionalSP(token: string, values: AdditionalSP) {
 	const { video_call_friendly, available_always_off } = values;
 	if (checkTokenType(token)) {
 		return axios({
@@ -166,7 +166,7 @@ export async function updateAdditionalSP(token: string, values: AdditionalSP) {
 	return null;
 }
 
-export async function checkProfileEmpty(token: string) {
+export function checkProfileEmpty(token: string) {
 	const url = `${API_URL}/users/is-complete/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -180,7 +180,7 @@ export async function checkProfileEmpty(token: string) {
 	return null;
 }
 
-export async function checkSocialProfileEmpty(token: string) {
+export function checkSocialProfileEmpty(token: string) {
 	const url = `${API_URL}/social/is-complete/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -199,7 +199,7 @@ This deals with UserStatus Model.
 getStatus() - This is to check "approved" field.
 setSubmittedStatus() - This is to set the "status" field to "Submitted".
 */
-export const getStatus = async (token: string | undefined) => {
+export const getStatus = (token: string | undefined) => {
 	const url = `${API_URL}/users/status/`;
 	if (token !== undefined && token !== '') {
 		return axios({
@@ -215,7 +215,7 @@ export const getStatus = async (token: string | undefined) => {
 	return null;
 };
 
-export const setSubmittedStatus = async (token: string) => {
+export const setSubmittedStatus = (token: string) => {
 	const url = `${API_URL}/users/status/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -230,7 +230,7 @@ export const setSubmittedStatus = async (token: string) => {
 
 // =================== ONE-ONE ML ===================
 
-export const getOneOne = async (token: string) => {
+export const getOneOne = (token: string) => {
 	const url = `${API_URL}/social/one-one/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -246,7 +246,7 @@ export const getOneOne = async (token: string) => {
 	return null;
 };
 
-export const getShadowUsers = async (token: string) => {
+export const getShadowUsers = (token: string) => {
 	const url = `${API_URL}/social/shadow/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -262,7 +262,7 @@ export const getShadowUsers = async (token: string) => {
 	return null;
 };
 
-export const shadowUser = async (
+export const shadowUser = (
 	token: string,
 	username: string,
 	shadowed: string[],
@@ -289,7 +289,7 @@ export const shadowUser = async (
 	return null;
 };
 
-export const getSkippedUsers = async (token: string) => {
+export const getSkippedUsers = (token: string) => {
 	const url = `${API_URL}/social/skipped/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -305,7 +305,7 @@ export const getSkippedUsers = async (token: string) => {
 	return null;
 };
 
-export const skipUser = async (
+export const skipUser = (
 	token: string,
 	username: string,
 	skipped: string[],
@@ -335,7 +335,7 @@ export const skipUser = async (
 };
 
 // =================== circle ===================
-export const getAdded = async (token: string) => {
+export const getAdded = (token: string) => {
 	const url = `${API_URL}/social/added/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -351,7 +351,7 @@ export const getAdded = async (token: string) => {
 	return null;
 };
 
-export const getCircle = async (token: string, username: string) => {
+export const getCircle = (token: string, username: string) => {
 	const url = `${API_URL}/social/circle/${username}/get/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -368,7 +368,7 @@ export const getCircle = async (token: string, username: string) => {
 };
 
 // Add is only for One-One
-export const patchCircle = async (
+export const patchCircle = (
 	token: string,
 	operationUsername: string,
 	circle: string[],
@@ -403,7 +403,7 @@ export const patchCircle = async (
 	return null;
 };
 
-export const getBlockedUsers = async (token: string) => {
+export const getBlockedUsers = (token: string) => {
 	const url = `${API_URL}/social/block/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -415,7 +415,7 @@ export const getBlockedUsers = async (token: string) => {
 	return null;
 };
 
-export const blockUser = async (
+export const blockUser = (
 	token: string,
 	operationUsername: string,
 	blocked: string[],

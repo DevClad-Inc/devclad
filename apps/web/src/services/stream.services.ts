@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL, checkTokenType } from '@/services/auth.services';
 
-export const getStreamToken = async (token: string) => {
+export const getStreamToken = (token: string) => {
 	const url = `${API_URL}/stream/token/`;
 
 	if (checkTokenType(token)) {
@@ -22,7 +22,7 @@ export const getStreamToken = async (token: string) => {
 
 // meant to be used for other users
 // token/ already returns uid and token for current user
-export const getStreamUID = async (token: string, username: string) => {
+export const getStreamUID = (token: string, username: string) => {
 	const url = `${API_URL}/stream/uid/${username}/`;
 
 	if (checkTokenType(token)) {
