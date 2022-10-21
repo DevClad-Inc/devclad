@@ -6,7 +6,7 @@ import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-d
 import { GraphTextureSVG } from '@devclad/ui';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
-import { refreshToken } from '@/services/auth.services';
+import { checkTokenType, refreshToken } from '@/services/auth.services';
 import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 import SplashScreen from '@/components/Splash';
@@ -27,7 +27,7 @@ function Routing(): JSX.Element {
 	const { token, refresh } = useAuth();
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
-		if (token && refresh && token !== undefined && refresh !== undefined) {
+		if (checkTokenType(token) && checkTokenType(refresh)) {
 			qc.setQueryData(['token'], token); // setting data on first load to use in functions
 			qc.setQueryData(['refresh'], refresh);
 		}

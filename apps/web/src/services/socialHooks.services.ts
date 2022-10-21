@@ -15,12 +15,13 @@ import {
 } from '@/lib/queriesAndLoaders';
 import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
+import { checkTokenType } from './auth.services';
 
 export const useStreamUID = (username: string) => {
 	const { token } = useAuth();
 	const { isSuccess, data } = useQuery({
 		...streamUIDQuery(token, username),
-		enabled: Boolean(token) && Boolean(username),
+		enabled: checkTokenType(token) && Boolean(username),
 	});
 	if (isSuccess && data) {
 		const { uid } = data as { uid: string };
@@ -107,7 +108,7 @@ export const useOneOneProfile = (username: string) => {
 	const { token } = useAuth();
 	const profileQ = useQuery({
 		...profileQuery(token, username),
-		enabled: Boolean(username) && Boolean(token),
+		enabled: Boolean(username) && checkTokenType(token),
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 	const spUsernameQuery = useQuery({
@@ -145,7 +146,7 @@ export const useProfile = (username: string) => {
 	const { token } = useAuth();
 	const profileQ = useQuery({
 		...profileQuery(token, username),
-		enabled: Boolean(username) && Boolean(token),
+		enabled: Boolean(username) && checkTokenType(token),
 	});
 	if (profileQ.isSuccess && profileQ.data !== null) {
 		const { data } = profileQ.data;

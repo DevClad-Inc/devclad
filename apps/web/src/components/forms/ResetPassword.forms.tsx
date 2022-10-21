@@ -8,10 +8,12 @@ import { forgotPassword, passwordChange, passwordReset } from '@/services/auth.s
 import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { InterfaceEmail, PasswordReset } from '@/lib/InterfacesStates.lib';
+import { useAuth } from '@/services/useAuth.services';
 
 export default function PasswordResetForm(): JSX.Element {
 	const [resetDone, setresetDone] = useState(false);
 	const { uid, token } = useParams() as { uid: string; token: string };
+	const { token: accessToken } = useAuth();
 	const validate = (values: PasswordReset) => {
 		const errors: PasswordReset['errors'] = {};
 		if (!values.password1) {
@@ -58,8 +60,8 @@ export default function PasswordResetForm(): JSX.Element {
 					});
 				});
 		} else {
-			await passwordChange(password1, password2)
-				.then(() => {
+			await passwordChange(accessToken, password1, password2)
+				?.then(() => {
 					toast.custom(<Success success="Password change successful." />, {
 						id: 'success-password-change',
 						duration: 3000,

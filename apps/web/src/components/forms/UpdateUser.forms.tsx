@@ -14,7 +14,7 @@ import { useAuth } from '@/services/useAuth.services';
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {
 	const qc = useQueryClient();
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 
 	const validate = (values: UpdateUserFormValues) => {
 		const errors: UpdateUserFormValues['errors'] = {};
@@ -40,7 +40,7 @@ export default function UpdateUserForm(): JSX.Element {
 			if (username === loggedInUser.username) {
 				username = undefined;
 			}
-			await updateUser(firstName, lastName, username)?.then(() => {
+			await updateUser(token, firstName, lastName, username)?.then(() => {
 				del('loggedInUser');
 				if (username === undefined) {
 					username = loggedInUser.username;

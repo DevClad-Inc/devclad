@@ -3,7 +3,6 @@ import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import Cookies from 'js-cookie';
 import { NewUser, User } from '@/lib/InterfacesStates.lib';
-import serverlessCookie from '@/lib/serverlessCookie.lib';
 import { tokenQuery } from '@/lib/queriesAndLoaders';
 
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -56,31 +55,29 @@ export const passwordReset = async (
 	return response.data;
 };
 
-export const passwordChange = async (
-	password1: string,
-	password2: string
-): Promise<AxiosResponse> => {
-	const token = await serverlessCookie<string>('token');
+export const passwordChange = async (token: string, password1: string, password2: string) => {
 	const url = `${API_URL}/auth/password/change/`;
-	const response = await axios.post(
-		url,
-		{
-			new_password1: password1,
-			new_password2: password2,
-		},
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
+	if (checkTokenType(token)) {
+		const response = await axios.post(
+			url,
+			{
+				new_password1: password1,
+				new_password2: password2,
 			},
-		}
-	);
-	return response;
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			}
+		);
+		return response;
+	}
+	return null;
 };
 
-export const changeEmail = async (email: string) => {
-	const token = await serverlessCookie<string>('token');
+export const changeEmail = async (token: string, email: string) => {
 	const url = `${API_URL}/users/change-email/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -97,8 +94,7 @@ export const changeEmail = async (email: string) => {
 	return null;
 };
 
-export const checkVerified = async () => {
-	const token = await serverlessCookie<string>('token');
+export const checkVerified = async (token: string) => {
 	const url = `${API_URL}/users/change-email/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -197,8 +193,12 @@ export async function getUser(token: string): Promise<AxiosResponse<User> | null
 	return null;
 }
 
-export async function updateUser(first_name?: string, last_name?: string, username?: string) {
-	const token = await serverlessCookie<string>('token');
+export async function updateUser(
+	token: string,
+	first_name?: string,
+	last_name?: string,
+	username?: string
+) {
 	if (checkTokenType(token)) {
 		return axios.patch(
 			`${API_URL}/auth/user/`,

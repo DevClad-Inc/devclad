@@ -8,6 +8,7 @@ import {
 	tokenQuery,
 	userQuery,
 } from '@/lib/queriesAndLoaders';
+import { checkTokenType } from './auth.services';
 
 export type StreamTokenT = {
 	token: string;
@@ -74,7 +75,7 @@ export function useApproved(): { approved: boolean; status: string } {
 
 	const { isSuccess, data } = useQuery({
 		...statusQuery(token),
-		enabled: Boolean(token),
+		enabled: checkTokenType(token),
 	});
 
 	if (isSuccess && data && approved !== data.data.approved && status !== data.data.status) {

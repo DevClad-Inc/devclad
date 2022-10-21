@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { getUser } from '@/services/auth.services';
+import { checkTokenType, getUser } from '@/services/auth.services';
 import {
 	getAdded,
 	getAdditionalSP,
@@ -58,7 +58,7 @@ export const meetingQuery = (uid: string) => ({
 export const userQuery = (token: string) => ({
 	queryKey: ['user'],
 	queryFn: () => getUser(token),
-	enabled: Boolean(token),
+	enabled: checkTokenType(token),
 });
 
 export const socialProfileQuery = () => ({
