@@ -4,17 +4,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
 import { logOut } from '@/services/auth.services';
-import { redString } from '@/lib/Buttons.lib';
+import { LoadingSpinner, redString } from '@/lib/Buttons.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 function Home(): JSX.Element {
 	const qc = useQueryClient();
-	const { authed, loggedInUser } = useAuth();
 	const navigate = useNavigate();
+	const { authed, loggedInUser } = useAuth();
+	const [loggingOut, setLoggingOut] = React.useState(false);
 	const handlelogOut = async () => {
-		await logOut().then(() => {
-			navigate(0);
-		});
+		setLoggingOut(true);
+		await logOut();
 	};
 	useDocumentTitle('Dashboard');
 	React.useEffect(() => {
@@ -33,11 +33,21 @@ function Home(): JSX.Element {
 			<div className="mx-auto w-3/4 max-w-lg">
 				<div className="text-center text-sm text-neutral-500">
 					<button onClick={handlelogOut} type="button" className={redString}>
-						<ArrowLeftOnRectangleIcon
-							className="-ml-1 mr-2 h-5 w-5"
-							aria-hidden="true"
-						/>
-						Sign Out
+						{loggingOut ? (
+							<>
+								<LoadingSpinner /> Signing
+							</>
+						) : (
+							<>
+								<ArrowLeftOnRectangleIcon
+									className="-ml-1 mr-2 h-5 w-5"
+									aria-hidden="true"
+								/>
+								Sign
+							</>
+						)}
+						{'  '}
+						Out
 					</button>
 				</div>
 			</div>

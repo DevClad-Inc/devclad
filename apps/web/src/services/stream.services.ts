@@ -1,12 +1,10 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import { API_URL } from './auth.services';
+import { API_URL, checkTokenType } from '@/services/auth.services';
 
-export const getStreamToken = () => {
+export const getStreamToken = (token: string) => {
 	const url = `${API_URL}/stream/token/`;
-	const token = Cookies.get('token');
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -24,11 +22,10 @@ export const getStreamToken = () => {
 
 // meant to be used for other users
 // token/ already returns uid and token for current user
-export const getStreamUID = (username: string) => {
+export const getStreamUID = (token: string, username: string) => {
 	const url = `${API_URL}/stream/uid/${username}/`;
-	const token = Cookies.get('token');
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,

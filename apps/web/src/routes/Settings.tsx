@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet, useLoaderData, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
 	UserCircleIcon,
 	KeyIcon,
@@ -13,7 +13,6 @@ import UpdateUserForm from '@/components/forms/UpdateUser.forms';
 import { AdditionalSPForm, SocialProfileForm } from '@/components/forms/SocialProfile.forms';
 import PasswordResetForm from '@/components/forms/ResetPassword.forms';
 import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';
-import { socialProfileLoader } from '@/lib/queriesAndLoaders';
 
 const navigation = [
 	{
@@ -113,9 +112,6 @@ export function AccountProfile() {
 }
 
 export function SocialProfile() {
-	const initialSocialData = useLoaderData() as Awaited<
-		ReturnType<ReturnType<typeof socialProfileLoader>>
-	>;
 	return (
 		<div className="sm:px-6 lg:col-span-9 lg:px-0">
 			<div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
@@ -129,7 +125,7 @@ export function SocialProfile() {
 							possible match every week.
 						</p>
 					</div>
-					<SocialProfileForm initialSocialData={initialSocialData} />
+					<SocialProfileForm />
 				</div>
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>

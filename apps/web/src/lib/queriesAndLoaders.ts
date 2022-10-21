@@ -1,142 +1,125 @@
-// import { QueryClient } from '@tanstack/react-query';
-import { QueryClient } from '@tanstack/react-query';
-import { getUser } from '@/services/auth.services';
+import Cookies from 'js-cookie';
+import { checkTokenType, getUser } from '@/services/auth.services';
 import {
 	getAdded,
 	getAdditionalSP,
 	getBlockedUsers,
 	getCircle,
 	getOneOne,
-	getProfile,
 	getShadowUsers,
 	getSkippedUsers,
 	getSocialProfile,
 	getStatus,
-	getUsernameProfile,
+	getProfile,
 	getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
-import { getMeeting } from '@/services/meetings.services';
+import { getMeeting, idTypeCheck } from '@/services/meetings.services';
+import serverlessCookie from './serverlessCookie.lib';
 
 // ! only using social profile loader rn
 
-export const streamQuery = () => ({
+export const streamQuery = (token: string) => ({
 	queryKey: ['stream'],
-	queryFn: () => getStreamToken(),
-	staleTime: 1000 * 60 * 60 * 24, // 24 hours
-	cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-	refetchOnWindowFocus: false,
+	queryFn: () => getStreamToken(token),
 });
 
-export const streamUIDQuery = (username: string) => ({
+export const streamUIDQuery = (token: string, username: string) => ({
 	queryKey: ['streamUID', username],
-	queryFn: () => getStreamUID(username),
+	queryFn: () => getStreamUID(token, username),
 	staleTime: 1000 * 60 * 60 * 24, //
 	cacheTime: 1000 * 60 * 60 * 24, //
 	refetchOnWindowFocus: false,
 });
 
-export const meetingQuery = (uid: string) => ({
+export const tokenQuery = () => ({
+	queryKey: ['token'],
+	queryFn: () => serverlessCookie<string>('token'),
+	staleTime: 1000 * 60 * 60 * 24, // 24 hours
+	enabled: Cookies.get('loggedIn') === 'true',
+});
+
+export const refreshQuery = () => ({
+	queryKey: ['refresh'],
+	queryFn: () => serverlessCookie<string>('refresh'),
+	staleTime: 1000 * 60 * 60 * 24 * 14, // 14 days
+	enabled: Cookies.get('loggedIn') === 'true',
+});
+
+export const meetingQuery = (token: string, uid: string) => ({
 	queryKey: ['meeting', uid],
-	queryFn: () => getMeeting(uid),
+	queryFn: () => getMeeting(token, uid),
 	staleTime: 1000 * 60 * 5, // 5 minutes
 	cacheTime: 1000 * 60 * 5, // 5 minutes
 	refetchOnWindowFocus: false,
+	enabled: idTypeCheck(uid),
 });
 
-export const userQuery = () => ({
+export const userQuery = (token: string) => ({
 	queryKey: ['user'],
-	queryFn: () => getUser(),
+	queryFn: () => getUser(token),
+	enabled: checkTokenType(token),
 });
 
-export const profileQuery = () => ({
-	queryKey: ['profile'],
-	queryFn: () => getProfile(),
-});
-
-export const socialProfileQuery = () => ({
+export const socialProfileQuery = (token: string) => ({
 	queryKey: ['social-profile'],
-	queryFn: () => getSocialProfile(),
+	queryFn: () => getSocialProfile(token),
 });
 
-export const additionalSPQuery = () => ({
+export const additionalSPQuery = (token: string) => ({
 	queryKey: ['additional-sprefs'],
-	queryFn: () => getAdditionalSP(),
+	queryFn: () => getAdditionalSP(token),
 });
 
-export const statusQuery = () => ({
+export const statusQuery = (token: string) => ({
 	queryKey: ['userStatus'],
-	queryFn: () => getStatus(),
+	queryFn: () => getStatus(token),
+	enabled: checkTokenType(token),
 });
 
-export const profileUsernameQuery = (username: string) => ({
+export const profileQuery = (token: string, username: string) => ({
 	queryKey: ['profile', username],
-	queryFn: () => getUsernameProfile(username),
+	queryFn: () => getProfile(token, username),
+	enabled: Boolean(username) && username !== '',
 });
 
-export const socialProfileUsernameQuery = (username: string) => ({
+export const socialProfileUsernameQuery = (token: string, username: string) => ({
 	queryKey: ['social-profile', username],
-	queryFn: () => getUsernameSocialProfile(username),
+	queryFn: () => getUsernameSocialProfile(token, username),
+	enabled: Boolean(username) && username !== '' && checkTokenType(token),
 });
 
-export const userMatchesQuery = () => ({
+export const userMatchesQuery = (token: string) => ({
 	queryKey: ['matches'],
-	queryFn: () => getOneOne(),
+	queryFn: () => getOneOne(token),
 	staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
-export const userCircleQuery = (username: string) => ({
+export const userCircleQuery = (token: string, username: string) => ({
 	queryKey: ['circle', username],
-	enabled: Boolean(username),
-	queryFn: () => getCircle(username),
+	enabled: Boolean(username) && username !== '',
+	queryFn: () => getCircle(token, username),
 });
 
-export const userAddedQuery = () => ({
+export const userAddedQuery = (token: string) => ({
 	queryKey: ['added'],
-	queryFn: () => getAdded(),
+	queryFn: () => getAdded(token),
 });
 
-export const userBlockedQuery = () => ({
+export const userBlockedQuery = (token: string) => ({
 	queryKey: ['blocked'],
-	queryFn: () => getBlockedUsers(),
+	queryFn: () => getBlockedUsers(token),
 });
 
-export const userShadowedQuery = () => ({
+export const userShadowedQuery = (token: string) => ({
 	queryKey: ['shadowed'],
-	queryFn: () => getShadowUsers(),
+	queryFn: () => getShadowUsers(token),
 });
 
-export const userSkippedQuery = () => ({
+export const userSkippedQuery = (token: string) => ({
 	queryKey: ['skipped'],
-	queryFn: () => getSkippedUsers(),
+	queryFn: () => getSkippedUsers(token),
 });
 
-// profileempty and socialempty query are only used in Onboarding
 // verified query is only used in ChangeEmail
 // so not making a reusable query for them
-
-export const userLoader = (qc: QueryClient) => async () =>
-	qc.getQueryData(userQuery().queryKey) ?? (await qc.fetchQuery(userQuery()));
-
-export const profileLoader = (qc: QueryClient) => async () => {
-	const query = profileQuery();
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const socialProfileLoader = (qc: QueryClient) => async () => {
-	const query = socialProfileQuery();
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const statusLoader = (qc: QueryClient) => async () =>
-	qc.getQueryData(statusQuery().queryKey) ?? (await qc.fetchQuery(statusQuery()));
-
-export const profileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-	const query = profileUsernameQuery(username);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const socialProfileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-	const query = socialProfileUsernameQuery(username);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};

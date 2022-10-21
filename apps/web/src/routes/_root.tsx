@@ -1,14 +1,16 @@
 import clsx from 'clsx';
 import React from 'react';
+import Cookies from 'js-cookie';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
 import { GraphTextureSVG } from '@devclad/ui';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
-import { refreshToken } from '@/services/auth.services';
+import { checkTokenType, refreshToken } from '@/services/auth.services';
 import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
+import SplashScreen from '@/components/Splash';
 
 const allowedPaths = [
 	'/login',
@@ -23,17 +25,23 @@ function Routing(): JSX.Element {
 	const { pathname } = useLocation();
 	const { authed } = useAuth();
 	const { approved } = useApproved();
+	const { token, refresh } = useAuth();
+	const loggedInCookie = Cookies.get('loggedIn');
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
+		if (checkTokenType(token) && checkTokenType(refresh)) {
+			qc.setQueryData(['token'], token); // setting data on first load to use in functions
+			qc.setQueryData(['refresh'], refresh);
+		}
 		if (authed) {
 			setInterval(() => {
 				refreshToken();
-			}, 1000 * 60 * 90); // (lower than 2 hour on the backend)
+			}, 1000 * 60 * 60 * 2); // refresh token every 2 hours
 		}
-	}, [authed]);
+	}, [qc, authed, token, refresh]);
 
 	// UNAUTHED
-	if (qc.getQueryData(['user']) === null) {
+	if (!authed && !loggedInCookie) {
 		if (!allowedPaths.includes(pathname)) {
 			return <Navigate to="/login" />;
 		}
@@ -56,8 +64,7 @@ function Routing(): JSX.Element {
 			</AppShell>
 		);
 	}
-
-	return <div />;
+	return <SplashScreen />;
 }
 
 export default function Root(): JSX.Element {
@@ -70,6 +77,13 @@ export default function Root(): JSX.Element {
 			document.getElementById('body')?.classList.add('bg-black');
 		}
 	}, [darkMode]);
+	// const initialData = useLoaderData() as Awaited<
+	// 	ReturnType<ReturnType<typeof initialDataLoader>>
+	// >;
+	// React.useEffect(() => {
+	// 	qc.setQueryData(['initialData'], initialData);
+	// 	console.log('initialData', initialData);
+	// }, [initialData, qc]);
 	return (
 		<div style={{ backgroundImage: `url(${GraphTextureSVG})` }}>
 			<div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>

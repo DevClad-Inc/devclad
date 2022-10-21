@@ -1,26 +1,17 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import { API_URL } from '@/services/auth.services';
+import { API_URL, checkTokenType } from '@/services/auth.services';
 import { Meeting } from '@/lib/InterfacesStates.lib';
 
-export const getMeetings = (uid: string) => {
-	const token = Cookies.get('token');
-	const url = `${API_URL}/social/meetings/${uid}/`; // either "all" or uid
-	if (token) {
-		return axios({
-			method: 'GET',
-			url,
-			headers: { Authorization: `Bearer ${token}` },
-		});
+export const idTypeCheck = (id: string | undefined | null) => {
+	if (typeof id === 'string' && id.length > 0 && id !== 'undefined' && id !== 'null') {
+		return true;
 	}
-	return null;
+	return false;
 };
 
-export const getMeeting = (id: string) => {
-	const token = Cookies.get('token');
+export const getMeeting = (token: string, id: string) => {
 	const url = `${API_URL}/social/meetings/${id}/`;
-
-	if (token) {
+	if (checkTokenType(token) && idTypeCheck(id)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -30,11 +21,10 @@ export const getMeeting = (id: string) => {
 	return null;
 };
 
-export const createUpdateMeeting = (data: Meeting) => {
-	const token = Cookies.get('token');
+export const createUpdateMeeting = (token: string, data: Meeting) => {
 	const url = `${API_URL}/social/meetings/`;
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,

@@ -7,26 +7,20 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { changeEmail, checkVerified, resendEmail } from '@/services/auth.services';
+import { changeEmail, checkTokenType, checkVerified, resendEmail } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
-import { userQuery } from '@/lib/queriesAndLoaders';
+import { InterfaceEmail } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '../LoadingStates';
+import { useAuth } from '@/services/useAuth.services';
 
 export default function ChangeEmailForm(): JSX.Element {
-	let loggedInUser: User = { ...initialUserState };
 	let verified = false;
 	const qc = useQueryClient();
-	const {
-		data: userQueryData,
-		isSuccess: userQuerySuccess,
-		isLoading: userQueryLoading,
-	} = useQuery(userQuery());
-	if (userQuerySuccess && userQueryData !== null) {
-		loggedInUser = userQueryData.data;
-	}
-	const verifiedQuery = useQuery(['verified'], () => checkVerified());
+	const { token, loggedInUser } = useAuth();
+	const verifiedQuery = useQuery(['verified'], () => checkVerified(token), {
+		enabled: checkTokenType(token),
+	});
 	if (verifiedQuery.isSuccess && verifiedQuery.data !== null) {
 		const { data } = verifiedQuery.data;
 		verified = data.verified;
@@ -48,8 +42,8 @@ export default function ChangeEmailForm(): JSX.Element {
 	) => {
 		setSubmitting(true);
 		const { email } = values;
-		await changeEmail(email)
-			.then(async () => {
+		await changeEmail(token, email)
+			?.then(async () => {
 				await qc.invalidateQueries(['user']);
 				await qc.invalidateQueries(['verified']);
 				toast.custom(<Success success="Verification Email Sent." />, {
@@ -66,7 +60,7 @@ export default function ChangeEmailForm(): JSX.Element {
 			});
 		setSubmitting(false);
 	};
-	if (userQueryLoading || verifiedQuery.isLoading) {
+	if (qc.getQueryState(['user'])?.status === 'loading' || verifiedQuery.isLoading) {
 		return (
 			<div className="flex items-center justify-center">
 				<ProfileLoading />

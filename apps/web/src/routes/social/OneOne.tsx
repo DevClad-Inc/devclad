@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
 import { greenString, redString, warningString, badge, PrimaryButton } from '@/lib/Buttons.lib';
 import {
-	useCircleUsernames,
+	useCircle,
 	useOneOneProfile,
 	useOneOneUsernames,
 	useSkippedUsernames,
@@ -33,21 +33,21 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', username]);
 	// logged in username and connection check
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const loggedInUserUserName = loggedInUser.username;
 	const connected = useConnected(username);
 	// logged in username and connection check
 	const { usernames: skippedUsers } = useSkippedUsernames();
 	const { usernames: shadowedUsers } = useShadowedUsernames();
-	const { usernames: circle } = useCircleUsernames();
+	const { usernames: circle } = useCircle();
 
 	const [open, setOpen] = React.useState(false);
 	const [action, setAction] = React.useState('');
 	const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
 	const handleAdd = async () => {
-		await patchCircle(username, circle, 'add')
-			.then(async () => {
+		await patchCircle(token, username, circle, 'add')
+			?.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
 					id: 'connect-profile-success',
 					duration: 3000,
@@ -64,8 +64,8 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	};
 
 	const handleSkip = async () => {
-		await skipUser(username, skippedUsers, true)
-			.then(async () => {
+		await skipUser(token, username, skippedUsers, true)
+			?.then(async () => {
 				toast.custom(<Success success="Skipped successfully" />, {
 					id: 'skip-profile-success',
 					duration: 3000,
@@ -82,8 +82,8 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	};
 
 	const handleShadow = async () => {
-		await shadowUser(username, shadowedUsers, true)
-			.then(async () => {
+		await shadowUser(token, username, shadowedUsers, true)
+			?.then(async () => {
 				toast.custom(<Success success="Shadowed successfully" />, {
 					id: 'shadow-profile-success',
 					duration: 3000,

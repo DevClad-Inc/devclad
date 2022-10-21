@@ -2,10 +2,10 @@
 
 ## Database and Async
 
--   PostgresQL (in prod only)
--   Redis for caching and async tasks.
--   Channel layer for websocket communication.
--   Celery for scheduling async tasks.
+- PostgresQL (in prod only)
+- Redis for caching and async tasks.
+- Channel layer for websocket communication.
+- Celery for scheduling async tasks.
 
 ## Code Formatting
 

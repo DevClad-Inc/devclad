@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios, { AxiosResponse } from 'axios';
 import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
-import { refreshToken, API_URL, verifyToken } from '@/services/auth.services';
+import { refreshToken, API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
+import serverlessCookie from '@/lib/serverlessCookie.lib';
 
-export async function getProfile() {
-	const url = `${API_URL}/users/profile/`;
-	const token = Cookies.get('token');
+export async function getProfile(
+	token: string,
+	username: string
+): Promise<AxiosResponse<Profile> | null> {
+	const url = `${API_URL}/users/profile/${username}/`;
+	const refresh = await serverlessCookie<string>('refresh');
 	let isVerified = false;
-	if (token) {
+	if (checkTokenType(token)) {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {
@@ -21,32 +24,15 @@ export async function getProfile() {
 			.then((resp) => resp)
 			.catch(() => null);
 	}
-	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
+	if ((token === undefined || !isVerified) && refresh) {
 		await refreshToken();
 	}
 	return null;
 }
 
-export function getUsernameProfile(username: string) {
-	const url = `${API_URL}/users/profile/${username}/`;
-	const token = Cookies.get('token');
-	if (token) {
-		return axios
-			.get(url, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			.then((resp) => resp)
-			.catch(() => null);
-	}
-	return null;
-}
-
-export function updateProfile(values: Profile, profileData: Profile) {
+export function updateProfile(token: string, values: Profile, profileData: Profile) {
 	const { pronouns, about, website, linkedin, calendly } = values;
-	const token = Cookies.get('token');
-	if (token && profileData) {
+	if (checkTokenType(token) && profileData) {
 		return axios({
 			method: 'PATCH',
 			url: `${API_URL}/users/profile/`,
@@ -65,12 +51,11 @@ export function updateProfile(values: Profile, profileData: Profile) {
 	return null;
 }
 
-export function updateProfileAvatar(avatar: File) {
+export function updateProfileAvatar(token: string, avatar: File) {
 	const url = `${import.meta.env.VITE_API_URL}/users/profile/`;
-	const token = Cookies.get('token');
 	const formData = new FormData();
 	formData.append('avatar', avatar);
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -83,10 +68,9 @@ export function updateProfileAvatar(avatar: File) {
 	return null;
 }
 
-export function getSocialProfile() {
+export function getSocialProfile(token: string) {
 	const url = `${API_URL}/social/profile/`;
-	const token = Cookies.get('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -98,10 +82,9 @@ export function getSocialProfile() {
 	return null;
 }
 
-export function getUsernameSocialProfile(username: string) {
+export function getUsernameSocialProfile(token: string, username: string) {
 	const url = `${API_URL}/social/profile/${username}/`;
-	const token = Cookies.get('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -113,7 +96,11 @@ export function getUsernameSocialProfile(username: string) {
 	return null;
 }
 
-export function updateSocialProfile(values: SocialProfile, socialProfileData: SocialProfile) {
+export function updateSocialProfile(
+	token: string,
+	values: SocialProfile,
+	socialProfileData: SocialProfile
+) {
 	const {
 		preferred_dev_type,
 		idea_status,
@@ -124,7 +111,6 @@ export function updateSocialProfile(values: SocialProfile, socialProfileData: So
 		location,
 		timezone,
 	} = values;
-	const token = Cookies.get('token');
 	if (token && socialProfileData) {
 		return axios({
 			method: 'PATCH',
@@ -150,10 +136,9 @@ export function updateSocialProfile(values: SocialProfile, socialProfileData: So
 	return null;
 }
 
-export function getAdditionalSP() {
+export function getAdditionalSP(token: string) {
 	const url = `${API_URL}/social/additional-prefs/`;
-	const token = Cookies.get('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -163,10 +148,9 @@ export function getAdditionalSP() {
 	return null;
 }
 
-export function updateAdditionalSP(values: AdditionalSP) {
+export function updateAdditionalSP(token: string, values: AdditionalSP) {
 	const { video_call_friendly, available_always_off } = values;
-	const token = Cookies.get('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url: `${API_URL}/social/additional-prefs/`,
@@ -182,10 +166,9 @@ export function updateAdditionalSP(values: AdditionalSP) {
 	return null;
 }
 
-export function checkProfileEmpty() {
+export function checkProfileEmpty(token: string) {
 	const url = `${API_URL}/users/is-complete/`;
-	const token = Cookies.get('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -197,10 +180,9 @@ export function checkProfileEmpty() {
 	return null;
 }
 
-export function checkSocialProfileEmpty() {
+export function checkSocialProfileEmpty(token: string) {
 	const url = `${API_URL}/social/is-complete/`;
-	const token = Cookies.get('token');
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -217,10 +199,9 @@ This deals with UserStatus Model.
 getStatus() - This is to check "approved" field.
 setSubmittedStatus() - This is to set the "status" field to "Submitted".
 */
-export const getStatus = () => {
-	const token = Cookies.get('token');
+export const getStatus = (token: string | undefined) => {
 	const url = `${API_URL}/users/status/`;
-	if (token) {
+	if (token !== undefined && token !== '') {
 		return axios({
 			method: 'GET',
 			url,
@@ -234,10 +215,9 @@ export const getStatus = () => {
 	return null;
 };
 
-export const setSubmittedStatus = () => {
-	const token = Cookies.get('token');
+export const setSubmittedStatus = (token: string) => {
 	const url = `${API_URL}/users/status/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -250,10 +230,9 @@ export const setSubmittedStatus = () => {
 
 // =================== ONE-ONE ML ===================
 
-export const getOneOne = () => {
-	const token = Cookies.get('token');
+export const getOneOne = (token: string) => {
 	const url = `${API_URL}/social/one-one/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -267,10 +246,9 @@ export const getOneOne = () => {
 	return null;
 };
 
-export const getShadowUsers = () => {
-	const token = Cookies.get('token');
+export const getShadowUsers = (token: string) => {
 	const url = `${API_URL}/social/shadow/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -284,8 +262,12 @@ export const getShadowUsers = () => {
 	return null;
 };
 
-export const shadowUser = (username: string, shadowed: string[], shadow: boolean) => {
-	const token = Cookies.get('token');
+export const shadowUser = (
+	token: string,
+	username: string,
+	shadowed: string[],
+	shadow: boolean
+) => {
 	const url = `${API_URL}/social/shadow/`;
 
 	if (shadow) {
@@ -296,7 +278,7 @@ export const shadowUser = (username: string, shadowed: string[], shadow: boolean
 			shadowed.splice(index, 1);
 		}
 	}
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -307,10 +289,9 @@ export const shadowUser = (username: string, shadowed: string[], shadow: boolean
 	return null;
 };
 
-export const getSkippedUsers = () => {
-	const token = Cookies.get('token');
+export const getSkippedUsers = (token: string) => {
 	const url = `${API_URL}/social/skipped/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -324,8 +305,12 @@ export const getSkippedUsers = () => {
 	return null;
 };
 
-export const skipUser = (username: string, skipped: string[], skip: boolean) => {
-	const token = Cookies.get('token');
+export const skipUser = (
+	token: string,
+	username: string,
+	skipped: string[],
+	skip: boolean
+) => {
 	const url = `${API_URL}/social/skipped/`;
 
 	if (skip) {
@@ -338,7 +323,7 @@ export const skipUser = (username: string, skipped: string[], skip: boolean) => 
 			skipped.splice(index, 1);
 		}
 	}
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -350,10 +335,9 @@ export const skipUser = (username: string, skipped: string[], skip: boolean) => 
 };
 
 // =================== circle ===================
-export const getAdded = () => {
-	const token = Cookies.get('token');
+export const getAdded = (token: string) => {
 	const url = `${API_URL}/social/added/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -367,10 +351,9 @@ export const getAdded = () => {
 	return null;
 };
 
-export const getCircle = (username: string) => {
-	const token = Cookies.get('token');
+export const getCircle = (token: string, username: string) => {
 	const url = `${API_URL}/social/circle/${username}/get/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -385,8 +368,12 @@ export const getCircle = (username: string) => {
 };
 
 // Add is only for One-One
-export const patchCircle = (operationUsername: string, circle: string[], operation: string) => {
-	const token = Cookies.get('token');
+export const patchCircle = (
+	token: string,
+	operationUsername: string,
+	circle: string[],
+	operation: string
+) => {
 	let url = `${API_URL}/social/circle/`;
 	if (operation === 'add') {
 		url += `${operationUsername}/add/`;
@@ -401,7 +388,7 @@ export const patchCircle = (operationUsername: string, circle: string[], operati
 		}
 	}
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -416,10 +403,9 @@ export const patchCircle = (operationUsername: string, circle: string[], operati
 	return null;
 };
 
-export const getBlockedUsers = () => {
-	const token = Cookies.get('token');
+export const getBlockedUsers = (token: string) => {
 	const url = `${API_URL}/social/block/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -429,8 +415,12 @@ export const getBlockedUsers = () => {
 	return null;
 };
 
-export const blockUser = (operationUsername: string, blocked: string[], operation: string) => {
-	const token = Cookies.get('token');
+export const blockUser = (
+	token: string,
+	operationUsername: string,
+	blocked: string[],
+	operation: string
+) => {
 	const url = `${API_URL}/social/block/`;
 
 	if (operation === 'block') {
@@ -444,7 +434,7 @@ export const blockUser = (operationUsername: string, blocked: string[], operatio
 		}
 	}
 
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,

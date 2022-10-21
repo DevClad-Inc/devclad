@@ -1,23 +1,23 @@
 import React, { ChangeEvent, Fragment, useContext } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { Profile, initialProfileState, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
+import { Profile, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
 import { Error, Success } from '@/components/Feedback';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
-import { profileQuery } from '@/lib/queriesAndLoaders';
 import { ProfileLoading } from '../LoadingStates';
+import { useAuth } from '@/services/useAuth.services';
+import { useProfile } from '@/services/socialHooks.services';
 
 export default function UpdateProfileForm(): JSX.Element {
-	let profileData: Profile = { ...initialProfileState };
-	const { data: profileQueryData, isSuccess: profileQuerySuccess } = useQuery(profileQuery());
-	if (profileQuerySuccess && profileQueryData !== null) {
-		profileData = profileQueryData.data;
-	}
 	const qc = useQueryClient();
+	const { token, loggedInUser } = useAuth();
+	const profileData = useProfile(
+		loggedInUser.username !== undefined ? loggedInUser.username : ''
+	) as Profile;
 	const validate = (values: UpdateProfileFormValues) => {
 		const errors: UpdateProfileFormValues['errors'] = {};
 		// ABOUT
@@ -54,7 +54,7 @@ export default function UpdateProfileForm(): JSX.Element {
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
 		setSubmitting(true);
-		await updateProfile(values, profileData)
+		await updateProfile(token, values, profileData)
 			?.then(() => {
 				setSubmitting(false);
 				invalidateAndStoreIDB(qc, 'profile');
@@ -76,7 +76,7 @@ export default function UpdateProfileForm(): JSX.Element {
 			});
 	};
 
-	if (profileQuerySuccess && profileQueryData !== null) {
+	if (profileData) {
 		return (
 			<Formik
 				initialValues={{
@@ -246,16 +246,11 @@ const enableDropping = (event: React.DragEvent<HTMLDivElement>) => {
 export function AvatarUploadForm() {
 	const { darkMode } = useContext(ThemeContext);
 	const qc = useQueryClient();
-	let profileData: Profile = { ...initialProfileState };
-	const {
-		data: profileQueryData,
-		isSuccess: profileQuerySuccess,
-		isLoading: profileQueryLoading,
-	} = useQuery(profileQuery());
-	if (profileQuerySuccess && profileQueryData !== null) {
-		profileData = profileQueryData.data;
-	}
-	if (profileQueryLoading) {
+	const { token, loggedInUser } = useAuth();
+	const profileData = useProfile(
+		loggedInUser.username !== undefined ? loggedInUser.username : ''
+	) as Profile;
+	if (qc.getQueryState(['profile', loggedInUser.username as string])?.status === 'loading') {
 		return <ProfileLoading />;
 	}
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -269,7 +264,7 @@ export function AvatarUploadForm() {
 					color: darkMode ? '#f0abfc' : '#1f2937',
 				},
 			});
-			updateProfileAvatar(file)
+			updateProfileAvatar(token, file)
 				?.then(() => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);
@@ -287,7 +282,7 @@ export function AvatarUploadForm() {
 	const handleonChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const avatar = e.target.files && e.target.files[0];
 		if (avatar) {
-			updateProfileAvatar(avatar)
+			updateProfileAvatar(token, avatar)
 				?.then(() => {
 					invalidateAndStoreIDB(qc, 'profile');
 					toast.custom(<Success success="Profile avatar updated successfully!" />);

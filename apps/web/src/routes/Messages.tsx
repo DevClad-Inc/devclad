@@ -9,12 +9,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Channel, DefaultGenerics, StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
 import { classNames, useDocumentTitle } from '@devclad/lib';
-import {
-	useCircleUsernames,
-	useConnected,
-	useProfile,
-	useStreamUID,
-} from '@/services/socialHooks.services';
+import { useCircle, useConnected, useProfile, useStreamUID } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 import { badge } from '@/lib/Buttons.lib';
 import { Profile } from '@/lib/InterfacesStates.lib';
@@ -67,7 +62,7 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 
 export default function Messages() {
 	useDocumentTitle('Messages');
-	const { usernames: circle } = useCircleUsernames() as {
+	const { usernames: circle } = useCircle() as {
 		usernames: string[];
 	};
 	return (

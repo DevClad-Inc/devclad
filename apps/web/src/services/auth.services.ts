@@ -1,10 +1,13 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
-import Cookies from 'js-cookie';
-import { NewUser } from '@/lib/InterfacesStates.lib';
+import { NewUser, User } from '@/lib/InterfacesStates.lib';
+import { tokenQuery } from '@/lib/queriesAndLoaders';
+import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
+export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
 
 const headers = {
 	'Content-Type': 'application/json',
@@ -15,6 +18,18 @@ const qc = new QueryClient();
 
 // const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
 
+export const checkTokenType = (token: string | undefined | null) => {
+	if (
+		typeof token === 'string' &&
+		token.length > 0 &&
+		token !== 'undefined' &&
+		token !== 'null'
+	) {
+		return true;
+	}
+	return false;
+};
+
 export const verifyEmail = async (key: string) => {
 	const url = `${API_URL}/auth/registration/verify-email/`;
 	const response = await axios.post(url, { key }, { headers });
@@ -24,8 +39,8 @@ export const verifyEmail = async (key: string) => {
 export const passwordReset = async (
 	password1: string,
 	password2: string,
-	uid?: string,
-	token?: string
+	uid: string,
+	token: string
 ) => {
 	const url = `${API_URL}/auth/password/reset/confirm/`;
 	const response = await axios.post(
@@ -41,30 +56,31 @@ export const passwordReset = async (
 	return response.data;
 };
 
-export const passwordChange = async (password1: string, password2: string) => {
-	const token = Cookies.get('token');
+export const passwordChange = async (token: string, password1: string, password2: string) => {
 	const url = `${API_URL}/auth/password/change/`;
-	const response = await axios.post(
-		url,
-		{
-			new_password1: password1,
-			new_password2: password2,
-		},
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
+	if (checkTokenType(token)) {
+		const response = await axios.post(
+			url,
+			{
+				new_password1: password1,
+				new_password2: password2,
 			},
-		}
-	);
-	return response;
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			}
+		);
+		return response;
+	}
+	return null;
 };
 
-export const changeEmail = (email: string) => {
-	const token = Cookies.get('token');
+export const changeEmail = (token: string, email: string) => {
 	const url = `${API_URL}/users/change-email/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
 			url,
@@ -79,10 +95,9 @@ export const changeEmail = (email: string) => {
 	return null;
 };
 
-export const checkVerified = () => {
-	const token = Cookies.get('token');
+export const checkVerified = (token: string) => {
 	const url = `${API_URL}/users/change-email/`;
-	if (token) {
+	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',
 			url,
@@ -125,42 +140,47 @@ export function verifyToken(token: string): Promise<boolean> {
 		.catch(() => false);
 }
 
-export function refreshToken() {
+export async function refreshToken() {
 	const url = `${API_URL}/auth/token/refresh/`;
-	const token = Cookies.get('token');
-	return axios
-		.post(url, {
-			refresh: Cookies.get('refresh'),
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-			credentials: 'same-origin',
-		})
-		.then((resp) => {
-			Cookies.set('token', resp.data.access, {
-				sameSite: 'strict',
-				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
+	const refresh = await serverlessCookie<string>('refresh');
+	if (checkTokenType(refresh)) {
+		return axios
+			.post(url, {
+				refresh,
+				headers: {
+					Authorization: `Bearer ${refresh}`,
+				},
+				credentials: 'same-origin',
+			})
+			.then((resp) => {
+				serverlessCookie<string>('token', resp.data.access, 60 * 60 * 36, false)
+					.then(() => {
+						serverlessCookie<string>(
+							'refresh',
+							resp.data.refresh,
+							60 * 60 * 24 * 28,
+							false
+						);
+					})
+					.then(() => {
+						window.location.reload();
+					});
 			});
-			Cookies.set('refresh', resp.data.refresh, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
-			});
-		})
-		.then(async () => {
-			await qc.invalidateQueries();
-		});
+	}
+	return null;
 	// .catch(() => {
 	// 	delMany(['loggedInUser', 'profile']);
 	// 	Cookies.remove('token');
 	// });
 }
 
-export async function getUser() {
+export async function getUser(token: string): Promise<AxiosResponse<User> | null> {
 	const url = `${API_URL}/auth/user/`;
-	const token = Cookies.get('token');
+	// todo: store this in jotai instead of passing props
+	const refresh = await serverlessCookie<string>('refresh');
 	let isVerified = false;
-	if (token) {
+	// check if token is a string
+	if (checkTokenType(token) && checkTokenType(refresh)) {
 		isVerified = await verifyToken(token);
 	}
 	if (isVerified) {
@@ -173,15 +193,19 @@ export async function getUser() {
 			.then((resp) => resp)
 			.catch(() => null);
 	}
-	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
+	if ((!checkTokenType(token) || !isVerified) && checkTokenType(refresh)) {
 		await refreshToken();
 	}
 	return null;
 }
 
-export function updateUser(first_name?: string, last_name?: string, username?: string) {
-	const token = Cookies.get('token');
-	if (token) {
+export function updateUser(
+	token: string,
+	first_name?: string,
+	last_name?: string,
+	username?: string
+) {
+	if (checkTokenType(token)) {
 		return axios.patch(
 			`${API_URL}/auth/user/`,
 			{ first_name, last_name, username },
@@ -202,15 +226,8 @@ export function SignUp(user: NewUser) {
 			headers,
 		})
 		.then((resp) => {
-			Cookies.set('token', resp.data.access_token, {
-				sameSite: 'strict',
-				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
-			});
-			Cookies.set('refresh', resp.data.refresh_token, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
-			});
+			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 36, false);
+			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 28, false);
 			return resp;
 		})
 		.catch((err) => err);
@@ -218,44 +235,54 @@ export function SignUp(user: NewUser) {
 
 export async function logIn(email: string, password: string) {
 	const url = `${API_URL}/auth/login/`;
+	let token;
 	const response = await axios
 		.post(url, {
 			email,
 			password,
 			headers,
-			credentials: 'same-origin',
+			credentials: 'include',
 		})
-		.then((resp) => {
-			Cookies.set('token', resp.data.access_token, {
-				sameSite: 'strict',
-				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
-			});
-			Cookies.set('refresh', resp.data.refresh_token, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: import.meta.env.VITE_DEVELOPMENT !== 'True',
+		.then( (resp) => {
+			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
+			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
+			token = qc.refetchQueries(tokenQuery().queryKey);
+			Cookies.set('loggedIn', 'true', {
+				path: '/',
+				sameSite: 'Strict',
 			});
 		});
-	return response;
+	return { response, token };
 }
 
 export async function logOut() {
-	const refresh = Cookies.get('refresh');
+	const refresh = await serverlessCookie<string>('refresh');
 	const url = `${API_URL}/auth/logout/`;
 
 	if (refresh) {
-		const response = await axios
-			.post(url, {
-				refresh,
-				headers,
-				credentials: 'same-origin',
-			})
+		const response = serverlessCookie<string>('token', '', 0, true)
 			.then(() => {
-				delMany(['loggedInUser', 'profile']);
-				Cookies.remove('token');
-				Cookies.remove('refresh');
+				Cookies.remove('loggedIn');
+				serverlessCookie<string>('refresh', '', 0, true);
 			})
-			.catch(() => null);
+			.then(async () => {
+				await axios
+					.post(url, {
+						refresh,
+						headers,
+						credentials: 'same-origin',
+					})
+					.then(async () => {
+						await delMany(['loggedInUser', 'profile'])
+							.then(() => {
+								qc.invalidateQueries();
+							})
+							.then(() => {
+								window.location.reload();
+							});
+					})
+					.catch(() => window.location.reload());
+			});
 		return response;
 	}
 	return null;

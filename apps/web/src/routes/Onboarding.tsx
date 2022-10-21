@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
@@ -8,22 +8,22 @@ import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
-import { logOut } from '@/services/auth.services';
-import { UserStatus, initialUserStatus, initialUserState, User } from '@/lib/InterfacesStates.lib';
+import { checkTokenType, logOut } from '@/services/auth.services';
 import {
 	checkProfileEmpty,
 	checkSocialProfileEmpty,
-	getStatus,
 	setSubmittedStatus,
 } from '@/services/profile.services';
-import { socialProfileLoader, socialProfileQuery, userQuery } from '@/lib/queriesAndLoaders';
+import { socialProfileQuery } from '@/lib/queriesAndLoaders';
 import { ProfileLoading } from '@/components/LoadingStates';
+import { useApproved, useAuth } from '@/services/useAuth.services';
 
 const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
 duration-500 rounded-md py-1 px-6 inline-flex justify-center text-md dark:text-orange-200`;
 
 export function StepOne() {
 	const qc = useQueryClient();
+	const { token } = useAuth();
 	return (
 		<div className="max-w-prose">
 			<UpdateProfileForm />
@@ -33,7 +33,7 @@ export function StepOne() {
 					className={linkClassesString}
 					to="/onboarding/step-two"
 					onMouseEnter={() => {
-						qc.prefetchQuery(socialProfileQuery());
+						qc.prefetchQuery(socialProfileQuery(token));
 					}}
 				>
 					Proceed to Step 2
@@ -44,22 +44,23 @@ export function StepOne() {
 }
 
 export function StepTwo() {
-	const initialSocialData = useLoaderData() as Awaited<
-		ReturnType<ReturnType<typeof socialProfileLoader>>
-	>;
 	const qc = useQueryClient();
 	const checkEmpty: {
 		profile: boolean;
 		socialProfile: boolean;
 	} = { profile: false, socialProfile: false };
-	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty());
-	const socialEmptyQuery = useQuery(['social-profile-empty'], () => checkSocialProfileEmpty());
-	let userStatus: UserStatus = { ...initialUserStatus };
-	const statusQuery = useQuery(['userStatus'], () => getStatus());
-	if (statusQuery.isSuccess && statusQuery.data !== null) {
-		const { data } = statusQuery;
-		userStatus = data.data;
-	}
+	const { token } = useAuth();
+	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty(token), {
+		enabled: checkTokenType(token),
+	});
+	const socialEmptyQuery = useQuery(
+		['social-profile-empty'],
+		() => checkSocialProfileEmpty(token),
+		{
+			enabled: checkTokenType(token),
+		}
+	);
+	const { status } = useApproved();
 	if (profileEmptyQuery.isLoading || socialEmptyQuery.isLoading) {
 		return <ProfileLoading />;
 	}
@@ -78,13 +79,13 @@ export function StepTwo() {
 		}
 	}
 	let submitText = 'Submit Request';
-	if (userStatus && userStatus.status === 'Submitted') {
+	if (status === 'Submitted') {
 		submitText = 'Submitted Request';
 	}
 
 	return (
 		<div className="max-w-5xl">
-			<SocialProfileForm initialSocialData={initialSocialData} />
+			<SocialProfileForm />
 			<div className="mt-10 flex justify-between p-2">
 				<div className="inline-flex justify-start">
 					<Link className={linkClassesString} to="/onboarding/">
@@ -98,7 +99,7 @@ export function StepTwo() {
 						className={classNames(
 							!checkEmpty.profile ||
 								!checkEmpty.socialProfile ||
-								userStatus.status === 'Submitted'
+								status === 'Submitted'
 								? 'cursor-not-allowed'
 								: '',
 							linkClassesString
@@ -107,10 +108,10 @@ export function StepTwo() {
 							if (
 								checkEmpty.profile &&
 								checkEmpty.socialProfile &&
-								userStatus.status !== 'Submitted'
+								status !== 'Submitted'
 							) {
-								await setSubmittedStatus()
-									.then(async () => {
+								await setSubmittedStatus(token)
+									?.then(async () => {
 										toast.custom(<Success success="Submitted request!" />);
 										await qc.refetchQueries(['userStatus']);
 									})
@@ -135,35 +136,22 @@ export function Onboarding() {
 	const navigate = useNavigate();
 	const handlelogOut = async () => {
 		await logOut().then(() => {
-			navigate('/login');
+			navigate(0);
 		});
 	};
-	let loggedInUser: User = { ...initialUserState };
-	const {
-		data: userQueryData,
-		isSuccess: userQuerySuccess,
-		isLoading: userQueryLoading,
-	} = useQuery(userQuery());
-	if (userQuerySuccess && userQueryData !== null) {
-		loggedInUser = userQueryData.data;
-	}
-	let userStatus: UserStatus = { ...initialUserStatus };
-	const statusQuery = useQuery(['userStatus'], () => getStatus());
+	const { loggedInUser } = useAuth();
+	const qc = useQueryClient();
+	const { status, approved } = useApproved();
 	if (
-		statusQuery.isSuccess &&
-		statusQuery.data !== null &&
-		Object.values(userStatus).every((value) => value === undefined)
+		qc.getQueryState(['user'])?.status === 'loading' ||
+		qc.getQueryState(['userStatus'])?.status === 'loading'
 	) {
-		const { data } = statusQuery;
-		userStatus = data.data;
-	}
-	if (userQueryLoading || statusQuery.isLoading) {
 		return <ProfileLoading />;
 	}
-	if (userStatus && userStatus.approved) {
+	if (approved) {
 		return <Navigate to="/" />;
 	}
-	if (userStatus && !userStatus.approved) {
+	if (approved === false) {
 		return (
 			<div>
 				<div className="backdrop-blur-0">
@@ -207,7 +195,7 @@ export function Onboarding() {
 					</div>
 					<div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
 						<div className="w-fit-content mx-auto p-2">
-							{userStatus.status === 'Not Submitted' ? (
+							{status === 'Not Submitted' ? (
 								<>
 									<Warning warning="Not submitted request to join yet." />
 									<Info info="Tip: Fill out as much as possible for quicker request approval." />

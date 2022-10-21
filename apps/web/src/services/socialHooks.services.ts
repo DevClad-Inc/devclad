@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
 	additionalSPQuery,
-	profileUsernameQuery,
+	profileQuery,
 	socialProfileUsernameQuery,
 	socialProfileQuery,
 	userBlockedQuery,
@@ -15,9 +15,14 @@ import {
 } from '@/lib/queriesAndLoaders';
 import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
+import { checkTokenType } from './auth.services';
 
 export const useStreamUID = (username: string) => {
-	const { isSuccess, data } = useQuery(streamUIDQuery(username));
+	const { token } = useAuth();
+	const { isSuccess, data } = useQuery({
+		...streamUIDQuery(token, username),
+		enabled: checkTokenType(token) && Boolean(username),
+	});
 	if (isSuccess && data) {
 		const { uid } = data as { uid: string };
 		return uid;
@@ -26,8 +31,9 @@ export const useStreamUID = (username: string) => {
 };
 
 export const useOneOneUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const matchesQuery = useQuery(userMatchesQuery());
+	const matchesQuery = useQuery(userMatchesQuery(token));
 	if (matchesQuery.isSuccess && matchesQuery.data !== null) {
 		const { data } = matchesQuery.data;
 		for (let i = 0; i < data.matches_this_week.length; i += 1) {
@@ -38,8 +44,9 @@ export const useOneOneUsernames = () => {
 };
 
 export const useShadowedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const shadowedQuery = useQuery(userShadowedQuery());
+	const shadowedQuery = useQuery(userShadowedQuery(token));
 	if (shadowedQuery.isSuccess && shadowedQuery.data !== null) {
 		const { data } = shadowedQuery.data;
 		for (let i = 0; i < data.length; i += 1) {
@@ -50,8 +57,9 @@ export const useShadowedUsernames = () => {
 };
 
 export const useSkippedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const skippedQuery = useQuery(userSkippedQuery());
+	const skippedQuery = useQuery(userSkippedQuery(token));
 	if (skippedQuery.isSuccess && skippedQuery.data !== null) {
 		const { data } = skippedQuery.data;
 		for (let i = 0; i < data.length; i += 1) {
@@ -61,11 +69,11 @@ export const useSkippedUsernames = () => {
 	return { usernames };
 };
 
-export const useCircleUsernames = () => {
-	const { loggedInUser } = useAuth();
-	const username = loggedInUser?.username;
+export const useCircle = () => {
+	const { token, loggedInUser } = useAuth();
+	const { username } = loggedInUser;
 	const usernames = [];
-	const circleQuery = useQuery(userCircleQuery(username as string));
+	const circleQuery = useQuery(userCircleQuery(token, username as string));
 	if (circleQuery.isSuccess && circleQuery.data !== null) {
 		const { data } = circleQuery.data;
 		for (let i = 0; i < data.circle.length; i += 1) {
@@ -76,8 +84,9 @@ export const useCircleUsernames = () => {
 };
 
 export const useAddedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const addedQuery = useQuery(userAddedQuery());
+	const addedQuery = useQuery(userAddedQuery(token));
 	if (addedQuery.isSuccess && addedQuery.data !== null) {
 		const { data } = addedQuery.data;
 		for (let i = 0; i < data.added.length; i += 1) {
@@ -88,8 +97,9 @@ export const useAddedUsernames = () => {
 };
 
 export const useBlockedUsernames = () => {
+	const { token } = useAuth();
 	const usernames = [];
-	const blockedQuery = useQuery(userBlockedQuery());
+	const blockedQuery = useQuery(userBlockedQuery(token));
 	if (blockedQuery.isSuccess && blockedQuery.data !== null) {
 		const { data } = blockedQuery.data;
 		for (let i = 0; i < data.blocked.length; i += 1) {
@@ -100,33 +110,34 @@ export const useBlockedUsernames = () => {
 };
 
 export const useOneOneProfile = (username: string) => {
-	const profileQuery = useQuery({
-		...profileUsernameQuery(username),
-		enabled: username !== '',
-		staleTime: 1000 * 5 * 60, // 5 minutes
+	const { token } = useAuth();
+	const profileQ = useQuery({
+		...profileQuery(token, username),
+		enabled: Boolean(username) && checkTokenType(token),
+		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 	const spUsernameQuery = useQuery({
-		...socialProfileUsernameQuery(username),
+		...socialProfileUsernameQuery(token, username),
 		enabled: username !== '',
 		staleTime: 1000 * 5 * 60, // 5 minutes
 	});
 	if (
-		profileQuery.isSuccess &&
+		profileQ.isSuccess &&
 		spUsernameQuery.isSuccess &&
-		profileQuery.data !== null &&
+		profileQ.data !== null &&
 		spUsernameQuery.data !== null
 	) {
-		const { data: profile } = profileQuery.data;
+		const { data: profile } = profileQ.data;
 		const { data: socialProfile } = spUsernameQuery.data;
 		return { ...profile, ...socialProfile };
 	}
 	return null;
 };
 
-export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unknown | null }) => {
+export const useSocialProfile = () => {
+	const { token } = useAuth();
 	const spQuery = useQuery({
-		...socialProfileQuery(),
-		initialData: initialSocialData,
+		...socialProfileQuery(token),
 	});
 	if (spQuery.isSuccess && spQuery.data !== null) {
 		const { data } = spQuery.data as { data: SocialProfile };
@@ -137,19 +148,21 @@ export const useSocialProfile = ({ initialSocialData }: { initialSocialData: unk
 
 export const useProfile = (username: string) => {
 	const profileRef = React.useRef<Profile | null>(null);
-	const profileQuery = useQuery({
-		...profileUsernameQuery(username),
-		enabled: username !== '',
+	const { token } = useAuth();
+	const profileQ = useQuery({
+		...profileQuery(token, username),
+		enabled: Boolean(username) && checkTokenType(token),
 	});
-	if (profileQuery.isSuccess && profileQuery.data !== null) {
-		const { data } = profileQuery.data;
+	if (profileQ.isSuccess && profileQ.data !== null) {
+		const { data } = profileQ.data;
 		profileRef.current = data;
 	}
 	return profileRef.current;
 };
 
 export const useAdditionalSP = () => {
-	const additionalSocialProfileQuery = useQuery(additionalSPQuery());
+	const { token } = useAuth();
+	const additionalSocialProfileQuery = useQuery(additionalSPQuery(token));
 	if (additionalSocialProfileQuery.isSuccess && additionalSocialProfileQuery.data !== null) {
 		const { data } = additionalSocialProfileQuery.data;
 		return data;
@@ -159,7 +172,7 @@ export const useAdditionalSP = () => {
 
 export const useConnected = (otherUser: string): boolean => {
 	const [connected, setConnected] = React.useState(false);
-	const circle = useCircleUsernames();
+	const circle = useCircle();
 	const { usernames } = circle;
 	if (usernames !== undefined) {
 		if (usernames.includes(otherUser) && !connected) {

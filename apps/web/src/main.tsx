@@ -15,7 +15,6 @@ import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
 import Hackathons from '@/components/Hackathons';
 import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Settings';
 import Home from '@/routes/Home';
-import { socialProfileLoader } from '@/lib/queriesAndLoaders';
 import Login from '@/routes/Login';
 import Signup from '@/routes/Signup';
 import FourOFour from '@/routes/404';
@@ -84,7 +83,6 @@ const router = createBrowserRouter([
 						path: '/onboarding/step-two',
 						element: <StepTwo />,
 						hasErrorBoundary: true,
-						loader: socialProfileLoader(queryClient),
 					},
 				],
 			},
@@ -164,7 +162,6 @@ const router = createBrowserRouter([
 						path: '/settings/social',
 						element: <SocialProfile />,
 						hasErrorBoundary: true,
-						loader: socialProfileLoader(queryClient),
 					},
 					{
 						path: '/settings/password',

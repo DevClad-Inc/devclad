@@ -6,7 +6,11 @@ from dj_rest_auth.registration.views import SocialLoginView
 from dj_rest_auth.social_serializers import TwitterLoginSerializer
 from dj_rest_auth.registration.serializers import VerifyEmailSerializer
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import (
+    api_view,
+    permission_classes,
+    authentication_classes,
+)
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,6 +23,124 @@ from users.serializers import (
 )
 from users.models import Profile, UserStatus, User
 from django.utils.translation import gettext_lazy as _
+
+from dj_rest_auth.views import LoginView
+from django.conf import settings
+from django.utils import timezone
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.settings import api_settings as jwt_settings
+
+from rest_framework import throttling
+
+from django.shortcuts import redirect
+
+from rest_framework.renderers import JSONRenderer
+
+
+class Login(LoginView):
+    def get_response(self):
+        serializer_class = self.get_response_serializer()
+
+        if getattr(settings, "REST_USE_JWT", False):
+            from rest_framework_simplejwt.settings import (
+                api_settings as jwt_settings,
+            )
+
+            access_token_expiration = (
+                timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
+            )
+            refresh_token_expiration = (
+                timezone.now() + jwt_settings.REFRESH_TOKEN_LIFETIME
+            )
+            return_expiration_times = getattr(
+                settings, "JWT_AUTH_RETURN_EXPIRATION", False
+            )
+            auth_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", False)
+
+            data = {
+                "user": self.user,
+                "access_token": self.access_token,
+                "refresh_token": "" if auth_httponly else self.refresh_token,
+            }
+
+            if return_expiration_times:
+                data["access_token_expiration"] = access_token_expiration
+                data["refresh_token_expiration"] = refresh_token_expiration
+
+            serializer = serializer_class(
+                instance=data,
+                context=self.get_serializer_context(),
+            )
+        elif self.token:
+            serializer = serializer_class(
+                instance=self.token,
+                context=self.get_serializer_context(),
+            )
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        response = Response(serializer.data, status=status.HTTP_200_OK)
+        if getattr(settings, "REST_USE_JWT", False):
+            cookie_name = getattr(settings, "JWT_AUTH_COOKIE", None)
+            access_token_expiration = (
+                timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
+            )
+            cookie_secure = getattr(settings, "JWT_AUTH_SECURE", False)
+            cookie_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", True)
+            cookie_samesite = getattr(settings, "JWT_AUTH_SAMESITE", "Lax")
+            refresh_cookie_name = getattr(settings, "JWT_AUTH_REFRESH_COOKIE", None)
+            refresh_cookie_path = getattr(settings, "JWT_AUTH_REFRESH_COOKIE_PATH", "/")
+            cookie_domain = getattr(settings, "SESSION_COOKIE_DOMAIN", None)
+            if cookie_name:
+                response.set_cookie(
+                    cookie_name,
+                    self.access_token,
+                    expires=access_token_expiration,
+                    secure=cookie_secure,
+                    domain=cookie_domain,
+                    httponly=cookie_httponly,
+                    samesite=cookie_samesite,
+                )
+
+            if refresh_cookie_name:
+                response.set_cookie(
+                    refresh_cookie_name,
+                    self.refresh_token,
+                    expires=refresh_token_expiration,
+                    secure=cookie_secure,
+                    domain=cookie_domain,
+                    httponly=cookie_httponly,
+                    samesite=cookie_samesite,
+                    path=refresh_cookie_path,
+                )
+        return response
+
+
+class RefreshToken(TokenRefreshView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        cookie_name = getattr(settings, "JWT_AUTH_COOKIE", None)
+        if cookie_name and response.status_code == 200 and "access" in response.data:
+            cookie_secure = getattr(settings, "JWT_AUTH_SECURE", False)
+            cookie_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", True)
+            cookie_samesite = getattr(settings, "JWT_AUTH_SAMESITE", "Lax")
+
+            # read domain from django settings
+            cookie_domain = getattr(settings, "SESSION_COOKIE_DOMAIN", None)
+
+            token_expiration = timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
+            response.set_cookie(
+                cookie_name,
+                response.data["access"],
+                expires=token_expiration,
+                secure=cookie_secure,
+                domain=cookie_domain,
+                httponly=cookie_httponly,
+                samesite=cookie_samesite,
+            )
+
+            response.data["access_token_expiration"] = token_expiration
+        return response
 
 
 class VerifyEmailView(APIView, ConfirmEmailView):

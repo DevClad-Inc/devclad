@@ -3,8 +3,8 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany } from 'idb-keyval';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
-import { getUser } from '@/services/auth.services';
 import { initialUserState, Profile, User } from '@/lib/InterfacesStates.lib';
+import { tokenQuery, userQuery } from '@/lib/queriesAndLoaders';
 
 export enum UserReducerActionTypes {
 	SET_USER_DATA = 'SET_USER_DATA',
@@ -38,7 +38,11 @@ interface UserProviderProps {
 
 export function UserProvider({ children }: UserProviderProps) {
 	const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialUserState });
-	const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
+	const { data: tokenData } = useQuery(tokenQuery());
+	const { data, isError, isSuccess } = useQuery({
+		...userQuery(tokenData || ''),
+		enabled: Boolean(tokenData),
+	});
 	if (Object.values(loggedInUser).every((v) => v === undefined)) {
 		getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
 			if (localUser) {
@@ -84,9 +88,13 @@ export async function invalidateAndStoreIDB(qc: QueryClient, key: string) {
 	await qc.refetchQueries([key]);
 	if (key === 'user') {
 		const cacheUserData = qc.getQueryData([key]) as { data: User };
-		getsetIndexedDB<User>('loggedInUser', 'set', cacheUserData.data);
+		if (cacheUserData) {
+			getsetIndexedDB<User>('loggedInUser', 'set', cacheUserData.data);
+		}
 	} else if (key === 'profile') {
 		const cacheProfileData = qc.getQueryData([key]) as { data: Profile };
-		getsetIndexedDB<Profile>('profile', 'set', cacheProfileData.data);
+		if (cacheProfileData) {
+			getsetIndexedDB<Profile>('profile', 'set', cacheProfileData.data);
+		}
 	}
 }

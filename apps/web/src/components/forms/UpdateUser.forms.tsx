@@ -1,28 +1,21 @@
 import React from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { updateUser } from '@/services/auth.services';
-import { User, initialUserState, UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
+import { UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/components/Feedback';
-import { userQuery } from '@/lib/queriesAndLoaders';
 import { ProfileLoading } from '../LoadingStates';
+import { useAuth } from '@/services/useAuth.services';
 
 // only first name, last name, and username can be updated via this form
 export default function UpdateUserForm(): JSX.Element {
-	let loggedInUser: User = { ...initialUserState };
-	const {
-		data: userQueryData,
-		isSuccess: userQuerySuccess,
-		isLoading: userQueryLoading,
-	} = useQuery(userQuery());
-	if (userQuerySuccess && userQueryData !== null) {
-		loggedInUser = userQueryData.data;
-	}
 	const qc = useQueryClient();
+	const { token, loggedInUser } = useAuth();
+
 	const validate = (values: UpdateUserFormValues) => {
 		const errors: UpdateUserFormValues['errors'] = {};
 		if (!values.firstName) {
@@ -47,7 +40,7 @@ export default function UpdateUserForm(): JSX.Element {
 			if (username === loggedInUser.username) {
 				username = undefined;
 			}
-			await updateUser(firstName, lastName, username).then(() => {
+			await updateUser(token, firstName, lastName, username)?.then(() => {
 				del('loggedInUser');
 				if (username === undefined) {
 					username = loggedInUser.username;
@@ -72,7 +65,7 @@ export default function UpdateUserForm(): JSX.Element {
 			setSubmitting(false);
 		}
 	};
-	if (userQueryLoading) {
+	if (qc.getQueryState(['user'])?.status === 'loading') {
 		return <ProfileLoading />;
 	}
 	return (
