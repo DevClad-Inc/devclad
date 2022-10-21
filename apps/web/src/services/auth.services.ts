@@ -259,7 +259,6 @@ export async function logOut() {
 				await delMany(['loggedInUser', 'profile']).then(() => {
 					Cookies.remove('token');
 					Cookies.remove('refresh');
-					qc.invalidateQueries();
 				});
 			})
 			.catch(() => null);

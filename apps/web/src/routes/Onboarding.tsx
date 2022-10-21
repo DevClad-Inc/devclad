@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Navigate, Outlet, useLoaderData } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
@@ -8,7 +8,7 @@ import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
-import { API_URL, logOut } from '@/services/auth.services';
+import { logOut } from '@/services/auth.services';
 import {
 	checkProfileEmpty,
 	checkSocialProfileEmpty,
@@ -126,9 +126,10 @@ export function StepTwo() {
 
 export function Onboarding() {
 	useDocumentTitle('Onboarding');
+	const navigate = useNavigate();
 	const handlelogOut = async () => {
 		await logOut().then(() => {
-			window.location.href = `${API_URL}/logout-redirect/`;
+			navigate(0);
 		});
 	};
 	const { loggedInUser } = useAuth();
