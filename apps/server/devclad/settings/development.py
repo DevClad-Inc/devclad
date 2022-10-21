@@ -1,5 +1,4 @@
 from decouple import config
-from corsheaders.defaults import default_headers
 from .base import *
 
 DATABASES = {

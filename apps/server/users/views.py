@@ -9,8 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import (
     api_view,
     permission_classes,
-    authentication_classes,
-)
+    )
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -29,12 +28,6 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
-
-from rest_framework import throttling
-
-from django.shortcuts import redirect
-
-from rest_framework.renderers import JSONRenderer
 
 
 class Login(LoginView):
