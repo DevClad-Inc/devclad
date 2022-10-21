@@ -36,20 +36,22 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 		try {
 			setSubmitting(true);
 			const { email, password } = values;
-			await logIn(email, password);
+			const { token } = await logIn(email, password);
 
 			if (loginError) {
 				setLoginError(false);
 			}
-			await getUser()
-				.then(() => {
-					invalidateAndStoreIDB(qc, 'user');
-					qc.refetchQueries(['userStatus']);
-				})
-				.catch(() => {
-					delMany(['loggedInUser', 'profile']);
-				});
-			qc.fetchQuery(streamQuery());
+			if (token) {
+				await getUser(token)
+					.then(() => {
+						invalidateAndStoreIDB(qc, 'user');
+						qc.refetchQueries();
+					})
+					.catch(() => {
+						delMany(['loggedInUser', 'profile']);
+					});
+				qc.fetchQuery(streamQuery());
+			}
 		} catch (error) {
 			setLoginError(true);
 			setSubmitting(false);

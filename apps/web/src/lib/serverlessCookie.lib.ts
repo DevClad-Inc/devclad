@@ -3,10 +3,10 @@ import axios from 'axios';
 export default async function serverlessCookie<TState>(
 	key: string,
 	value?: string,
-	expiry?: number
+	maxAge?: number
 ): Promise<TState> {
 	const url = `/api/cookies`;
-	const secure = import.meta.env.PROD;
+	const secure = import.meta.env.VITE_DEVELOPMENT;
 	if (value) {
 		return axios({
 			method: 'PUT',
@@ -14,7 +14,7 @@ export default async function serverlessCookie<TState>(
 			data: {
 				key,
 				value,
-				expiry,
+				maxAge,
 				secure,
 			},
 			headers: { 'Content-Type': 'application/json' },
@@ -27,5 +27,5 @@ export default async function serverlessCookie<TState>(
 			key,
 		},
 		headers: { 'Content-Type': 'application/json' },
-	}).then((response) => response.data);
+	}).then((response) => response.data.value);
 }

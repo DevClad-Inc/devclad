@@ -2,6 +2,8 @@
 
 interface ImportMetaEnv {
 	readonly VITE_APP_TITLE: string;
+	readonly VITE_DEVELOPMENT: boolean;
+	readonly VITE_STREAM_API_KEY: string;
 }
 
 interface ImportMeta {

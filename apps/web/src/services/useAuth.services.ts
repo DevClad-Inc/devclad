@@ -1,7 +1,13 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
-import { statusQuery, streamQuery, userQuery } from '@/lib/queriesAndLoaders';
+import {
+	refreshQuery,
+	statusQuery,
+	streamQuery,
+	tokenQuery,
+	userQuery,
+} from '@/lib/queriesAndLoaders';
 
 export type StreamTokenT = {
 	token: string;
@@ -9,22 +15,38 @@ export type StreamTokenT = {
 };
 
 export function useAuth() {
+	const tokenRef = React.useRef<string | undefined>(undefined);
+	const refreshRef = React.useRef<string | undefined>(undefined);
 	const authedRef = React.useRef<boolean>(false);
 	const streamTokenRef = React.useRef<StreamTokenT | null>(null);
 	const userRef = React.useRef<User>({ ...initialUserState });
 
-	const { isSuccess, data } = useQuery(userQuery());
+	const { isSuccess: tokenSuccess, data: tokenData } = useQuery(tokenQuery());
+	const { isSuccess: refreshSuccess, data: refreshData } = useQuery(refreshQuery());
+
+	if (tokenSuccess && tokenData) {
+		tokenRef.current = tokenData;
+	}
+
+	if (refreshSuccess && refreshData) {
+		refreshRef.current = refreshData;
+	}
+
+	const { isSuccess: userSuccess, data: userData } = useQuery({
+		...userQuery(tokenRef.current !== undefined ? tokenRef.current : ''),
+		enabled: Boolean(tokenData),
+	});
 	const { isSuccess: streamSuccess, data: streamData } = useQuery({
 		...streamQuery(),
-		enabled: isSuccess && data !== null,
+		enabled: Boolean(userData),
 	});
 
 	if (streamSuccess && streamData) {
 		streamTokenRef.current = streamData;
 	}
 
-	if (isSuccess && data) {
-		userRef.current = data.data;
+	if (userSuccess && userData) {
+		userRef.current = userData.data;
 		authedRef.current = true;
 	}
 
@@ -36,6 +58,8 @@ export function useAuth() {
 	return {
 		authed: authedRef.current,
 		loggedInUser: userRef.current,
+		token: tokenRef.current,
+		refresh: refreshRef.current,
 		streamToken: streamTokenRef.current,
 	};
 }
@@ -43,9 +67,11 @@ export function useAuth() {
 export function useApproved(): { approved: boolean; status: string } {
 	const approved = React.useRef<boolean>(false);
 	const status = React.useRef<string>('Not Submitted');
+	const { loggedInUser, token } = useAuth();
 
 	const { isSuccess, data } = useQuery({
-		...statusQuery(),
+		...statusQuery(token),
+		enabled: Boolean(loggedInUser),
 	});
 
 	if (isSuccess && data && approved !== data.data.approved && status !== data.data.status) {

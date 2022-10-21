@@ -22,16 +22,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 				if (value) {
 					res.status(200).json({ value });
 				} else {
-					res.status(404).json({ error: 'Not Found' });
+					res.status(200).json({ undefined });
 				}
 			} else {
-				res.status(400).json({ error: 'Bad Request' });
+				res.status(200).json({ undefined });
 			}
 			break;
 		case 'PUT':
 			if (body) {
-				const { key, value } = body as { key: string; value: string };
-				res.setHeader('Set-Cookie', `${key}=${value}; Path=/; HttpOnly`);
+				const { key, value, maxAge, secure } = body as {
+					key: string;
+					value: string;
+					maxAge: number;
+					secure: boolean;
+				};
+				res.setHeader(
+					'Set-Cookie',
+					`${key}=${value}; Path=/; HttpOnly; Max-Age=${maxAge}; Secure=${secure}`
+				);
 				res.status(200).json({ value });
 			} else {
 				res.status(400).json({ error: 'Bad Request' });

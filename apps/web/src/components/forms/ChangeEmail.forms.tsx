@@ -10,22 +10,14 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { changeEmail, checkVerified, resendEmail } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { User, initialUserState, InterfaceEmail } from '@/lib/InterfacesStates.lib';
-import { userQuery } from '@/lib/queriesAndLoaders';
+import { InterfaceEmail } from '@/lib/InterfacesStates.lib';
 import { ProfileLoading } from '../LoadingStates';
+import { useAuth } from '@/services/useAuth.services';
 
 export default function ChangeEmailForm(): JSX.Element {
-	let loggedInUser: User = { ...initialUserState };
 	let verified = false;
 	const qc = useQueryClient();
-	const {
-		data: userQueryData,
-		isSuccess: userQuerySuccess,
-		isLoading: userQueryLoading,
-	} = useQuery(userQuery());
-	if (userQuerySuccess && userQueryData !== null) {
-		loggedInUser = userQueryData.data;
-	}
+	const { loggedInUser } = useAuth();
 	const verifiedQuery = useQuery(['verified'], () => checkVerified());
 	if (verifiedQuery.isSuccess && verifiedQuery.data !== null) {
 		const { data } = verifiedQuery.data;
@@ -66,7 +58,7 @@ export default function ChangeEmailForm(): JSX.Element {
 			});
 		setSubmitting(false);
 	};
-	if (userQueryLoading || verifiedQuery.isLoading) {
+	if (qc.getQueryState(['user'])?.status === 'loading' || verifiedQuery.isLoading) {
 		return (
 			<div className="flex items-center justify-center">
 				<ProfileLoading />

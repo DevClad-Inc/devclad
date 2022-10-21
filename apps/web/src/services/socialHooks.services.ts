@@ -63,7 +63,7 @@ export const useSkippedUsernames = () => {
 
 export const useCircle = () => {
 	const { loggedInUser } = useAuth();
-	const username = loggedInUser?.username;
+	const { username } = loggedInUser;
 	const usernames = [];
 	const circleQuery = useQuery(userCircleQuery(username as string));
 	if (circleQuery.isSuccess && circleQuery.data !== null) {
@@ -102,7 +102,7 @@ export const useBlockedUsernames = () => {
 export const useOneOneProfile = (username: string) => {
 	const profileQuery = useQuery({
 		...profileUsernameQuery(username),
-		enabled: username !== '',
+		enabled: Boolean(username),
 		staleTime: 1000 * 5 * 60, // 5 minutes
 	});
 	const spUsernameQuery = useQuery({
@@ -139,7 +139,7 @@ export const useProfile = (username: string) => {
 	const profileRef = React.useRef<Profile | null>(null);
 	const profileQuery = useQuery({
 		...profileUsernameQuery(username),
-		enabled: username !== '',
+		enabled: Boolean(username),
 	});
 	if (profileQuery.isSuccess && profileQuery.data !== null) {
 		const { data } = profileQuery.data;

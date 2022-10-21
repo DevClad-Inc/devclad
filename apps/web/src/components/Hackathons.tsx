@@ -1,16 +1,10 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useDocumentTitle } from '@devclad/lib';
-import { User, initialUserState } from '@/lib/InterfacesStates.lib';
-import { userQuery } from '@/lib/queriesAndLoaders';
+import { useAuth } from '@/services/useAuth.services';
 
 export default function Hackathons(): JSX.Element {
 	useDocumentTitle('Hackathons');
-	let loggedInUser: User = { ...initialUserState };
-	const { data: userQueryData, isSuccess: userQuerySuccess } = useQuery(userQuery());
-	if (userQuerySuccess && userQueryData !== null) {
-		loggedInUser = userQueryData.data;
-	}
+	const { loggedInUser } = useAuth();
 	return (
 		<div>
 			<p className="text-center">{loggedInUser && loggedInUser.first_name}</p>

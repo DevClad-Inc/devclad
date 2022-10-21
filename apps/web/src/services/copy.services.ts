@@ -6,7 +6,6 @@ import { NewUser } from '@/lib/InterfacesStates.lib';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
-export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL;
 
 const headers = {
 	'Content-Type': 'application/json',
@@ -44,8 +43,8 @@ export const passwordReset = async (
 };
 
 export const passwordChange = async (password1: string, password2: string) => {
-	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/auth/password/change/`;
+	const token = serverlessCookie<string>('token');
 	const response = await axios.post(
 		url,
 		{
@@ -63,8 +62,8 @@ export const passwordChange = async (password1: string, password2: string) => {
 	return response;
 };
 
-export const changeEmail = async (email: string) => {
-	const token = await serverlessCookie<string>('token');
+export const changeEmail = (email: string) => {
+	const token = serverlessCookie<string>('token');
 	const url = `${API_URL}/users/change-email/`;
 	if (token) {
 		return axios({
@@ -81,8 +80,8 @@ export const changeEmail = async (email: string) => {
 	return null;
 };
 
-export const checkVerified = async () => {
-	const token = await serverlessCookie<string>('token');
+export const checkVerified = () => {
+	const token = serverlessCookie<string>('token');
 	const url = `${API_URL}/users/change-email/`;
 	if (token) {
 		return axios({
@@ -129,59 +128,70 @@ export function verifyToken(token: string): Promise<boolean> {
 
 export function refreshToken() {
 	const url = `${API_URL}/auth/token/refresh/`;
-	const refresh = Cookies.get('refresh');
-	return axios
-		.post(url, {
-			refresh: Cookies.get('refresh'),
-			headers: {
-				Authorization: `Bearer ${refresh}`,
-			},
-			credentials: 'same-origin',
-		})
-		.then((resp) => {
-			Cookies.set('token', resp.data.access, {
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-			Cookies.set('refresh', resp.data.refresh, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-		})
-		.then(async () => {
-			await qc.invalidateQueries();
-		});
+	serverlessCookie<string>('refresh').then((refresh) => {
+		if (refresh) {
+			axios({
+				method: 'POST',
+				url,
+				data: { refresh },
+				headers: { Authorization: `Bearer ${refresh}` },
+			})
+				.then(async (resp) => {
+					if (resp.status === 200) {
+						await serverlessCookie<string>('token', resp.data.access, 60 * 60 * 24);
+						await serverlessCookie<string>(
+							'refresh',
+							resp.data.refresh,
+							60 * 60 * 24 * 14
+						);
+					}
+				})
+				.then(async () => {
+					await qc.invalidateQueries();
+				});
+		}
+	});
 	// .catch(() => {
 	// 	delMany(['loggedInUser', 'profile']);
 	// 	Cookies.remove('token');
 	// });
 }
 
-export async function getUser(token: string | undefined) {
+export async function getUser() {
 	const url = `${API_URL}/auth/user/`;
 	let isVerified = false;
-	if (token !== undefined && token !== '') {
-		isVerified = await verifyToken(token);
-	}
-	if (isVerified) {
-		return axios
-			.get(url, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			.then((resp) => resp)
-			.catch(() => null);
-	}
-	if ((token === undefined || !isVerified) && Cookies.get('refresh')) {
-		await refreshToken();
-	}
-	return null;
+	let refresh: string | null = null;
+	await serverlessCookie<string>('refresh')
+		.then((ref) => {
+			if (ref) {
+				refresh = ref;
+			}
+		})
+		.catch(() => null);
+	await serverlessCookie<string>('token')
+		.then(async (token) => {
+			if (token) {
+				isVerified = await verifyToken(token);
+			}
+			if (isVerified) {
+				return axios({
+					method: 'GET',
+					url,
+					headers: { Authorization: `Bearer ${token}` },
+				})
+					.then((resp) => resp)
+					.catch(() => null);
+			}
+			if ((token === null || !isVerified) && refresh) {
+				await refreshToken();
+			}
+			return null;
+		})
+		.catch(() => null);
 }
 
-export async function updateUser(first_name?: string, last_name?: string, username?: string) {
-	const token = await serverlessCookie<string>('token');
+export function updateUser(first_name?: string, last_name?: string, username?: string) {
+	const token = serverlessCookie<string>('token');
 	if (token) {
 		return axios.patch(
 			`${API_URL}/auth/user/`,
@@ -203,15 +213,8 @@ export function SignUp(user: NewUser) {
 			headers,
 		})
 		.then((resp) => {
-			Cookies.set('token', resp.data.access_token, {
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-			Cookies.set('refresh', resp.data.refresh_token, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
+			serverlessCookie<string>('token', resp.data.access, 60 * 60 * 24);
+			serverlessCookie<string>('refresh', resp.data.refresh, 60 * 60 * 24 * 14);
 			return resp;
 		})
 		.catch((err) => err);
@@ -219,7 +222,6 @@ export function SignUp(user: NewUser) {
 
 export async function logIn(email: string, password: string) {
 	const url = `${API_URL}/auth/login/`;
-	let token;
 	const response = await axios
 		.post(url, {
 			email,
@@ -228,39 +230,31 @@ export async function logIn(email: string, password: string) {
 			credentials: 'include',
 		})
 		.then(async (resp) => {
-			Cookies.set('token', resp.data.access_token, {
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-			Cookies.set('refresh', resp.data.refresh_token, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-			token = await serverlessCookie<string>('token');
+			serverlessCookie<string>('token', resp.data.access, 60 * 60 * 24);
+			serverlessCookie<string>('refresh', resp.data.refresh, 60 * 60 * 24 * 14);
 		});
-	return { response, token };
+	return response;
 }
 
 export async function logOut() {
-	const refresh = Cookies.get('refresh');
 	const url = `${API_URL}/auth/logout/`;
-
-	if (refresh) {
-		const response = await axios
-			.post(url, {
-				refresh,
-				headers,
-				credentials: 'same-origin',
-			})
-			.then(async () => {
-				await delMany(['loggedInUser', 'profile']).then(() => {
-					Cookies.remove('token');
-					Cookies.remove('refresh');
-				});
-			})
-			.catch(() => null);
-		return response;
-	}
-	return null;
+	return serverlessCookie<string>('refresh').then(async (refresh) => {
+		if (refresh) {
+			const response = await axios
+				.post(url, {
+					refresh,
+					headers,
+					credentials: 'same-origin',
+				})
+				.then(async () => {
+					await delMany(['loggedInUser', 'profile']).then(() => {
+						Cookies.remove('token');
+						Cookies.remove('refresh');
+					});
+				})
+				.catch(() => null);
+			return response;
+		}
+		return null;
+	});
 }

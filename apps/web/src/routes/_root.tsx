@@ -23,14 +23,19 @@ function Routing(): JSX.Element {
 	const { pathname } = useLocation();
 	const { authed } = useAuth();
 	const { approved } = useApproved();
+	const { token, refresh } = useAuth();
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
+		if (token !== undefined && refresh !== undefined) {
+			qc.setQueryData(['token'], token); // setting data on first load to use in functions
+			qc.setQueryData(['refresh'], refresh);
+		}
 		if (authed) {
 			setInterval(() => {
 				refreshToken();
-			}, 1000 * 60 * 90); // (lower than 2 hour on the backend)
+			}, 1000 * 60 * 60 * 2); // refresh token every 2 hours
 		}
-	}, [authed]);
+	}, [qc, authed, token, refresh]);
 
 	// UNAUTHED
 	if (qc.getQueryData(['user']) === null) {

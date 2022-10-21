@@ -17,6 +17,7 @@ import {
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
 import { getMeeting } from '@/services/meetings.services';
+import serverlessCookie from './serverlessCookie.lib';
 
 // ! only using social profile loader rn
 
@@ -36,14 +37,21 @@ export const streamUIDQuery = (username: string) => ({
 	refetchOnWindowFocus: false,
 });
 
-// export const initialDataQuery = () => ({
-// 	queryKey: ['initialData'],
-// 	queryFn: () => getInitialData(),
-// 	// keep fresh forever
-// 	staleTime: 1000 * 60 * 60 * 365,
-// 	cacheTime: 1000 * 60 * 60 * 365,
-// 	refetchOnWindowFocus: false,
-// });
+export const tokenQuery = () => ({
+	queryKey: ['token'],
+	queryFn: () => serverlessCookie<string>('token'),
+	placeholderData: '',
+	staleTime: 1000 * 60 * 60 * 12, // 12 hours
+	refetchOnWindowFocus: true, // explicitly stating for clarity
+});
+
+export const refreshQuery = () => ({
+	queryKey: ['refresh'],
+	queryFn: () => serverlessCookie<string>('refresh'),
+	placeholderData: '',
+	staleTime: 1000 * 60 * 60 * 24 * 14, // 14 days
+	refetchOnWindowFocus: true, // explicitly stating for clarity
+});
 
 export const meetingQuery = (uid: string) => ({
 	queryKey: ['meeting', uid],
@@ -53,14 +61,16 @@ export const meetingQuery = (uid: string) => ({
 	refetchOnWindowFocus: false,
 });
 
-export const userQuery = () => ({
+export const userQuery = (token: string | undefined) => ({
 	queryKey: ['user'],
-	queryFn: () => getUser(),
+	queryFn: () => getUser(token),
+	enabled: token !== undefined,
 });
 
-export const profileQuery = () => ({
+export const profileQuery = (token: string | undefined) => ({
 	queryKey: ['profile'],
-	queryFn: () => getProfile(),
+	queryFn: () => getProfile(token),
+	enabled: token !== undefined,
 });
 
 export const socialProfileQuery = () => ({
@@ -73,9 +83,9 @@ export const additionalSPQuery = () => ({
 	queryFn: () => getAdditionalSP(),
 });
 
-export const statusQuery = () => ({
+export const statusQuery = (token: string | undefined) => ({
 	queryKey: ['userStatus'],
-	queryFn: () => getStatus(),
+	queryFn: () => getStatus(token),
 });
 
 export const profileUsernameQuery = (username: string) => ({
@@ -129,11 +139,11 @@ export const userSkippedQuery = () => ({
 // 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 // };
 
-export const userLoader = (qc: QueryClient) => async () =>
-	qc.getQueryData(userQuery().queryKey) ?? (await qc.fetchQuery(userQuery()));
+export const userLoader = (qc: QueryClient, token: string) => async () =>
+	qc.getQueryData(userQuery(token).queryKey) ?? (await qc.fetchQuery(userQuery(token)));
 
-export const profileLoader = (qc: QueryClient) => async () => {
-	const query = profileQuery();
+export const profileLoader = (qc: QueryClient, token: string) => async () => {
+	const query = profileQuery(token);
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
@@ -142,8 +152,8 @@ export const socialProfileLoader = (qc: QueryClient) => async () => {
 	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
 };
 
-export const statusLoader = (qc: QueryClient) => async () =>
-	qc.getQueryData(statusQuery().queryKey) ?? (await qc.fetchQuery(statusQuery()));
+export const statusLoader = (qc: QueryClient, token: string) => async () =>
+	qc.getQueryData(statusQuery(token).queryKey) ?? (await qc.fetchQuery(statusQuery(token)));
 
 export const profileUsernameLoader = (qc: QueryClient) => async (username: string) => {
 	const query = profileUsernameQuery(username);

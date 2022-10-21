@@ -3,8 +3,8 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany } from 'idb-keyval';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
-import { getUser } from '@/services/auth.services';
 import { initialUserState, Profile, User } from '@/lib/InterfacesStates.lib';
+import { tokenQuery, userQuery } from '@/lib/queriesAndLoaders';
 
 export enum UserReducerActionTypes {
 	SET_USER_DATA = 'SET_USER_DATA',
@@ -38,7 +38,11 @@ interface UserProviderProps {
 
 export function UserProvider({ children }: UserProviderProps) {
 	const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialUserState });
-	const { data, isError, isSuccess } = useQuery(['user'], () => getUser());
+	const { data: tokenData } = useQuery(tokenQuery());
+	const { data, isError, isSuccess } = useQuery({
+		...userQuery(tokenData),
+		enabled: tokenData !== undefined,
+	});
 	if (Object.values(loggedInUser).every((v) => v === undefined)) {
 		getsetIndexedDB('loggedInUser', 'get').then((localUser) => {
 			if (localUser) {

@@ -9,15 +9,14 @@ import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.
 import { Error, Info, Success, Warning } from '@/components/Feedback';
 import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
 import { API_URL, logOut } from '@/services/auth.services';
-import { UserStatus, initialUserStatus, initialUserState, User } from '@/lib/InterfacesStates.lib';
 import {
 	checkProfileEmpty,
 	checkSocialProfileEmpty,
-	getStatus,
 	setSubmittedStatus,
 } from '@/services/profile.services';
-import { socialProfileLoader, socialProfileQuery, userQuery } from '@/lib/queriesAndLoaders';
+import { socialProfileLoader, socialProfileQuery } from '@/lib/queriesAndLoaders';
 import { ProfileLoading } from '@/components/LoadingStates';
+import { useApproved, useAuth } from '@/services/useAuth.services';
 
 const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
 duration-500 rounded-md py-1 px-6 inline-flex justify-center text-md dark:text-orange-200`;
@@ -54,12 +53,7 @@ export function StepTwo() {
 	} = { profile: false, socialProfile: false };
 	const profileEmptyQuery = useQuery(['profile-empty'], () => checkProfileEmpty());
 	const socialEmptyQuery = useQuery(['social-profile-empty'], () => checkSocialProfileEmpty());
-	let userStatus: UserStatus = { ...initialUserStatus };
-	const statusQuery = useQuery(['userStatus'], () => getStatus());
-	if (statusQuery.isSuccess && statusQuery.data !== null) {
-		const { data } = statusQuery;
-		userStatus = data.data;
-	}
+	const { status } = useApproved();
 	if (profileEmptyQuery.isLoading || socialEmptyQuery.isLoading) {
 		return <ProfileLoading />;
 	}
@@ -78,7 +72,7 @@ export function StepTwo() {
 		}
 	}
 	let submitText = 'Submit Request';
-	if (userStatus && userStatus.status === 'Submitted') {
+	if (status === 'Submitted') {
 		submitText = 'Submitted Request';
 	}
 
@@ -98,7 +92,7 @@ export function StepTwo() {
 						className={classNames(
 							!checkEmpty.profile ||
 								!checkEmpty.socialProfile ||
-								userStatus.status === 'Submitted'
+								status === 'Submitted'
 								? 'cursor-not-allowed'
 								: '',
 							linkClassesString
@@ -107,7 +101,7 @@ export function StepTwo() {
 							if (
 								checkEmpty.profile &&
 								checkEmpty.socialProfile &&
-								userStatus.status !== 'Submitted'
+								status !== 'Submitted'
 							) {
 								await setSubmittedStatus()
 									?.then(async () => {
@@ -137,32 +131,19 @@ export function Onboarding() {
 			window.location.href = `${API_URL}/logout-redirect/`;
 		});
 	};
-	let loggedInUser: User = { ...initialUserState };
-	const {
-		data: userQueryData,
-		isSuccess: userQuerySuccess,
-		isLoading: userQueryLoading,
-	} = useQuery(userQuery());
-	if (userQuerySuccess && userQueryData !== null) {
-		loggedInUser = userQueryData.data;
-	}
-	let userStatus: UserStatus = { ...initialUserStatus };
-	const statusQuery = useQuery(['userStatus'], () => getStatus());
+	const { loggedInUser } = useAuth();
+	const qc = useQueryClient();
+	const { status, approved } = useApproved();
 	if (
-		statusQuery.isSuccess &&
-		statusQuery.data !== null &&
-		Object.values(userStatus).every((value) => value === undefined)
+		qc.getQueryState(['user'])?.status === 'loading' ||
+		qc.getQueryState(['userStatus'])?.status === 'loading'
 	) {
-		const { data } = statusQuery;
-		userStatus = data.data;
-	}
-	if (userQueryLoading || statusQuery.isLoading) {
 		return <ProfileLoading />;
 	}
-	if (userStatus && userStatus.approved) {
+	if (approved) {
 		return <Navigate to="/" />;
 	}
-	if (userStatus && !userStatus.approved) {
+	if (approved === false) {
 		return (
 			<div>
 				<div className="backdrop-blur-0">
@@ -206,7 +187,7 @@ export function Onboarding() {
 					</div>
 					<div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
 						<div className="w-fit-content mx-auto p-2">
-							{userStatus.status === 'Not Submitted' ? (
+							{status === 'Not Submitted' ? (
 								<>
 									<Warning warning="Not submitted request to join yet." />
 									<Info info="Tip: Fill out as much as possible for quicker request approval." />

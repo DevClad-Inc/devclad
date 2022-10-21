@@ -1,10 +1,10 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { API_URL } from '@/services/auth.services';
 import { Meeting } from '@/lib/InterfacesStates.lib';
+import serverlessCookie from '@/lib/serverlessCookie.lib';
 
-export const getMeetings = (uid: string) => {
-	const token = Cookies.get('token');
+export const getMeetings = async (uid: string) => {
+	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/meetings/${uid}/`; // either "all" or uid
 	if (token) {
 		return axios({
@@ -16,8 +16,8 @@ export const getMeetings = (uid: string) => {
 	return null;
 };
 
-export const getMeeting = (id: string) => {
-	const token = Cookies.get('token');
+export const getMeeting = async (id: string) => {
+	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/meetings/${id}/`;
 
 	if (token) {
@@ -30,8 +30,8 @@ export const getMeeting = (id: string) => {
 	return null;
 };
 
-export const createUpdateMeeting = (data: Meeting) => {
-	const token = Cookies.get('token');
+export const createUpdateMeeting = async (data: Meeting) => {
+	const token = await serverlessCookie<string>('token');
 	const url = `${API_URL}/social/meetings/`;
 
 	if (token) {

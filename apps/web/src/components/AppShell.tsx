@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import {
 	HomeIcon,
 	UsersIcon,
@@ -11,10 +10,10 @@ import {
 
 import { checkIOS, checkMacOS, classNames } from '@devclad/lib';
 import { DevCladSVG } from '@devclad/ui';
-import { Profile, initialProfileState } from '@/lib/InterfacesStates.lib';
-import { profileQuery } from '@/lib/queriesAndLoaders';
 import CheckChild from '@/lib/CheckChild.lib';
 import { useAuth } from '@/services/useAuth.services';
+import { useProfile } from '@/services/socialHooks.services';
+import { Profile } from '@/lib/InterfacesStates.lib';
 
 const navigation = [
 	{
@@ -53,14 +52,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
 	// user logic
 	const { loggedInUser } = useAuth();
-
-	let profileData: Profile = { ...initialProfileState };
-	const { data: profileQueryData, isSuccess: profileQuerySuccess } = useQuery({
-		...profileQuery(),
-	});
-	if (profileQuerySuccess && profileQueryData !== null) {
-		profileData = profileQueryData.data;
-	}
+	const profileData = useProfile(loggedInUser.username as string) as Profile;
 
 	// sidebar logic
 	const [sidebarExpand, setSidebarExpand] = React.useState(false);
@@ -125,15 +117,18 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 						<Link to="/settings" className="group block w-full flex-shrink-0">
 							<div className="flex items-center">
 								<div>
-									<img
-										className="bg-linen inline-block h-12 w-12 rounded-full object-cover"
-										src={
-											import.meta.env.VITE_DEVELOPMENT
-												? import.meta.env.VITE_API_URL + profileData.avatar
-												: profileData.avatar
-										}
-										alt=""
-									/>
+									{profileData && (
+										<img
+											className="bg-linen inline-block h-12 w-12 rounded-full object-cover"
+											src={
+												import.meta.env.VITE_DEVELOPMENT
+													? import.meta.env.VITE_API_URL +
+													  profileData.avatar
+													: profileData.avatar
+											}
+											alt=""
+										/>
+									)}
 								</div>
 								{sidebarExpand && (
 									<div className="ml-3 font-mono">
