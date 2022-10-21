@@ -29,7 +29,7 @@ export function useAuth() {
 		...refreshQuery(),
 	});
 	if (tokenSuccess && tokenData !== '') {
-		tokenRef.current = tokenData;
+		tokenRef.current = tokenData as string;
 	}
 
 	if (refreshSuccess && refreshData && refreshData !== '') {

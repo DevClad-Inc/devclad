@@ -1,4 +1,3 @@
-import { QueryClient } from '@tanstack/react-query';
 import { checkTokenType, getUser } from '@/services/auth.services';
 import {
 	getAdded,
@@ -119,35 +118,3 @@ export const userSkippedQuery = (token: string) => ({
 
 // verified query is only used in ChangeEmail
 // so not making a reusable query for them
-
-// loaders are unused rn
-
-export const userLoader = (qc: QueryClient) => async () => {
-	const token = await serverlessCookie<string>('token');
-	const query = userQuery(token);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const socialProfileLoader = (qc: QueryClient) => async () => {
-	const token = await serverlessCookie<string>('token');
-	const query = socialProfileQuery(token);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const statusLoader = (qc: QueryClient) => async () => {
-	const token = await serverlessCookie<string>('token');
-	const query = statusQuery(token);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const profileLoader = (qc: QueryClient) => async (username: string) => {
-	const token = await serverlessCookie<string>('token');
-	const query = profileQuery(token, username);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};
-
-export const socialProfileUsernameLoader = (qc: QueryClient) => async (username: string) => {
-	const token = await serverlessCookie<string>('token');
-	const query = socialProfileUsernameQuery(token, username);
-	return qc.getQueryData(query.queryKey) ?? (await qc.fetchQuery(query));
-};

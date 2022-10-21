@@ -30,17 +30,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 			break;
 		case 'PUT':
 			if (body) {
-				const { key, value, maxAge, secure } = body as {
+				const { key, value, maxAge, secure, del } = body as {
 					key: string;
 					value: string;
 					maxAge: number;
 					secure: boolean;
+					del: boolean;
 				};
-				res.setHeader(
-					'Set-Cookie',
-					`${key}=${value}; Path=/; HttpOnly; Max-Age=${maxAge}; Secure=${secure}`
-				);
-				res.status(200).json({ value });
+				switch (del) {
+					case true:
+						res.setHeader(
+							'Set-Cookie',
+							`${key}=''; Path=/; HttpOnly; Secure=${secure}; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/;`
+						);
+						res.status(200).end();
+						break;
+					default:
+						res.setHeader(
+							'Set-Cookie',
+							`${key}=${value}; Path=/; HttpOnly; Max-Age=${maxAge}; Secure=${secure}`
+						);
+						res.status(200).json({ value });
+						break;
+				}
 			} else {
 				res.status(400).json({ error: 'Bad Request' });
 			}

@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
-import Cookies from 'js-cookie';
 import { NewUser, User } from '@/lib/InterfacesStates.lib';
 import { tokenQuery } from '@/lib/queriesAndLoaders';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
@@ -153,15 +152,13 @@ export async function refreshToken() {
 				credentials: 'same-origin',
 			})
 			.then((resp) => {
-				Cookies.set('token', resp.data.access, {
-					sameSite: 'strict',
-					secure: !import.meta.env.VITE_DEVELOPMENT,
-				});
-				Cookies.set('refresh', resp.data.refresh, {
-					expires: 14, // 2 weeks
-					sameSite: 'strict',
-					secure: !import.meta.env.VITE_DEVELOPMENT,
-				});
+				serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
+				serverlessCookie<string>(
+					'refresh',
+					resp.data.refresh_token,
+					60 * 60 * 24 * 14,
+					false
+				);
 			})
 			.then(async () => {
 				await qc.invalidateQueries();
@@ -226,15 +223,8 @@ export function SignUp(user: NewUser) {
 			headers,
 		})
 		.then((resp) => {
-			Cookies.set('token', resp.data.access_token, {
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-			Cookies.set('refresh', resp.data.refresh_token, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
+			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
+			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
 			return resp;
 		})
 		.catch((err) => err);
@@ -251,15 +241,8 @@ export async function logIn(email: string, password: string) {
 			credentials: 'include',
 		})
 		.then(async (resp) => {
-			Cookies.set('token', resp.data.access_token, {
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
-			Cookies.set('refresh', resp.data.refresh_token, {
-				expires: 14, // 2 weeks
-				sameSite: 'strict',
-				secure: !import.meta.env.VITE_DEVELOPMENT,
-			});
+			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
+			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
 			token = qc.refetchQueries(tokenQuery().queryKey);
 		});
 	return { response, token };
@@ -270,20 +253,26 @@ export async function logOut() {
 	const url = `${API_URL}/auth/logout/`;
 
 	if (refresh) {
-		const response = await axios
-			.post(url, {
-				refresh,
-				headers,
-				credentials: 'same-origin',
+		const response = serverlessCookie<string>('token', '', 0, true).then(() =>
+			serverlessCookie<string>('refresh', '', 0, true).then(async () => {
+				await axios
+					.post(url, {
+						refresh,
+						headers,
+						credentials: 'same-origin',
+					})
+					.then(async () => {
+						await delMany(['loggedInUser', 'profile'])
+							.then(() => {
+								qc.invalidateQueries();
+							})
+							.then(() => {
+								window.location.href = '/';
+							});
+					})
+					.catch(() => null);
 			})
-			.then(async () => {
-				await delMany(['loggedInUser', 'profile']).then(() => {
-					Cookies.remove('token');
-					Cookies.remove('refresh');
-					qc.invalidateQueries();
-				});
-			})
-			.catch(() => null);
+		);
 		return response;
 	}
 	return null;
