@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { NewUser, User } from '@/lib/InterfacesStates.lib';
-import { tokenQuery } from '@/lib/queriesAndLoaders';
+import { refreshQuery, tokenQuery } from '@/lib/queriesAndLoaders';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -123,7 +123,47 @@ export const resendEmail = async (email: string) => {
 	return response.data;
 };
 
-export function verifyToken(token: string): Promise<boolean> {
+export async function refreshToken(queryClient: QueryClient) {
+	const url = `${API_URL}/auth/token/refresh/`;
+	const refresh = await serverlessCookie<string>('refresh');
+	if (checkTokenType(refresh)) {
+		return axios
+			.post(url, {
+				refresh,
+				headers: {
+					Authorization: `Bearer ${refresh}`,
+				},
+				credentials: 'same-origin',
+			})
+			.then((resp) => {
+				serverlessCookie<string>('token', resp.data.access, 60 * 60 * 36, false).then(
+					() => {
+						serverlessCookie<string>(
+							'refresh',
+							resp.data.refresh,
+							60 * 60 * 24 * 28,
+							false
+						);
+						queryClient
+							.setQueryData(tokenQuery().queryKey, resp.data.access)
+							.then(() =>
+								queryClient.setQueryData(refreshQuery().queryKey, resp.data.refresh)
+							)
+							.then(() => {
+								queryClient.invalidateQueries();
+							});
+					}
+				);
+			});
+	}
+	return null;
+	// .catch(() => {
+	// 	delMany(['loggedInUser', 'profile']);
+	// 	Cookies.remove('token');
+	// });
+}
+
+export async function verifyToken(token: string, queryClient?: QueryClient): Promise<boolean> {
 	const url = `${API_URL}/auth/token/verify/`;
 	return axios({
 		method: 'POST',
@@ -137,51 +177,23 @@ export function verifyToken(token: string): Promise<boolean> {
 			}
 			return false;
 		})
-		.catch(() => false);
+		.catch(() => {
+			if (queryClient) {
+				refreshToken(queryClient);
+			}
+			return false;
+		});
 }
 
-export async function refreshToken() {
-	const url = `${API_URL}/auth/token/refresh/`;
-	const refresh = await serverlessCookie<string>('refresh');
-	if (checkTokenType(refresh)) {
-		return axios
-			.post(url, {
-				refresh,
-				headers: {
-					Authorization: `Bearer ${refresh}`,
-				},
-				credentials: 'same-origin',
-			})
-			.then((resp) => {
-				serverlessCookie<string>('token', resp.data.access, 60 * 60 * 36, false)
-					.then(() => {
-						serverlessCookie<string>(
-							'refresh',
-							resp.data.refresh,
-							60 * 60 * 24 * 28,
-							false
-						);
-					})
-					.then(() => {
-						window.location.reload();
-					});
-			});
-	}
-	return null;
-	// .catch(() => {
-	// 	delMany(['loggedInUser', 'profile']);
-	// 	Cookies.remove('token');
-	// });
-}
-
-export async function getUser(token: string): Promise<AxiosResponse<User> | null> {
+export async function getUser(
+	token: string,
+	queryClient?: QueryClient
+): Promise<AxiosResponse<User> | null> {
 	const url = `${API_URL}/auth/user/`;
 	// todo: store this in jotai instead of passing props
-	const refresh = await serverlessCookie<string>('refresh');
 	let isVerified = false;
-	// check if token is a string
-	if (checkTokenType(token) && checkTokenType(refresh)) {
-		isVerified = await verifyToken(token);
+	if (checkTokenType(token)) {
+		isVerified = await verifyToken(token, queryClient);
 	}
 	if (isVerified) {
 		return axios
@@ -192,9 +204,6 @@ export async function getUser(token: string): Promise<AxiosResponse<User> | null
 			})
 			.then((resp) => resp)
 			.catch(() => null);
-	}
-	if ((!checkTokenType(token) || !isVerified) && checkTokenType(refresh)) {
-		await refreshToken();
 	}
 	return null;
 }

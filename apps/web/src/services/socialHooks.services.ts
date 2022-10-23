@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
 	additionalSPQuery,
 	profileQuery,
@@ -111,8 +111,9 @@ export const useBlockedUsernames = () => {
 
 export const useOneOneProfile = (username: string) => {
 	const { token } = useAuth();
+	const qc = useQueryClient();
 	const profileQ = useQuery({
-		...profileQuery(token, username),
+		...profileQuery(token, username, qc),
 		enabled: Boolean(username) && checkTokenType(token),
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
@@ -149,8 +150,9 @@ export const useSocialProfile = () => {
 export const useProfile = (username: string) => {
 	const profileRef = React.useRef<Profile | null>(null);
 	const { token } = useAuth();
+	const qc = useQueryClient();
 	const profileQ = useQuery({
-		...profileQuery(token, username),
+		...profileQuery(token, username, qc),
 		enabled: Boolean(username) && checkTokenType(token),
 	});
 	if (profileQ.isSuccess && profileQ.data !== null) {

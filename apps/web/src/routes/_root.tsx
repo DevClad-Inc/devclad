@@ -30,12 +30,12 @@ function Routing(): JSX.Element {
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
 		if (checkTokenType(token) && checkTokenType(refresh)) {
-			qc.setQueryData(['token'], token); // setting data on first load to use in functions
+			qc.setQueryData(['token'], token);
 			qc.setQueryData(['refresh'], refresh);
 		}
 		if (authed) {
 			setInterval(() => {
-				refreshToken();
+				refreshToken(qc);
 			}, 1000 * 60 * 60 * 2); // refresh token every 2 hours
 		}
 	}, [qc, authed, token, refresh]);

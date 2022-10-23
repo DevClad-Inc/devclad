@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { checkTokenType } from '@/services/auth.services';
 
-export default function serverlessCookie<TState>(
+export default async function serverlessCookie<TState>(
 	key: string,
 	value?: string,
 	maxAge?: number,
@@ -11,7 +11,7 @@ export default function serverlessCookie<TState>(
 	const secure = import.meta.env.VITE_DEVELOPMENT;
 
 	if (checkTokenType(value) && !del) {
-		return axios({
+		const response = await axios({
 			method: 'PUT',
 			url,
 			data: {
@@ -21,25 +21,30 @@ export default function serverlessCookie<TState>(
 				secure,
 			},
 			headers: { 'Content-Type': 'application/json' },
-		}).then((response) => response.data.value as TState);
+		});
+		return response.data.value as TState;
 	}
 	if (del) {
-		return axios({
+		const response = await axios({
 			method: 'PUT',
 			url,
 			data: { key, value, maxAge, secure, del },
 			headers: { 'Content-Type': 'application/json' },
-		}).then((response) => response.data.value as TState);
+		});
+		return response.data.value as TState;
 	}
 
-	return axios({
-		method: 'GET',
-		url,
-		params: {
-			key,
-		},
-		headers: { 'Content-Type': 'application/json' },
-	})
-		.then((response) => response.data.value as TState)
-		.catch(() => null);
+	try {
+		const response = await axios({
+			method: 'GET',
+			url,
+			params: {
+				key,
+			},
+			headers: { 'Content-Type': 'application/json' },
+		});
+		return response.data.value as TState;
+	} catch {
+		return null;
+	}
 }

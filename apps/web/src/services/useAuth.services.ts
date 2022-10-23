@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
 import {
 	refreshQuery,
@@ -21,6 +21,7 @@ export function useAuth() {
 	const authedRef = React.useRef<boolean>(false);
 	const streamTokenRef = React.useRef<StreamTokenT | null>(null);
 	const userRef = React.useRef<User>({ ...initialUserState });
+	const qc = useQueryClient();
 
 	const { isSuccess: tokenSuccess, data: tokenData } = useQuery({
 		...tokenQuery(),
@@ -37,7 +38,7 @@ export function useAuth() {
 	}
 
 	const { isSuccess: userSuccess, data: userData } = useQuery({
-		...userQuery(tokenRef.current ? tokenRef.current : ''),
+		...userQuery(tokenRef.current ? tokenRef.current : '', qc),
 		enabled: Boolean(tokenData),
 	});
 	const { isSuccess: streamSuccess, data: streamData } = useQuery({
@@ -72,9 +73,9 @@ export function useApproved(): { approved: boolean; status: string } {
 	const approved = React.useRef<boolean>(false);
 	const status = React.useRef<string>('Not Submitted');
 	const { token } = useAuth();
-
+	const qc = useQueryClient();
 	const { isSuccess, data } = useQuery({
-		...statusQuery(token),
+		...statusQuery(token, qc),
 		enabled: checkTokenType(token),
 	});
 

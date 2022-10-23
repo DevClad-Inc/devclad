@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios, { AxiosResponse } from 'axios';
+import { QueryClient } from '@tanstack/react-query';
 import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
-import { refreshToken, API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
-import serverlessCookie from '@/lib/serverlessCookie.lib';
+import { API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
 
 export async function getProfile(
 	token: string,
-	username: string
+	username: string,
+	qc?: QueryClient
 ): Promise<AxiosResponse<Profile> | null> {
 	const url = `${API_URL}/users/profile/${username}/`;
-	const refresh = await serverlessCookie<string>('refresh');
 	let isVerified = false;
 	if (checkTokenType(token)) {
-		isVerified = await verifyToken(token);
+		isVerified = await verifyToken(token, qc);
 	}
 	if (isVerified) {
 		return axios
@@ -23,9 +23,6 @@ export async function getProfile(
 			})
 			.then((resp) => resp)
 			.catch(() => null);
-	}
-	if ((token === undefined || !isVerified) && refresh) {
-		await refreshToken();
 	}
 	return null;
 }
@@ -195,13 +192,16 @@ export function checkSocialProfileEmpty(token: string) {
 }
 
 /*
-This deals with UserStatus Model.
 getStatus() - This is to check "approved" field.
 setSubmittedStatus() - This is to set the "status" field to "Submitted".
 */
-export const getStatus = (token: string | undefined) => {
+export const getStatus = async (token: string, qc: QueryClient) => {
 	const url = `${API_URL}/users/status/`;
-	if (token !== undefined && token !== '') {
+	let isVerified = false;
+	if (checkTokenType(token)) {
+		isVerified = await verifyToken(token, qc);
+	}
+	if (isVerified) {
 		return axios({
 			method: 'GET',
 			url,
@@ -305,12 +305,7 @@ export const getSkippedUsers = (token: string) => {
 	return null;
 };
 
-export const skipUser = (
-	token: string,
-	username: string,
-	skipped: string[],
-	skip: boolean
-) => {
+export const skipUser = (token: string, username: string, skipped: string[], skip: boolean) => {
 	const url = `${API_URL}/social/skipped/`;
 
 	if (skip) {

@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { QueryClient } from '@tanstack/react-query';
 import { checkTokenType, getUser } from '@/services/auth.services';
 import {
 	getAdded,
@@ -35,15 +36,15 @@ export const streamUIDQuery = (token: string, username: string) => ({
 export const tokenQuery = () => ({
 	queryKey: ['token'],
 	queryFn: () => serverlessCookie<string>('token'),
-	staleTime: 1000 * 60 * 60 * 24, // 24 hours
 	enabled: Cookies.get('loggedIn') === 'true',
+	staleTime: 1000 * 60 * 60 * 24,
 });
 
 export const refreshQuery = () => ({
 	queryKey: ['refresh'],
 	queryFn: () => serverlessCookie<string>('refresh'),
-	staleTime: 1000 * 60 * 60 * 24 * 14, // 14 days
 	enabled: Cookies.get('loggedIn') === 'true',
+	staleTime: 1000 * 60 * 60 * 24 * 28,
 });
 
 export const meetingQuery = (token: string, uid: string) => ({
@@ -55,9 +56,9 @@ export const meetingQuery = (token: string, uid: string) => ({
 	enabled: idTypeCheck(uid),
 });
 
-export const userQuery = (token: string) => ({
+export const userQuery = (token: string, qc?: QueryClient) => ({
 	queryKey: ['user'],
-	queryFn: () => getUser(token),
+	queryFn: () => getUser(token, qc),
 	enabled: checkTokenType(token),
 });
 
@@ -71,15 +72,15 @@ export const additionalSPQuery = (token: string) => ({
 	queryFn: () => getAdditionalSP(token),
 });
 
-export const statusQuery = (token: string) => ({
+export const statusQuery = (token: string, qc: QueryClient) => ({
 	queryKey: ['userStatus'],
-	queryFn: () => getStatus(token),
+	queryFn: () => getStatus(token, qc),
 	enabled: checkTokenType(token),
 });
 
-export const profileQuery = (token: string, username: string) => ({
+export const profileQuery = (token: string, username: string, qc?: QueryClient) => ({
 	queryKey: ['profile', username],
-	queryFn: () => getProfile(token, username),
+	queryFn: () => getProfile(token, username, qc),
 	enabled: Boolean(username) && username !== '',
 });
 
