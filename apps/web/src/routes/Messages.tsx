@@ -108,7 +108,7 @@ export function MessageChild(): JSX.Element {
 	type LtOrGtType = 'id_lte' | 'id_gte' | undefined;
 
 	const fetchMessages = React.useCallback(
-		async (
+		(
 			channelVal: Channel<DefaultGenerics> | undefined,
 			lastMessageIDVal: string | undefined,
 			ltOrGt: LtOrGtType
@@ -157,7 +157,7 @@ export function MessageChild(): JSX.Element {
 		}
 	};
 
-	const handleInfiniteScroll = async (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+	const handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
 		// see if user is scrolling up
 		if (e.currentTarget.scrollTop === 0 && !channelQFetching) {
 			const lengthOfMessages = channelQData?.messages.length;

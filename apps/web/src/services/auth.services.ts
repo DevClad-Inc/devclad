@@ -163,7 +163,7 @@ export async function refreshToken(queryClient: QueryClient) {
 	// });
 }
 
-export async function verifyToken(token: string, queryClient?: QueryClient): Promise<boolean> {
+export function verifyToken(token: string, queryClient?: QueryClient): Promise<boolean> {
 	const url = `${API_URL}/auth/token/verify/`;
 	return axios({
 		method: 'POST',
