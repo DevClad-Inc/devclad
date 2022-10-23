@@ -1,10 +1,13 @@
 from urllib.request import Request
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from social.models import SocialProfile
 from social.serializers import (
     SocialProfileSerializer,
@@ -395,11 +398,6 @@ def skip(request: Request) -> Response:
             return Response(serializer.errors, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)
-
-
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework.views import APIView
 
 
 class CsrfTokenView(APIView):
