@@ -395,21 +395,3 @@ def skip(request: Request) -> Response:
             return Response(serializer.errors, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)
-
-
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework.views import APIView
-
-
-class CsrfTokenView(APIView):
-    @method_decorator(ensure_csrf_cookie)
-    def get(self, request, *args, **kwargs) -> Response:
-        """Return a empty response with the token CSRF.
-
-        Returns
-        -------
-        Response
-            The response with the token CSRF as a cookie.
-        """
-        return Response(status=204)
