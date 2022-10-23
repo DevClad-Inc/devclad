@@ -167,7 +167,7 @@ export function MessageChild(): JSX.Element {
 				setNoOfMessages(noOfMessages + 5);
 				if (noOfMessages > 50) {
 					fetchMessages(channelRef.current, channelQData?.messages[0].id, 'id_lte')
-						.then((res) => {
+						?.then((res) => {
 							setShowScrollDown(true);
 							qc.setQueryData(['channel', channelRef.current?.cid as string], res);
 						})
@@ -226,7 +226,7 @@ export function MessageChild(): JSX.Element {
 						.create()
 						.then(async () => {
 							await fetchMessages(channelRef.current, undefined, undefined)
-								.then((res) =>
+								?.then((res) =>
 									qc.setQueryData(
 										['channel', channelRef.current?.cid as string],
 										res
@@ -319,7 +319,7 @@ export function MessageChild(): JSX.Element {
 												channelRef.current,
 												undefined,
 												undefined
-											).then((res) => {
+											)?.then((res) => {
 												qc.setQueryData(
 													['channel', channelRef.current?.cid as string],
 													res
