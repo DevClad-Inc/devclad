@@ -1,10 +1,10 @@
-import clsx from 'clsx';
 import React from 'react';
 import Cookies from 'js-cookie';
 import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-dom';
 import { GraphTextureSVG } from '@devclad/ui';
+import { classNames } from '@devclad/lib';
 import { ThemeContext } from '@/context/Theme.context';
 import AppShell from '@/components/AppShell';
 import { checkTokenType, refreshToken } from '@/services/auth.services';
@@ -29,6 +29,7 @@ function Routing(): JSX.Element {
 	const loggedInCookie = Cookies.get('loggedIn');
 	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
+		// ! need this for login
 		if (checkTokenType(token) && checkTokenType(refresh)) {
 			qc.setQueryData(['token'], token);
 			qc.setQueryData(['refresh'], refresh);
@@ -68,7 +69,6 @@ function Routing(): JSX.Element {
 }
 
 export default function Root(): JSX.Element {
-	// todo: add splash screen
 	const { darkMode } = React.useContext(ThemeContext);
 	React.useEffect(() => {
 		if (!darkMode) {
@@ -77,16 +77,9 @@ export default function Root(): JSX.Element {
 			document.getElementById('body')?.classList.add('bg-black');
 		}
 	}, [darkMode]);
-	// const initialData = useLoaderData() as Awaited<
-	// 	ReturnType<ReturnType<typeof initialDataLoader>>
-	// >;
-	// React.useEffect(() => {
-	// 	qc.setQueryData(['initialData'], initialData);
-	// 	console.log('initialData', initialData);
-	// }, [initialData, qc]);
 	return (
 		<div style={{ backgroundImage: `url(${GraphTextureSVG})` }}>
-			<div className={clsx('h-full overflow-x-clip', { dark: darkMode })}>
+			<div className={classNames(darkMode ? 'dark' : '', 'h-full overflow-x-clip')}>
 				<div
 					className="sm:text-md via-darkBG2 bg-white
           from-black/50 to-black/50

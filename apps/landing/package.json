@@ -18,7 +18,6 @@
 		"@heroicons/react": "^2.0.11",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"airtable": "^0.11.4",
-		"clsx": "^1.2.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hot-toast": "^2.3.0",
