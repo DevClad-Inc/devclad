@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
+import Cookies from 'js-cookie';
 import { useAuth } from '@/services/useAuth.services';
 import AppShell from '@/components/AppShell';
 
@@ -8,12 +9,13 @@ export default function FourOFour(): JSX.Element {
 	const { authed } = useAuth();
 	useDocumentTitle('Oops! 404');
 	const navigate = useNavigate();
+	const loggedInCookie = Cookies.get('loggedIn');
 
 	React.useEffect(() => {
-		if (!authed) {
+		if (!authed && !loggedInCookie) {
 			navigate('/login');
 		}
-	}, [authed, navigate]);
+	}, [authed, loggedInCookie, navigate]);
 
 	return (
 		// todo: CHANGE THIS!!

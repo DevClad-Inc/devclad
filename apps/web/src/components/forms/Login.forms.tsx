@@ -8,7 +8,6 @@ import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { LoginFormValues } from '@/lib/InterfacesStates.lib';
-import { streamQuery } from '@/lib/queriesAndLoaders';
 
 interface LoginFormProps {
 	loginError: boolean;
@@ -36,7 +35,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 		try {
 			setSubmitting(true);
 			const { email, password } = values;
-			const { token } = await logIn(email, password);
+			const { token } = await logIn(qc, email, password);
 
 			if (loginError) {
 				setLoginError(false);
@@ -44,14 +43,12 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 			if (token) {
 				// only exception to checkTokenType; type is checked in checkTokenType within getUser tho
 				await getUser(token || '')
-					?.then(() => {
+					.then(() => {
 						invalidateAndStoreIDB(qc, 'user');
-						qc.refetchQueries();
 					})
 					.catch(() => {
 						delMany(['loggedInUser', 'profile']);
 					});
-				qc.fetchQuery(streamQuery(token || ''));
 			}
 		} catch (error) {
 			setLoginError(true);

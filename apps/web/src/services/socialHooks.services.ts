@@ -147,7 +147,7 @@ export const useSocialProfile = () => {
 	return null;
 };
 
-export const useProfile = (username: string) => {
+export const useProfile = (username: string): Profile | null => {
 	const profileRef = React.useRef<Profile | null>(null);
 	const { token } = useAuth();
 	const qc = useQueryClient();

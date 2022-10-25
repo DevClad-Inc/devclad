@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@/root.css';
 import '@devclad/ui/fontscss';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { UserProvider } from '@/context/User.context';
 import { ThemeProvider } from '@/context/Theme.context';
 import Root from '@/routes/_root';
 import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
@@ -180,13 +179,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<UserProvider>
-				<StreamProvider>
-					<ThemeProvider>
-						<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
-					</ThemeProvider>
-				</StreamProvider>
-			</UserProvider>
+			<StreamProvider>
+				<ThemeProvider>
+					<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
+				</ThemeProvider>
+			</StreamProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	</React.StrictMode>

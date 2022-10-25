@@ -14,8 +14,6 @@ const headers = {
 	Accept: 'application/json',
 };
 
-const qc = new QueryClient();
-
 // const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
 
 export const checkTokenType = (token: string | undefined | null) => {
@@ -242,7 +240,7 @@ export function SignUp(user: NewUser) {
 		.catch((err) => err);
 }
 
-export async function logIn(email: string, password: string) {
+export async function logIn(queryClient: QueryClient, email: string, password: string) {
 	const url = `${API_URL}/auth/login/`;
 	let token;
 	const response = await axios
@@ -253,14 +251,26 @@ export async function logIn(email: string, password: string) {
 			credentials: 'include',
 		})
 		.then((resp) => {
-			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false);
-			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 14, false);
-			token = qc.refetchQueries(tokenQuery().queryKey);
-			Cookies.set('loggedIn', 'true', {
-				path: '/',
-				sameSite: 'Strict',
-			});
+			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false).then(
+				() => {
+					token = resp.data.access_token;
+					queryClient.setQueryData(tokenQuery().queryKey, resp.data.access_token);
+					queryClient.setQueryData(refreshQuery().queryKey, resp.data.refresh_token);
+					serverlessCookie<string>(
+						'refresh',
+						resp.data.refresh_token,
+						60 * 60 * 24 * 14,
+						false
+					).then(() => {
+						Cookies.set('loggedIn', 'true', {
+							path: '/',
+							sameSite: 'Strict',
+						});
+					});
+				}
+			);
 		});
+
 	return { response, token };
 }
 
@@ -269,29 +279,24 @@ export async function logOut() {
 	const url = `${API_URL}/auth/logout/`;
 
 	if (refresh) {
-		const response = serverlessCookie<string>('token', '', 0, true)
-			.then(() => {
-				Cookies.remove('loggedIn');
-				serverlessCookie<string>('refresh', '', 0, true);
-			})
-			.then(async () => {
-				await axios
-					.post(url, {
-						refresh,
-						headers,
-						credentials: 'same-origin',
-					})
-					.then(async () => {
-						await delMany(['loggedInUser', 'profile'])
-							.then(() => {
-								qc.invalidateQueries();
-							})
-							.then(() => {
-								window.location.reload();
-							});
-					})
-					.catch(() => window.location.reload());
-			});
+		Cookies.remove('loggedIn');
+		const response = serverlessCookie<string>('token', '', 0, true).then(async () => {
+			await axios
+				.post(url, {
+					refresh,
+					headers,
+					credentials: 'same-origin',
+				})
+				.then(async () => {
+					await delMany(['loggedInUser', 'profile']);
+				})
+				.then(() => {
+					serverlessCookie<string>('refresh', '', 0, true).then(() => {
+						window.location.reload();
+					});
+				})
+				.catch(() => window.location.reload());
+		});
 		return response;
 	}
 	return null;

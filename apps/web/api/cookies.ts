@@ -41,14 +41,14 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 					case true:
 						res.setHeader(
 							'Set-Cookie',
-							`${key}=''; Path=/; HttpOnly; Secure=${secure}; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/;`
+							`${key}=''; Path=/; HttpOnly; Secure=${secure}; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; SameSite=Strict`
 						);
 						res.status(200).end();
 						break;
 					default:
 						res.setHeader(
 							'Set-Cookie',
-							`${key}=${value}; Path=/; HttpOnly; Max-Age=${maxAge}; Secure=${secure}`
+							`${key}=${value}; Path=/; HttpOnly; Max-Age=${maxAge}; Secure=${secure}; SameSite=Strict`
 						);
 						res.status(200).json({ value });
 						break;

@@ -41,31 +41,30 @@ function Routing(): JSX.Element {
 		}
 	}, [qc, authed, token, refresh]);
 
-	// UNAUTHED
-	if (!authed && !loggedInCookie) {
-		if (!allowedPaths.includes(pathname)) {
+	const unauthed = !authed && !loggedInCookie;
+	const authedAndUnApproved =
+		authed && !approved && qc.getQueryState(['userStatus'])?.status === 'success';
+	const authedAndApproved =
+		authed && approved && qc.getQueryState(['userStatus'])?.status === 'success';
+
+	switch (true) {
+		case unauthed && !allowedPaths.includes(pathname):
 			return <Navigate to="/login" />;
-		}
-		return <Outlet />;
-	}
-
-	// AUTHED+UNAPPROVED USER
-	if (authed && approved === false) {
-		if (!pathname.includes('onboarding')) {
+		case unauthed && allowedPaths.includes(pathname):
+			return <Outlet />;
+		case authedAndUnApproved && !pathname.includes('/onboarding'):
 			return <Navigate to="/onboarding" />;
-		}
-		return <Outlet />;
+		case authedAndUnApproved && pathname.includes('/onboarding'):
+			return <Outlet />;
+		case authedAndApproved:
+			return (
+				<AppShell>
+					<Outlet />
+				</AppShell>
+			);
+		default:
+			return <SplashScreen />;
 	}
-
-	// AUTHED+APPROVED USER
-	if (authed && approved) {
-		return (
-			<AppShell>
-				<Outlet />
-			</AppShell>
-		);
-	}
-	return <SplashScreen />;
 }
 
 export default function Root(): JSX.Element {
