@@ -88,18 +88,16 @@ export function MeetingList(): JSX.Element {
 										</a>
 									</div>
 									<div className="-ml-px flex w-0 flex-1">
-										<a
-											href={`tel:${meeting.name}`}
+										<Link
+											to={`/meetings/${meeting.uid}`}
 											className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
 										>
 											<VideoCameraIcon
 												className="h-5 w-5 text-neutral-600"
 												aria-hidden="true"
 											/>
-											<Link to={`/meetings/${meeting.id}`}>
-												<span className="ml-3">Join Room</span>
-											</Link>
-										</a>
+											<span className="ml-3">Join Room</span>
+										</Link>
 									</div>
 								</div>
 							</div>

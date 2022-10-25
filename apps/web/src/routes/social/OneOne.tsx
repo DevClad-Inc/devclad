@@ -158,8 +158,8 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 								</h2>
 							</div>
 							<div
-								className="dark:bg-darkBG rounded-lg border-[1px]
-               border-neutral-200 p-4 text-neutral-800
+								className="dark:bg-darkBG rounded-lg
+               border-[1px] border-neutral-200 p-4 text-neutral-800
                dark:border-neutral-800 dark:text-neutral-200 sm:ml-24"
 							>
 								<div className="italic text-neutral-300">
@@ -218,15 +218,19 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 									)}
 								</div>
 							</div>
-							<div className="-ml-4 flex flex-col space-y-2 rounded-md pb-4 pl-4 sm:ml-20">
-								<div className="sm:text-md flex flex-row space-x-2 font-mono text-sm">
-									{profile.languages &&
-										badge(
-											profile.languages,
-											'bg-darkBG font-medium text-amber-200'
-										)}
-								</div>
 
+							<div className="flex flex-col rounded-md pb-4 sm:ml-20 sm:pl-4">
+								{profile.languages && (
+									<span className="block space-x-2 space-y-4">
+										{badge(
+											profile.languages,
+											'bg-darkBG text-sm font-mono font-medium text-amber-200'
+										)}
+									</span>
+								)}
+							</div>
+
+							<div className="flex flex-col space-y-2 rounded-md pb-4 sm:ml-20 sm:pl-4">
 								{/* TODO: add GITHUB */}
 								<div className="sm:text-md flex flex-row space-x-2 text-sm">
 									{profile.location && profile.location !== 'Other' && (
@@ -266,7 +270,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 												</a>
 											</button>
 										)}
-										<span className="block">
+										<span className="block space-x-2 space-y-2">
 											⚡ {profile.first_name} is good at{' '}
 											{profile.dev_type &&
 												badge(
@@ -314,7 +318,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 												<span className="flex">
 													Why is {profile.first_name} here?
 												</span>
-												<span className="block space-x-2 space-y-2">
+												<span className="block space-y-2 sm:space-x-2">
 													{badge(
 														profile.purpose,
 														'bg-darkBG2 text-sm font-mono font-medium text-amber-200'
@@ -343,7 +347,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 											className="mr-2 h-6 w-6 lg:h-8"
 											aria-hidden="true"
 										/>
-										Schedule Meeting
+										Schedule
 									</PrimaryButton>
 								</div>
 							</div>

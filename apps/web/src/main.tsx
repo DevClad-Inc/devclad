@@ -26,6 +26,7 @@ import Profile from '@/routes/Profile';
 import Messages, { MessageChild } from '@/routes/Messages';
 import StreamProvider from '@/context/Stream.context';
 import Meetings, { MeetingDetail, MeetingList } from './routes/Meetings';
+import { UserProvider } from './context/User.context';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -179,11 +180,13 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<StreamProvider>
-				<ThemeProvider>
-					<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
-				</ThemeProvider>
-			</StreamProvider>
+			<UserProvider>
+				<StreamProvider>
+					<ThemeProvider>
+						<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
+					</ThemeProvider>
+				</StreamProvider>
+			</UserProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	</React.StrictMode>
