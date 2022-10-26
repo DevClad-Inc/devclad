@@ -25,6 +25,7 @@ import ActionDropdown from '@/components/ActionDropdown';
 import { blockUser, patchCircle } from '@/services/profile.services';
 import { useAuth } from '@/services/useAuth.services';
 import { Success, Error } from '@/components/Feedback';
+import { DEVELOPMENT, API_URL } from '@/services/auth.services';
 
 export const genExp = (rawXP: number) => {
 	if (rawXP === 1) {
@@ -175,9 +176,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 									<img
 										className="bg-linen h-32 w-32 rounded-full object-cover sm:h-24 sm:w-24"
 										src={
-											import.meta.env.VITE_DEVELOPMENT
-												? import.meta.env.VITE_API_URL + profile.avatar
-												: profile.avatar
+											DEVELOPMENT ? API_URL + profile.avatar : profile.avatar
 										}
 										alt=""
 									/>

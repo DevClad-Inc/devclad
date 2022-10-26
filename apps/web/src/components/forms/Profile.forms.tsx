@@ -11,6 +11,7 @@ import { invalidateAndStoreIDB } from '@/context/User.context';
 import { ProfileLoading } from '../LoadingStates';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile } from '@/services/socialHooks.services';
+import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 
 export default function UpdateProfileForm(): JSX.Element {
 	const qc = useQueryClient();
@@ -301,11 +302,7 @@ export function AvatarUploadForm() {
 				<div className="mt-1 flex items-center">
 					<img
 						className="inline-block h-24 w-24 rounded-full bg-white object-cover"
-						src={
-							import.meta.env.VITE_DEVELOPMENT
-								? import.meta.env.VITE_API_URL + profileData.avatar
-								: profileData.avatar
-						}
+						src={DEVELOPMENT ? API_URL + profileData.avatar : profileData.avatar}
 						alt=""
 					/>
 				</div>

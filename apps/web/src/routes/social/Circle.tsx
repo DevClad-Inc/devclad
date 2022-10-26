@@ -12,6 +12,7 @@ import { PrimaryButton } from '@/lib/Buttons.lib';
 import { MatchProfile } from '@/lib/InterfacesStates.lib';
 import { useCircle, useOneOneProfile, useConnected } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
+import { DEVELOPMENT, API_URL } from '@/services/auth.services';
 
 function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 	const connected = useConnected(otherUser);
@@ -37,9 +38,7 @@ function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 									<img
 										className="bg-linen h-16 w-16 rounded-full object-cover sm:h-24 sm:w-24"
 										src={
-											import.meta.env.VITE_DEVELOPMENT
-												? import.meta.env.VITE_API_URL + profile.avatar
-												: profile.avatar
+											DEVELOPMENT ? API_URL + profile.avatar : profile.avatar
 										}
 										alt=""
 									/>

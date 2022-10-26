@@ -17,6 +17,7 @@ import { MessagesLoading } from '@/components/LoadingStates';
 import { Error } from '@/components/Feedback';
 import { useStreamContext } from '@/context/Stream.context';
 import Message from '@/components/Message';
+import { DEVELOPMENT, API_URL } from '@/services/auth.services';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-400
@@ -345,8 +346,8 @@ export function MessageChild(): JSX.Element {
 										// todo: refactor this
 										// eslint-disable-next-line no-nested-ternary
 										msg.user
-											? import.meta.env.VITE_DEVELOPMENT
-												? import.meta.env.VITE_API_URL + msg.user.image
+											? DEVELOPMENT
+												? API_URL + msg.user.image
 												: msg.user?.image
 											: ''
 									}
@@ -360,11 +361,7 @@ export function MessageChild(): JSX.Element {
 					<div className="flex-shrink-0">
 						<img
 							className="bg-linen hidden h-10 w-10 rounded-full object-cover sm:inline-block"
-							src={
-								import.meta.env.VITE_DEVELOPMENT
-									? import.meta.env.VITE_API_URL + profileData.avatar
-									: profileData.avatar
-							}
+							src={DEVELOPMENT ? API_URL + profileData.avatar : profileData.avatar}
 							alt=""
 						/>
 					</div>

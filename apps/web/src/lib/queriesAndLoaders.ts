@@ -12,7 +12,6 @@ import {
 	getSocialProfile,
 	getStatus,
 	getProfile,
-	getUsernameSocialProfile,
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
 import { getMeeting, idTypeCheck } from '@/services/meetings.services';
@@ -62,9 +61,12 @@ export const userQuery = (token: string, qc?: QueryClient) => ({
 	enabled: checkTokenType(token),
 });
 
-export const socialProfileQuery = (token: string) => ({
-	queryKey: ['social-profile'],
-	queryFn: () => getSocialProfile(token),
+export const socialProfileQuery = (token: string, username?: string) => ({
+	queryKey: username ? ['social-profile', username] : ['social-profile'],
+	queryFn: () => getSocialProfile(token, username),
+	enabled: username
+		? Boolean(username) && username !== '' && checkTokenType(token)
+		: checkTokenType(token),
 });
 
 export const additionalSPQuery = (token: string) => ({
@@ -78,16 +80,10 @@ export const statusQuery = (token: string, qc: QueryClient) => ({
 	enabled: checkTokenType(token),
 });
 
-export const profileQuery = (token: string, username: string, qc?: QueryClient) => ({
+export const profileQuery = (token: string, qc: QueryClient, username: string) => ({
 	queryKey: ['profile', username],
 	queryFn: () => getProfile(token, username, qc),
 	enabled: Boolean(username) && username !== '',
-});
-
-export const socialProfileUsernameQuery = (token: string, username: string) => ({
-	queryKey: ['social-profile', username],
-	queryFn: () => getUsernameSocialProfile(token, username),
-	enabled: Boolean(username) && username !== '' && checkTokenType(token),
 });
 
 export const userMatchesQuery = (token: string) => ({

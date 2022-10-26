@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { checkTokenType } from '@/services/auth.services';
+import { checkTokenType, DEVELOPMENT } from '@/services/auth.services';
 
 export default async function serverlessCookie<TState>(
 	key: string,
@@ -9,7 +9,7 @@ export default async function serverlessCookie<TState>(
 	del?: boolean
 ): Promise<TState | null> {
 	const url = `/api/cookies`;
-	const secure = !import.meta.env.VITE_DEVELOPMENT;
+	const secure = !DEVELOPMENT;
 
 	// use serverless function with httponly cookies in secure env
 	if (secure) {

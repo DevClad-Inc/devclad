@@ -3,7 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
 	additionalSPQuery,
 	profileQuery,
-	socialProfileUsernameQuery,
 	socialProfileQuery,
 	userBlockedQuery,
 	userCircleQuery,
@@ -113,12 +112,12 @@ export const useOneOneProfile = (username: string) => {
 	const { token } = useAuth();
 	const qc = useQueryClient();
 	const profileQ = useQuery({
-		...profileQuery(token, username, qc),
+		...profileQuery(token, qc, username),
 		enabled: Boolean(username) && checkTokenType(token),
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 	const spUsernameQuery = useQuery({
-		...socialProfileUsernameQuery(token, username),
+		...socialProfileQuery(token, username),
 		enabled: username !== '',
 		staleTime: 1000 * 5 * 60, // 5 minutes
 	});
@@ -152,7 +151,7 @@ export const useProfile = (username: string): Profile | null => {
 	const { token } = useAuth();
 	const qc = useQueryClient();
 	const profileQ = useQuery({
-		...profileQuery(token, username, qc),
+		...profileQuery(token, qc, username),
 		enabled: Boolean(username) && checkTokenType(token),
 	});
 	if (profileQ.isSuccess && profileQ.data !== null) {

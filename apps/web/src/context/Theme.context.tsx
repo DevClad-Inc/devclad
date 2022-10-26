@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useMemo, useState } from 'react';
+import { DEVELOPMENT } from '@/services/auth.services';
 
 export const ThemeContext = React.createContext({
 	darkMode: true,
@@ -14,7 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		setDarkMode(!dark);
 		Cookies.set('darkMode', String(!dark), {
 			expires: 365,
-			secure: !import.meta.env.VITE_DEVELOPMENT,
+			secure: !DEVELOPMENT,
 			sameSite: 'lax',
 		});
 	};

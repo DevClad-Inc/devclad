@@ -65,22 +65,13 @@ export function updateProfileAvatar(token: string, avatar: File) {
 	return null;
 }
 
-export function getSocialProfile(token: string) {
-	const url = `${API_URL}/social/profile/`;
-	if (checkTokenType(token)) {
-		return axios({
-			method: 'GET',
-			url,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+export function getSocialProfile(token: string, username?: string) {
+	let url: string;
+	if (username) {
+		url = `${API_URL}/social/profile/${username}/`;
+	} else {
+		url = `${API_URL}/social/profile/`;
 	}
-	return null;
-}
-
-export function getUsernameSocialProfile(token: string, username: string) {
-	const url = `${API_URL}/social/profile/${username}/`;
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'GET',

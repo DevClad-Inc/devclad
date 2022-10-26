@@ -27,6 +27,7 @@ import { genExp, genIdea } from '@/routes/Profile';
 import { useAuth } from '@/services/useAuth.services';
 import { patchCircle, shadowUser, skipUser } from '@/services/profile.services';
 import { Success, Error, ConfirmDialog } from '@/components/Feedback';
+import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 
 function MatchCard({ username }: { username: string }): JSX.Element {
 	const profile = useOneOneProfile(username) as MatchProfile;
@@ -127,8 +128,8 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 										<img
 											className="bg-linen h-32 w-32 rounded-full object-cover sm:h-24 sm:w-24"
 											src={
-												import.meta.env.VITE_DEVELOPMENT
-													? import.meta.env.VITE_API_URL + profile.avatar
+												DEVELOPMENT
+													? API_URL + profile.avatar
 													: profile.avatar
 											}
 											alt=""

@@ -14,6 +14,7 @@ import CheckChild from '@/lib/CheckChild.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile } from '@/services/socialHooks.services';
 import { Profile } from '@/lib/InterfacesStates.lib';
+import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 
 const navigation = [
 	{
@@ -115,7 +116,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 							))}
 						</nav>
 					</div>
-					<div className="flex flex-shrink-0 rounded-tl-3xl border-t border-orange-400/50 p-4 dark:bg-black">
+					<div className="flex flex-shrink-0 rounded-tl-3xl border-t border-orange-300 p-4 dark:bg-black">
 						<Link to="/settings" className="group block w-full flex-shrink-0">
 							<div className="flex items-center">
 								<div>
@@ -123,9 +124,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 										<img
 											className="bg-linen inline-block h-12 w-12 rounded-full object-cover"
 											src={
-												import.meta.env.VITE_DEVELOPMENT
-													? import.meta.env.VITE_API_URL +
-													  profileData.avatar
+												DEVELOPMENT
+													? API_URL + profileData.avatar
 													: profileData.avatar
 											}
 											alt=""
