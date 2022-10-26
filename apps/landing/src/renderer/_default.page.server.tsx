@@ -25,7 +25,7 @@ export function render(pageContext: PageContextServer) {
 		'Social Workspace Platform built for developers. Meet developers 1:1 using AI, build your network, and ship the next best thing.';
 
 	const documentHtml = escapeInject`<!DOCTYPE html>
-    <html lang="en" class="h-full">
+    <html lang="en" class="h-full bg-black">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

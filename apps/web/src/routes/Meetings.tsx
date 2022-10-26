@@ -2,7 +2,7 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
-import { EnvelopeIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
+import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { convertTimeZone } from '@devclad/lib';
 import { meetingQuery } from '@/lib/queriesAndLoaders';
 import { Meeting, SocialProfile } from '@/lib/InterfacesStates.lib';
@@ -23,7 +23,7 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 	return (
 		<li
 			key={meeting.id}
-			className="bg-darkBG2 col-span-1 divide-y divide-neutral-800 rounded-lg border-[1px] border-neutral-800 shadow"
+			className="bg-darkBG2 col-span-1 divide-y divide-neutral-800 rounded-md border-[1px] border-neutral-800 shadow-2xl shadow-white/5"
 		>
 			<div className="flex w-full items-center justify-between space-x-6 p-6">
 				<div className="flex-1 truncate">
@@ -51,25 +51,23 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 				/>
 			</div>
 			<div>
+				{/* todo: add reschedule request modal */}
 				<div className="-mt-px flex divide-x divide-neutral-800">
 					<div className="flex w-0 flex-1">
 						<a
 							href={`mailto:${meeting.name}`}
-							className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
+							className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
 						>
-							<EnvelopeIcon className="h-5 w-5 text-neutral-600" aria-hidden="true" />
+							<CalendarDaysIcon className="h-5 w-5" aria-hidden="true" />
 							<span className="ml-3">Reschedule</span>
 						</a>
 					</div>
 					<div className="-ml-px flex w-0 flex-1">
 						<Link
 							to={`/meetings/${meeting.uid}`}
-							className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
+							className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
 						>
-							<VideoCameraIcon
-								className="h-5 w-5 text-neutral-600"
-								aria-hidden="true"
-							/>
+							<VideoCameraIcon className="h-5 w-5" aria-hidden="true" />
 							<span className="ml-3">Join Room</span>
 						</Link>
 					</div>
