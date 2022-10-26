@@ -33,6 +33,7 @@ repos:
           - eslint-plugin-react-hooks
           - eslint-config-prettier
           - eslint-plugin-prettier
+          - prettier-plugin-tailwindcss
           - "@typescript-eslint/eslint-plugin"
           - "@typescript-eslint/parser"
   - repo: https://github.com/pre-commit/mirrors-prettier
