@@ -1,4 +1,5 @@
 import React from 'react';
+import { inject } from '@vercel/analytics';
 import { PageContextProvider } from './usePageContext';
 import type { PageContext } from './types';
 import '@devclad/ui/fontscss';
@@ -15,6 +16,7 @@ export default function PageShell({
 	children: React.ReactNode;
 	pageContext: PageContext;
 }) {
+	inject();
 	return (
 		<React.StrictMode>
 			<PageContextProvider pageContext={pageContext}>
