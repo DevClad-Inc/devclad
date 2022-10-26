@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import ReactDOMServer from 'react-dom/server';
+import { inject } from '@vercel/analytics';
 import React from 'react';
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr';
 import PageShell from './PageShell';
@@ -15,6 +16,8 @@ export function render(pageContext: PageContextServer) {
 			<Page {...pageProps} />
 		</PageShell>
 	);
+
+	inject();
 
 	// See https://vite-plugin-ssr.com/head
 	const { documentProps } = pageContext.exports;
