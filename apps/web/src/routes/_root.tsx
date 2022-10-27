@@ -12,13 +12,7 @@ import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 import SplashScreen from '@/components/Splash';
 
-const allowedPaths = [
-	'/login',
-	'/signup',
-	'/forgot-password',
-	'/auth/registration/account-confirm-email',
-	'/auth/password/reset/confirm',
-];
+const allowedPaths = ['/login', '/signup', '/forgot-password'];
 
 function Routing(): JSX.Element {
 	const qc = useQueryClient();
@@ -27,7 +21,6 @@ function Routing(): JSX.Element {
 	const { approved } = useApproved();
 	const { token, refresh } = useAuth();
 	const loggedInCookie = Cookies.get('loggedIn');
-	// AUTH CHECK AND REFRESH TOKEN
 	React.useEffect(() => {
 		// ! need this for login
 		if (checkTokenType(token) && checkTokenType(refresh)) {
@@ -37,7 +30,7 @@ function Routing(): JSX.Element {
 		if (authed) {
 			setInterval(() => {
 				refreshToken(qc);
-			}, 1000 * 60 * 60 * 2); // refresh token every 2 hours
+			}, 1000 * 60 * 60 * 2);
 		}
 	}, [qc, authed, token, refresh]);
 
@@ -48,9 +41,9 @@ function Routing(): JSX.Element {
 		authed && approved && qc.getQueryState(['userStatus'])?.status === 'success';
 
 	switch (true) {
-		case unauthed && !allowedPaths.includes(pathname):
+		case unauthed && !allowedPaths.includes(pathname) && !pathname.includes('/auth/'):
 			return <Navigate to="/login" />;
-		case unauthed && allowedPaths.includes(pathname):
+		case unauthed && (allowedPaths.includes(pathname) || pathname.includes('/auth/')):
 			return <Outlet />;
 		case authedAndUnApproved && !pathname.includes('/onboarding'):
 			return <Navigate to="/onboarding" />;

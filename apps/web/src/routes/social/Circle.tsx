@@ -71,20 +71,20 @@ function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 								<Link className="flex" to={`/messages/${otherUser}/`}>
 									<PrimaryButton>
 										<ChatBubbleBottomCenterIcon
-											className="mr-2 h-6 w-6 sm:h-8"
+											className="h-6 w-6 sm:mr-2 sm:h-8"
 											aria-hidden="true"
 										/>
-										Chat
+										<span className="hidden sm:flex">Chat</span>
 									</PrimaryButton>
 								</Link>
 							</div>
 							<div className="flex flex-col">
 								<PrimaryButton>
 									<VideoCameraIcon
-										className="mr-2 h-6 w-6 sm:h-8"
+										className="h-6 w-6 sm:mr-2 sm:h-8"
 										aria-hidden="true"
 									/>
-									<span>Schedule</span>
+									<span className="hidden sm:flex">Schedule</span>
 								</PrimaryButton>
 							</div>
 							<div className="flex flex-col">

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { LoginFormValues } from '@/lib/InterfacesStates.lib';
+import { ILoginForm } from '@/lib/InterfacesStates.lib';
 
 interface LoginFormProps {
 	loginError: boolean;
@@ -16,8 +16,8 @@ interface LoginFormProps {
 
 export default function LoginForm({ loginError, setLoginError }: LoginFormProps): JSX.Element {
 	const qc = useQueryClient();
-	const validate = (values: LoginFormValues) => {
-		const errors: LoginFormValues['errors'] = {};
+	const validate = (values: ILoginForm) => {
+		const errors: ILoginForm['errors'] = {};
 		if (!values.email) {
 			errors.email = 'Required';
 		} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
@@ -29,7 +29,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 		return errors;
 	};
 	const handleSubmit = async (
-		values: LoginFormValues,
+		values: ILoginForm,
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
 		try {

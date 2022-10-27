@@ -36,9 +36,7 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 						</span>
 					</div>
 					<p className="mt-1 truncate text-sm text-neutral-500">
-						{
-							convertTimeZone(meeting.time, time) // convert to local time
-						}
+						{convertTimeZone(meeting.time, time)}
 					</p>
 					<p className="mt-1 truncate text-sm text-neutral-500">
 						{meeting.invites.map((invite) => invite).join(', ')}
@@ -92,14 +90,6 @@ export function MeetingList(): JSX.Element {
 	) {
 		return <div>Loading...</div>;
 	}
-	/*
-	- invites
-	- link
-	- time (start)
-	- time (end) (15 min)
-	- description (auto-generated)
-	 */
-
 	if (isSuccess && meetingData !== null) {
 		const { meetings } = meetingData.data as { meetings: Meeting[] };
 		const time = socialProfile?.timezone as string;

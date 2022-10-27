@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { updateUser } from '@/services/auth.services';
-import { UpdateUserFormValues } from '@/lib/InterfacesStates.lib';
+import { IUpdateUserForm } from '@/lib/InterfacesStates.lib';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/components/Feedback';
 import { ProfileLoading } from '../LoadingStates';
@@ -16,8 +16,8 @@ export default function UpdateUserForm(): JSX.Element {
 	const qc = useQueryClient();
 	const { token, loggedInUser } = useAuth();
 
-	const validate = (values: UpdateUserFormValues) => {
-		const errors: UpdateUserFormValues['errors'] = {};
+	const validate = (values: IUpdateUserForm) => {
+		const errors: IUpdateUserForm['errors'] = {};
 		if (!values.firstName) {
 			errors.firstName = 'Required';
 		}
@@ -30,7 +30,7 @@ export default function UpdateUserForm(): JSX.Element {
 		return errors;
 	};
 	const handleSubmit = async (
-		values: UpdateUserFormValues,
+		values: IUpdateUserForm,
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
 		try {

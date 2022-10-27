@@ -122,7 +122,7 @@ export default function SignupForm({
 									id="firstName"
 									name="firstName"
 									type="text"
-									placeholder="Ye"
+									placeholder="John"
 									autoComplete="First Name"
 									required
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
@@ -156,7 +156,7 @@ export default function SignupForm({
 									id="lastName"
 									name="lastName"
 									type="lastName"
-									placeholder="West"
+									placeholder="Doe"
 									autoComplete="Last Name"
 									required
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border

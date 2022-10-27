@@ -9,7 +9,7 @@ export default async function serverlessCookie<TState>(
 	del?: boolean
 ): Promise<TState | null> {
 	const url = `/api/cookies`;
-	const secure = !DEVELOPMENT;
+	const secure = Boolean(!DEVELOPMENT);
 
 	// use serverless function with httponly cookies in secure env
 	if (secure) {

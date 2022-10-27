@@ -43,7 +43,6 @@ const router = createBrowserRouter([
 		path: '/',
 		element: <Root />,
 		children: [
-			// COMMON FOR ALL AUTHED USERS
 			{
 				path: '/',
 				element: <Home />,
@@ -69,7 +68,6 @@ const router = createBrowserRouter([
 				hasErrorBoundary: true,
 				element: <ForgotPassword />,
 			},
-			// AUTHED AND UNAPPROVED
 			{
 				path: 'onboarding',
 				element: <Onboarding />,
@@ -86,7 +84,6 @@ const router = createBrowserRouter([
 					},
 				],
 			},
-			// AUTHED AND APPROVED
 			{
 				path: 'profile/:username',
 				hasErrorBoundary: true,

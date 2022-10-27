@@ -4,7 +4,7 @@ import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { Profile, UpdateProfileFormValues } from '@/lib/InterfacesStates.lib';
+import { Profile, IUpdateProfileForm } from '@/lib/InterfacesStates.lib';
 import { Error, Success } from '@/components/Feedback';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
@@ -19,8 +19,8 @@ export default function UpdateProfileForm(): JSX.Element {
 	const profileData = useProfile(
 		loggedInUser.username !== undefined ? loggedInUser.username : ''
 	) as Profile;
-	const validate = (values: UpdateProfileFormValues) => {
-		const errors: UpdateProfileFormValues['errors'] = {};
+	const validate = (values: IUpdateProfileForm) => {
+		const errors: IUpdateProfileForm['errors'] = {};
 		// ABOUT
 		if (!values.about) {
 			errors.about = 'Required';
@@ -51,7 +51,7 @@ export default function UpdateProfileForm(): JSX.Element {
 		return errors;
 	};
 	const handleSubmit = async (
-		values: UpdateProfileFormValues,
+		values: IUpdateProfileForm,
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
 		setSubmitting(true);

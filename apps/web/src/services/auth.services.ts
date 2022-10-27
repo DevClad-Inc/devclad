@@ -232,11 +232,7 @@ export function SignUp(user: NewUser) {
 			password2: user.password2,
 			headers,
 		})
-		.then((resp) => {
-			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 36, false);
-			serverlessCookie<string>('refresh', resp.data.refresh_token, 60 * 60 * 24 * 28, false);
-			return resp;
-		})
+		.then((resp) => resp)
 		.catch((err) => err);
 }
 

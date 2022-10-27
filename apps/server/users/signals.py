@@ -25,12 +25,12 @@ def create_profiles(sender, instance, created, **kwargs):
             # client = Client(account_sid, auth_token)
             # with contextlib.suppress(Exception):
             #     client.conversations.users.create(identity=instance.username.lower())
-    # instance.userstatus.save()
-    # instance.profile.save()
-    # instance.socialprofile.save()
-    # instance.streamuser.save()
-    # instance.projectprofile.save()
-    # instance.hackathonprofile.save()
+    instance.userstatus.save()
+    instance.profile.save()
+    instance.socialprofile.save()
+    instance.streamuser.save()
+    instance.projectprofile.save()
+    instance.hackathonprofile.save()
 
 
 # todo: add a signal for an async task to send email to user (Welcome to DevClad!)

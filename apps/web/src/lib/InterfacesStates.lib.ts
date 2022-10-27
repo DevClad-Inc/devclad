@@ -111,8 +111,7 @@ export interface InterfaceEmail {
 	};
 }
 
-export interface LoginFormValues {
-	email: string;
+export interface ILoginForm extends InterfaceEmail {
 	password: string;
 	errors?: {
 		email?: string;
@@ -120,7 +119,7 @@ export interface LoginFormValues {
 	};
 }
 
-export interface UpdateUserFormValues {
+export interface IUpdateUserForm {
 	firstName?: string;
 	lastName?: string;
 	username?: string;
@@ -131,7 +130,7 @@ export interface UpdateUserFormValues {
 	};
 }
 
-export interface UpdateProfileFormValues extends Profile {
+export interface IUpdateProfileForm extends Profile {
 	errors?: {
 		pronouns?: string;
 		about?: string;
