@@ -67,11 +67,10 @@ export function render(pageContext: PageContextServer) {
         <div id="page-view">${dangerouslySkipEscape(pageHtml)}</div>
       </body>
     </html>`;
-
 	return {
 		documentHtml,
 		pageContext: {
-			// We can add some `pageContext` here, which is useful if we want to do page redirection https://vite-plugin-ssr.com/page-redirection
+			// We  add some `pageContext` here, which is useful if we want to do page redirection https://vite-plugin-ssr.com/page-redirection
 		},
 	};
 }
