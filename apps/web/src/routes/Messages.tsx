@@ -109,11 +109,7 @@ export function MessageChild(): JSX.Element {
 	type LtOrGtType = 'id_lte' | 'id_gte' | undefined;
 
 	const fetchMessages = React.useCallback(
-		(
-			channelVal: Channel<DefaultGenerics> | undefined,
-			lastMessageIDVal: string | undefined,
-			ltOrGt: LtOrGtType
-		) => {
+		(channelVal: Channel<DefaultGenerics>, lastMessageIDVal?: string, ltOrGt?: LtOrGtType) => {
 			if (channelVal && lastMessageIDVal) {
 				if (ltOrGt === 'id_lte') {
 					return channelVal.query({ messages: { limit: 50, id_lte: lastMessageIDVal } });
@@ -129,10 +125,10 @@ export function MessageChild(): JSX.Element {
 	);
 
 	const channelQuery = (
-		channelVal: Channel<DefaultGenerics> | undefined,
+		channelVal: Channel<DefaultGenerics>,
 		channelCID: string,
-		lastMessageIDVal: string | undefined,
-		ltOrGt: LtOrGtType
+		lastMessageIDVal?: string,
+		ltOrGt?: LtOrGtType
 	) => ({
 		queryKey: ['channel', channelCID],
 		queryFn: () => fetchMessages(channelVal, lastMessageIDVal, ltOrGt),
@@ -140,12 +136,7 @@ export function MessageChild(): JSX.Element {
 
 	// todo: create a zustand store (fetch 50; show 5; add infinite scroll)
 	const { data: channelQData, isFetching: channelQFetching } = useQuery({
-		...channelQuery(
-			channelRef.current,
-			channelRef.current?.cid as string,
-			undefined,
-			undefined // defaults to latest messages
-		),
+		...channelQuery(channelRef.current, channelRef.current?.cid as string),
 		enabled: Boolean(channelRef.current),
 	});
 
@@ -226,7 +217,7 @@ export function MessageChild(): JSX.Element {
 					await channelRef.current
 						.create()
 						.then(async () => {
-							await fetchMessages(channelRef.current, undefined, undefined)
+							await fetchMessages(channelRef.current)
 								?.then((res) =>
 									qc.setQueryData(
 										['channel', channelRef.current?.cid as string],
@@ -316,11 +307,7 @@ export function MessageChild(): JSX.Element {
 										type="button"
 										onClick={() => {
 											setNoOfMessages(6);
-											fetchMessages(
-												channelRef.current,
-												undefined,
-												undefined
-											)?.then((res) => {
+											fetchMessages(channelRef.current)?.then((res) => {
 												qc.setQueryData(
 													['channel', channelRef.current?.cid as string],
 													res
