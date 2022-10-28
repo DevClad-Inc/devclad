@@ -24,8 +24,10 @@ import Circle from '@/routes/social/Circle';
 import Profile from '@/routes/Profile';
 import Messages, { MessageChild } from '@/routes/Messages';
 import StreamProvider from '@/context/Stream.context';
-import Meetings, { MeetingDetail, MeetingList } from './routes/Meetings';
-import { UserProvider } from './context/User.context';
+import Meetings, { MeetingDetail, MeetingList } from '@/routes/Meetings';
+import { UserProvider } from '@/context/User.context';
+import reportWebVitals from '@/reportWebVitals';
+import { sendToVercelAnalytics } from '@/vitals';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -182,3 +184,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 		</QueryClientProvider>
 	</React.StrictMode>
 );
+
+reportWebVitals(sendToVercelAnalytics);

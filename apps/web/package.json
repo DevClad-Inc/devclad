@@ -28,7 +28,8 @@
 		"react-intersection-observer": "^9.4.0",
 		"react-router-dom": "^6.4.0",
 		"stream-chat": "^8.0.0",
-		"vite-plugin-svgr": "^2.2.1"
+		"vite-plugin-svgr": "^2.2.1",
+		"web-vitals": "^3.0.4"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^3.17.0",
