@@ -3,9 +3,9 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import {
 	HomeIcon,
 	UsersIcon,
-	FireIcon,
 	ArrowLeftIcon,
 	ChatBubbleLeftRightIcon,
+	CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
 
 import { checkIOS, checkMacOS, classNames } from '@devclad/lib';
@@ -36,10 +36,10 @@ const navigation = [
 		alt: 'Messages',
 	},
 	{
-		name: 'Hackathons',
-		href: '/hackathons',
-		icon: FireIcon,
-		alt: 'Hackathons',
+		name: 'Meetings',
+		href: '/meetings',
+		icon: CalendarDaysIcon,
+		alt: 'Meetings',
 	},
 ];
 

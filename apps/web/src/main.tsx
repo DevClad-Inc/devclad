@@ -11,7 +11,6 @@ import Root from '@/routes/_root';
 import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
 import VerifyEmail from '@/routes/VerifyEmail';
 import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
-import Hackathons from '@/components/Hackathons';
 import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Settings';
 import Home from '@/routes/Home';
 import Login from '@/routes/Login';
@@ -139,11 +138,6 @@ const router = createBrowserRouter([
 						element: <MeetingDetail uid={null} />,
 					},
 				],
-			},
-			{
-				path: 'hackathons',
-				hasErrorBoundary: true,
-				element: <Hackathons />,
 			},
 			{
 				path: 'settings',

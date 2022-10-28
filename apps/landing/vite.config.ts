@@ -7,6 +7,7 @@ import path from 'path';
 export default defineConfig({
 	define: {
 		'process.env': process.env,
+		'import.meta.env.VERCEL_ANALYTICS_ID': JSON.stringify(process.env.VERCEL_ANALYTICS_ID),
 	},
 	plugins: [react(), ssr(), svg()],
 	resolve: {

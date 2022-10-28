@@ -4,6 +4,8 @@ import { PageContextProvider } from './usePageContext';
 import type { PageContext } from './types';
 import '@devclad/ui/fontscss';
 import '@/root.css';
+import reportWebVitals from '@/reportWebVitals';
+import { sendToVercelAnalytics } from '@/vitals';
 
 function Content({ children }: { children: React.ReactNode }) {
 	return <div className="bg-black text-white">{children}</div>;
@@ -17,6 +19,7 @@ export default function PageShell({
 	pageContext: PageContext;
 }) {
 	inject();
+	reportWebVitals(sendToVercelAnalytics);
 	return (
 		<React.StrictMode>
 			<PageContextProvider pageContext={pageContext}>
