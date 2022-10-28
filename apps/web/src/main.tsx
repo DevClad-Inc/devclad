@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
@@ -26,8 +27,8 @@ import Messages, { MessageChild } from '@/routes/Messages';
 import StreamProvider from '@/context/Stream.context';
 import Meetings, { MeetingDetail, MeetingList } from '@/routes/Meetings';
 import { UserProvider } from '@/context/User.context';
-import reportWebVitals from '@/reportWebVitals';
-import { sendToVercelAnalytics } from '@/vitals';
+import { webVitals } from '@/vitals';
+import { DEVELOPMENT } from './services/auth.services';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -38,6 +39,17 @@ const queryClient = new QueryClient({
 		},
 	},
 });
+
+const analyticsId = import.meta.env.PUBLIC_VERCEL_ANALYTICS_ID;
+
+if (analyticsId) {
+	webVitals({
+		path: location.pathname,
+		params: location.search,
+		analyticsId,
+		debug: DEVELOPMENT,
+	});
+}
 
 const router = createBrowserRouter([
 	{
@@ -184,5 +196,3 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 		</QueryClientProvider>
 	</React.StrictMode>
 );
-
-reportWebVitals(sendToVercelAnalytics);

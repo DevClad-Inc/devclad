@@ -96,7 +96,7 @@ export function MessageChild(): JSX.Element {
 	const [message, setMessage] = React.useState('');
 	// reloadFetch is handled in the useeffect hook
 	const [reloadFetch, setReloadFetch] = React.useState(false);
-	const [noOfMessages, setNoOfMessages] = React.useState(6); // 6 is what fits in h-[60vh] and leaves room for infinite scroll
+	const [noOfMessages, setNoOfMessages] = React.useState(7); // 6 is what fits in h-[60vh] and leaves room for infinite scroll
 	const { connected, toggleConnection } = useStreamContext();
 	const [showScrollDown, setShowScrollDown] = React.useState(false);
 	const profileData = useProfile(loggedInUserUserName as string) as Profile;
@@ -150,7 +150,6 @@ export function MessageChild(): JSX.Element {
 	};
 
 	const handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-		// see if user is scrolling up
 		if (e.currentTarget.scrollTop === 0 && !channelQFetching) {
 			const lengthOfMessages = channelQData?.messages.length;
 			if (lengthOfMessages && lengthOfMessages < 50) {
@@ -295,8 +294,7 @@ export function MessageChild(): JSX.Element {
 			<div className="container mx-auto space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
 				<div className="shadow sm:rounded-md">
 					<div
-						className="bg-darkBG2 scrollbar flex h-[65vh] flex-col space-y-4 overflow-y-scroll
-						overscroll-y-contain
+						className="bg-darkBG2 scrollbar flex h-[60vh] flex-col space-y-4 overflow-y-scroll
 						rounded-md border-[1px] p-4 py-6 px-4 dark:border-neutral-800 sm:p-6"
 						onScroll={(e) => handleInfiniteScroll(e)}
 					>
