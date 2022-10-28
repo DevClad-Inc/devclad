@@ -39,10 +39,16 @@ export default defineConfig({
 	build: {
 		outDir: './dist',
 		assetsDir: '.',
+		target: 'es2020',
 	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
+		},
+	},
+	optimizeDeps: {
+		esbuildOptions: {
+			target: 'esnext',
 		},
 	},
 });

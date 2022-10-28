@@ -28,8 +28,8 @@ import Messages, { MessageChild } from '@/routes/Messages';
 import StreamProvider from '@/context/Stream.context';
 import Meetings, { MeetingDetail, MeetingList } from '@/routes/Meetings';
 import { UserProvider } from '@/context/User.context';
-// import { webVitals } from '@/vitals';
-// import { DEVELOPMENT } from './services/auth.services';
+import { webVitals } from '@/vitals';
+import { DEVELOPMENT } from './services/auth.services';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -41,16 +41,16 @@ const queryClient = new QueryClient({
 	},
 });
 
-// const analyticsId = import.meta.env.PUBLIC_VERCEL_ANALYTICS_ID;
+const analyticsId = import.meta.env.PUBLIC_VERCEL_ANALYTICS_ID;
 
-// if (analyticsId) {
-// 	webVitals({
-// 		path: location.pathname,
-// 		params: location.search,
-// 		analyticsId,
-// 		debug: DEVELOPMENT,
-// 	});
-// }
+if (analyticsId) {
+	webVitals({
+		path: location.pathname,
+		params: location.search,
+		analyticsId,
+		debug: DEVELOPMENT,
+	});
+}
 
 const router = createBrowserRouter([
 	{
@@ -198,4 +198,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	</React.StrictMode>
 );
 
-inject();
+if (import.meta.env.PROD) {
+	inject();
+}
