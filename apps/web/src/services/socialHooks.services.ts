@@ -11,7 +11,7 @@ import {
 	userSkippedQuery,
 	streamUIDQuery,
 	userAddedQuery,
-} from '@/lib/queriesAndLoaders';
+} from '@/lib/queries.lib';
 import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { checkTokenType } from './auth.services';

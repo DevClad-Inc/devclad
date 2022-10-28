@@ -36,19 +36,16 @@ export default defineConfig({
 			},
 		}),
 	],
+	define: {
+		'import.meta.env.VERCEL_ANALYTICS_ID': JSON.stringify(process.env.VERCEL_ANALYTICS_ID),
+	},
 	build: {
 		outDir: './dist',
 		assetsDir: '.',
-		target: 'es2020',
 	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
-		},
-	},
-	optimizeDeps: {
-		esbuildOptions: {
-			target: 'esnext',
 		},
 	},
 });

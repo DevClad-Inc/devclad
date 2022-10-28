@@ -1,13 +1,7 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
-import {
-	refreshQuery,
-	statusQuery,
-	streamQuery,
-	tokenQuery,
-	userQuery,
-} from '@/lib/queriesAndLoaders';
+import { refreshQuery, statusQuery, streamQuery, tokenQuery, userQuery } from '@/lib/queries.lib';
 import { checkTokenType } from './auth.services';
 
 export type StreamTokenT = {

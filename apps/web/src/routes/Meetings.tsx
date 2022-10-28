@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { convertTimeZone } from '@devclad/lib';
-import { meetingQuery } from '@/lib/queriesAndLoaders';
+import { meetingQuery } from '@/lib/queries.lib';
 import { Meeting, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile, useSocialProfile } from '@/services/socialHooks.services';
@@ -86,7 +86,7 @@ export function MeetingList(): JSX.Element {
 		isLoading ||
 		spState?.status === 'loading' ||
 		spState?.status !== 'success' ||
-		socialProfile === null
+		!socialProfile
 	) {
 		return <div>Loading...</div>;
 	}

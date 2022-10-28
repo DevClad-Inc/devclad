@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { NewUser, User } from '@/lib/InterfacesStates.lib';
-import { refreshQuery, tokenQuery } from '@/lib/queriesAndLoaders';
+import { refreshQuery, tokenQuery } from '@/lib/queries.lib';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;

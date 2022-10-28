@@ -89,7 +89,7 @@ export default function ChangeEmailForm(): JSX.Element {
 						) : (
 							<>
 								<Warning warning="Please verify your email. You will not be able to login with an unverified email." />
-								<span className="dark:to-bloodRed2 dark:text-mistyRose inline-flex rounded-md p-2 text-sm">
+								<span className="dark:bg-bloodRed2 dark:text-mistyRose inline-flex rounded-md p-2 text-sm">
 									{' '}
 									<ShieldExclamationIcon className="text-bloodRed dark:text-mistyRose mr-2 h-6 w-5" />{' '}
 									{loggedInUser.email} is unverified.

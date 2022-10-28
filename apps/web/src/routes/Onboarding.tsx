@@ -14,7 +14,7 @@ import {
 	checkSocialProfileEmpty,
 	setSubmittedStatus,
 } from '@/services/profile.services';
-import { socialProfileQuery } from '@/lib/queriesAndLoaders';
+import { socialProfileQuery } from '@/lib/queries.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { useApproved, useAuth } from '@/services/useAuth.services';
 
