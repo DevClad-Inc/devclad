@@ -5,6 +5,7 @@ import { DevCladSVG, GraphTextureSVG } from '@devclad/ui';
 import { classNames } from '@devclad/lib';
 import { Popover } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';
+import Link from 'next/link';
 import Hero from '@/components/Hero';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -43,10 +44,10 @@ function Nav(): JSX.Element {
 				>
 					<div className="z-20 flex flex-1 items-center md:absolute">
 						<div className="mt-10 flex w-full items-center justify-between rounded-full md:w-auto">
-							<a href="/">
+							<Link href="/">
 								<span className="sr-only">DevClad</span>
 								<Image className="h-24 w-24" src={DevCladSVG} alt="" />
-							</a>
+							</Link>
 						</div>
 					</div>
 				</nav>
