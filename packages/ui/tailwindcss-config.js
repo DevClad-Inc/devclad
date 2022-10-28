@@ -125,7 +125,7 @@ module.exports = {
         },
       },
       animation: {
-        fadeIn: "fadeIn 1s ease-in forwards",
+        fadeIn: "fadeIn 1.5s ease-in forwards",
         gradient: "gradient 10s ease-out infinite",
         "gradient-reverse": "gradient 10s ease infinite reverse",
         "spin-slow": "spin 10s linear",

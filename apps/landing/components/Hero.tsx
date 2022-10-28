@@ -11,7 +11,7 @@ function NBS(): JSX.Element {
 				className="space-y-4 rounded-xl border-[1px] border-neutral-800 bg-black p-3
          shadow-2xl shadow-orange-900/20 duration-1000 hover:border-neutral-400 sm:max-w-prose"
 			>
-				<h2 className="animate-fadeIn space-x-4 text-4xl sm:text-6xl md:text-5xl xl:text-6xl">
+				<h2 className="space-x-4 text-4xl sm:text-6xl md:text-5xl xl:text-6xl">
 					<span aria-label="Network">🤝</span>
 					<span aria-label="Build">🛠️</span>
 					<span aria-label="Ship">🚀</span>
