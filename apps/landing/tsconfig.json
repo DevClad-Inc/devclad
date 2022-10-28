@@ -1,11 +1,15 @@
 {
-	"extends": "../../packages/config/vite.tsconfig.json",
-	"compilerOptions": {
-		"baseUrl": ".",
+  "extends": "../../packages/config/base.tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
-		}
-	},
-	"include": ["src"],
-	"exclude": ["node_modules", "dist"]
+			"@/*": ["./*"]
+		},
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

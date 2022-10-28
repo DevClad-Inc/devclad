@@ -1,7 +1,7 @@
 import React from 'react';
 import { toast } from 'react-hot-toast';
 import { classNames } from '@devclad/lib';
-import handleForm from '../handleForm';
+import handleForm from '@/handleForm';
 
 export default function CTA() {
 	const [submitted, setSubmitted] = React.useState(false);

@@ -1,12 +1,13 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import Airtable from 'airtable';
 import { toast } from 'react-hot-toast';
 
 Airtable.configure({
 	endpointUrl: 'https://api.airtable.com',
-	apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
+	apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY,
 });
 
-const base = Airtable.base(import.meta.env.VITE_AIRTABLE_BASE);
+const base = Airtable.base(process.env.NEXT_PUBLIC_AIRTABLE_BASE as string);
 
 export default function handleForm(email: string) {
 	base('Table 1').create(

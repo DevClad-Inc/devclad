@@ -1,5 +1,6 @@
 module.exports = {
 	...require('@devclad/config/eslint-react'),
+	extends: ['next/core-web-vitals'],
 	ignorePatterns: [
 		'**/*.js',
 		'**/*.cjs',
