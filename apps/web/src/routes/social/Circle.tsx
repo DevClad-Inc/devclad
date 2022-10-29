@@ -107,7 +107,7 @@ function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 	return <div />;
 }
 
-export default function Circle(): JSX.Element {
+export function Circle(): JSX.Element {
 	useDocumentTitle('Circle');
 	const qc = useQueryClient();
 	const { loggedInUser } = useAuth();

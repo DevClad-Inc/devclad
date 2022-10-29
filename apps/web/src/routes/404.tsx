@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useAuth } from '@/services/useAuth.services';
 import AppShell from '@/components/AppShell';
 
-export default function FourOFour(): JSX.Element {
+export function FourOFour(): JSX.Element {
 	const { authed } = useAuth();
 	useDocumentTitle('Oops! 404');
 	const navigate = useNavigate();

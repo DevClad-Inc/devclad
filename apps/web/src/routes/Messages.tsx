@@ -61,7 +61,7 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 	return <div />;
 }
 
-export default function Messages() {
+export function Messages() {
 	useDocumentTitle('Messages');
 	const { usernames: circle } = useCircle() as {
 		usernames: string[];

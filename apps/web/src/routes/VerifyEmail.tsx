@@ -8,7 +8,7 @@ import { verifyEmail } from '@/services/auth.services';
 import { Error, Success } from '@/components/Feedback';
 import { useAuth } from '@/services/useAuth.services';
 
-export default function VerifyEmail(): JSX.Element {
+export function VerifyEmail(): JSX.Element {
 	useDocumentTitle('Verify Email');
 	const { authed } = useAuth();
 	const [verified, setVerified] = useState(false);

@@ -7,7 +7,7 @@ import { logOut } from '@/services/auth.services';
 import { LoadingSpinner, redString } from '@/lib/Buttons.lib';
 import { useAuth } from '@/services/useAuth.services';
 
-function Home(): JSX.Element {
+export function Home(): JSX.Element {
 	const qc = useQueryClient();
 	const navigate = useNavigate();
 	const { authed, loggedInUser } = useAuth();
@@ -55,5 +55,3 @@ function Home(): JSX.Element {
 		</div>
 	);
 }
-
-export default Home;

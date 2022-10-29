@@ -78,5 +78,3 @@ export const useStreamContext = () => {
 	const context = React.useContext(StreamContext);
 	return context;
 };
-
-export default StreamProvider;

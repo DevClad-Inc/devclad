@@ -24,6 +24,7 @@ module.exports = {
 		'react/prefer-stateless-function': [1],
 		'react/static-property-placement': [1, 'property assignment'],
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+		'import/prefer-default-export': 'off',
 		'@typescript-eslint/no-shadow': ['error', { ignoreTypeValueShadow: true }],
 		'no-shadow': 'off',
 		'@typescript-eslint/naming-convention': 'warn',

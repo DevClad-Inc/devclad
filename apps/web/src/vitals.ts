@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { onCLS, onFCP, onFID, onLCP, onTTFB, Metric } from 'web-vitals';
 
 const vitalsUrl = 'https://vitals.vercel-analytics.com/v1/vitals';

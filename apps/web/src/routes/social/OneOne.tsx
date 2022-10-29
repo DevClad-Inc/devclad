@@ -410,7 +410,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	return <div />;
 }
 
-export default function OneOne(): JSX.Element {
+export function OneOne(): JSX.Element {
 	useDocumentTitle('Social Mode');
 	const qc = useQueryClient();
 	const { usernames } = useOneOneUsernames();

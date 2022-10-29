@@ -415,7 +415,7 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 	return <div />;
 }
 
-export default function Profile(): JSX.Element {
+export function Profile(): JSX.Element {
 	const { username } = useParams<{ username: string }>() as { username: string };
 	useDocumentTitle(`Profile | ${username}`);
 	return <ProfileCard key={username} username={username} />;

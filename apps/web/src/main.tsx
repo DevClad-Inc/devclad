@@ -2,34 +2,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import '@/root.css';
-import '@devclad/ui/fontscss';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// Analytics
 import { inject } from '@vercel/analytics';
+import { webVitals } from '@/vitals';
+// Context + Components
 import { ThemeProvider } from '@/context/Theme.context';
+import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
+import '@devclad/ui/fontscss';
+import '@/root.css';
+// Routes - Primary
 import Root from '@/routes/_root';
 import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
-import VerifyEmail from '@/routes/VerifyEmail';
+import { VerifyEmail } from '@/routes/VerifyEmail';
 import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
 import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Settings';
-import Home from '@/routes/Home';
-import Login from '@/routes/Login';
-import Signup from '@/routes/Signup';
-import FourOFour from '@/routes/404';
-import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
-// SOCIAL
-import Social from '@/routes/social/Social';
-import OneOne from '@/routes/social/OneOne';
-import Circle from '@/routes/social/Circle';
-import Profile from '@/routes/Profile';
-import Messages, { MessageChild } from '@/routes/Messages';
-import StreamProvider from '@/context/Stream.context';
-import Meetings, { MeetingDetail, MeetingList } from '@/routes/Meetings';
+import { Home } from '@/routes/Home';
+import { Login } from '@/routes/Login';
+import { Signup } from '@/routes/Signup';
+import { FourOFour } from '@/routes/404';
+// Routes - Social
+import { Social } from '@/routes/social/Social';
+import { OneOne } from '@/routes/social/OneOne';
+import { Circle } from '@/routes/social/Circle';
+import { Profile } from '@/routes/Profile';
+import { Messages, MessageChild } from '@/routes/Messages';
+import { Meetings, MeetingDetail, MeetingList } from '@/routes/Meetings';
+import { StreamProvider } from '@/context/Stream.context';
 import { UserProvider } from '@/context/User.context';
-import { webVitals } from '@/vitals';
-import { DEVELOPMENT } from './services/auth.services';
+import { DEVELOPMENT } from '@/services/auth.services';
 
 axios.defaults.headers.common.withCredentials = true;
 

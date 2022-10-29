@@ -9,7 +9,7 @@ const tabs = [
 	{ name: 'Circle', href: '/social/circle' },
 ];
 
-export default function Social(): JSX.Element {
+export function Social(): JSX.Element {
 	useDocumentTitle('Social Mode');
 	const { loggedInUser } = useAuth();
 	return (

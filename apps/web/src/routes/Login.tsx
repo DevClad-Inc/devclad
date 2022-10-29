@@ -7,7 +7,7 @@ import { Error } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { useAuth } from '@/services/useAuth.services';
 
-function Login() {
+export function Login() {
 	const navigate = useNavigate();
 	const qc = useQueryClient();
 	const [loginError, setLoginError] = useState(false);
@@ -78,5 +78,3 @@ function Login() {
 		</div>
 	);
 }
-
-export default Login;

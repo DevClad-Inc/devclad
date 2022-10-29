@@ -44,7 +44,7 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 				</div>
 				<img
 					className="bg-linen h-32 w-32 rounded-full object-cover sm:h-24 sm:w-24"
-					src={DEVELOPMENT ? API_URL + avatar : avatar}
+					src={DEVELOPMENT ? `${API_URL}${avatar}` : avatar}
 					alt=""
 				/>
 			</div>
@@ -98,7 +98,7 @@ export function MeetingList(): JSX.Element {
 				<h1 className="text-2xl font-bold">Meetings</h1>
 				<ul className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 					{meetings.map((meeting) => (
-						<MeetingCard meeting={meeting} time={time} />
+						<MeetingCard meeting={meeting} time={time} key={meeting.id} />
 					))}
 				</ul>
 			</div>
@@ -124,20 +124,20 @@ export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
 	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
 		return (
-			<div>
+			<>
 				<h1>Meeting</h1>
 				<div key={meeting.id}>
 					<h2>{meeting.name}</h2>
 					<p>{meeting.invites}</p>
 				</div>
-			</div>
+			</>
 		);
 	}
 
 	return <div>Meeting not found</div>;
 }
 
-export default function Meetings(): JSX.Element {
+export function Meetings(): JSX.Element {
 	const { uid } = useParams<{ uid: string }>() as { uid: string };
 
 	if (!uid) {
