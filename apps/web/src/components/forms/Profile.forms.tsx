@@ -86,6 +86,7 @@ export default function UpdateProfileForm(): JSX.Element {
 					website: profileData.website,
 					linkedin: profileData.linkedin,
 					calendly: profileData.calendly,
+					avatar: profileData.avatar,
 				}}
 				validate={validate}
 				onSubmit={(values, { setSubmitting }) => {
@@ -261,8 +262,11 @@ export function AvatarUploadForm() {
 		if (file) {
 			toast.loading('Uploading...', {
 				style: {
-					background: darkMode ? '#222435' : '#fff',
-					color: darkMode ? '#f0abfc' : '#1f2937',
+					background: darkMode ? '#000' : '#fff',
+					color: darkMode ? '#fff' : '#000',
+					border: darkMode ? '1px solid #113123' : '1px solid #000',
+					borderWidth: '1px',
+					borderStyle: 'dashed',
 				},
 			});
 			updateProfileAvatar(token, file)
