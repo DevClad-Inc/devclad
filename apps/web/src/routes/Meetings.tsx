@@ -3,7 +3,7 @@ import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
-import { convertTimeZone } from '@devclad/lib';
+import { convertTimeZone, useDocumentTitle } from '@devclad/lib';
 import { meetingQuery } from '@/lib/queries.lib';
 import { Meeting, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
@@ -138,6 +138,7 @@ export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
 }
 
 export function Meetings(): JSX.Element {
+	useDocumentTitle('Meetings');
 	const { uid } = useParams<{ uid: string }>() as { uid: string };
 
 	if (!uid) {

@@ -11,7 +11,6 @@ import toast from 'react-hot-toast';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import { useCircle, useConnected, useProfile, useStreamUID } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
-import { badge } from '@/lib/Buttons.lib';
 import { Profile } from '@/lib/InterfacesStates.lib';
 import { MessagesLoading } from '@/components/LoadingStates';
 import { Error } from '@/components/Feedback';
@@ -47,12 +46,13 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 				<div className="flex-1 space-y-1">
 					<div className="flex items-center justify-between">
 						<span className="truncate">{user}</span>
-						<div>
+						{/* todo: Add unread count and last message time */}
+						{/* <div>
 							<span>{badge('3 unread', 'bg-darkBG')}</span>
 							<span className="ml-2 text-xs text-neutral-400 dark:text-neutral-600">
 								1h ago
 							</span>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</NavLink>
@@ -134,7 +134,11 @@ export function MessageChild(): JSX.Element {
 	});
 
 	// todo: create a zustand store (fetch 50; show 5; add infinite scroll)
-	const { data: channelQData, isFetching: channelQFetching } = useQuery({
+	const {
+		data: channelQData,
+		isFetching: channelQFetching,
+		isLoading: channelQLoading,
+	} = useQuery({
 		...channelQuery(channelRef.current, channelRef.current?.cid as string),
 		enabled: Boolean(channelRef.current),
 	});
@@ -287,7 +291,12 @@ export function MessageChild(): JSX.Element {
 		}
 	);
 
-	if (state?.status === 'loading' || state?.status !== 'success' || profileData === null) {
+	if (
+		state?.status === 'loading' ||
+		state?.status !== 'success' ||
+		profileData === null ||
+		channelQLoading
+	) {
 		return <MessagesLoading />;
 	}
 	if (channelQData || reloadFetch) {
@@ -299,7 +308,7 @@ export function MessageChild(): JSX.Element {
 						rounded-md border-[1px] p-4 py-6 px-4 dark:border-neutral-800 sm:p-6"
 						onScroll={(e) => handleInfiniteScroll(e)}
 					>
-						<div className="flex flex-col justify-end space-y-6 ">
+						<div className="flex flex-col justify-end space-y-6">
 							{showScrollDown && (
 								<div className="flex justify-center">
 									<button
