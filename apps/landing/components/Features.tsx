@@ -61,7 +61,7 @@ export function Features(): JSX.Element {
 									<div className="-mt-6">
 										<div>
 											<span
-												className="animate-dropglow inline-flex items-center justify-center
+												className="animate-dropglowSM inline-flex items-center justify-center
                        rounded-xl border-[1px] border-neutral-800 bg-black p-4 shadow-lg"
 											>
 												<feature.icon
@@ -115,7 +115,7 @@ export function Roadmap(): JSX.Element {
 									<div className="-mt-6">
 										<div>
 											<span
-												className="animate-dropglowSM bg-darkBG2 inline-flex items-center
+												className="animate-dropglow bg-darkBG2 inline-flex items-center
                    justify-center rounded-xl border-[1px] border-dotted border-neutral-800 p-4 shadow-lg"
 											>
 												<feature.icon
@@ -123,7 +123,7 @@ export function Roadmap(): JSX.Element {
 														feature.icon === HandRaisedIcon
 															? '-rotate-[30deg]'
 															: '',
-														'animate-gradient-reverse h-8 w-8'
+														'h-8 w-8'
 													)}
 													aria-hidden="true"
 												/>

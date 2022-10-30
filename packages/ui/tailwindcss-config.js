@@ -83,7 +83,7 @@ module.exports = {
             boxShadow: "0 10px 20px 5px #083249",
           },
           "50%": {
-            boxShadow: "0 10px 20px 5px #330151",
+            boxShadow: "0 10px 20px 5px #05f5cd",
           },
           "75%": {
             boxShadow: "0 10px 20px 5px #170019",
@@ -98,7 +98,7 @@ module.exports = {
             boxShadow: "0 5px 20px 5px #083249",
           },
           "50%": {
-            boxShadow: "0 5px 10px 5px #330151",
+            boxShadow: "0 5px 10px 5px #05f5cd",
           },
           "75%": {
             boxShadow: "0 5px 10px 5px #170019",

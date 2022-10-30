@@ -129,11 +129,11 @@ export default function Home() {
 				</div>
 				<div
 					className="blob absolute top-10 left-1/4 h-96 w-96 rounded-full bg-gradient-to-bl from-fuchsia-900/50
-					via-orange-900/10 to-sky-900/30 opacity-50 mix-blend-difference blur-2xl filter"
+					via-orange-900/10 to-sky-900/30 mix-blend-difference blur-2xl filter"
 				/>
 				<div
 					className="blob absolute bottom-5 left-1/3 h-[36rem] w-[42rem] rounded-full bg-gradient-to-bl from-fuchsia-900/60
-	 via-sky-900/30 to-black opacity-75 mix-blend-difference blur-2xl filter"
+	 via-sky-900/30 to-black mix-blend-difference blur-[72px] filter"
 				/>
 			</div>
 		</div>
