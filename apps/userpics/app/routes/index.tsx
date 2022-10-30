@@ -1,8 +1,8 @@
 export default function Index() {
 	return (
-		<div className="mt-10 justify-center">
+		<div className="justify-self-center">
 			<div className="flex justify-center">
-				<h1 className="text-3xl font-extrabold">Serverless Userpics</h1>
+				<h1 className="mt-10 text-3xl font-extrabold">Serverless Userpics</h1>
 			</div>
 			<div className="flex justify-center py-10 font-mono">
 				<span className="block text-amber-300">
@@ -45,7 +45,7 @@ export default function Index() {
 					>
 						readme
 					</a>
-					on GitHub for instructions on how to use this. (It`&lsquo;`s easy!)
+					on GitHub for instructions on how to use this. (It&lsquo;s easy!)
 				</span>
 			</div>
 
