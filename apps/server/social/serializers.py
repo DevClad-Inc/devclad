@@ -35,6 +35,8 @@ class SocialProfileSerializer(serializers.ModelSerializer):
             "circle",
             "preferred_timezone_deviation",
             "available_this_week",
+            "available_always_off",
+            "indirect_matching",
         ]
 
 

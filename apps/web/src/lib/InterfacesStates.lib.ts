@@ -23,32 +23,22 @@ export const initialUserState: User = {
 };
 
 export interface Profile {
-	avatar?: string;
-	pronouns?: string;
-	about?: string;
-	website?: string;
-	linkedin?: string;
-	calendly?: string;
+	avatar: string;
+	pronouns: string;
+	about: string;
+	website: string;
+	linkedin: string;
+	calendly: string;
 }
 
-export const initialProfileState: Profile = {
-	avatar: undefined,
-	pronouns: undefined,
-	about: undefined,
-	website: undefined,
-	linkedin: undefined,
-	calendly: undefined,
-};
-
 export interface SocialProfile {
-	languages?: string;
-	raw_xp?: number;
-	purpose?: string;
-	location?: string;
-	video_call_friendly?: boolean;
-	timezone?: string;
+	timezone: string;
+	purpose: string;
 	dev_type?: string;
+	location?: string;
 	preferred_dev_type?: string;
+	languages?: string;
+	raw_xp: number;
 	idea_status?: string;
 }
 
@@ -66,21 +56,19 @@ export interface SocialProfileFormValues extends SocialProfile {
 }
 
 export interface AdditionalSP {
-	video_call_friendly?: boolean;
-	available_always_off?: boolean;
+	video_call_friendly: boolean;
+	available_always_off: boolean;
+	preferred_day: string;
+	preferred_time: string;
 }
 
-export const initialSocialProfileState: SocialProfile = {
-	languages: undefined,
-	raw_xp: undefined,
-	purpose: undefined,
-	location: undefined,
-	video_call_friendly: undefined,
-	timezone: undefined,
-	dev_type: undefined,
-	preferred_dev_type: undefined,
-	idea_status: undefined,
-};
+export interface MatchProfile extends Profile, SocialProfile {
+	first_name: string;
+	last_name: string;
+	video_call_friendly: boolean;
+	preferred_day: string;
+	preferred_time: string;
+}
 
 export interface UserStatus {
 	status?: string;
@@ -147,10 +135,6 @@ export interface PasswordReset {
 		password1?: string;
 		password2?: string;
 	};
-}
-export interface MatchProfile extends Profile, SocialProfile {
-	first_name?: string;
-	last_name?: string;
 }
 
 export interface MeetingCreateUpdate {

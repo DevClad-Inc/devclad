@@ -10,7 +10,8 @@ import {
 import { useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import UpdateUserForm from '@/components/forms/UpdateUser.forms';
-import { AdditionalSPForm, SocialProfileForm } from '@/components/forms/SocialProfile.forms';
+import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
+import { AdditionalSPForm } from '@/components/forms/AdditionalSP.forms';
 import PasswordResetForm from '@/components/forms/ResetPassword.forms';
 import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';
 
@@ -41,18 +42,15 @@ function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ');
 }
 
-const activeClass = `bg-neutral-50 dark:bg-darkBG2
-                    hover:text-neutral-700 dark:hover:text-orange-400
-                    border-[1px] border-neutral-200 dark:border-neutral-800
-                    dark:text-orange-300
-                    text-orange-700`;
+const activeClass = `bg-neutral-50 dark:bg-darkBG2 hover:text-neutral-700
+					dark:hover:text-orange-400 dark:text-orange-300 text-orange-700`;
 
 export function Settings() {
 	useDocumentTitle('Settings');
 	const { pathname } = useLocation();
 	return (
 		<div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-			<aside className="py-6 px-0 sm:px-6 lg:col-span-3 lg:py-0 lg:px-0">
+			<aside className=" py-6 px-0 sm:px-6 lg:col-span-3 lg:py-0 lg:px-0">
 				<nav
 					className="bg-snow dark:bg-darkBG2 space-y-1 rounded-md
         border-[1px] p-4 dark:border-neutral-800"

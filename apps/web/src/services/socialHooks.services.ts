@@ -12,7 +12,7 @@ import {
 	streamUIDQuery,
 	userAddedQuery,
 } from '@/lib/queries.lib';
-import { Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
+import { AdditionalSP, Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { checkTokenType } from './auth.services';
 
@@ -161,7 +161,7 @@ export const useProfile = (username: string): Profile | null => {
 	return profileRef.current;
 };
 
-export const useAdditionalSP = () => {
+export const useAdditionalSP = (): AdditionalSP | null => {
 	const { token } = useAuth();
 	const additionalSocialProfileQuery = useQuery(additionalSPQuery(token));
 	if (additionalSocialProfileQuery.isSuccess && additionalSocialProfileQuery.data !== null) {
