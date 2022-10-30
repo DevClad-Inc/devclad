@@ -176,6 +176,7 @@ export function verifyToken(token: string, queryClient?: QueryClient): Promise<b
 			return false;
 		})
 		.catch(() => {
+			// case: expiring on the backend but not on client
 			if (queryClient) {
 				refreshToken(queryClient);
 			}

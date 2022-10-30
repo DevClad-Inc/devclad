@@ -1,12 +1,14 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { checkTokenType, DEVELOPMENT } from '@/services/auth.services';
+import { QueryClient } from '@tanstack/react-query';
+import { checkTokenType, DEVELOPMENT, refreshToken } from '@/services/auth.services';
 
 export default async function serverlessCookie<TState>(
 	key: string,
 	value?: string,
 	maxAge?: number,
-	del?: boolean
+	del?: boolean,
+	qc?: QueryClient
 ): Promise<TState | null> {
 	const url = `/api/cookies`;
 	const secure = Boolean(!DEVELOPMENT);
@@ -48,6 +50,16 @@ export default async function serverlessCookie<TState>(
 			});
 			return response.data.value as TState;
 		} catch {
+			if (key === 'token' && qc) {
+				await refreshToken(qc);
+				const response = await axios({
+					method: 'GET',
+					url,
+					params: { key },
+					headers: { 'Content-Type': 'application/json' },
+				});
+				return response.data.value as TState;
+			}
 			return null;
 		}
 	} else {
@@ -58,6 +70,10 @@ export default async function serverlessCookie<TState>(
 		if (del) {
 			Cookies.remove(key, { path: '/', secure });
 			return null;
+		}
+
+		if (Cookies.get(key) === undefined && Cookies.get('refresh')) {
+			await refreshToken(qc as QueryClient);
 		}
 		return Cookies.get(key) as TState;
 	}

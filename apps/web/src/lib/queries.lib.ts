@@ -32,9 +32,9 @@ export const streamUIDQuery = (token: string, username: string) => ({
 	refetchOnWindowFocus: false,
 });
 
-export const tokenQuery = () => ({
+export const tokenQuery = (qc?: QueryClient) => ({
 	queryKey: ['token'],
-	queryFn: () => serverlessCookie<string>('token'),
+	queryFn: () => serverlessCookie<string>('token', undefined, undefined, undefined, qc),
 	enabled: Cookies.get('loggedIn') === 'true',
 	staleTime: 1000 * 60 * 60 * 24,
 });
