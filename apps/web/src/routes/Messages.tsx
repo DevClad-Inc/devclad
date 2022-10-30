@@ -107,7 +107,6 @@ export function MessageChild(): JSX.Element {
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
 	type LtOrGtType = 'id_lte' | 'id_gte' | undefined;
-
 	const fetchMessages = React.useCallback(
 		(channelVal: Channel<DefaultGenerics>, lastMessageIDVal?: string, ltOrGt?: LtOrGtType) => {
 			if (channelVal && lastMessageIDVal) {
@@ -277,10 +276,12 @@ export function MessageChild(): JSX.Element {
 			onSuccess: () => {
 				setMessage('');
 			},
-			onError: () => {
-				toast.custom(<Error error="Error sending message." />, {
-					id: 'error-message-send',
-				});
+			onError: (e: Error) => {
+				if (e instanceof Error && e.message !== 'Error: Timeout exceeded 3000ms') {
+					toast.custom(<Error error="Error sending message." />, {
+						id: 'error-message-send',
+					});
+				}
 				mutation.reset();
 			},
 		}
@@ -356,7 +357,7 @@ export function MessageChild(): JSX.Element {
 								onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
 									e.preventDefault();
 									e.target.reset();
-									if (message.length > 0) {
+									if (message.length > 0 && message !== '\n') {
 										handleSendMessage(message).then(() => {
 											setMessage('');
 										});
@@ -376,9 +377,9 @@ export function MessageChild(): JSX.Element {
 											onKeyDown={(
 												e: React.KeyboardEvent<HTMLTextAreaElement>
 											) => {
-												if (e.key === 'Enter') {
+												if (e.key === 'Enter' && !e.shiftKey) {
 													e.preventDefault();
-													if (message.length > 0) {
+													if (message.length > 0 && message !== '\n') {
 														setNoOfMessages(6); // to keep the scroll at the bottom
 														mutation.mutate(message);
 														const target =
