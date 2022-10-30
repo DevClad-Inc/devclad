@@ -50,6 +50,7 @@ export default async function serverlessCookie<TState>(
 			});
 			return response.data.value as TState;
 		} catch {
+			// if token cookie is expired on the client
 			if (key === 'token' && qc) {
 				await refreshToken(qc);
 				const response = await axios({
