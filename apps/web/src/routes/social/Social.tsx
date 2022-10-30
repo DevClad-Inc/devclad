@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
-import Tab from '@/components/Tab';
+import { Tab } from '@/components/Tabs';
 import { useAuth } from '@/services/useAuth.services';
 
 const tabs = [

@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { classNames } from '@devclad/lib';
 
-export default function Tabs({ tabs }: { tabs: { name: string; href: string }[] }) {
+export function Tab({ tabs }: { tabs: { name: string; href: string }[] }) {
 	const { pathname } = useLocation();
 	return (
 		<div className="mb-4 flex justify-center">
 			<div
-				className="bg-darkBG2 items-center space-x-4 rounded-md border-[1px] border-neutral-800 p-3
+				className="bg-darkBG2 items-center rounded-md border-[1px] border-neutral-800 p-3
     text-sm shadow-none duration-1000 hover:border-neutral-700 hover:bg-black hover:shadow-xl hover:shadow-white/30"
 			>
 				<nav className="flex space-x-4" aria-label="Tabs">

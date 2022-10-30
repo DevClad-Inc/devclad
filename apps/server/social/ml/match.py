@@ -13,6 +13,11 @@ from users.models import User
 
 User = get_user_model()
 
+"""
+Todo
+- use Preferred day, time, and timezone deviation to find closest match
+"""
+
 # substantial ML functionality lifted from connectdome's existing codebase and modified
 def transform_variables_profile(social_profile):
     """Transforms the variables so that they work well on knn for 1:1"""

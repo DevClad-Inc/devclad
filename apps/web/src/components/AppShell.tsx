@@ -295,7 +295,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 										{loggedInUser.first_name}
 										&apos;s Settings
 									</h1>
-									<hr className="border-1 my-8 border-neutral-200 dark:border-neutral-800" />
+									<hr className="border-1 border-neutral-200 dark:border-neutral-800 xl:my-8" />
 								</>
 							)}
 						</div>

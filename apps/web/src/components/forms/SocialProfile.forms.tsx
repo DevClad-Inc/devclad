@@ -39,16 +39,27 @@ const purposes = Purposes.map((purpose) => ({ purpose })) as {
 	};
 }[];
 
-// const tzDeviation = [
-//   { name: '+/- 0', id: 0 },
-//   { name: '+/- 2', id: 1 },
-//   { name: '+/- 4', id: 2 },
-//   { name: '+/- 6', id: 3 },
-//   { name: '+/- 8', id: 4 },
-//   { name: 'Any', id: 5 },
-// ];
+const daysOfWeek = [
+	{ name: 'Sunday', id: 0 },
+	{ name: 'Monday', id: 1 },
+	{ name: 'Tuesday', id: 2 },
+	{ name: 'Wednesday', id: 3 },
+	{ name: 'Thursday', id: 4 },
+	{ name: 'Friday', id: 5 },
+	{ name: 'Saturday', id: 6 },
+	{ name: 'Any Day', id: 7 },
+];
 
-const idea_status = [
+const hoursOfDay = [
+	{ name: '6AM - 12PM', id: 0 },
+	{ name: '12PM - 4PM', id: 1 },
+	{ name: '4PM - 8PM', id: 2 },
+	{ name: '8PM - 12AM', id: 3 },
+	{ name: '12AM - 6AM', id: 4 },
+	{ name: 'Anytime', id: 5 },
+];
+
+const ideaStatus = [
 	{ name: 'Open to exploring ideas.', id: 0 },
 	{ name: 'Not open to exploring ideas.', id: 1 },
 	{ name: 'Need people working on my idea.', id: 2 },
@@ -251,7 +262,7 @@ export function SocialProfileForm(): JSX.Element {
                         rounded-md py-1 text-base shadow-lg ring-1 ring-black
                         ring-opacity-5 focus:outline-none sm:text-sm"
 												>
-													{idea_status.map((status) => (
+													{ideaStatus.map((status) => (
 														<Listbox.Option
 															key={status.id}
 															className={({ active }) =>
@@ -1011,7 +1022,7 @@ export function AdditionalSPForm() {
 						<VideoCameraSlashIcon className="mr-2 h-8 w-8 text-neutral-500" />
 					)}
 				</Switch.Label>
-				<span className="text-base">
+				<span className="text-sm sm:text-base">
 					Video Call Friendly{!profile.video_call_friendly && '?'}
 				</span>
 			</Switch.Group>
@@ -1038,7 +1049,7 @@ export function AdditionalSPForm() {
 					/>
 				</Switch>
 				<Switch.Label as="span" className="ml-3 flex">
-					<span className="text-base">
+					<span className="text-sm sm:text-base">
 						{availableAlwaysOff ? (
 							<ClockIcon className="mr-2 h-8 w-8 text-neutral-500" />
 						) : (
@@ -1048,12 +1059,94 @@ export function AdditionalSPForm() {
 				</Switch.Label>
 				<span>
 					{availableAlwaysOff ? (
-						<span className="text-base">1-on-1 Mode off until turned on</span>
+						<span className="text-sm sm:text-base">
+							1-on-1 Mode off until turned on
+						</span>
 					) : (
-						<span className="text-base">1-on-1 Mode on until turned off</span>
+						<span className="text-sm sm:text-base">
+							1-on-1 Mode on until turned off
+						</span>
 					)}
 				</span>
 			</Switch.Group>
+			{profile.video_call_friendly === true && profile.available_always_off === false && (
+				<div className="flex flex-col">
+					<div className="container mt-5">
+						<h3 className="mb-2 font-sans leading-6 text-neutral-900 dark:text-neutral-100 sm:text-lg">
+							Preferred Day for Video Calls
+						</h3>
+						<div className="space-y-3 rounded-md duration-1000">
+							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
+								{daysOfWeek.slice(0, 4).map((tab) => (
+									<span
+										key={tab.name}
+										className={classNames(
+											tab.name === 'Any Day'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												: 'hover:text-neutral-900border-neutral-800 text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
+											'rounded-md border-[1px] border-dashed border-neutral-800 font-light duration-300 sm:px-3 lg:px-6'
+										)}
+									>
+										{tab.name}
+									</span>
+								))}
+							</nav>
+							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
+								{daysOfWeek.slice(4, 8).map((tab) => (
+									<span
+										key={tab.name}
+										className={classNames(
+											tab.name === 'Any Day'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
+											'rounded-md border-[1px] font-light duration-300 sm:px-3 lg:px-6'
+										)}
+									>
+										{tab.name}
+									</span>
+								))}
+							</nav>
+						</div>
+					</div>
+					<div className="container mt-5">
+						<h3 className="mb-2 font-sans leading-6 text-neutral-900 dark:text-neutral-100 sm:text-lg">
+							Preferred Time for Video Calls
+						</h3>
+						<div className="space-y-3 rounded-md duration-1000">
+							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
+								{hoursOfDay.slice(0, 3).map((tab) => (
+									<span
+										key={tab.name}
+										className={classNames(
+											tab.name === 'Anytime'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												: 'hover:text-neutral-900border-neutral-800 text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
+											'rounded-md border-[1px] border-dashed border-neutral-800 font-light duration-300 sm:px-3 lg:px-6'
+										)}
+									>
+										{tab.name}
+									</span>
+								))}
+							</nav>
+							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
+								{hoursOfDay.slice(3, 6).map((tab) => (
+									<span
+										key={tab.name}
+										className={classNames(
+											tab.name === 'Anytime'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
+											'rounded-md border-[1px] font-light duration-300 sm:px-3 lg:px-6'
+										)}
+									>
+										{tab.name}
+									</span>
+								))}
+							</nav>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -89,7 +89,7 @@ export function AccountProfile() {
 			<div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>
-						<h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
+						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
 							Account
 						</h2>
 					</div>
@@ -97,7 +97,7 @@ export function AccountProfile() {
 				</div>
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>
-						<h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
+						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
 							Profile
 						</h2>
 					</div>
@@ -117,7 +117,7 @@ export function SocialProfile() {
 			<div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>
-						<h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
+						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
 							Social Preferences
 						</h2>
 						<p className="mt-2 text-xs italic text-neutral-600 dark:text-neutral-400">
@@ -129,7 +129,7 @@ export function SocialProfile() {
 				</div>
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>
-						<h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
+						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
 							Additional Preferences
 						</h2>
 					</div>
@@ -147,7 +147,7 @@ export function Password() {
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div className="inline-flex">
 						<EnvelopeIcon className="mr-2 h-6 w-6" />
-						<h2 className="font-sans text-3xl leading-6  text-neutral-900 dark:text-neutral-100">
+						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
 							Email{' '}
 						</h2>
 					</div>

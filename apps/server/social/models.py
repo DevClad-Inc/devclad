@@ -24,6 +24,24 @@ class SocialProfile(models.Model):
         ("Not open to exploring ideas.", "Not open to exploring ideas."),
         ("Need people working on my idea.", "Need people working on my idea."),
     ]
+    DAYS_OF_WEEK = [
+        ("Sunday", "Sunday"),
+        ("Monday", "Monday"),
+        ("Tuesday", "Tuesday"),
+        ("Wednesday", "Wednesday"),
+        ("Thursday", "Thursday"),
+        ("Friday", "Friday"),
+        ("Saturday", "Saturday"),
+        ("Any Day", "Any Day"),
+    ]
+    TIMES_OF_DAY = [
+        ("6AM - 12PM", "6AM - 12PM"),
+        ("12PM - 4PM", "12PM - 4PM"),
+        ("4PM - 8PM", "4PM - 8PM"),
+        ("8PM - 12AM", "8PM - 12AM"),
+        ("12AM - 6AM", "12AM - 6AM"),
+        ("Anytime", "Anytime"),
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     video_call_friendly = models.BooleanField(default=True)
     languages = models.CharField(max_length=64, blank=True)  # up to 5
@@ -44,6 +62,12 @@ class SocialProfile(models.Model):
         ],
         default="Any",
         max_length=5,
+    )
+    preferred_day = models.CharField(
+        choices=DAYS_OF_WEEK, default="Any Day", max_length=20
+    )
+    preferred_time = models.CharField(
+        choices=TIMES_OF_DAY, default="Anytime", max_length=20
     )
     dev_type = models.CharField(
         max_length=128,
