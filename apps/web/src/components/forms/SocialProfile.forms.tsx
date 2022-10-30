@@ -83,7 +83,7 @@ export function SocialProfileForm(): JSX.Element {
 	if (detected === 'Asia/Calcutta') {
 		detected = 'Asia/Kolkata';
 	}
-	const [profileTimezone, setProfileTimezone] = React.useState<string>(detected);
+	const [profileTimezone, setProfileTimezone] = useState<string>(detected);
 
 	// ============= FORM value states for multi-selects =============
 

@@ -11,7 +11,7 @@ import { classNames } from '@devclad/lib';
 
 export function Success({ success }: { success: string }): JSX.Element {
 	return (
-		<div className="dark:bg-phthaloGreen mb-4 rounded-md bg-green-50 p-4">
+		<div className="border-phthaloGreen shadow-phthaloGreen/30 mb-4 rounded-md border-[1px] bg-green-50 p-4 shadow-2xl dark:bg-black">
 			<div className="flex">
 				<div className="flex-shrink-0">
 					<CheckIcon
@@ -65,7 +65,7 @@ export function Info({ info }: { info: string }): JSX.Element {
 
 export function Error({ error }: { error: string }): JSX.Element {
 	return (
-		<div className="bg-mistyRose dark:bg-bloodRed2 mb-4 rounded-md p-4">
+		<div className="border-bloodRed2 shadow-bloodRed2/30 bg-mistyRose mb-4 rounded-md border-[1px] p-4 shadow-2xl dark:bg-black">
 			<div className="flex">
 				<div className="flex-shrink-0">
 					<XMarkIcon

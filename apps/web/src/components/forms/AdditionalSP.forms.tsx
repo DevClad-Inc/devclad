@@ -40,31 +40,40 @@ export function AdditionalSPForm() {
 	const [videoCallFriendly, setVideoCallFriendly] = useState(false);
 	const [availableAlwaysOff, setAvailableAlwaysOff] = useState(false);
 
+	const [selectedDay, setSelectedDay] = useState<{ name: string; id: number }>();
+	const [selectedTime, setSelectedTime] = useState<{ name: string; id: number }>();
+
 	if (state?.status === 'loading' || state?.status !== 'success' || profile === null) {
 		return <ProfileLoading />;
 	}
 
-	if (
-		state?.status === 'success' &&
-		videoCallFriendly !== profile.video_call_friendly &&
-		availableAlwaysOff !== profile.available_always_off
-	) {
-		setVideoCallFriendly(profile.video_call_friendly as boolean);
-		setAvailableAlwaysOff(profile.available_always_off as boolean);
+	if (state?.status === 'success' && profile !== null) {
+		if (availableAlwaysOff !== profile.available_always_off) {
+			setAvailableAlwaysOff(profile.available_always_off);
+		}
+		if (videoCallFriendly !== profile.video_call_friendly) {
+			setVideoCallFriendly(profile.video_call_friendly);
+		}
+		if (selectedDay?.name !== profile.preferred_day) {
+			setSelectedDay(daysOfWeek.find((day) => day.name === profile.preferred_day));
+		}
+		if (selectedTime?.name !== profile.preferred_time) {
+			setSelectedTime(hoursOfDay.find((time) => time.name === profile.preferred_time));
+		}
 	}
 
 	const handleSubmit = async (values: AdditionalSP) => {
 		await updateAdditionalSP(token, values)
 			?.then(async () => {
 				toast.custom(<Success success="Preferences saved successfully" />, {
-					id: 'ad-prefs-success',
-					duration: 3000,
+					id: `ad-prefs-success${Math.random()}`,
+					duration: 1000,
 				});
 				await qc.invalidateQueries(['additional-sprefs']);
 			})
 			.catch(() => {
 				toast.custom(<Success success="Something went wrong" />, {
-					id: 'ad-prefs-error',
+					id: `ad-prefs-error${Math.random()}`,
 					duration: 3000,
 				});
 			});
@@ -154,50 +163,65 @@ export function AdditionalSPForm() {
 						<h3 className="mb-2 font-sans leading-6 text-neutral-700 dark:text-neutral-300 sm:text-lg">
 							Preferred Day for Video Calls
 						</h3>
-						<div className="space-y-3 rounded-md duration-1000">
+						<div className="space-y-3 rounded-md duration-500">
 							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
 								{daysOfWeek.slice(0, 3).map((tab) => (
-									<span
+									<button
+										type="button"
 										key={tab.name}
+										onClick={() => {
+											setSelectedDay(tab);
+											handleSubmit({ ...profile, preferred_day: tab.name });
+										}}
 										className={classNames(
-											tab.name === 'Any Day'
+											tab.name === selectedDay?.name
 												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
 												: 'hover:text-neutral-900border-neutral-800 text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] border-dashed border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
 									>
 										{tab.name}
-									</span>
+									</button>
 								))}
 							</nav>
 							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
 								{daysOfWeek.slice(3, 6).map((tab) => (
-									<span
+									<button
+										type="button"
 										key={tab.name}
+										onClick={() => {
+											setSelectedDay(tab);
+											handleSubmit({ ...profile, preferred_day: tab.name });
+										}}
 										className={classNames(
-											tab.name === 'Any Day'
+											tab.name === selectedDay?.name
 												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
 									>
 										{tab.name}
-									</span>
+									</button>
 								))}
 							</nav>
 							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
 								{daysOfWeek.slice(6, 8).map((tab) => (
-									<span
+									<button
+										type="button"
 										key={tab.name}
+										onClick={() => {
+											setSelectedDay(tab);
+											handleSubmit({ ...profile, preferred_day: tab.name });
+										}}
 										className={classNames(
-											tab.name === 'Any Day'
+											tab.name === selectedDay?.name
 												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
 									>
 										{tab.name}
-									</span>
+									</button>
 								))}
 							</nav>
 						</div>
@@ -206,35 +230,45 @@ export function AdditionalSPForm() {
 						<h3 className="mb-2 font-sans leading-6 text-neutral-700 dark:text-neutral-300 sm:text-lg">
 							Preferred Time for Video Calls
 						</h3>
-						<div className="space-y-3 rounded-md duration-1000">
+						<div className="space-y-3 rounded-md duration-500">
 							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
 								{hoursOfDay.slice(0, 3).map((tab) => (
-									<span
+									<button
+										type="button"
 										key={tab.name}
+										onClick={() => {
+											setSelectedTime(tab);
+											handleSubmit({ ...profile, preferred_time: tab.name });
+										}}
 										className={classNames(
-											tab.name === 'Anytime'
+											tab.name === selectedTime?.name
 												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
 												: 'hover:text-neutral-900border-neutral-800 text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] border-dashed border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
 									>
 										{tab.name}
-									</span>
+									</button>
 								))}
 							</nav>
 							<nav className="flex space-x-2 font-mono" aria-label="Tabs">
 								{hoursOfDay.slice(3, 6).map((tab) => (
-									<span
+									<button
+										type="button"
 										key={tab.name}
+										onClick={() => {
+											setSelectedTime(tab);
+											handleSubmit({ ...profile, preferred_time: tab.name });
+										}}
 										className={classNames(
-											tab.name === 'Anytime'
+											tab.name === selectedTime?.name
 												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
 									>
 										{tab.name}
-									</span>
+									</button>
 								))}
 							</nav>
 						</div>

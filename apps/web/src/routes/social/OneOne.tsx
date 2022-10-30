@@ -50,7 +50,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 		await patchCircle(token, username, circle, 'add')
 			?.then(async () => {
 				toast.custom(<Success success="Added to circle" />, {
-					id: 'connect-profile-success',
+					id: `connect-profile-success${Math.random()}`,
 					duration: 3000,
 				});
 				await qc.invalidateQueries(['circle', loggedInUserUserName as string]);
@@ -58,7 +58,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 			})
 			.catch(() => {
 				toast.custom(<Error error="Something went wrong." />, {
-					id: 'error-connect-profile',
+					id: `connect-profile-error${Math.random()}`,
 					duration: 5000,
 				});
 			});
@@ -68,7 +68,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 		await skipUser(token, username, skippedUsers, true)
 			?.then(async () => {
 				toast.custom(<Success success="Skipped successfully" />, {
-					id: 'skip-profile-success',
+					id: `skip-profile-success${Math.random()}`,
 					duration: 3000,
 				});
 				await qc.invalidateQueries(['skipped']);
@@ -76,7 +76,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 			})
 			.catch(() => {
 				toast.custom(<Error error="Something went wrong." />, {
-					id: 'skip-profile-error',
+					id: `skip-profile-error${Math.random()}`,
 					duration: 3000,
 				});
 			});
@@ -86,7 +86,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 		await shadowUser(token, username, shadowedUsers, true)
 			?.then(async () => {
 				toast.custom(<Success success="Shadowed successfully" />, {
-					id: 'shadow-profile-success',
+					id: `shadow-profile-success${Math.random()}`,
 					duration: 3000,
 				});
 				await qc.invalidateQueries(['shadowed']);
@@ -94,7 +94,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 			})
 			.catch(() => {
 				toast.custom(<Error error="Something went wrong." />, {
-					id: 'shadow-profile-error',
+					id: `shadow-profile-error${Math.random()}`,
 					duration: 3000,
 				});
 			});

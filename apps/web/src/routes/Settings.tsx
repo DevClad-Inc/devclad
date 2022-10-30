@@ -116,7 +116,15 @@ export function SocialProfile() {
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>
 						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
-							Social Preferences
+							Basic Preferences
+						</h2>
+					</div>
+					<AdditionalSPForm />
+				</div>
+				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
+					<div>
+						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
+							Advanced Preferences
 						</h2>
 						<p className="mt-2 text-xs italic text-neutral-600 dark:text-neutral-400">
 							We use your preferences in our ML algorithms to generate the best
@@ -124,14 +132,6 @@ export function SocialProfile() {
 						</p>
 					</div>
 					<SocialProfileForm />
-				</div>
-				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
-					<div>
-						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
-							Additional Preferences
-						</h2>
-					</div>
-					<AdditionalSPForm />
 				</div>
 			</div>
 		</div>

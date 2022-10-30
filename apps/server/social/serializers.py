@@ -36,6 +36,9 @@ class SocialProfileSerializer(serializers.ModelSerializer):
             "preferred_timezone_deviation",
             "available_this_week",
             "available_always_off",
+            "preferred_day",
+            "preferred_time",
+            "video_call_friendly",
             "indirect_matching",
         ]
 
@@ -43,7 +46,12 @@ class SocialProfileSerializer(serializers.ModelSerializer):
 class AdditionalSPSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialProfile
-        fields = ["video_call_friendly", "available_always_off"]
+        fields = [
+            "video_call_friendly",
+            "available_always_off",
+            "preferred_day",
+            "preferred_time",
+        ]
 
 
 class SocialDisplayProfileSerializer(serializers.ModelSerializer):

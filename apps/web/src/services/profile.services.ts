@@ -137,7 +137,7 @@ export function getAdditionalSP(token: string) {
 }
 
 export function updateAdditionalSP(token: string, values: AdditionalSP) {
-	const { video_call_friendly, available_always_off } = values;
+	const { video_call_friendly, available_always_off, preferred_day, preferred_time } = values;
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
@@ -148,6 +148,8 @@ export function updateAdditionalSP(token: string, values: AdditionalSP) {
 			data: {
 				video_call_friendly,
 				available_always_off,
+				preferred_day,
+				preferred_time,
 			},
 		});
 	}
