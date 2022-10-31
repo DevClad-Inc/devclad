@@ -17,7 +17,7 @@
 		"@devclad/ui": "*",
 		"prettier": "^2.7.1",
 		"prettier-plugin-tailwindcss": "^0.1.13",
-		"turbo": "1.6.1"
+		"turbo": "1.6.2"
 	},
 	"engines": {
 		"node": ">=14.0.0"
