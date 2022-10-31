@@ -12,7 +12,7 @@ import { ProfileLoading } from '../LoadingStates';
 import { useAdditionalSP } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 
-const daysOfWeek = [
+export const daysOfWeek = [
 	{ name: 'Sunday', id: 0 },
 	{ name: 'Monday', id: 1 },
 	{ name: 'Tuesday', id: 2 },
@@ -23,7 +23,7 @@ const daysOfWeek = [
 	{ name: 'Any Day', id: 7 },
 ];
 
-const hoursOfDay = [
+export const hoursOfDay = [
 	{ name: '6AM - 12PM', id: 0 },
 	{ name: '12PM - 4PM', id: 1 },
 	{ name: '4PM - 8PM', id: 2 },
@@ -89,7 +89,7 @@ export function AdditionalSPForm() {
 						handleSubmit({ ...profile, video_call_friendly: !videoCallFriendly });
 					}}
 					className={classNames(
-						profile.video_call_friendly ? 'bg-orange-300' : 'bg-neutral-700',
+						profile.video_call_friendly ? 'bg-orange-200' : 'bg-neutral-700',
 						'relative inline-flex h-6 w-12 flex-shrink-0 cursor-pointer rounded-sm border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2'
 					)}
 				>
@@ -105,7 +105,7 @@ export function AdditionalSPForm() {
 				</Switch>
 				<Switch.Label as="span" className="ml-3 flex">
 					{profile.video_call_friendly ? (
-						<VideoCameraIcon className="mr-2 h-8 w-8 text-orange-300" />
+						<VideoCameraIcon className="mr-2 h-8 w-8 text-orange-200" />
 					) : (
 						<VideoCameraSlashIcon className="mr-2 h-8 w-8 text-neutral-500" />
 					)}
@@ -122,7 +122,7 @@ export function AdditionalSPForm() {
 						handleSubmit({ ...profile, available_always_off: !availableAlwaysOff });
 					}}
 					className={classNames(
-						availableAlwaysOff ? 'bg-neutral-700' : 'bg-orange-300',
+						availableAlwaysOff ? 'bg-neutral-700' : 'bg-orange-200',
 						'relative inline-flex h-6 w-12 flex-shrink-0 cursor-pointer rounded-sm border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2'
 					)}
 				>
@@ -141,7 +141,7 @@ export function AdditionalSPForm() {
 						{availableAlwaysOff ? (
 							<ClockIcon className="mr-2 h-8 w-8 text-neutral-500" />
 						) : (
-							<ClockIcon className="mr-2 h-8 w-8 text-orange-300" />
+							<ClockIcon className="mr-2 h-8 w-8 text-orange-200" />
 						)}
 					</span>
 				</Switch.Label>
@@ -175,7 +175,7 @@ export function AdditionalSPForm() {
 										}}
 										className={classNames(
 											tab.name === selectedDay?.name
-												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
@@ -195,7 +195,7 @@ export function AdditionalSPForm() {
 										}}
 										className={classNames(
 											tab.name === selectedDay?.name
-												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
@@ -215,7 +215,7 @@ export function AdditionalSPForm() {
 										}}
 										className={classNames(
 											tab.name === selectedDay?.name
-												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
@@ -242,7 +242,7 @@ export function AdditionalSPForm() {
 										}}
 										className={classNames(
 											tab.name === selectedTime?.name
-												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
 												: 'hover:text-neutral-900border-neutral-800 text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] border-dashed border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
@@ -262,7 +262,7 @@ export function AdditionalSPForm() {
 										}}
 										className={classNames(
 											tab.name === selectedTime?.name
-												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-300'
+												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
 												: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 											'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}

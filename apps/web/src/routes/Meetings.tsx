@@ -108,7 +108,7 @@ export function MeetingList(): JSX.Element {
 	return <div>Meeting not found</div>;
 }
 
-export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
+export function MeetingDetail({ uid }: { uid?: string }): JSX.Element {
 	const { token } = useAuth();
 	const {
 		data: meetingData,
@@ -136,6 +136,10 @@ export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
 
 	return <div>Meeting not found</div>;
 }
+
+MeetingDetail.defaultProps = {
+	uid: '',
+};
 
 export function Meetings(): JSX.Element {
 	useDocumentTitle('Meetings');

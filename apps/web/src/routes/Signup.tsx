@@ -54,7 +54,7 @@ export function Signup() {
 				</h2>
 				<p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
 					Already a member?{' '}
-					<Link className=" text-orange-700 dark:text-orange-300" to="/">
+					<Link className=" text-orange-700 dark:text-orange-200" to="/">
 						Sign in to DevClad
 					</Link>
 				</p>

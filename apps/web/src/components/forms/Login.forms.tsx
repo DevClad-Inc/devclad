@@ -138,7 +138,7 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 						<div className="text-sm">
 							<Link
 								to="/forgot-password"
-								className=" text-orange-700 dark:text-orange-300"
+								className=" text-orange-700 dark:text-orange-200"
 							>
 								Forgot your password?
 							</Link>

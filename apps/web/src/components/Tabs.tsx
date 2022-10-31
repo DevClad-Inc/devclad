@@ -17,7 +17,7 @@ export function Tab({ tabs }: { tabs: { name: string; href: string }[] }) {
 							to={tab.href}
 							className={classNames(
 								tab.href === pathname || `${tab.href}/` === pathname
-									? ' hover:text-white dark:text-orange-300'
+									? ' hover:text-white dark:text-orange-200'
 									: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
 								'rounded-md px-6 font-sans text-lg font-light duration-300'
 							)}

@@ -30,7 +30,7 @@ export function Login() {
 			</h2>
 			<p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
 				Not a member?{' '}
-				<Link className=" text-orange-700 dark:text-orange-300" to="/signup">
+				<Link className=" text-orange-700 dark:text-orange-200" to="/signup">
 					Join DevClad
 				</Link>
 			</p>

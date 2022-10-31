@@ -337,7 +337,7 @@ export function AvatarUploadForm() {
 								htmlFor="file-upload"
 								className="relative cursor-pointer rounded-md
                 text-orange-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500
-                focus-within:ring-offset-2 hover:text-orange-600 dark:text-orange-300 dark:hover:text-orange-400"
+                focus-within:ring-offset-2 hover:text-orange-600 dark:text-orange-200 dark:hover:text-orange-300"
 							>
 								<span>Upload a file</span>
 								<input

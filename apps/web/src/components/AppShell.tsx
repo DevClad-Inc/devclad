@@ -137,7 +137,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 										<p className="text-sm">{loggedInUser.first_name}</p>
 										<p
 											className="text-xs text-neutral-600 duration-300 hover:text-black
-                  dark:text-orange-300 dark:group-hover:text-orange-400"
+                  dark:text-orange-200 dark:group-hover:text-orange-300"
 										>
 											Settings
 										</p>
@@ -171,7 +171,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 										className={({ isActive }) =>
 											classNames(
 												isActive
-													? 'text-orange-600 dark:text-orange-300'
+													? 'text-orange-600 dark:text-orange-200'
 													: 'hover:bg-linen dark:text-neutral-300 dark:hover:bg-neutral-900 dark:focus:bg-neutral-500',
 												'mb-1 flex w-1/4 justify-evenly rounded-xl border-t-2 border-transparent py-3'
 											)
@@ -202,7 +202,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 											<div>
 												<Link
 													to="/"
-													className="text-white duration-300 hover:text-orange-300"
+													className="text-white duration-300 hover:text-orange-200"
 												>
 													<HomeIcon
 														className="h-5 w-5 flex-shrink-0"
@@ -225,7 +225,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 														<path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
 													</svg>
 													<span
-														className="ml-2 font-mono text-sm font-medium text-orange-300
+														className="ml-2 font-mono text-sm font-medium text-orange-200
                           duration-300 hover:text-white"
 														aria-current={
 															pathname === page ? 'page' : undefined
@@ -247,7 +247,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 											<div className="flex items-center">
 												<NavLink
 													to="/social/circle"
-													className="ml-2 flex font-mono text-sm font-medium text-orange-300
+													className="ml-2 flex font-mono text-sm font-medium text-orange-200
                             duration-300 hover:text-white"
 													end
 												>
@@ -263,7 +263,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 								)}
 								<span
 									className="hidden items-center rounded-md border-[1px] border-neutral-900
-                p-2 font-mono text-xs font-medium text-orange-300
+                p-2 font-mono text-xs font-medium text-orange-200
                 shadow-white/20 duration-500
                 hover:text-white md:visible md:flex"
 								>

@@ -26,7 +26,8 @@ import { ProfileLoading } from '@/components/LoadingStates';
 import { genExp, genIdea } from '@/routes/Profile';
 import { useAuth } from '@/services/useAuth.services';
 import { patchCircle, shadowUser, skipUser } from '@/services/profile.services';
-import { Success, Error, ConfirmDialog } from '@/components/Feedback';
+import { Success, Error } from '@/components/Feedback';
+import { ActionDialog, ScheduleDialog } from '@/routes/social/components/ActionDialogs';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 
 function MatchCard({ username }: { username: string }): JSX.Element {
@@ -43,8 +44,11 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 	const { usernames: circle } = useCircle();
 
 	const [open, setOpen] = React.useState(false);
+	const [scheduleModalOpen, setScheduleModalOpen] = React.useState(false);
 	const [action, setAction] = React.useState('');
+	const [scheduleAction, setScheduleAction] = React.useState('');
 	const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
+	const scheduleButtonRef = React.useRef<HTMLButtonElement>(null);
 
 	const handleAdd = async () => {
 		await patchCircle(token, username, circle, 'add')
@@ -107,7 +111,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 		return (
 			<>
 				{open ? (
-					<ConfirmDialog
+					<ActionDialog
 						open={open}
 						setOpen={setOpen}
 						cancelButtonRef={cancelButtonRef}
@@ -116,6 +120,20 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 						onConfirm={() => {
 							if (action === 'warn') handleSkip();
 							else if (action === 'danger') handleShadow();
+						}}
+					/>
+				) : null}
+				{scheduleModalOpen ? (
+					<ScheduleDialog
+						open={scheduleModalOpen}
+						setOpen={setScheduleModalOpen}
+						scheduleButtonRef={scheduleButtonRef}
+						firstName={profile.first_name as string}
+						action={scheduleAction}
+						onConfirm={() => {
+							if (scheduleAction === 'schedule') {
+								console.log('schedule');
+							}
 						}}
 					/>
 				) : null}
@@ -343,7 +361,12 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 									</Link>
 								</div>
 								<div className="flex flex-col">
-									<PrimaryButton>
+									<PrimaryButton
+										onClick={() => {
+											setScheduleAction('schedule');
+											setScheduleModalOpen(true);
+										}}
+									>
 										<VideoCameraIcon
 											className="mr-2 h-6 w-6 lg:h-8"
 											aria-hidden="true"

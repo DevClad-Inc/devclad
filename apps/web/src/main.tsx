@@ -46,7 +46,7 @@ const queryClient = new QueryClient({
 
 const analyticsId = import.meta.env.VERCEL_ANALYTICS_ID;
 
-if (analyticsId) {
+if (analyticsId && !DEVELOPMENT) {
 	webVitals({
 		path: location.pathname,
 		params: location.search,
@@ -153,7 +153,7 @@ const router = createBrowserRouter([
 					{
 						path: '/meetings/:uid',
 						hasErrorBoundary: true,
-						element: <MeetingDetail uid={null} />,
+						element: <MeetingDetail />,
 					},
 				],
 			},

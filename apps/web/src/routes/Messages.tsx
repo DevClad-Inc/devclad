@@ -19,9 +19,9 @@ import Message from '@/components/Message';
 import { DEVELOPMENT, API_URL } from '@/services/auth.services';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
-                    hover:text-neutral-700 dark:hover:text-orange-400
+                    hover:text-neutral-700 dark:hover:text-orange-300
                     border-[1px] border-neutral-200 dark:border-neutral-800
-                    dark:text-orange-300
+                    dark:text-orange-200
                     text-orange-700`;
 
 function MessagesNav({ user }: { user: string }): JSX.Element {

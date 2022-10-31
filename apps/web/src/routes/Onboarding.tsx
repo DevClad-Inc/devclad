@@ -171,7 +171,7 @@ export function Onboarding() {
 					<p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
 						Questions?{' '}
 						<a
-							className=" text-orange-700 dark:text-orange-300"
+							className=" text-orange-700 dark:text-orange-200"
 							href="https://discord.devclad.com"
 							target="_blank"
 							rel="noreferrer"

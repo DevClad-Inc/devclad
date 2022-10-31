@@ -20,8 +20,8 @@ export default function Message({ self, username, avatarURL, message }: MessageP
 			<div className={classNames(self ? 'flex-row' : 'flex-row-reverse')}>
 				<div className="flex items-center space-x-2">
 					<div className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-						<span className="text-orange-400">@</span>
-						<span className="text-orange-400">
+						<span className="text-orange-300">@</span>
+						<span className="text-orange-300">
 							<Link to={`/profile/${username}`}>{username}</Link>
 						</span>
 					</div>

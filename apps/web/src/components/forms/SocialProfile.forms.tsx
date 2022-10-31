@@ -246,7 +246,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -362,7 +362,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -489,7 +489,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -613,7 +613,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -733,7 +733,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -842,7 +842,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)

@@ -43,7 +43,7 @@ function classNames(...classes: string[]) {
 }
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2 hover:text-neutral-700
-					dark:hover:text-orange-400 dark:text-orange-300 text-orange-700`;
+					dark:hover:text-orange-300 dark:text-orange-200 text-orange-700`;
 
 export function Settings() {
 	useDocumentTitle('Settings');
@@ -124,7 +124,7 @@ export function SocialProfile() {
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div>
 						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
-							Advanced Preferences
+							Details + Advanced Preferences
 						</h2>
 						<p className="mt-2 text-xs italic text-neutral-600 dark:text-neutral-400">
 							We use your preferences in our ML algorithms to generate the best
@@ -144,7 +144,7 @@ export function Password() {
 			<div className="space-y-6 shadow sm:overflow-hidden sm:rounded-md">
 				<div className="bg-darkBG2 space-y-6 rounded-md border-[1px] py-6 px-4 dark:border-neutral-800 sm:p-6">
 					<div className="inline-flex">
-						<EnvelopeIcon className="mr-2 h-6 w-6" />
+						<EnvelopeIcon className="mr-2 h-6 w-6 sm:h-12" />
 						<h2 className="font-sans text-2xl leading-6 text-neutral-900 dark:text-neutral-100 sm:text-3xl">
 							Email{' '}
 						</h2>

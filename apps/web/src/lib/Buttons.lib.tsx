@@ -7,9 +7,10 @@ interface ButtonProps {
 	disabled?: boolean;
 	wFull?: boolean;
 	className?: string;
+	onClick?: () => void;
 }
 
-export const altString = `border border-transparent bg-orange-300
+export const altString = `border border-transparent bg-orange-200
 duration-500 rounded-md py-2 px-4 inline-flex justify-center font-semibold text-black`;
 
 export const warningString = `mt-5 inline-flex items-center px-4 py-2
@@ -27,11 +28,19 @@ rounded-md shadow-sm text-phthaloGreen bg-honeyDew
 dark:bg-phthaloGreen dark:text-honeyDew`;
 
 // meant for Formik forms
-export function PrimaryButton({ children, isSubmitting, disabled, wFull, className }: ButtonProps) {
+export function PrimaryButton({
+	children,
+	isSubmitting,
+	disabled,
+	wFull,
+	className,
+	onClick,
+}: ButtonProps) {
 	return (
 		<button
 			type="submit"
 			disabled={isSubmitting || disabled}
+			onClick={onClick}
 			className={classNames(
 				wFull ? 'w-full' : 'w-auto px-6',
 				className ||
@@ -58,7 +67,7 @@ export function AlertButton({
 			type="submit"
 			disabled={isSubmitting}
 			className="dark:bg-raisinBlack2 inline-flex justify-center rounded-md border
-      border-transparent bg-orange-700 py-2 px-4 text-sm font-bold duration-500 dark:text-orange-300"
+      border-transparent bg-orange-700 py-2 px-4 text-sm font-bold duration-500 dark:text-orange-200"
 		>
 			{children}
 		</button>
@@ -110,4 +119,5 @@ PrimaryButton.defaultProps = {
   bg-black duration-300 rounded-md py-2 px-4 hover:bg-neutral-900
   hover:border-neutral-400
   inline-flex justify-center font-semibold text-white`,
+	onClick: () => {},
 };
