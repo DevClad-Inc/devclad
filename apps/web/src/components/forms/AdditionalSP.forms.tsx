@@ -243,8 +243,8 @@ export function AdditionalSPForm() {
 										className={classNames(
 											tab.name === selectedTime?.name
 												? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
-												: 'hover:text-neutral-900border-neutral-800 text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
-											'rounded-md border-[1px] border-dashed border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+												: 'hover:text-neutral-900border-neutral-800 border-dashed text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
+											'rounded-md border-[1px] border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 										)}
 									>
 										{tab.name}

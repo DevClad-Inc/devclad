@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { XMarkIcon, ExclamationTriangleIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
+import { daysOfWeek, hoursOfDay } from '@/components/forms/AdditionalSP.forms';
 
 export function ActionDialog({
 	open,
@@ -155,6 +156,8 @@ export function ScheduleDialog({
 	action: string;
 	onConfirm: () => void;
 }) {
+	const [selectedDay, setSelectedDay] = React.useState<{ name: string; id: number }>();
+	const [selectedTime, setSelectedTime] = React.useState<{ name: string; id: number }>();
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog
@@ -214,12 +217,176 @@ export function ScheduleDialog({
 											Schedule 1-on-1 call with {firstName}
 										</Dialog.Title>
 										<div className="mt-2">
-											<p className="text-sm text-neutral-100">
-												{action === 'warn' &&
-													`${firstName} will not be in your weekly 1 on 1 for the next 4 weeks.`}
-												{action === 'danger' &&
-													`${firstName} will never be in your weekly 1 on 1 again.`}
-											</p>
+											<div className="flex flex-col">
+												<div className="container mt-5">
+													<h3 className="mb-2 font-sans leading-6 text-neutral-700 dark:text-neutral-300 sm:text-lg">
+														Choose a day
+													</h3>
+													<div className="space-y-3 rounded-md duration-500">
+														<nav
+															className="flex space-x-2 font-mono"
+															aria-label="Tabs"
+														>
+															{daysOfWeek.slice(0, 3).map((tab) => (
+																<button
+																	type="button"
+																	key={tab.name}
+																	onClick={() => {
+																		setSelectedDay(tab);
+																		// handleSubmit(
+																		// 	{
+																		// 		...profile,
+																		// 		preferred_day:
+																		// 			tab.name,
+																		// 	}
+																		// );
+																	}}
+																	className={classNames(
+																		tab.name ===
+																			selectedDay?.name
+																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
+																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
+																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+																	)}
+																>
+																	{tab.name}
+																</button>
+															))}
+														</nav>
+														<nav
+															className="flex space-x-2 font-mono"
+															aria-label="Tabs"
+														>
+															{daysOfWeek.slice(3, 6).map((tab) => (
+																<button
+																	type="button"
+																	key={tab.name}
+																	onClick={() => {
+																		setSelectedDay(tab);
+																		// handleSubmit(
+																		// 	{
+																		// 		...profile,
+																		// 		preferred_day:
+																		// 			tab.name,
+																		// 	}
+																		// );
+																	}}
+																	className={classNames(
+																		tab.name ===
+																			selectedDay?.name
+																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
+																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
+																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+																	)}
+																>
+																	{tab.name}
+																</button>
+															))}
+														</nav>
+														<nav
+															className="flex space-x-2 font-mono"
+															aria-label="Tabs"
+														>
+															{daysOfWeek.slice(6, 8).map((tab) => (
+																<button
+																	type="button"
+																	key={tab.name}
+																	onClick={() => {
+																		setSelectedDay(tab);
+																		// handleSubmit(
+																		// 	{
+																		// 		...profile,
+																		// 		preferred_day:
+																		// 			tab.name,
+																		// 	}
+																		// );
+																	}}
+																	className={classNames(
+																		tab.name ===
+																			selectedDay?.name
+																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
+																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
+																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+																	)}
+																>
+																	{tab.name}
+																</button>
+															))}
+														</nav>
+													</div>
+												</div>
+												<div className="container mt-5">
+													<h3 className="mb-2 font-sans leading-6 text-neutral-300 sm:text-lg">
+														Select time
+													</h3>
+													<p className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">
+														Chat with your 1-on-1 match before
+														scheduling to avoid scheduliing conflicts.
+													</p>
+													<div className="space-y-3 rounded-md duration-500">
+														<nav
+															className="flex space-x-2 font-mono"
+															aria-label="Tabs"
+														>
+															{hoursOfDay.slice(0, 3).map((tab) => (
+																<button
+																	type="button"
+																	key={tab.name}
+																	onClick={() => {
+																		setSelectedTime(tab);
+																		// handleSubmit(
+																		// 	{
+																		// 		...profile,
+																		// 		preferred_time:
+																		// 			tab.name,
+																		// 	}
+																		// );
+																	}}
+																	className={classNames(
+																		tab.name ===
+																			selectedTime?.name
+																			? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
+																			: 'hover:text-neutral-900border-neutral-800 border-dashed text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
+																		'rounded-md border-[1px] border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+																	)}
+																>
+																	{tab.name}
+																</button>
+															))}
+														</nav>
+														<nav
+															className="flex space-x-2 font-mono"
+															aria-label="Tabs"
+														>
+															{hoursOfDay.slice(3, 6).map((tab) => (
+																<button
+																	type="button"
+																	key={tab.name}
+																	onClick={() => {
+																		setSelectedTime(tab);
+																		// handleSubmit(
+																		// 	{
+																		// 		...profile,
+																		// 		preferred_time:
+																		// 			tab.name,
+																		// 	}
+																		// );
+																	}}
+																	className={classNames(
+																		tab.name ===
+																			selectedTime?.name
+																			? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
+																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
+																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+																	)}
+																>
+																	{tab.name}
+																</button>
+															))}
+														</nav>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
