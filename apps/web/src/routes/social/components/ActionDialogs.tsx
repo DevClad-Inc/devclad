@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { XMarkIcon, ExclamationTriangleIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
-import { daysOfWeek, hoursOfDay } from '@/components/forms/AdditionalSP.forms';
+import { daysOfWeek } from '@/components/forms/AdditionalSP.forms';
 
 interface MeetingDate {
 	day: string;
@@ -178,7 +178,6 @@ export function ScheduleDialog({
 	onConfirm: () => void;
 }) {
 	const [selectedDay, setSelectedDay] = React.useState<MeetingDate>();
-	const [selectedTime, setSelectedTime] = React.useState<{ name: string; id: number }>();
 	const days = useDaysOfWeek();
 	return (
 		<Transition.Root show={open} as={Fragment}>
@@ -329,7 +328,7 @@ export function ScheduleDialog({
 																	}}
 																	className={classNames(
 																		tab.day === selectedDay?.day
-																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
+																			? 'border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
 																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
 																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 																	)}
@@ -346,66 +345,15 @@ export function ScheduleDialog({
 														Select time
 													</h3>
 													<div className="space-y-3 rounded-md duration-500">
-														<nav
-															className="flex space-x-2 font-mono"
-															aria-label="Tabs"
-														>
-															{hoursOfDay.slice(0, 3).map((tab) => (
-																<button
-																	type="button"
-																	key={tab.name}
-																	onClick={() => {
-																		setSelectedTime(tab);
-																		// handleSubmit(
-																		// 	{
-																		// 		...profile,
-																		// 		preferred_time:
-																		// 			tab.name,
-																		// 	}
-																		// );
-																	}}
-																	className={classNames(
-																		tab.name ===
-																			selectedTime?.name
-																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
-																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
-																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
-																	)}
-																>
-																	{tab.name}
-																</button>
-															))}
-														</nav>
-														<nav
-															className="flex space-x-2 font-mono"
-															aria-label="Tabs"
-														>
-															{hoursOfDay.slice(3, 6).map((tab) => (
-																<button
-																	type="button"
-																	key={tab.name}
-																	onClick={() => {
-																		setSelectedTime(tab);
-																		// handleSubmit(
-																		// 	{
-																		// 		...profile,
-																		// 		preferred_time:
-																		// 			tab.name,
-																		// 	}
-																		// );
-																	}}
-																	className={classNames(
-																		tab.name ===
-																			selectedTime?.name
-																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
-																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
-																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
-																	)}
-																>
-																	{tab.name}
-																</button>
-															))}
-														</nav>
+														<input
+															type="time"
+															name="time"
+															id="time"
+															className="rounded-md border-[1px] border-solid border-neutral-600 px-3 py-1 font-light text-slate-900
+															  shadow-2xl shadow-white/20 invert filter duration-300 sm:px-3 lg:px-6"
+															step={900}
+															required
+														/>
 													</div>
 												</div>
 											</div>
