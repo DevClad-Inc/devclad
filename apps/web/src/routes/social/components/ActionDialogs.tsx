@@ -4,6 +4,27 @@ import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
 import { daysOfWeek, hoursOfDay } from '@/components/forms/AdditionalSP.forms';
 
+interface MeetingDate {
+	day: string;
+	month: string;
+	date: Date;
+	id: number;
+}
+
+const useDaysOfWeek = () => {
+	const days: MeetingDate[] = [];
+	const today = new Date().getDay();
+	for (const day of daysOfWeek.slice(today, 7)) {
+		days.push({
+			day: day.name.slice(0, 3),
+			date: new Date(new Date().setDate(new Date().getDate() + day.id - today)),
+			month: new Date().toLocaleString('default', { month: 'short' }),
+			id: day.id,
+		});
+	}
+	return days;
+};
+
 export function ActionDialog({
 	open,
 	setOpen,
@@ -156,8 +177,9 @@ export function ScheduleDialog({
 	action: string;
 	onConfirm: () => void;
 }) {
-	const [selectedDay, setSelectedDay] = React.useState<{ name: string; id: number }>();
+	const [selectedDay, setSelectedDay] = React.useState<MeetingDate>();
 	const [selectedTime, setSelectedTime] = React.useState<{ name: string; id: number }>();
+	const days = useDaysOfWeek();
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog
@@ -218,8 +240,12 @@ export function ScheduleDialog({
 										</Dialog.Title>
 										<div className="mt-2">
 											<div className="flex flex-col">
-												<div className="container mt-5">
-													<h3 className="mb-2 font-sans leading-6 text-neutral-700 dark:text-neutral-300 sm:text-lg">
+												<p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+													Chat with your 1-on-1 match before scheduling to
+													avoid scheduliing conflicts.
+												</p>
+												<div className="container mt-3">
+													<h3 className="mb-2 font-sans leading-6 text-neutral-300 sm:text-lg">
 														Choose a day
 													</h3>
 													<div className="space-y-3 rounded-md duration-500">
@@ -227,10 +253,10 @@ export function ScheduleDialog({
 															className="flex space-x-2 font-mono"
 															aria-label="Tabs"
 														>
-															{daysOfWeek.slice(0, 3).map((tab) => (
+															{days.slice(0, 3).map((tab) => (
 																<button
 																	type="button"
-																	key={tab.name}
+																	key={tab.day}
 																	onClick={() => {
 																		setSelectedDay(tab);
 																		// handleSubmit(
@@ -242,14 +268,14 @@ export function ScheduleDialog({
 																		// );
 																	}}
 																	className={classNames(
-																		tab.name ===
-																			selectedDay?.name
+																		tab.day === selectedDay?.day
 																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
 																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
 																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 																	)}
 																>
-																	{tab.name}
+																	{tab.month},{' '}
+																	{tab.date.getDate()} ({tab.day})
 																</button>
 															))}
 														</nav>
@@ -257,10 +283,10 @@ export function ScheduleDialog({
 															className="flex space-x-2 font-mono"
 															aria-label="Tabs"
 														>
-															{daysOfWeek.slice(3, 6).map((tab) => (
+															{days.slice(3, 6).map((tab) => (
 																<button
 																	type="button"
-																	key={tab.name}
+																	key={tab.day}
 																	onClick={() => {
 																		setSelectedDay(tab);
 																		// handleSubmit(
@@ -272,14 +298,14 @@ export function ScheduleDialog({
 																		// );
 																	}}
 																	className={classNames(
-																		tab.name ===
-																			selectedDay?.name
+																		tab.day === selectedDay?.day
 																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
 																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
 																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 																	)}
 																>
-																	{tab.name}
+																	{tab.month},{' '}
+																	{tab.date.getDate()} ({tab.day})
 																</button>
 															))}
 														</nav>
@@ -287,10 +313,10 @@ export function ScheduleDialog({
 															className="flex space-x-2 font-mono"
 															aria-label="Tabs"
 														>
-															{daysOfWeek.slice(6, 8).map((tab) => (
+															{days.slice(6, 7).map((tab) => (
 																<button
 																	type="button"
-																	key={tab.name}
+																	key={tab.day}
 																	onClick={() => {
 																		setSelectedDay(tab);
 																		// handleSubmit(
@@ -302,27 +328,23 @@ export function ScheduleDialog({
 																		// );
 																	}}
 																	className={classNames(
-																		tab.name ===
-																			selectedDay?.name
+																		tab.day === selectedDay?.day
 																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
 																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
 																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 																	)}
 																>
-																	{tab.name}
+																	{tab.month},{' '}
+																	{tab.date.getDate()} ({tab.day})
 																</button>
 															))}
 														</nav>
 													</div>
 												</div>
-												<div className="container mt-5">
+												<div className="container mt-2">
 													<h3 className="mb-2 font-sans leading-6 text-neutral-300 sm:text-lg">
 														Select time
 													</h3>
-													<p className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">
-														Chat with your 1-on-1 match before
-														scheduling to avoid scheduliing conflicts.
-													</p>
 													<div className="space-y-3 rounded-md duration-500">
 														<nav
 															className="flex space-x-2 font-mono"
@@ -345,9 +367,9 @@ export function ScheduleDialog({
 																	className={classNames(
 																		tab.name ===
 																			selectedTime?.name
-																			? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
-																			: 'hover:text-neutral-900border-neutral-800 border-dashed text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-100',
-																		'rounded-md border-[1px] border-neutral-800 px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
+																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
+																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
+																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 																	)}
 																>
 																	{tab.name}
@@ -375,8 +397,8 @@ export function ScheduleDialog({
 																	className={classNames(
 																		tab.name ===
 																			selectedTime?.name
-																			? ' border-solid border-neutral-600 shadow-2xl shadow-white/20 hover:text-white dark:text-orange-200'
-																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-neutral-100',
+																			? ' border-solid border-neutral-600 text-orange-200 shadow-2xl shadow-white/20 hover:text-white'
+																			: 'border-dashed border-neutral-800 text-neutral-600 hover:text-neutral-100',
 																		'rounded-md border-[1px] px-3 py-1 font-light duration-300 sm:px-3 lg:px-6'
 																	)}
 																>
@@ -397,7 +419,7 @@ export function ScheduleDialog({
 										 bg-orange-200 px-6 py-1 text-base font-medium
 										text-black shadow-sm duration-300 hover:bg-orange-300 focus:outline-none
 										  focus:ring-2 focus:ring-neutral-200
-										  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+										  sm:mt-0 sm:w-auto sm:text-sm"
 										onClick={() => {
 											onConfirm();
 											setOpen(false);
