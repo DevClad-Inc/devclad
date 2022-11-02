@@ -7,7 +7,7 @@ import ClockIcon from '@heroicons/react/24/outline/ClockIcon';
 import { classNames } from '@devclad/lib';
 import { AdditionalSP } from '@/lib/InterfacesStates.lib';
 import { updateAdditionalSP } from '@/services/profile.services';
-import { Success } from '@/components/Feedback';
+import { Error, Success } from '@/components/Feedback';
 import { ProfileLoading } from '../LoadingStates';
 import { useAdditionalSP } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
@@ -72,7 +72,7 @@ export function AdditionalSPForm() {
 				await qc.invalidateQueries(['additional-sprefs']);
 			})
 			.catch(() => {
-				toast.custom(<Success success="Something went wrong" />, {
+				toast.custom(<Error error="Something went wrong" />, {
 					id: `ad-prefs-error${Math.random()}`,
 					duration: 3000,
 				});

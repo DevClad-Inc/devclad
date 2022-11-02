@@ -138,30 +138,16 @@ export interface PasswordReset {
 }
 
 export interface MeetingCreateUpdate {
+	name: string;
 	invites: string[];
 	type_of: string;
-	link: string;
 	time: string;
-}
-
-export interface MeetingFormValues extends MeetingCreateUpdate {
-	errors?: {
-		invites?: string;
-		type_of?: string;
-		link?: string;
-		time?: string;
-	};
-}
-
-export interface Meeting extends MeetingCreateUpdate {
-	name: string;
-	id: number;
-	uid: string;
-	attended: boolean;
 	organizer: string | number; // username when fetching all meetings, id when fetching individual meeting
 }
 
-export interface InitialData {
-	token: string;
-	refresh: string;
+export interface Meeting extends MeetingCreateUpdate {
+	id: number;
+	uid: string;
+	link: string;
+	attended: boolean;
 }

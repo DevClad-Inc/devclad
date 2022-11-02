@@ -7,6 +7,10 @@
 		{
 			"source": "/api",
 			"destination": "/api/cookies.ts"
+		},
+		{
+			"source": "/((?!api).*)",
+			"destination": "/"
 		}
 	],
 	"headers": [

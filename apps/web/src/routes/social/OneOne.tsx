@@ -115,7 +115,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 						open={open}
 						setOpen={setOpen}
 						cancelButtonRef={cancelButtonRef}
-						firstName={profile.first_name as string}
+						firstName={profile.first_name || ''}
 						action={action}
 						onConfirm={() => {
 							if (action === 'warn') handleSkip();
@@ -128,13 +128,12 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 						open={scheduleModalOpen}
 						setOpen={setScheduleModalOpen}
 						scheduleButtonRef={scheduleButtonRef}
-						firstName={profile.first_name as string}
-						action={scheduleAction}
-						onConfirm={() => {
-							if (scheduleAction === 'schedule') {
-								console.log('schedule');
-							}
+						otherUser={{
+							firstName: profile.first_name,
+							username,
 						}}
+						loggedInUser={loggedInUser}
+						action={scheduleAction}
 					/>
 				) : null}
 				<div className="flex justify-center p-0 lg:p-4">
