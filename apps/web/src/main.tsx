@@ -151,6 +151,11 @@ const router = createBrowserRouter([
 						element: <MeetingList />,
 					},
 					{
+						path: '/meetings/past',
+						hasErrorBoundary: true,
+						element: <MeetingList past />,
+					},
+					{
 						path: '/meetings/:uid',
 						hasErrorBoundary: true,
 						element: <MeetingDetail />,
