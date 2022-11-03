@@ -83,3 +83,18 @@ class UserStatus(models.Model):
 
     def __str__(self: "UserStatus") -> str:
         return self.user.username
+
+
+class GithubOAuth(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    access_token = models.CharField(max_length=255, default="")
+    access_token_workspaces = models.CharField(
+        max_length=255, default=""
+    )  # access token with advanced permissions for workspaces feature
+
+    class Meta:
+        verbose_name = "Github OAuth Token"
+        verbose_name_plural = "Github OAuth Tokens"
+
+    def __str__(self: "GithubOAuth") -> str:
+        return self.user.username

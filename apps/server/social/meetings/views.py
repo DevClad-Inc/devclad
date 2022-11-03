@@ -30,6 +30,7 @@ def meetings(request: Request, uid: str) -> Response:
                             Q(invites__in=[request.user]) | Q(organizer=request.user)
                         )
                         .distinct()
+                        .order_by("time")
                     )
                     serializer = MeetingSerializer(meetings, many=True)
                     for meeting in serializer.data:
@@ -45,9 +46,13 @@ def meetings(request: Request, uid: str) -> Response:
                             Q(invites__in=[request.user]) | Q(organizer=request.user),
                         )
                         .distinct()
+                        .order_by("-time")
                     )
                     serializer = MeetingSerializer(meetings, many=True)
-
+                    for meeting in serializer.data:
+                        meeting["organizer"] = User.objects.get(
+                            id=meeting["organizer"]
+                        ).username
                 case _:
                     try:
                         uuid.UUID(uid)
