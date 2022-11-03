@@ -165,11 +165,9 @@ class LoginSerializer(serializers.Serializer):
 
     @staticmethod
     def validate_email_verification_status(user):
-        from allauth.account import app_settings
-
         if (
-            app_settings.EMAIL_VERIFICATION
-            == app_settings.EmailVerificationMethod.MANDATORY
+            allauth_settings.EMAIL_VERIFICATION
+            == allauth_settings.EmailVerificationMethod.MANDATORY
             and not user.emailaddress_set.filter(
                 email=user.email, verified=True
             ).exists()
