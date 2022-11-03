@@ -165,7 +165,6 @@ class LoginSerializer(serializers.Serializer):
 
     @staticmethod
     def validate_email_verification_status(user):
-        from allauth.account import app_settings
 
         if (
             app_settings.EMAIL_VERIFICATION
