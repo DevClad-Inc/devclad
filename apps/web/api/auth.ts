@@ -62,7 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	const { headers } = req;
 	switch (true) {
 		case req.url?.startsWith('/api/auth/login/github/'): {
-			const REDIRECT_URI = 'http://127.0.0.1:5173/api/auth/complete/github/login/';
+			const REDIRECT_URI = `${process.env.CLIENT_URL}/api/auth/complete/github/login/`;
 			const SCOPE = 'user';
 			const redirectUrl =
 				`https://github.com/login/oauth/authorize` +
@@ -74,7 +74,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 		}
 		case req.url?.startsWith('/api/auth/connect/github/'): {
 			const state = crypto.getRandomValues(new Uint8Array(32)).toString();
-			const REDIRECT_URI = 'http://127.0.0.1:5173/api/auth/complete/github/connect/';
+			const REDIRECT_URI = `${process.env.CLIENT_URL}/api/auth/complete/github/connect/`;
 			const SCOPE = 'user';
 			const redirectUrl =
 				`https://github.com/login/oauth/authorize` +
