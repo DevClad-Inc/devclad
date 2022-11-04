@@ -79,6 +79,7 @@ export function SocialProfileForm(): JSX.Element {
 	);
 	const [selectedCountry, setSelectedCountry] = useState<{ name: string; code: string }>();
 	let detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 	// this is a hack to get the timezone to display correctly; FUCK YOU CHROMium
 	if (detected === 'Asia/Calcutta') {
 		detected = 'Asia/Kolkata';

@@ -201,7 +201,7 @@ export function ScheduleDialog({
 		return meetingDateTime;
 	};
 
-	const handleSubmit = async (values: MeetingCreateUpdate) => {
+	const apiCall = async (values: MeetingCreateUpdate) => {
 		await createUpdateMeeting(token, values)
 			?.then(() => {
 				setSubmitted(true);
@@ -217,6 +217,41 @@ export function ScheduleDialog({
 					duration: 5000,
 				});
 			});
+	};
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const time = e.currentTarget.time.value;
+		if (selectedDay) {
+			const processedTime = processDate({
+				date: selectedDay?.date,
+				time: time || '',
+			});
+			const now = new Date();
+			const meetingDate = new Date(processedTime);
+			if (meetingDate.getTime() < now.getTime()) {
+				toast.custom(<Error error="Please select the time in future." />, {
+					id: `past-error${Math.random()}`,
+					duration: 3000,
+				});
+				return;
+			}
+			const meeting: MeetingCreateUpdate = {
+				name: `15-min 1-on-1 | ${loggedInUser.first_name} <-> ${otherUser.firstName}`,
+				invites: [otherUser.username],
+				type_of: '1:1 Match',
+				time: processedTime,
+				organizer: loggedInUser.username || '',
+			};
+			apiCall(meeting).then(() => {
+				navigate('/meetings');
+			});
+		} else {
+			toast.custom(<Error error="Please select the day." />, {
+				id: `day-select-error${Math.random()}`,
+				duration: 3000,
+			});
+		}
 	};
 
 	return (
@@ -250,45 +285,7 @@ export function ScheduleDialog({
 							leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 							leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 						>
-							<form
-								onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
-									e.preventDefault();
-									const time = e.currentTarget.time.value;
-									if (selectedDay) {
-										const processedTime = processDate({
-											date: selectedDay?.date,
-											time: time || '',
-										});
-										const now = new Date();
-										const meetingDate = new Date(processedTime);
-										if (meetingDate.getTime() < now.getTime()) {
-											toast.custom(
-												<Error error="Please select the time in future." />,
-												{
-													id: `past-error${Math.random()}`,
-													duration: 3000,
-												}
-											);
-											return;
-										}
-										const meeting: MeetingCreateUpdate = {
-											name: `15-min 1-on-1 | ${loggedInUser.first_name} <-> ${otherUser.firstName}`,
-											invites: [otherUser.username],
-											type_of: '1:1 Match',
-											time: processedTime,
-											organizer: loggedInUser.username || '',
-										};
-										handleSubmit(meeting).then(() => {
-											navigate('/meetings');
-										});
-									} else {
-										toast.custom(<Error error="Please select the day." />, {
-											id: `day-select-error${Math.random()}`,
-											duration: 3000,
-										});
-									}
-								}}
-							>
+							<form onSubmit={handleSubmit}>
 								<Dialog.Panel
 									className="
                 relative transform

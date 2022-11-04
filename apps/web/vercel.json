@@ -5,12 +5,12 @@
 	"framework": "vite",
 	"rewrites": [
 		{
-			"source": "/api",
+			"source": "/api/cookies",
 			"destination": "/api/cookies.ts"
 		},
 		{
-			"source": "/((?!api).*)",
-			"destination": "/"
+			"source": "/api/auth/(.*)",
+			"destination": "/api/auth.ts"
 		}
 	],
 	"headers": [

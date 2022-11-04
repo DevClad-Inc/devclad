@@ -96,14 +96,11 @@ export function MeetingList({ past }: { past?: boolean }): JSX.Element {
 		const { meetings } = meetingData.data as { meetings: Meeting[] };
 		const time = socialProfile?.timezone as string;
 		return (
-			<div>
-				<h1 className="text-2xl font-bold">Meetings</h1>
-				<ul className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{meetings.map((meeting) => (
-						<MeetingCard meeting={meeting} time={time} key={meeting.id} />
-					))}
-				</ul>
-			</div>
+			<ul className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{meetings.map((meeting) => (
+					<MeetingCard meeting={meeting} time={time} key={meeting.id} />
+				))}
+			</ul>
 		);
 	}
 
@@ -131,13 +128,10 @@ export function MeetingDetail(): JSX.Element {
 	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
 		return (
-			<>
-				<h1>Meeting</h1>
-				<div key={meeting.id}>
-					<h2>{meeting.name}</h2>
-					<p>{meeting.invites}</p>
-				</div>
-			</>
+			<div key={meeting.id}>
+				<h2>{meeting.name}</h2>
+				<p>{meeting.invites}</p>
+			</div>
 		);
 	}
 

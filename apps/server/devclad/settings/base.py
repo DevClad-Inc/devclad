@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     # Enable registration with allauth
     "dj_rest_auth.registration",
     "django_q",
-    # "graphene_django",
     "django_filters",
 ]
 

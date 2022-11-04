@@ -178,7 +178,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 							<div
 								className="dark:bg-darkBG rounded-lg
                border-[1px] border-neutral-200 p-4 text-neutral-800
-               dark:border-neutral-800 dark:text-neutral-200 sm:ml-24"
+               dark:border-neutral-800 dark:border-l-orange-200 dark:text-neutral-200 sm:ml-24"
 							>
 								<div className="italic text-neutral-300">
 									<p>
@@ -264,7 +264,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 							<div
 								className="dark:bg-darkBG rounded-lg border-[1px]
                border-neutral-200 p-4 text-neutral-800
-               dark:border-neutral-800 dark:text-neutral-200 sm:ml-24"
+               dark:border-neutral-800 dark:border-l-orange-200 dark:text-neutral-200 sm:ml-24"
 							>
 								<div className="flex flex-col">
 									{/* TODO: add GITHUB */}
@@ -310,7 +310,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 							<div
 								className="dark:bg-darkBG rounded-lg border-[1px]
                border-neutral-200 p-4 text-neutral-800
-               dark:border-neutral-800 dark:text-neutral-200 sm:ml-24"
+               dark:border-neutral-800 dark:border-l-orange-200 dark:text-neutral-200 sm:ml-24"
 							>
 								<div className="flex flex-col">
 									<div className="bg-darkBG space-y-2 italic text-neutral-300">
@@ -327,7 +327,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 							<div
 								className="dark:bg-darkBG rounded-lg border-[1px]
                border-neutral-200 p-4 text-neutral-800
-               dark:border-neutral-800 dark:text-neutral-200 sm:ml-24"
+               dark:border-neutral-800 dark:border-l-orange-200 dark:text-neutral-200 sm:ml-24"
 							>
 								<div className="flex flex-col">
 									<div className="bg-darkBG space-y-2">
@@ -447,16 +447,30 @@ export function OneOne(): JSX.Element {
 				<MatchCard key={username} username={username} />
 			))}
 			<div key="tips" className="flex justify-center p-4">
-				<div className="dark:bg-darkBG rounded-lg shadow sm:w-full md:w-3/4">
-					<div className="px-4 py-5 sm:p-6">
-						<h2 className="font-sans text-2xl font-black leading-6 text-neutral-900 dark:text-neutral-100">
-							Prompts for Conversation/Tips
-						</h2>
-						<div className="text-md pt-5 text-neutral-800 dark:text-neutral-200">
-							<p>
-								Since you suck at making conversation and don&apos; get bitches,
-								here are some prompts to spark a conversation.
-							</p>
+				<div className="rounded-lg border-[1px] border-neutral-800 shadow dark:bg-black sm:w-full md:w-3/4">
+					<div className="space-y-4 px-4 py-5 sm:p-6">
+						<div className="mb-5 flex flex-col">
+							<h2 className="font-sans text-2xl font-black leading-6 text-neutral-900 dark:text-neutral-100">
+								Prompts for Conversation/Tips
+							</h2>
+						</div>
+						<div className="text-md bg-darkBG rounded-md border-[1px] border-neutral-800 border-l-orange-200 p-4 text-neutral-800 dark:text-neutral-300">
+							<ol className="list-inside list-decimal space-y-2">
+								<li>Favorite tools and languages.</li>
+								<li>
+									OSS projects to keep track of right now in
+									<span> {new Date().getFullYear()}</span> in your opinion.
+								</li>
+								<li>&ldquo;What are you working on right now?&rdquo;</li>
+								<li>
+									&ldquo;What do you like doing apart from programming?&rdquo;
+									{` `}
+									<span className="text-sm text-neutral-500 dark:text-neutral-400">
+										This is usually the sweet spot for side-projects (hobby+dev
+										skills).
+									</span>
+								</li>
+							</ol>
 						</div>
 					</div>
 				</div>
