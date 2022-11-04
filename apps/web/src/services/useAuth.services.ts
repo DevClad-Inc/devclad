@@ -25,7 +25,7 @@ export function useAuth() {
 	const qc = useQueryClient();
 
 	const { isSuccess: tokenSuccess, data: tokenData } = useQuery({
-		...tokenQuery(),
+		...tokenQuery(qc),
 	});
 	const { isSuccess: refreshSuccess, data: refreshData } = useQuery({
 		...refreshQuery(),

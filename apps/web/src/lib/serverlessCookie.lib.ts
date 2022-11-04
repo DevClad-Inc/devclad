@@ -12,8 +12,8 @@ export default async function serverlessCookie<TState>(
 ): Promise<TState | null> {
 	const url = `/api/cookies`;
 	const secure = Boolean(!DEVELOPMENT); // use serverless function with httponly cookies in secure env
-	const test = true;
-	if (test) {
+	const test = false;
+	if (secure || test) {
 		if (checkTokenType(value) && !del) {
 			const response = await axios({
 				method: 'PUT',
@@ -49,7 +49,6 @@ export default async function serverlessCookie<TState>(
 			});
 			return response.data.value as TState;
 		} catch {
-			// if token cookie is expired on the client
 			if (key === 'token' && qc) {
 				await refreshToken(qc);
 				const response = await axios({
