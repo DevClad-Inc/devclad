@@ -1,7 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { IncomingHttpHeaders } from 'http';
-
 import fetch from 'node-fetch';
 
 const getUsername = async (token: string) => {
