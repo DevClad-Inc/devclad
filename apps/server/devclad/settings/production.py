@@ -10,7 +10,3 @@ SESSION_COOKIE_SAMESITE = "Strict"
 
 
 REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ["rest_framework.renderers.JSONRenderer"]
-
-# SET COOKIE AND REDIRECT
-
-REDIRECT_URL = config("REDIRECT_URL", default="https://app.devclad.com/", cast=str)
