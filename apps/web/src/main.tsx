@@ -22,7 +22,6 @@ import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Sett
 import { Home } from '@/routes/Home';
 import { Login } from '@/routes/Login';
 import { Signup } from '@/routes/Signup';
-import { FourOFour } from '@/routes/404';
 // Routes - Social
 import { Social } from '@/routes/social/Social';
 import { OneOne } from '@/routes/social/OneOne';
@@ -187,10 +186,6 @@ const router = createBrowserRouter([
 				],
 			},
 		],
-	},
-	{
-		path: '*',
-		element: <FourOFour />,
 	},
 ]);
 
