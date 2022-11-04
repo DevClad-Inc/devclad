@@ -2,6 +2,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { IncomingHttpHeaders } from 'http';
 
+import fetch from 'node-fetch';
+
 const getUsername = async (token: string) => {
 	const url = 'https://api.github.com/user';
 	const response = await fetch(url, {
@@ -9,7 +11,7 @@ const getUsername = async (token: string) => {
 			Authorization: `token ${token}`,
 		},
 	});
-	const { login } = await response.json();
+	const { login } = (await response.json()) as { login: string };
 	return login;
 };
 
@@ -24,7 +26,7 @@ const connectGithub = async (
 	username: string,
 	apiURL: string,
 	operation: 'connect' | 'login'
-): Promise<ConnectGithubResponse | null> => {
+) => {
 	let apiHeaders: Record<string, string> = {};
 	if (operation === 'connect') {
 		const cookieToken = headers.cookie?.split('; ').find((c) => c.startsWith('token='));
@@ -50,7 +52,7 @@ const connectGithub = async (
 			username: username.toLowerCase(),
 		}),
 	}).then((resp) => resp.json());
-	return apiResp;
+	return apiResp as ConnectGithubResponse;
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -99,7 +101,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					code,
 				}),
 			}).then((resp) => resp.json());
-			const { access_token } = tokenResponse;
+			const { access_token } = tokenResponse as { access_token: string };
 			const username = await getUsername(access_token);
 			switch (true) {
 				case req.url?.startsWith('/api/auth/complete/github/login'): {

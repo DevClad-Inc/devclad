@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@devclad/config": "*",
 		"@devclad/ui": "*",
-		"prettier": "latest",
+		"prettier": "2.7.1",
 		"eslint": "8.26.0",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
