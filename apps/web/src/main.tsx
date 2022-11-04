@@ -36,6 +36,9 @@ import { DEVELOPMENT } from '@/services/auth.services';
 
 axios.defaults.headers.common.withCredentials = true;
 
+// ! NOTE: Safari has sort of an unpredictable behavior with cookies in development mode
+// try using Firefox/Chromium based browser when testing vercel serverless functions
+
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {

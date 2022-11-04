@@ -11,10 +11,9 @@ export default async function serverlessCookie<TState>(
 	qc?: QueryClient
 ): Promise<TState | null> {
 	const url = `/api/cookies`;
-	const secure = Boolean(!DEVELOPMENT);
-
-	// use serverless function with httponly cookies in secure env
-	if (secure) {
+	const secure = Boolean(!DEVELOPMENT); // use serverless function with httponly cookies in secure env
+	const test = true;
+	if (test) {
 		if (checkTokenType(value) && !del) {
 			const response = await axios({
 				method: 'PUT',

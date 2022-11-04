@@ -55,7 +55,6 @@ const connectGithub = async (
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-	const DEVELOPMENT = process.env.NODE_ENV === 'development';
 	const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 	const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 	const LOGIN_URL = `${process.env.VITE_API_URL}/oauth/github/login/`;
@@ -108,16 +107,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 			switch (true) {
 				case req.url?.startsWith('/api/auth/complete/github/login'): {
 					const apiURL = LOGIN_URL;
-					const secure = false;
 					const maxAge = 60 * 60 * 24 * 28;
 					connectGithub(headers, access_token, username, apiURL, 'login')
 						.then((apiResp) => {
 							if (apiResp) {
-								const { refresh } = apiResp;
-								res.setHeader(
-									'Set-Cookie',
-									`refresh=${refresh}; Path=/; Max-Age=${maxAge}; Secure=false; SameSite=Strict`
-								);
+								const { refresh, access } = apiResp;
+								res.setHeader('Set-Cookie', [
+									// ! unpreditable behavior when using serverless functions (cause of cookies) in Safari in dev mode
+									`token=${access}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Strict; Secure`,
+									`refresh=${refresh}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Strict; Secure`,
+									`loggedIn=true; Path=/; Max-Age=${maxAge}; SameSite=Strict; Secure`,
+								]);
 								res.redirect('/').end();
 							}
 						})
