@@ -102,17 +102,12 @@ export function useGithubOAuth(): {
 		enabled: checkTokenType(token),
 	});
 
-	if (
-		isSuccess &&
-		data &&
-		username.current !== data.username &&
-		accessToken.current !== data.access_token &&
-		accessTokenWorkspaces.current !== data.access_token_workspaces
-	) {
+	if (isSuccess && data && username.current !== data.username) {
 		username.current = data.username;
 		accessToken.current = data.access_token;
 		accessTokenWorkspaces.current = data.access_token_workspaces;
 	}
+
 	return {
 		username: username.current,
 		accessToken: accessToken.current,
