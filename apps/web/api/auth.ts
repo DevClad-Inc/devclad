@@ -1,6 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import crypto from 'crypto';
 import { IncomingHttpHeaders } from 'http';
 
 const getUsername = async (token: string) => {
@@ -62,14 +61,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	const { headers } = req;
 	switch (true) {
 		case req.url?.startsWith('/api/auth/login/github/'): {
-			const state = crypto.getRandomValues(new Uint8Array(32)).toString();
 			const REDIRECT_URI = 'http://127.0.0.1:5173/api/auth/complete/github/login/';
 			const SCOPE = 'user';
 			const redirectUrl =
 				`https://github.com/login/oauth/authorize` +
 				`?client_id=${CLIENT_ID}` +
 				`&redirect_uri=${REDIRECT_URI}` +
-				`&state=${state}` +
 				`&scope=${SCOPE}`;
 			res.redirect(redirectUrl).end();
 			break;
