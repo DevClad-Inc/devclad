@@ -11,10 +11,6 @@
 		{
 			"source": "/api/auth/(.*)",
 			"destination": "/api/auth.ts"
-		},
-		{
-			"source": "/((?!api).*)",
-			"destination": "/"
 		}
 	],
 	"headers": [

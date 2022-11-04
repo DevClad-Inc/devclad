@@ -1,7 +1,14 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { User, initialUserState } from '@/lib/InterfacesStates.lib';
-import { refreshQuery, statusQuery, streamQuery, tokenQuery, userQuery } from '@/lib/queries.lib';
+import {
+	githubDataQuery,
+	refreshQuery,
+	statusQuery,
+	streamQuery,
+	tokenQuery,
+	userQuery,
+} from '@/lib/queries.lib';
 import { checkTokenType } from './auth.services';
 
 export type StreamTokenT = {
@@ -78,4 +85,37 @@ export function useApproved(): { approved: boolean; status: string } {
 		status.current = data.data.status;
 	}
 	return { approved: approved.current, status: status.current };
+}
+
+export function useGithubOAuth(): {
+	username: string;
+	accessToken: string;
+	accessTokenWorkspaces: string;
+} {
+	const username = React.useRef<string>('');
+	const accessToken = React.useRef<string>('');
+	const accessTokenWorkspaces = React.useRef<string>('');
+	const { token } = useAuth();
+	const qc = useQueryClient();
+	const { isSuccess, data } = useQuery({
+		...githubDataQuery(token, qc),
+		enabled: checkTokenType(token),
+	});
+
+	if (
+		isSuccess &&
+		data &&
+		username !== data.username &&
+		accessToken !== data.access_token &&
+		accessTokenWorkspaces !== data.access_token_workspaces
+	) {
+		username.current = data.username;
+		accessToken.current = data.access_token;
+		accessTokenWorkspaces.current = data.access_token_workspaces;
+	}
+	return {
+		username: username.current,
+		accessToken: accessToken.current,
+		accessTokenWorkspaces: accessTokenWorkspaces.current,
+	};
 }

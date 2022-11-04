@@ -16,6 +16,7 @@ import {
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
 import { getMeeting, idTypeCheck } from '@/services/meetings.services';
 import serverlessCookie from './serverlessCookie.lib';
+import { getGithubData } from '@/services/github.services';
 
 // ! only using social profile loader rn
 
@@ -44,6 +45,12 @@ export const refreshQuery = () => ({
 	queryFn: () => serverlessCookie<string>('refresh'),
 	enabled: Cookies.get('loggedIn') === 'true',
 	staleTime: 1000 * 60 * 60 * 24 * 28,
+});
+
+export const githubDataQuery = (token: string, qc: QueryClient) => ({
+	queryKey: ['githubData'],
+	queryFn: () => getGithubData(token, qc),
+	enabled: checkTokenType(token),
 });
 
 export const meetingQuery = (token: string, uid: string) => ({

@@ -87,6 +87,7 @@ class UserStatus(models.Model):
 
 class GithubOAuth(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=255, blank=True)
     access_token = models.CharField(max_length=255, default="")
     access_token_workspaces = models.CharField(
         max_length=255, default=""
