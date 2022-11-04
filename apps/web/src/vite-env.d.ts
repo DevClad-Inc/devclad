@@ -17,3 +17,4 @@ declare module '@heroicons/react/24/solid';
 
 declare module '@devclad/config/eslint-react';
 declare module 'rollup-plugin-visualizer';
+declare module 'isomorphic-fetch';

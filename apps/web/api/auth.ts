@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { IncomingHttpHeaders } from 'http';
-import fetch from 'node-fetch';
+import fetch from 'isomorphic-fetch';
 
 const getUsername = async (token: string) => {
 	const url = 'https://api.github.com/user';
@@ -50,7 +50,7 @@ const connectGithub = async (
 			access_token: token,
 			username: username.toLowerCase(),
 		}),
-	}).then((resp) => resp.json());
+	}).then((resp: { json: () => any }) => resp.json());
 	return apiResp as ConnectGithubResponse;
 };
 
@@ -99,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					client_secret: CLIENT_SECRET,
 					code,
 				}),
-			}).then((resp) => resp.json());
+			}).then((resp: { json: () => any }) => resp.json());
 			const { access_token } = tokenResponse as { access_token: string };
 			const username = await getUsername(access_token);
 			switch (true) {
