@@ -105,9 +105,9 @@ export function useGithubOAuth(): {
 	if (
 		isSuccess &&
 		data &&
-		username !== data.username &&
-		accessToken !== data.access_token &&
-		accessTokenWorkspaces !== data.access_token_workspaces
+		username.current !== data.username &&
+		accessToken.current !== data.access_token &&
+		accessTokenWorkspaces.current !== data.access_token_workspaces
 	) {
 		username.current = data.username;
 		accessToken.current = data.access_token;
