@@ -103,6 +103,8 @@ class SocialProfile(models.Model):
     def get_flat_values(self: "SocialProfile", field: str) -> list:
         match field:
             case "circle_symmetrical":
+                """because circle is assymetrical by default, adding the user does not add them to your circle.
+                adding is being managed by the views so only certain cases allow adding in circle 2-way"""
                 list_one = self.circle_symmetrical.all()
                 list_two = self.circle.all()
                 intersect = list(set(list_one) & set(list_two))

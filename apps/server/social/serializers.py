@@ -83,7 +83,6 @@ class SocialDisplayProfileSerializer(serializers.ModelSerializer):
 # PATCH: add/remove user from circle
 # GET: get circle
 class CircleSerializer(serializers.ModelSerializer):
-    # manytomany field
     circle = ReadWriteSerializerMethodField()
 
     class Meta:

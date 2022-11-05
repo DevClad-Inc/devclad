@@ -2,14 +2,13 @@
 
 ## Database and Async
 
--   PostgresQL (in prod only)
--   Redis for caching and async tasks.
--   Channel layer for websocket communication.
--   Celery for scheduling async tasks.
+- PostgresQL (in prod only)
+- Django-Q + Redis for scheduling async tasks.
+- Channel layer for websocket communication.
 
 ## Code Formatting
 
-Using Black to format the code.
+Using Black to format the code. Spaces not tabs.
 
 ## Testing
 
