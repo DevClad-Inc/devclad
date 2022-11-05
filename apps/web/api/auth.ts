@@ -55,38 +55,16 @@ const connectGithub = async (
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-	const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 	const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+	const CLIENT_ID = process.env.VITE_GITHUB_CLIENT_ID;
 	const LOGIN_URL = `${process.env.VITE_API_URL}/oauth/github/login/`;
 	const CONNECT_URL = `${process.env.VITE_API_URL}/oauth/github/connect/`;
 	const { headers } = req;
 	switch (true) {
-		case req.url?.startsWith('/api/auth/login/github/'): {
-			const REDIRECT_URI = `${process.env.CLIENT_URL}/api/auth/complete/github/login/`;
-			const SCOPE = 'user';
-			const redirectUrl =
-				`https://github.com/login/oauth/authorize` +
-				`?client_id=${CLIENT_ID}` +
-				`&redirect_uri=${REDIRECT_URI}` +
-				`&scope=${SCOPE}`;
-			res.redirect(redirectUrl).end();
-			break;
-		}
-		case req.url?.startsWith('/api/auth/connect/github/'): {
-			const state = crypto.getRandomValues(new Uint8Array(32)).toString();
-			const REDIRECT_URI = `${process.env.CLIENT_URL}/api/auth/complete/github/connect/`;
-			const SCOPE = 'user';
-			const redirectUrl =
-				`https://github.com/login/oauth/authorize` +
-				`?client_id=${CLIENT_ID}` +
-				`&redirect_uri=${REDIRECT_URI}` +
-				`&state=${state}` +
-				`&scope=${SCOPE}`;
-			res.redirect(redirectUrl).end();
-			break;
-		}
+		// callback
 		case req.url?.startsWith('/api/auth/complete/github'): {
-			const { code } = req.query;
+			const { code } = req.body;
+			console.log('code', code);
 			const tokenUrl = 'https://github.com/login/oauth/access_token';
 			const tokenResponse = await fetch(tokenUrl, {
 				method: 'POST',
@@ -116,7 +94,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 									`refresh=${refresh}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Strict; Secure`,
 									`loggedIn=true; Path=/; Max-Age=${maxAge}; SameSite=Strict; Secure`,
 								]);
-								res.redirect('/').end();
+								res.status(200).json({ success: true });
 							}
 						})
 						.catch((err) => {
@@ -128,7 +106,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					const apiURL = CONNECT_URL;
 					connectGithub(headers, access_token, username, apiURL, 'connect')
 						.then(() => {
-							res.redirect('/settings/password').end();
+							res.status(200).json({ success: true });
 						})
 						.catch((err) => {
 							res.status(500).json(err);

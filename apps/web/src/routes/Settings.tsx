@@ -17,6 +17,7 @@ import PasswordResetForm from '@/components/forms/ResetPassword.forms';
 import ChangeEmailForm from '@/components/forms/ChangeEmail.forms';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { useGithubOAuth } from '@/services/useAuth.services';
+import { connectGithub } from '@/services/github.services';
 
 const navigation = [
 	{
@@ -185,7 +186,7 @@ export function Password() {
 							<PrimaryButton
 								onClick={() => {
 									if (githubLogin && username !== '') {
-										window.open(`https://github.com/${username}`, '_blank');
+										connectGithub();
 									} else {
 										window.location.href = '/api/auth/connect/github/';
 									}

@@ -32,6 +32,8 @@ import { Meetings, MeetingDetail, MeetingList } from '@/routes/Meetings';
 import { StreamProvider } from '@/context/Stream.context';
 import { UserProvider } from '@/context/User.context';
 import { DEVELOPMENT } from '@/services/auth.services';
+import { FourOFour } from './routes/404';
+import { GithubAuth } from './routes/Github';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -59,11 +61,11 @@ if (analyticsId && !DEVELOPMENT) {
 
 const router = createBrowserRouter([
 	{
-		path: '',
+		path: '/',
 		element: <Root />,
 		children: [
 			{
-				path: '/',
+				index: true,
 				element: <Home />,
 			},
 			{
@@ -81,6 +83,10 @@ const router = createBrowserRouter([
 			{
 				path: 'auth/password/reset/confirm/:uid/:token',
 				element: <PassReset />,
+			},
+			{
+				path: 'auth/complete/github/*',
+				element: <GithubAuth />,
 			},
 			{
 				path: 'forgot-password',
@@ -186,6 +192,10 @@ const router = createBrowserRouter([
 				],
 			},
 		],
+	},
+	{
+		path: '*',
+		element: <FourOFour />,
 	},
 ]);
 

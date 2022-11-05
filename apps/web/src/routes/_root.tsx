@@ -12,7 +12,7 @@ import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 import SplashScreen from '@/components/Splash';
 
-export const allowedPaths = ['/login', '/signup', '/forgot-password', '/api/auth/'];
+export const allowedPaths = ['/login', '/signup', '/forgot-password'];
 
 function Routing(): JSX.Element {
 	const qc = useQueryClient();
