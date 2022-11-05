@@ -59,7 +59,7 @@ if (analyticsId && !DEVELOPMENT) {
 
 const router = createBrowserRouter([
 	{
-		path: '/',
+		path: '',
 		element: <Root />,
 		children: [
 			{

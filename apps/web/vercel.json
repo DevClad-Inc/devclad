@@ -3,6 +3,12 @@
 	"outputDirectory": "dist",
 	"installCommand": "yarn install",
 	"framework": "vite",
+	"redirects": [
+		{
+			"source": "/api/(.*)",
+			"destination": "http://127.0.0.1:5173/api/$1"
+		}
+	],
 	"rewrites": [
 		{
 			"source": "/api/cookies/(.*)",
@@ -11,10 +17,6 @@
 		{
 			"source": "/api/auth/(.*)",
 			"destination": "/api/auth.ts"
-		},
-		{
-			"source": "/((?!api).*)",
-			"destination": "/"
 		}
 	],
 	"headers": [
