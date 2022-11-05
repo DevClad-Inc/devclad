@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from users.models import Profile, UserStatus
+from users.models import Profile, UserStatus, GithubOAuth
 
 # Register your models here.
 
@@ -15,3 +15,4 @@ class CustomUserAdmin(BaseUserAdmin):
 
 admin.site.register(Profile)
 admin.site.register(UserStatus)
+admin.site.register(GithubOAuth)

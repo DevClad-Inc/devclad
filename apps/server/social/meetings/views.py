@@ -1,3 +1,4 @@
+import datetime
 from urllib.request import Request
 import uuid
 from django.contrib.auth import get_user_model
@@ -21,9 +22,32 @@ def meetings(request: Request, uid: str) -> Response:
         case "GET":
             match (uid):
                 case "all":
-                    meetings = MeetingRoom.objects.filter(
-                        Q(invites__in=[request.user]) | Q(organizer=request.user)
-                    ).distinct()
+                    meetings = (
+                        MeetingRoom.objects.filter(
+                            time__gt=datetime.datetime.now(),
+                        )
+                        .filter(
+                            Q(invites__in=[request.user]) | Q(organizer=request.user)
+                        )
+                        .distinct()
+                        .order_by("time")
+                    )
+                    serializer = MeetingSerializer(meetings, many=True)
+                    for meeting in serializer.data:
+                        meeting["organizer"] = User.objects.get(
+                            id=meeting["organizer"]
+                        ).username
+                case "past":
+                    meetings = (
+                        MeetingRoom.objects.filter(
+                            time__lt=datetime.datetime.now(),
+                        )
+                        .filter(
+                            Q(invites__in=[request.user]) | Q(organizer=request.user),
+                        )
+                        .distinct()
+                        .order_by("-time")
+                    )
                     serializer = MeetingSerializer(meetings, many=True)
                     for meeting in serializer.data:
                         meeting["organizer"] = User.objects.get(

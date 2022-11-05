@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
 	readonly VITE_APP_TITLE: string;
 	readonly VITE_STREAM_API_KEY: string;
+	readonly VITE_GITHUB_CLIENT_ID: string;
+	readonly VITE_CLIENT_URL: string;
 	readonly VERCEL_ANALYTICS_ID: string;
 }
 
@@ -17,3 +19,4 @@ declare module '@heroicons/react/24/solid';
 
 declare module '@devclad/config/eslint-react';
 declare module 'rollup-plugin-visualizer';
+declare module 'isomorphic-fetch';

@@ -1,14 +1,6 @@
 module.exports = {
 	...require('@devclad/config/eslint-react'),
-	ignorePatterns: [
-		'**/*.js',
-		'**/*.cjs',
-		'**/*.json',
-		'node_modules',
-		'public',
-		'dist',
-		'vite.config.ts',
-	],
+	ignorePatterns: ['**/*.js', '**/*.cjs', '**/*.json', 'node_modules'],
 	parserOptions: {
 		ecmaFeatures: {
 			jsx: true,

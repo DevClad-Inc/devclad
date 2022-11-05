@@ -107,7 +107,6 @@ func ImageList(client *s3.Client, bucketName string, _ string) string {
 	}
 	json.Unmarshal(jsonString, &s3Response)
 
-	// i have to use time as a source?! lol python is better hAhAhA (ofc not wtf)
 	goddamnSource := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(goddamnSource)
 	randomNumber := r.Intn(len(s3Response.Contents))

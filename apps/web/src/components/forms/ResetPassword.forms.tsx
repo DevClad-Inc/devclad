@@ -163,7 +163,7 @@ export default function PasswordResetForm(): JSX.Element {
 								<span
 									className="dark:bg-darkBG mt-5 inline-flex justify-center
                     rounded-md border border-transparent bg-orange-700 py-2
-                    px-4 text-sm duration-500 dark:text-orange-300"
+                    px-4 text-sm duration-500 dark:text-orange-200"
 								>
 									<div className="flex">
 										<div className="flex-shrink-0">
@@ -275,7 +275,7 @@ export function ForgotPasswordForm(): JSX.Element {
 								<span
 									className="dark:bg-darkBG mt-5 inline-flex justify-center
                     rounded-md border border-transparent bg-orange-700 py-2
-                    px-4 text-sm font-bold duration-500 dark:text-orange-300"
+                    px-4 text-sm font-bold duration-500 dark:text-orange-200"
 								>
 									<div className="flex">
 										<div className="flex-shrink-0">

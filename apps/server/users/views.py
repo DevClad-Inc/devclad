@@ -151,10 +151,6 @@ class VerifyEmailView(APIView, ConfirmEmailView):
         return Response({"detail": _("ok")}, status=status.HTTP_200_OK)
 
 
-# Additional Social Connect View -
-# https://dj-rest-auth.readthedocs.io/en/latest/installation.html?highlight=DEFAULT_AUTHENTICATION_CLASSES#additional-social-connect-views
-
-
 @api_view(["GET", "PUT", "PATCH"])
 @permission_classes([IsAuthenticated])
 def profile(request) -> Response:

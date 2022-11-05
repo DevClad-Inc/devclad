@@ -79,6 +79,7 @@ export function SocialProfileForm(): JSX.Element {
 	);
 	const [selectedCountry, setSelectedCountry] = useState<{ name: string; code: string }>();
 	let detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 	// this is a hack to get the timezone to display correctly; FUCK YOU CHROMium
 	if (detected === 'Asia/Calcutta') {
 		detected = 'Asia/Kolkata';
@@ -246,7 +247,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -362,7 +363,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -489,7 +490,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -613,7 +614,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -733,7 +734,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)
@@ -842,7 +843,7 @@ export function SocialProfileForm(): JSX.Element {
 															className={({ active }) =>
 																classNames(
 																	active
-																		? 'bg-orange-300 text-black dark:bg-orange-300'
+																		? 'bg-orange-200 text-black dark:bg-orange-200'
 																		: 'bg-snow dark:bg-darkBG text-neutral-900 dark:text-neutral-100',
 																	'relative cursor-default select-none py-2 pl-3 pr-9'
 																)

@@ -15,9 +15,31 @@
 	"devDependencies": {
 		"@devclad/config": "*",
 		"@devclad/ui": "*",
+<<<<<<< HEAD
 		"prettier": "^2.7.1",
 		"prettier-plugin-tailwindcss": "^0.1.13",
 		"turbo": "1.6.2"
+=======
+		"prettier": "2.7.1",
+		"eslint": "8.26.0",
+		"@typescript-eslint/eslint-plugin": "latest",
+		"@typescript-eslint/parser": "latest",
+		"eslint-config-airbnb": "latest",
+		"eslint-config-airbnb-typescript": "latest",
+		"eslint-config-prettier": "latest",
+		"eslint-config-standard-with-typescript": "latest",
+		"eslint-config-turbo": "latest",
+		"eslint-plugin-import": "latest",
+		"eslint-plugin-jsx-a11y": "latest",
+		"eslint-plugin-n": "latest",
+		"eslint-plugin-prettier": "latest",
+		"eslint-plugin-promise": "latest",
+		"eslint-plugin-react": "latest",
+		"eslint-plugin-react-hooks": "latest",
+		"prettier-plugin-tailwindcss": "latest",
+		"turbo": "latest",
+		"typescript": "^4.8.4"
+>>>>>>> ff9e76cec7626bac876e4f9ce643606cf92c4fdb
 	},
 	"engines": {
 		"node": ">=14.0.0"

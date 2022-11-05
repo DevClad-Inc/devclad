@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { convertTimeZone, useDocumentTitle } from '@devclad/lib';
 import { meetingQuery } from '@/lib/queries.lib';
@@ -9,6 +9,7 @@ import { Meeting, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile, useSocialProfile } from '@/services/socialHooks.services';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
+import { Tab } from '@/components/Tabs';
 
 export const useMeetingImage = (meeting: Meeting): string => {
 	const { loggedInUser } = useAuth();
@@ -75,13 +76,14 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 	);
 }
 
-export function MeetingList(): JSX.Element {
+export function MeetingList({ past }: { past?: boolean }): JSX.Element {
 	const qc = useQueryClient();
 	const { token } = useAuth();
 	const socialProfile = useSocialProfile() as SocialProfile;
 	const spState = qc.getQueryState(['social-profile']);
+	const mQ = past ? meetingQuery(token, 'past') : meetingQuery(token, 'all');
 
-	const { data: meetingData, isLoading, isSuccess } = useQuery({ ...meetingQuery(token, 'all') });
+	const { data: meetingData, isLoading, isSuccess } = useQuery({ ...mQ });
 	if (
 		isLoading ||
 		spState?.status === 'loading' ||
@@ -94,22 +96,24 @@ export function MeetingList(): JSX.Element {
 		const { meetings } = meetingData.data as { meetings: Meeting[] };
 		const time = socialProfile?.timezone as string;
 		return (
-			<div>
-				<h1 className="text-2xl font-bold">Meetings</h1>
-				<ul className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{meetings.map((meeting) => (
-						<MeetingCard meeting={meeting} time={time} key={meeting.id} />
-					))}
-				</ul>
-			</div>
+			<ul className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{meetings.map((meeting) => (
+					<MeetingCard meeting={meeting} time={time} key={meeting.id} />
+				))}
+			</ul>
 		);
 	}
 
 	return <div>Meeting not found</div>;
 }
 
-export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
+MeetingList.defaultProps = {
+	past: false,
+};
+
+export function MeetingDetail(): JSX.Element {
 	const { token } = useAuth();
+	const { uid } = useParams<{ uid: string }>() as { uid: string };
 	const {
 		data: meetingData,
 		isLoading,
@@ -124,13 +128,10 @@ export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
 	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
 		return (
-			<>
-				<h1>Meeting</h1>
-				<div key={meeting.id}>
-					<h2>{meeting.name}</h2>
-					<p>{meeting.invites}</p>
-				</div>
-			</>
+			<div key={meeting.id}>
+				<h2>{meeting.name}</h2>
+				<p>{meeting.invites}</p>
+			</div>
 		);
 	}
 
@@ -139,10 +140,15 @@ export function MeetingDetail({ uid }: { uid: string | null }): JSX.Element {
 
 export function Meetings(): JSX.Element {
 	useDocumentTitle('Meetings');
-	const { uid } = useParams<{ uid: string }>() as { uid: string };
-
-	if (!uid) {
-		return <MeetingList />;
-	}
-	return <MeetingDetail uid={uid} />;
+	return (
+		<>
+			<Tab
+				tabs={[
+					{ name: 'Meetings', href: '/meetings' },
+					{ name: 'Past Meetings', href: '/meetings/past' },
+				]}
+			/>
+			<Outlet />
+		</>
+	);
 }

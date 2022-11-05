@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, checkTokenType } from '@/services/auth.services';
-import { Meeting } from '@/lib/InterfacesStates.lib';
+import { MeetingCreateUpdate } from '@/lib/InterfacesStates.lib';
 
 export const idTypeCheck = (id: string | undefined | null) => {
 	if (typeof id === 'string' && id.length > 0 && id !== 'undefined' && id !== 'null') {
@@ -21,8 +21,21 @@ export const getMeeting = (token: string, id: string) => {
 	return null;
 };
 
-export const createUpdateMeeting = (token: string, data: Meeting) => {
-	const url = `${API_URL}/social/meetings/`;
+export const createUpdateMeeting = (token: string, data: MeetingCreateUpdate) => {
+	const url = `${API_URL}/social/meetings/all/`;
+
+	/*
+	  {
+            "invites": [
+                "pat"
+            ],
+            "type_of": "1:1 Match",
+            "name": "1:1 Meeting",
+            "link": null,
+            "time": "2022-11-16T18:00:00Z",
+            "organizer": "arth"
+        }
+	*/
 
 	if (checkTokenType(token)) {
 		return axios({

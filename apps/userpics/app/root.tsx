@@ -30,7 +30,7 @@ export default function App() {
 			<div style={{ backgroundImage: `url(${GraphTextureSVG})` }} className="h-full bg-black">
 				<body
 					className="sm:text-md h-full bg-black/80 font-sans
-          text-sm font-medium text-white subpixel-antialiased selection:bg-orange-300 selection:text-black
+          text-sm font-medium text-white subpixel-antialiased selection:bg-orange-200 selection:text-black
           dark:bg-black/60  lg:text-lg"
 				>
 					<Outlet />

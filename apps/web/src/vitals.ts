@@ -6,7 +6,8 @@ function getConnectionSpeed() {
 	return 'connection' in navigator &&
 		(navigator as Navigator & { connection: { effectiveType: string } }).connection
 			.effectiveType
-		? (navigator as any).connection.effectiveType
+		? (navigator as Navigator & { connection: { effectiveType: string } }).connection
+				.effectiveType
 		: 'unknown';
 }
 

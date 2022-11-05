@@ -53,7 +53,7 @@ export default function Hero(): JSX.Element {
                border-neutral-900 bg-black p-1 pr-2 sm:text-base lg:text-sm xl:text-base"
 								rel="noreferrer"
 							>
-								<span className="rounded-full border-[0.5px] border-neutral-500 px-4 py-0.5 font-mono text-xs font-semibold text-orange-300 lg:text-sm">
+								<span className="rounded-full border-[0.5px] border-neutral-500 px-4 py-0.5 font-mono text-xs font-semibold text-orange-200 lg:text-sm">
 									Beta 1.0
 								</span>
 								<span className="ml-4 text-xs lg:text-sm">Join our Discord</span>

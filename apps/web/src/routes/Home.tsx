@@ -19,7 +19,7 @@ export function Home(): JSX.Element {
 	useDocumentTitle('Dashboard');
 	React.useEffect(() => {
 		if (!authed && qc.getQueryData(['user']) === null) {
-			navigate('/login');
+			navigate('/');
 		}
 	}, [authed, qc, navigate]);
 	return (

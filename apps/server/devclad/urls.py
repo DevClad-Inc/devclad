@@ -26,6 +26,7 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
+    path("oauth/", include("users.oauth.urls")),
     path("stream/", include("stream.urls")),
     path("users/", include("users.urls")),
     path("social/", include("social.urls")),
@@ -34,5 +35,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# API Endpoints - https://dj-rest-auth.readthedocs.io/en/latest/api_endpoints.html

@@ -129,7 +129,7 @@ export default function ChangeEmailForm(): JSX.Element {
 									<span
 										className="dark:bg-darkBG inline-flex w-full items-center
                   justify-center rounded-md bg-orange-700 py-2 px-4 text-sm
-                  text-white duration-500 dark:text-orange-300 sm:mt-0 sm:ml-3
+                  text-white duration-500 dark:text-orange-200 sm:mt-0 sm:ml-3
                   sm:w-auto sm:text-sm"
 									>
 										<div className="flex">

@@ -12,7 +12,7 @@ import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
 import SplashScreen from '@/components/Splash';
 
-const allowedPaths = ['/login', '/signup', '/forgot-password'];
+export const allowedPaths = ['/login', '/signup', '/forgot-password'];
 
 function Routing(): JSX.Element {
 	const qc = useQueryClient();
@@ -76,7 +76,7 @@ export default function Root(): JSX.Element {
 					className="sm:text-md via-darkBG2 bg-white
           from-black/50 to-black/50
           font-sans text-sm font-medium
-          subpixel-antialiased selection:bg-orange-300 selection:text-black dark:bg-black/80
+          subpixel-antialiased selection:bg-orange-200 selection:text-black dark:bg-black/80
           dark:bg-gradient-to-t dark:text-white lg:text-lg"
 				>
 					<Toaster

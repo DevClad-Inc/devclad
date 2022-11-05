@@ -75,7 +75,7 @@ export function VerifyEmail(): JSX.Element {
 					Verification
 				</h2>
 				<p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
-					<Link className=" text-orange-700 dark:text-orange-300" to="/">
+					<Link className=" text-orange-700 dark:text-orange-200" to="/">
 						Login
 					</Link>
 				</p>
@@ -106,7 +106,7 @@ export function VerifyEmail(): JSX.Element {
 									<span
 										className="dark:bg-darkBG mt-5 inline-flex justify-center
                 rounded-md border border-transparent bg-orange-700 py-2
-                px-4 text-sm font-bold duration-500 dark:text-orange-300"
+                px-4 text-sm font-bold duration-500 dark:text-orange-200"
 									>
 										<div className="flex">
 											<div className="flex-shrink-0">

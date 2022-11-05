@@ -6,11 +6,13 @@ import LoginForm from '@/components/forms/Login.forms';
 import { Error } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { useAuth } from '@/services/useAuth.services';
+import { loginGithub } from '@/services/github.services';
 
 export function Login() {
 	const navigate = useNavigate();
 	const qc = useQueryClient();
 	const [loginError, setLoginError] = useState(false);
+	const [githubLogin, setGithubLogin] = useState(false);
 	const { authed } = useAuth();
 	React.useEffect(() => {
 		if (authed && qc.getQueryData(['user'])) {
@@ -30,7 +32,7 @@ export function Login() {
 			</h2>
 			<p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
 				Not a member?{' '}
-				<Link className=" text-orange-700 dark:text-orange-300" to="/signup">
+				<Link className=" text-orange-700 dark:text-orange-200" to="/signup">
 					Join DevClad
 				</Link>
 			</p>
@@ -55,7 +57,13 @@ export function Login() {
 							</div>
 
 							<div className="mt-6">
-								<PrimaryButton wFull>
+								<PrimaryButton
+									wFull
+									onClick={() => {
+										setGithubLogin(true);
+										loginGithub();
+									}}
+								>
 									<svg
 										className="mr-2 h-6 w-4 sm:h-8 sm:w-5"
 										aria-hidden="true"
@@ -68,7 +76,9 @@ export function Login() {
 											clipRule="evenodd"
 										/>
 									</svg>
-									<span className="text-sm sm:text-lg">GitHub</span>
+									<span className="text-sm sm:text-lg">
+										{githubLogin ? 'Signing in...' : 'GitHub'}
+									</span>
 								</PrimaryButton>
 							</div>
 						</div>

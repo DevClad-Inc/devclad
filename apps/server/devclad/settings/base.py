@@ -48,11 +48,7 @@ INSTALLED_APPS = [
     "allauth.account",
     # Enable registration with allauth
     "dj_rest_auth.registration",
-    # Social accounts
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.twitter",
     "django_q",
-    # "graphene_django",
     "django_filters",
 ]
 
@@ -241,6 +237,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "users.serializers.RegisterSerializer",
+    "LOGIN_SERIALIZER": "users.serializers.LoginSerializer",
 }
 
 REST_AUTH_SERIALIZERS = {

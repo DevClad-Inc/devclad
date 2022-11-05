@@ -22,7 +22,6 @@ import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Sett
 import { Home } from '@/routes/Home';
 import { Login } from '@/routes/Login';
 import { Signup } from '@/routes/Signup';
-import { FourOFour } from '@/routes/404';
 // Routes - Social
 import { Social } from '@/routes/social/Social';
 import { OneOne } from '@/routes/social/OneOne';
@@ -33,8 +32,13 @@ import { Meetings, MeetingDetail, MeetingList } from '@/routes/Meetings';
 import { StreamProvider } from '@/context/Stream.context';
 import { UserProvider } from '@/context/User.context';
 import { DEVELOPMENT } from '@/services/auth.services';
+import { FourOFour } from './routes/404';
+import { GithubAuth } from './routes/Github';
 
 axios.defaults.headers.common.withCredentials = true;
+
+// ! NOTE: Safari has sort of an unpredictable behavior with cookies in development mode
+// try using Firefox/Chromium based browser when testing vercel serverless functions
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -46,7 +50,7 @@ const queryClient = new QueryClient({
 
 const analyticsId = import.meta.env.VERCEL_ANALYTICS_ID;
 
-if (analyticsId) {
+if (analyticsId && !DEVELOPMENT) {
 	webVitals({
 		path: location.pathname,
 		params: location.search,
@@ -61,7 +65,7 @@ const router = createBrowserRouter([
 		element: <Root />,
 		children: [
 			{
-				path: '/',
+				index: true,
 				element: <Home />,
 			},
 			{
@@ -79,6 +83,10 @@ const router = createBrowserRouter([
 			{
 				path: 'auth/password/reset/confirm/:uid/:token',
 				element: <PassReset />,
+			},
+			{
+				path: 'auth/complete/github/*',
+				element: <GithubAuth />,
 			},
 			{
 				path: 'forgot-password',
@@ -151,9 +159,14 @@ const router = createBrowserRouter([
 						element: <MeetingList />,
 					},
 					{
+						path: '/meetings/past',
+						hasErrorBoundary: true,
+						element: <MeetingList past />,
+					},
+					{
 						path: '/meetings/:uid',
 						hasErrorBoundary: true,
-						element: <MeetingDetail uid={null} />,
+						element: <MeetingDetail />,
 					},
 				],
 			},
