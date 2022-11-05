@@ -50,7 +50,7 @@ const connectGithub = async (
 			access_token: token,
 			username: username.toLowerCase(),
 		}),
-	}).then((resp: { json: () => any }) => resp.json());
+	}).then((resp: { json: () => Promise<ConnectGithubResponse> }) => resp.json());
 	return apiResp as ConnectGithubResponse;
 };
 
@@ -64,7 +64,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 		// callback
 		case req.url?.startsWith('/api/auth/complete/github'): {
 			const { code } = req.body;
-			console.log('code', code);
 			const tokenUrl = 'https://github.com/login/oauth/access_token';
 			const tokenResponse = await fetch(tokenUrl, {
 				method: 'POST',
@@ -77,14 +76,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					client_secret: CLIENT_SECRET,
 					code,
 				}),
-			}).then((resp: { json: () => any }) => resp.json());
-			const { access_token } = tokenResponse as { access_token: string };
-			const username = await getUsername(access_token);
+			}).then((resp: { json: () => Promise<Record<string, string>> }) => resp.json());
+			const { access_token: accessToken } = tokenResponse as { access_token: string };
+			const username = await getUsername(accessToken);
 			switch (true) {
 				case req.url?.startsWith('/api/auth/complete/github/login'): {
 					const apiURL = LOGIN_URL;
 					const maxAge = 60 * 60 * 24 * 28;
-					connectGithub(headers, access_token, username, apiURL, 'login')
+					connectGithub(headers, accessToken, username, apiURL, 'login')
 						.then((apiResp) => {
 							if (apiResp) {
 								const { refresh, access } = apiResp;
@@ -104,7 +103,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 				}
 				case req.url?.startsWith('/api/auth/complete/github/connect'): {
 					const apiURL = CONNECT_URL;
-					connectGithub(headers, access_token, username, apiURL, 'connect')
+					connectGithub(headers, accessToken, username, apiURL, 'connect')
 						.then(() => {
 							res.status(200).json({ success: true });
 						})
