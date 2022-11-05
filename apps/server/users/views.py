@@ -2,6 +2,7 @@ from allauth.account.models import EmailAddress
 from allauth.account.utils import has_verified_email, send_email_confirmation
 from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.serializers import VerifyEmailSerializer
+from dj_rest_auth.views import LoginView
 from rest_framework.views import APIView
 from rest_framework.decorators import (
     api_view,
@@ -19,8 +20,6 @@ from users.serializers import (
 )
 from users.models import Profile, UserStatus, User
 from django.utils.translation import gettext_lazy as _
-
-from dj_rest_auth.views import LoginView
 from django.conf import settings
 from django.utils import timezone
 from rest_framework_simplejwt.views import TokenRefreshView
