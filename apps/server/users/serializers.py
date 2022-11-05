@@ -13,7 +13,7 @@ from allauth.account.utils import setup_user_email
 from dj_rest_auth.serializers import PasswordResetSerializer
 from django.urls import exceptions as url_exceptions
 
-from users.models import Profile, UserStatus, User, GithubOAuth
+from users.models import Profile, UserStatus, User
 from users.forms import CustomAllAuthPasswordResetForm
 from users.validators import image_size_validator, validate_email
 
