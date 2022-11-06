@@ -1,6 +1,7 @@
 <div align="center">
     <img src="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/011da5ea-039b-4be5-8e63-4461fef0cb00/public" width=25%>
-    <h1>DevClad - <i>Network, Build, and Ship rapidly ⚡</i></h1>
+    <h1>⚡ DevClad ⚡</h1>
+   <i><b>Network, Build, and Ship rapidly ⚡</b></i>
     <p>A social workspace platform for developers to dive in a new realm.</p>
     <h3>
     <a href="https://youtube.com/">🎥 Watch Demo</a>
@@ -11,13 +12,14 @@
 
 ![Discord](https://img.shields.io/discord/812804160700284958?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff&style=for-the-badge)
 ![Website](https://img.shields.io/website?down_color=bloodred&down_message=Systems%20Down&label=DevClad.com&style=for-the-badge&up_color=honeydew&up_message=Running&url=https%3A%2F%2Fdevclad.com)
-![GitHub](https://img.shields.io/github/license/devclad-inc/devclad?color=black&style=for-the-badge)
 
 </div>
 
 ## Features
 
 ## Roadmap
+
+-   [ ] Release v1 beta. (almost done!! 🎉)
 
 ### Apps
 
