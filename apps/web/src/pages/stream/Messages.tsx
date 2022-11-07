@@ -6,7 +6,7 @@ import {
 	ChevronDoubleDownIcon,
 } from '@heroicons/react/24/outline';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import { Channel, DefaultGenerics, StreamChat } from 'stream-chat';
+import { Channel, DefaultGenerics, MessageResponse, StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import { useCircle, useConnected, useProfile, useStreamUID } from '@/services/socialHooks.services';
@@ -97,12 +97,13 @@ export function MessageChild(): JSX.Element {
 	const [message, setMessage] = React.useState('');
 	// reloadFetch is handled in the useeffect hook
 	const [reloadFetch, setReloadFetch] = React.useState(false);
-	const [noOfMessages, setNoOfMessages] = React.useState(7); // 6 is what fits in h-[60vh] and leaves room for infinite scroll
+	const [noOfMessages, setNoOfMessages] = React.useState(10); // 6 is what fits in h-[60vh] and leaves room for infinite scroll
 	const { connected, toggleConnection } = useStreamContext();
 	const [showScrollDown, setShowScrollDown] = React.useState(false);
 	const profileData = useProfile(loggedInUserUserName as string) as Profile;
 
 	const channelRef = React.useRef() as React.MutableRefObject<Channel<DefaultGenerics>>;
+	const messagesWindowRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
 
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
@@ -159,8 +160,8 @@ export function MessageChild(): JSX.Element {
 	const handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
 		if (e.currentTarget.scrollTop === 0 && !channelQFetching) {
 			const lengthOfMessages = channelQData?.messages.length;
-			// here, we fetched 50 messages at first
-			// so we can fetch from the existing cache if max messages fetched are <50
+			/* here, we fetched 50 messages at first so we can fetch
+			from the existing cache if max messages fetched are <50 */
 			if (lengthOfMessages && lengthOfMessages < 50) {
 				setNoOfMessages(noOfMessages + 5);
 			} else {
@@ -192,7 +193,7 @@ export function MessageChild(): JSX.Element {
 			otherUserUID !== null &&
 			profileData !== null
 		) {
-			const CreateChannel = async () => {
+			const createChannel = async () => {
 				try {
 					channelRef.current = client.channel('messaging', {
 						members: [currUserUID, otherUserUID],
@@ -248,7 +249,7 @@ export function MessageChild(): JSX.Element {
 						});
 				}
 			};
-			CreateChannel();
+			createChannel();
 		}
 	}, [
 		client,
@@ -273,13 +274,14 @@ export function MessageChild(): JSX.Element {
 					'channel',
 					channelRef.current?.cid as string,
 				]);
-				// todo: remove any; fix this mess
 				qc.setQueryData(
 					['channel', channelRef.current?.cid as string],
-					(old: { messages: any } | undefined) => ({
+					(old: { messages: MessageResponse<DefaultGenerics>[] } | undefined) => ({
 						...old,
-						// eslint-disable-next-line no-unsafe-optional-chaining
-						messages: [...old?.messages, { text }],
+						messages: [
+							...(old?.messages || []),
+							{ text },
+						] as MessageResponse<DefaultGenerics>[],
 					})
 				);
 				return { previousMessages };
@@ -311,10 +313,14 @@ export function MessageChild(): JSX.Element {
 		return <MessagesLoading />;
 	}
 	if (channelQData || reloadFetch) {
+		if (messagesWindowRef.current) {
+			messagesWindowRef.current.scrollTop = messagesWindowRef.current.scrollHeight;
+		}
 		return (
 			<div className="container mx-auto space-y-6 sm:px-6 lg:col-span-8 lg:px-0">
 				<div className="shadow sm:rounded-md">
 					<div
+						ref={messagesWindowRef}
 						className="bg-darkBG2 scrollbar flex h-[60vh] flex-col space-y-4 overflow-y-scroll
 						rounded-md border-[1px] p-4 py-6 px-4 dark:border-neutral-800 sm:p-6"
 						onScroll={(e) => handleInfiniteScroll(e)}

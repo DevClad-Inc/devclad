@@ -96,8 +96,8 @@ export function SocialProfileForm(): JSX.Element {
 
 	// ============= VALIDATE AND SUBMIT =============
 
-	const throwToastError = (error: string | undefined) => {
-		toast.custom(<Error error={error as string} />, {
+	const throwToastError = (error: string) => {
+		toast.custom(<Error error={error} />, {
 			id: `${crypto.randomUUID()}-profile-update-error`,
 		});
 	};
@@ -145,22 +145,22 @@ export function SocialProfileForm(): JSX.Element {
 			const { data } = response;
 			switch (true) {
 				case data.timezone !== undefined:
-					throwToastError(data.timezone);
+					throwToastError(data.timezone as string);
 					break;
 				case data.location !== undefined:
-					throwToastError(data.location);
+					throwToastError(data.location as string);
 					break;
 				case data.preferred_dev_type !== undefined:
-					throwToastError(data.preferred_dev_type);
+					throwToastError(data.preferred_dev_type as string);
 					break;
 				case data.idea_status !== undefined:
-					throwToastError(data.idea_status);
+					throwToastError(data.idea_status as string);
 					break;
 				case data.dev_type !== undefined:
-					throwToastError(data.dev_type);
+					throwToastError(data.dev_type as string);
 					break;
 				case data.languages !== undefined:
-					throwToastError(data.languages);
+					throwToastError(data.languages as string);
 					break;
 				case data.purpose !== undefined:
 					throwToastError(data.purpose as string);
