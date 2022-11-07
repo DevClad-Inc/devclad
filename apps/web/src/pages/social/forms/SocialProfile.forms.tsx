@@ -96,6 +96,12 @@ export function SocialProfileForm(): JSX.Element {
 
 	// ============= VALIDATE AND SUBMIT =============
 
+	const throwToastError = (error: string | undefined) => {
+		toast.custom(<Error error={error as string} />, {
+			id: `${crypto.randomUUID()}-profile-update-error`,
+		});
+	};
+
 	const validate = (values: SocialProfileFormValues) => {
 		const errors: SocialProfileFormValues['errors'] = {};
 		if (!values.raw_xp) {
@@ -112,7 +118,7 @@ export function SocialProfileForm(): JSX.Element {
 	) => {
 		try {
 			values.preferred_dev_type = selectedPrefDevType?.name;
-			values.idea_status = selectedIdeaStatus?.name;
+			values.idea_status = 'TESTESTERROR';
 			values.location = selectedCountry?.name;
 			values.dev_type = selectedDevType
 				.map((type: { name: string; id: number }) => type.name)
@@ -134,15 +140,34 @@ export function SocialProfileForm(): JSX.Element {
 					id: 'social-update-success',
 				});
 			});
-		} catch (error: any) {
-			const { data } = error.response;
-			if (data.timezone) {
-				toast.custom(<Error error={data.timezone} />, { id: 'profile-update-error' });
-			} else {
-				toast.custom(<Error error="Error saving. Please fill required fields." />, {
-					id: 'social-update-error-unknown',
-					position: 'top-right',
-				});
+		} catch (error: unknown) {
+			const { response } = error as { response: { data: Partial<SocialProfile> } };
+			const { data } = response;
+			switch (true) {
+				case data.timezone !== undefined:
+					throwToastError(data.timezone);
+					break;
+				case data.location !== undefined:
+					throwToastError(data.location);
+					break;
+				case data.preferred_dev_type !== undefined:
+					throwToastError(data.preferred_dev_type);
+					break;
+				case data.idea_status !== undefined:
+					throwToastError(data.idea_status);
+					break;
+				case data.dev_type !== undefined:
+					throwToastError(data.dev_type);
+					break;
+				case data.languages !== undefined:
+					throwToastError(data.languages);
+					break;
+				case data.purpose !== undefined:
+					throwToastError(data.purpose as string);
+					break;
+				default:
+					throwToastError('An unknown error occurred');
+					break;
 			}
 			setSubmitting(false);
 		}
