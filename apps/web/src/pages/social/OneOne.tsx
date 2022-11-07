@@ -21,7 +21,7 @@ import {
 	useShadowedUsernames,
 	useConnected,
 } from '@/services/socialHooks.services';
-import { MatchProfile } from '@/lib/types.lib';
+import { MatchProfile } from '@/pages/social/types';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { genExp, genIdea } from '@/pages/Profile';
 import { useAuth } from '@/services/useAuth.services';

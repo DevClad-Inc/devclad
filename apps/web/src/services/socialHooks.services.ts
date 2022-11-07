@@ -12,9 +12,10 @@ import {
 	streamUIDQuery,
 	userAddedQuery,
 } from '@/lib/queries.lib';
-import { AdditionalSP, Profile, SocialProfile } from '@/lib/types.lib';
+import { Profile } from '@/lib/types.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { checkTokenType } from './auth.services';
+import { SocialProfile, AdditionalSP } from '@/pages/social/types';
 
 export const useStreamUID = (username: string) => {
 	const { token } = useAuth();

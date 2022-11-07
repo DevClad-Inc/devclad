@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, checkTokenType } from '@/services/auth.services';
-import { MeetingCreateUpdate } from '@/lib/types.lib';
+import { MeetingCreateUpdate } from '@/pages/stream/types';
 
 export const idTypeCheck = (id: string | undefined | null) => {
 	if (typeof id === 'string' && id.length > 0 && id !== 'undefined' && id !== 'null') {
