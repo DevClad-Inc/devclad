@@ -7,7 +7,7 @@ import { DevCladSVG } from '@devclad/ui';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
 import { Error, Info, Success, Warning } from '@/components/Feedback';
-import { SocialProfileForm } from '@/components/forms/SocialProfile.forms';
+import { SocialProfileForm } from '@/pages/social/forms/SocialProfile.forms';
 import { checkTokenType, logOut } from '@/services/auth.services';
 import {
 	checkProfileEmpty,

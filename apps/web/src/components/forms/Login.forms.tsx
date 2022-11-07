@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { ILoginForm } from '@/lib/InterfacesStates.lib';
+import { ILoginForm } from '@/lib/types.lib';
 
 interface LoginFormProps {
 	loginError: boolean;

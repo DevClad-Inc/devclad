@@ -3,7 +3,7 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany } from 'idb-keyval';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
-import { initialUserState, Profile, User } from '@/lib/InterfacesStates.lib';
+import { initialUserState, Profile, User } from '@/lib/types.lib';
 import { tokenQuery, userQuery } from '@/lib/queries.lib';
 import { checkTokenType } from '@/services/auth.services';
 

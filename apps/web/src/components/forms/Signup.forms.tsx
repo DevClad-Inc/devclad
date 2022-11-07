@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react';
 import { resendEmail, SignUp } from '@/services/auth.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { SignupFormValues } from '@/lib/InterfacesStates.lib';
+import { SignupFormValues } from '@/lib/types.lib';
 
 interface SignupFormProps {
 	signupErrorState: string;

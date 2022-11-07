@@ -4,7 +4,7 @@ import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { Profile, IUpdateProfileForm } from '@/lib/InterfacesStates.lib';
+import { Profile, IUpdateProfileForm } from '@/lib/types.lib';
 import { Error, Success } from '@/components/Feedback';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';

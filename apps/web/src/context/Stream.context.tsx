@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import { StreamChat } from 'stream-chat';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/services/useAuth.services';
-import { Profile } from '@/lib/InterfacesStates.lib';
+import { Profile } from '@/lib/types.lib';
 import { Error } from '@/components/Feedback';
 import { useProfile } from '@/services/socialHooks.services';
 

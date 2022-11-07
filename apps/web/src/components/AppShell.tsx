@@ -13,7 +13,7 @@ import { DevCladSVG } from '@devclad/ui';
 import CheckChild from '@/lib/CheckChild.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile } from '@/services/socialHooks.services';
-import { Profile } from '@/lib/InterfacesStates.lib';
+import { Profile } from '@/lib/types.lib';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 
 const navigation = [

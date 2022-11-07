@@ -12,7 +12,7 @@ import {
 	streamUIDQuery,
 	userAddedQuery,
 } from '@/lib/queries.lib';
-import { AdditionalSP, Profile, SocialProfile } from '@/lib/InterfacesStates.lib';
+import { AdditionalSP, Profile, SocialProfile } from '@/lib/types.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { checkTokenType } from './auth.services';
 

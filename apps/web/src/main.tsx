@@ -14,26 +14,26 @@ import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
 import '@devclad/ui/fontscss';
 import '@/root.css';
 // Routes - Primary
-import Root from '@/routes/_root';
-import { ForgotPassword, PassReset } from '@/routes/PasswordReset';
-import { VerifyEmail } from '@/routes/VerifyEmail';
-import { Onboarding, StepOne, StepTwo } from '@/routes/Onboarding';
-import { Settings, AccountProfile, SocialProfile, Password } from '@/routes/Settings';
-import { Home } from '@/routes/Home';
-import { Login } from '@/routes/Login';
-import { Signup } from '@/routes/Signup';
+import Root from '@/pages/_root';
+import { ForgotPassword, PassReset } from '@/pages/PasswordReset';
+import { VerifyEmail } from '@/pages/VerifyEmail';
+import { Onboarding, StepOne, StepTwo } from '@/pages/Onboarding';
+import { Settings, AccountProfile, SocialProfile, Password } from '@/pages/Settings';
+import { Home } from '@/pages/Home';
+import { Login } from '@/pages/Login';
+import { Signup } from '@/pages/Signup';
 // Routes - Social
-import { Social } from '@/routes/social/Social';
-import { OneOne } from '@/routes/social/OneOne';
-import { Circle } from '@/routes/social/Circle';
-import { Profile } from '@/routes/Profile';
-import { Messages, MessageChild } from '@/routes/Messages';
-import { Meetings, MeetingDetail, MeetingList } from '@/routes/Meetings';
+import { Social } from '@/pages/social/Social';
+import { OneOne } from '@/pages/social/OneOne';
+import { Circle } from '@/pages/social/Circle';
+import { Profile } from '@/pages/Profile';
+import { Messages, MessageChild } from '@/pages/stream/Messages';
+import { Meetings, MeetingDetail, MeetingList } from '@/pages/stream/Meetings';
 import { StreamProvider } from '@/context/Stream.context';
 import { UserProvider } from '@/context/User.context';
 import { DEVELOPMENT } from '@/services/auth.services';
-import { FourOFour } from './routes/404';
-import { GithubAuth } from './routes/Github';
+import { FourOFour } from './pages/404';
+import { GithubAuth } from './pages/Github';
 
 axios.defaults.headers.common.withCredentials = true;
 

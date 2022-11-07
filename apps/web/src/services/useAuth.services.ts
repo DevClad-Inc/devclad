@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { User, initialUserState } from '@/lib/InterfacesStates.lib';
+import { User, initialUserState } from '@/lib/types.lib';
 import {
 	githubDataQuery,
 	refreshQuery,

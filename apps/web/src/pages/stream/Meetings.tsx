@@ -4,11 +4,12 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { convertTimeZone, useDocumentTitle } from '@devclad/lib';
-import { meetingQuery } from '@/lib/queries.lib';
-import { Meeting, SocialProfile } from '@/lib/InterfacesStates.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile, useSocialProfile } from '@/services/socialHooks.services';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
+import { meetingQuery } from '@/lib/queries.lib';
+import { Meeting } from '@/pages/stream/types';
+import { SocialProfile } from '@/pages/social/types';
 import { Tab } from '@/components/Tabs';
 
 export const useMeetingImage = (meeting: Meeting): string => {

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { MatchProfile } from '@/lib/InterfacesStates.lib';
+import { MatchProfile } from '@/lib/types.lib';
 import { useCircle, useOneOneProfile, useConnected } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 import { DEVELOPMENT, API_URL } from '@/services/auth.services';

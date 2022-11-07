@@ -11,12 +11,13 @@ import toast from 'react-hot-toast';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import { useCircle, useConnected, useProfile, useStreamUID } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
-import { Profile } from '@/lib/InterfacesStates.lib';
+import { Profile } from '@/lib/types.lib';
 import { MessagesLoading } from '@/components/LoadingStates';
 import { Error } from '@/components/Feedback';
 import { useStreamContext } from '@/context/Stream.context';
-import Message from '@/components/Message';
+import Message from '@/pages/stream/components/Message';
 import { DEVELOPMENT, API_URL } from '@/services/auth.services';
+import { FetchMessages, ChannelQuery } from '@/pages/stream/types';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-300
@@ -106,40 +107,43 @@ export function MessageChild(): JSX.Element {
 	const qc = useQueryClient();
 	const state = qc.getQueryState(['profile', loggedInUserUserName as string]);
 
-	type LtOrGtType = 'id_lte' | 'id_gte' | undefined;
 	const fetchMessages = React.useCallback(
-		(channelVal: Channel<DefaultGenerics>, lastMessageIDVal?: string, ltOrGt?: LtOrGtType) => {
-			if (channelVal && lastMessageIDVal) {
-				if (ltOrGt === 'id_lte') {
-					return channelVal.query({ messages: { limit: 50, id_lte: lastMessageIDVal } });
+		({ channelVal, lastMessageID, ltOrGt }: FetchMessages) => {
+			switch (channelVal !== null) {
+				case true: {
+					if (lastMessageID) {
+						if (ltOrGt === 'id_lte') {
+							return channelVal.query({
+								messages: { limit: 50, id_lte: lastMessageID },
+							});
+						}
+						return channelVal.query({
+							messages: { limit: 50, id_gte: lastMessageID },
+						});
+					}
+					return channelVal.query({ messages: { limit: 50 } });
 				}
-				return channelVal.query({ messages: { limit: 50, id_gte: lastMessageIDVal } });
+				default:
+					return null;
 			}
-			if (channelVal) {
-				return channelVal.query({ messages: { limit: 50 } });
-			}
-			return null;
 		},
 		[]
 	);
 
-	const channelQuery = (
-		channelVal: Channel<DefaultGenerics>,
-		channelCID: string,
-		lastMessageIDVal?: string,
-		ltOrGt?: LtOrGtType
-	) => ({
+	const channelQuery = ({ channelVal, lastMessageID, ltOrGt, channelCID }: ChannelQuery) => ({
 		queryKey: ['channel', channelCID],
-		queryFn: () => fetchMessages(channelVal, lastMessageIDVal, ltOrGt),
+		queryFn: () => fetchMessages({ channelVal, lastMessageID, ltOrGt }),
 	});
 
-	// todo: create a zustand store (fetch 50; show 5; add infinite scroll)
 	const {
 		data: channelQData,
 		isFetching: channelQFetching,
 		isLoading: channelQLoading,
 	} = useQuery({
-		...channelQuery(channelRef.current, channelRef.current?.cid as string),
+		...channelQuery({
+			channelVal: channelRef.current,
+			channelCID: channelRef.current?.cid as string,
+		}),
 		enabled: Boolean(channelRef.current),
 	});
 
@@ -155,12 +159,19 @@ export function MessageChild(): JSX.Element {
 	const handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
 		if (e.currentTarget.scrollTop === 0 && !channelQFetching) {
 			const lengthOfMessages = channelQData?.messages.length;
+			// here, we fetched 50 messages at first
+			// so we can fetch from the existing cache if max messages fetched are <50
 			if (lengthOfMessages && lengthOfMessages < 50) {
 				setNoOfMessages(noOfMessages + 5);
 			} else {
+				// here, we are fetching more messages from the server
 				setNoOfMessages(noOfMessages + 5);
 				if (noOfMessages > 50) {
-					fetchMessages(channelRef.current, channelQData?.messages[0].id, 'id_lte')
+					fetchMessages({
+						channelVal: channelRef.current,
+						lastMessageID: channelQData?.messages[0].id,
+						ltOrGt: 'id_lte',
+					})
 						?.then((res) => {
 							setShowScrollDown(true);
 							qc.setQueryData(['channel', channelRef.current?.cid as string], res);
@@ -219,7 +230,7 @@ export function MessageChild(): JSX.Element {
 					await channelRef.current
 						.create()
 						.then(async () => {
-							await fetchMessages(channelRef.current)
+							await fetchMessages({ channelVal: channelRef.current })
 								?.then((res) =>
 									qc.setQueryData(
 										['channel', channelRef.current?.cid as string],
@@ -315,7 +326,9 @@ export function MessageChild(): JSX.Element {
 										type="button"
 										onClick={() => {
 											setNoOfMessages(6);
-											fetchMessages(channelRef.current)?.then((res) => {
+											fetchMessages({
+												channelVal: channelRef.current,
+											})?.then((res) => {
 												qc.setQueryData(
 													['channel', channelRef.current?.cid as string],
 													res

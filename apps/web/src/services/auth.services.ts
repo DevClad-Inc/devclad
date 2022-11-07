@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
-import { NewUser, User } from '@/lib/InterfacesStates.lib';
+import { NewUser, User } from '@/lib/types.lib';
 import { refreshQuery, tokenQuery } from '@/lib/queries.lib';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 

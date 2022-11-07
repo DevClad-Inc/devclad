@@ -5,10 +5,10 @@ import { Switch } from '@headlessui/react';
 import { VideoCameraIcon, VideoCameraSlashIcon } from '@heroicons/react/24/outline';
 import ClockIcon from '@heroicons/react/24/outline/ClockIcon';
 import { classNames } from '@devclad/lib';
-import { AdditionalSP } from '@/lib/InterfacesStates.lib';
+import { AdditionalSP } from '@/lib/types.lib';
 import { updateAdditionalSP } from '@/services/profile.services';
 import { Error, Success } from '@/components/Feedback';
-import { ProfileLoading } from '../LoadingStates';
+import { ProfileLoading } from '../../../components/LoadingStates';
 import { useAdditionalSP } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';
 

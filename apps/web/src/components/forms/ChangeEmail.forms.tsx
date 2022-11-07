@@ -10,7 +10,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { changeEmail, checkTokenType, checkVerified, resendEmail } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { InterfaceEmail } from '@/lib/InterfacesStates.lib';
+import { InterfaceEmail } from '@/lib/types.lib';
 import { ProfileLoading } from '../LoadingStates';
 import { useAuth } from '@/services/useAuth.services';
 

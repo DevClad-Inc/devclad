@@ -7,7 +7,7 @@ import { useDocumentTitle } from '@devclad/lib';
 import { forgotPassword, passwordChange, passwordReset } from '@/services/auth.services';
 import { Error, Success, Warning } from '@/components/Feedback';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { InterfaceEmail, PasswordReset } from '@/lib/InterfacesStates.lib';
+import { InterfaceEmail, PasswordReset } from '@/lib/types.lib';
 import { useAuth } from '@/services/useAuth.services';
 
 export default function PasswordResetForm(): JSX.Element {

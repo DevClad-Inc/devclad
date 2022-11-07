@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios, { AxiosResponse } from 'axios';
 import { QueryClient } from '@tanstack/react-query';
-import { Profile, SocialProfile, AdditionalSP } from '@/lib/InterfacesStates.lib';
+import { Profile, SocialProfile, AdditionalSP } from '@/lib/types.lib';
 import { API_URL, verifyToken, checkTokenType } from '@/services/auth.services';
 
 export async function getProfile(

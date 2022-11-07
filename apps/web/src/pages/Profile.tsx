@@ -19,7 +19,7 @@ import {
 	useBlocked,
 	useBlockedUsernames,
 } from '@/services/socialHooks.services';
-import { MatchProfile } from '@/lib/InterfacesStates.lib';
+import { MatchProfile } from '@/lib/types.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import ActionDropdown from '@/components/ActionDropdown';
 import { blockUser, patchCircle } from '@/services/profile.services';

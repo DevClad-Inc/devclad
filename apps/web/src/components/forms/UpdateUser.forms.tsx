@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { del } from 'idb-keyval';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { updateUser } from '@/services/auth.services';
-import { IUpdateUserForm } from '@/lib/InterfacesStates.lib';
+import { IUpdateUserForm } from '@/lib/types.lib';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/components/Feedback';
 import { ProfileLoading } from '../LoadingStates';

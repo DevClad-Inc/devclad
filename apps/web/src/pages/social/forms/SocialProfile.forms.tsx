@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { classNames } from '@devclad/lib';
-import { SocialProfile, SocialProfileFormValues } from '@/lib/InterfacesStates.lib';
+import { SocialProfile, SocialProfileFormValues } from '@/pages/social/types';
 import { updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/components/Feedback';
@@ -14,7 +14,7 @@ import Countries from '@/lib/list/Countries.list.json';
 import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
 
-import { ProfileLoading } from '../LoadingStates';
+import { ProfileLoading } from '../../../components/LoadingStates';
 
 import { useSocialProfile } from '@/services/socialHooks.services';
 import { useAuth } from '@/services/useAuth.services';

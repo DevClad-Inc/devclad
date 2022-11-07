@@ -4,11 +4,12 @@ import { XMarkIcon, ExclamationTriangleIcon, CalendarDaysIcon } from '@heroicons
 import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
 import { toast } from 'react-hot-toast';
-import { daysOfWeek } from '@/components/forms/AdditionalSP.forms';
+import { daysOfWeek } from '@/pages/social/forms/AdditionalSP.forms';
 import { useAuth } from '@/services/useAuth.services';
-import { MeetingCreateUpdate, User } from '@/lib/InterfacesStates.lib';
+import { User } from '@/lib/types.lib';
 import { createUpdateMeeting } from '@/services/meetings.services';
 import { Error, Success } from '@/components/Feedback';
+import { MeetingCreateUpdate } from '@/pages/stream/types';
 
 interface MeetingDate {
 	day: string;
