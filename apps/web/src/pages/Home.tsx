@@ -112,7 +112,9 @@ function DashCard({ item }: { item: typeof items[0] }): JSX.Element {
 				<div className="flex items-center space-x-3">
 					<h3 className="truncate text-sm font-medium text-neutral-100">{name}</h3>
 				</div>
-				<p className="mt-1 truncate text-sm text-neutral-500">{description}</p>
+				<p className="mt-1 hidden truncate text-xs text-neutral-500 sm:block">
+					{description}
+				</p>
 			</div>
 			<Icon className="h-6 w-6 flex-shrink-0 text-neutral-400" aria-hidden="true" />
 		</Link>
@@ -220,7 +222,7 @@ export function Home(): JSX.Element {
 
 			<div className="bg-darkBG2 mx-auto py-8 sm:px-6 lg:px-8">
 				<div className="mt-12 flex justify-center">
-					<div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-3">
+					<div className="xs:grid-cols-2 grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-3">
 						{items.map((item) => (
 							<DashCard item={item} />
 						))}
