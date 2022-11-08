@@ -91,10 +91,10 @@ function ConnectionCard({ otherUser }: { otherUser: string }): JSX.Element {
 								<PrimaryButton>
 									<Link to={`/profile/${otherUser}`} className="flex">
 										<ArrowUpRightIcon
-											className="mr-2 h-6 w-5 sm:h-8"
+											className="h-6 w-5 sm:mr-2 sm:h-8"
 											aria-hidden="true"
 										/>
-										Profile
+										<span className="hidden sm:flex">Profile</span>
 									</Link>
 								</PrimaryButton>
 							</div>

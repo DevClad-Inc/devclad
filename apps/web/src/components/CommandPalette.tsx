@@ -9,6 +9,7 @@ import {
 	KeyIcon,
 	VideoCameraIcon,
 	ChatBubbleLeftRightIcon,
+	CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
 import { classNames } from '@devclad/lib';
 
@@ -18,7 +19,6 @@ const items = [
 		name: 'Dashboard',
 		description: 'Go to Home.',
 		url: '/',
-		color: 'bg-indigo-500',
 		icon: HomeIcon,
 	},
 	{
@@ -26,7 +26,6 @@ const items = [
 		name: 'Messages Dashboard',
 		description: 'Messages Dashboard',
 		url: '/messages',
-		color: 'bg-indigo-500',
 		icon: ChatBubbleLeftRightIcon,
 	},
 	{
@@ -34,7 +33,6 @@ const items = [
 		name: 'Social Mode 1-on-1',
 		description: 'Social Mode. 1-on-1.',
 		url: '/social',
-		color: 'bg-indigo-500',
 		icon: VideoCameraIcon,
 	},
 	{
@@ -42,31 +40,34 @@ const items = [
 		name: 'Social Mode Circle',
 		description: 'Social Mode. Circle.',
 		url: '/social/circle',
-		color: 'bg-indigo-500',
 		icon: UserGroupIcon,
 	},
 	{
 		id: 5,
-		name: 'Account Settings',
-		description: 'Settings.',
-		url: '/settings',
-		color: 'bg-indigo-500',
-		icon: WrenchIcon,
+		name: 'Meetings',
+		description: 'Upcoming Meetings',
+		url: '/meetings',
+		icon: CalendarDaysIcon,
 	},
 	{
 		id: 6,
-		name: 'Social Preferencess',
-		description: 'Social Preferences',
-		url: '/settings/social',
-		color: 'bg-indigo-500',
-		icon: UserCircleIcon,
+		name: 'Account Settings',
+		description: 'Settings.',
+		url: '/settings',
+		icon: WrenchIcon,
 	},
 	{
 		id: 7,
+		name: 'Social Preferences',
+		description: 'Social Preferences',
+		url: '/settings/social',
+		icon: UserCircleIcon,
+	},
+	{
+		id: 8,
 		name: 'Email and Password',
 		description: 'Email and Password',
 		url: '/settings/password',
-		color: 'bg-indigo-500',
 		icon: KeyIcon,
 	},
 ];

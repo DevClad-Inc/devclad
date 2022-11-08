@@ -6,11 +6,11 @@ import { Outlet, useLocation, ScrollRestoration, Navigate } from 'react-router-d
 import { GraphTextureSVG } from '@devclad/ui';
 import { classNames } from '@devclad/lib';
 import { ThemeContext } from '@/context/Theme.context';
-import AppShell from '@/components/AppShell';
+import Layout from '@/pages/Layout';
 import { checkTokenType, refreshToken } from '@/services/auth.services';
 import { useApproved, useAuth } from '@/services/useAuth.services';
 import CommandPalette from '@/components/CommandPalette';
-import SplashScreen from '@/components/Splash';
+import SplashScreen from '@/pages/Splash';
 
 export const allowedPaths = ['/login', '/signup', '/forgot-password'];
 
@@ -51,9 +51,9 @@ function Routing(): JSX.Element {
 			return <Outlet />;
 		case authedAndApproved:
 			return (
-				<AppShell>
+				<Layout>
 					<Outlet />
-				</AppShell>
+				</Layout>
 			);
 		default:
 			return <SplashScreen />;

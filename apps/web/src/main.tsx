@@ -12,7 +12,7 @@ import { webVitals } from '@/vitals';
 import { ThemeProvider } from '@/context/Theme.context';
 import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
 import '@devclad/ui/fontscss';
-import '@/root.css';
+import '@/styles/globals.css';
 // Routes - Primary
 import Root from '@/pages/_root';
 import { ForgotPassword, PassReset } from '@/pages/PasswordReset';

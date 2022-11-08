@@ -45,7 +45,7 @@ const navigation = [
 
 const noBreadCrumbRoutes = ['profile', ''];
 
-export default function AppShell({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
 	const { pathname } = useLocation();
 	const pathArray = pathname.split('/');
 	pathArray.shift();

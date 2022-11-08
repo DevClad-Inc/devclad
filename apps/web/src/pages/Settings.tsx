@@ -186,9 +186,10 @@ export function Password() {
 							<PrimaryButton
 								onClick={() => {
 									if (githubLogin && username !== '') {
-										connectGithub();
+										// github is already connected
+										window.open(`https://github.com/${username}`, '_blank');
 									} else {
-										window.location.href = '/api/auth/connect/github/';
+										connectGithub();
 									}
 								}}
 							>

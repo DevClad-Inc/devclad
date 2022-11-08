@@ -17,12 +17,12 @@ export type StreamTokenT = {
 };
 
 export function useAuth() {
+	const qc = useQueryClient();
 	const tokenRef = React.useRef<string>('');
 	const refreshRef = React.useRef<string>('');
 	const authedRef = React.useRef<boolean>(false);
-	const streamTokenRef = React.useRef<StreamTokenT | null>(null);
 	const userRef = React.useRef<User>({ ...initialUserState });
-	const qc = useQueryClient();
+	const streamTokenRef = React.useRef<StreamTokenT | null>(null);
 
 	const { isSuccess: tokenSuccess, data: tokenData } = useQuery({
 		...tokenQuery(qc),

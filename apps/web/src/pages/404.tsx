@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
 import Cookies from 'js-cookie';
 import { useAuth } from '@/services/useAuth.services';
-import AppShell from '@/components/AppShell';
+import Layout from '@/pages/Layout';
 
 export function FourOFour(): JSX.Element {
 	const { authed } = useAuth();
@@ -20,7 +20,7 @@ export function FourOFour(): JSX.Element {
 	return (
 		// todo: CHANGE THIS!!
 		<div>
-			<AppShell>
+			<Layout>
 				<div className="mx-auto max-w-full  px-4 py-16 sm:px-6 lg:px-8">
 					<div className="mx-auto max-w-lg">
 						<h1 className="text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
@@ -28,7 +28,7 @@ export function FourOFour(): JSX.Element {
 						</h1>
 					</div>
 				</div>
-			</AppShell>
+			</Layout>
 		</div>
 	);
 }
