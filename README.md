@@ -37,7 +37,7 @@
 -   Use `prettier` for formatting.
 -   Using [Airbnb Style Guide](https://github.com/airbnb/javascript) for ESLint with some modifications.
 
--   In the process of migrating to Romev10. Use `bun rome` to run the linter/formatter. Prior to that, run `bun install` to install the dependencies. Why? `bun` is much faster even for a single command like this.
+-   In the process of migrating to Romev10. Use `bun [command]` to run the linter/formatter. Prior to that, run `bun install` to install the dependencies. Why? `bun` is much faster even for a single commands like these.
 
 ## Absolute Imports
 

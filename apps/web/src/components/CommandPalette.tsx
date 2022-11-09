@@ -97,7 +97,7 @@ export default function CommandPalette() {
 	}, [handleKeyPress]);
 
 	return (
-		<Transition.Root show={open} as={Fragment} appear={true}>
+		<Transition.Root show={open} as={Fragment} appear>
 			<Dialog as="div" className="relative z-10" onClose={setOpen}>
 				<Transition.Child
 					as={Fragment}
@@ -170,7 +170,7 @@ export default function CommandPalette() {
 												'group flex items-center rounded-md px-4 py-4 text-sm',
 												'focus:ring-offset-neutral border-[1px] border-dashed border-neutral-800 focus:outline-none focus:ring-2 focus:ring-offset-2'
 											)}
-											end={true}
+											end
 										>
 											<item.icon
 												className="-ml-1 mr-3 h-6 w-6 flex-shrink-0"

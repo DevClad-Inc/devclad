@@ -414,7 +414,7 @@ export function ScheduleDialog({
 																className="rounded-md border-[1px] border-solid border-neutral-600 px-3 py-1 font-light text-slate-900
 															  shadow-2xl shadow-white/20 invert filter duration-300 sm:px-3 lg:px-6"
 																step={900}
-																required={true}
+																required
 															/>
 														</div>
 													</div>

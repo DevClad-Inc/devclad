@@ -10,7 +10,6 @@
 		"build": "turbo run build",
 		"dev": "turbo run dev --parallel",
 		"lint": "turbo run lint",
-		"rome": "rome check ./ --apply",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\""
 	},
 	"devDependencies": {
@@ -33,7 +32,6 @@
 		"eslint-plugin-react-hooks": "latest",
 		"prettier": "2.7.1",
 		"prettier-plugin-tailwindcss": "latest",
-		"rome": "^10.0.0",
 		"turbo": "latest",
 		"typescript": "^4.8.4",
 		"workspace": "^0.0.1-preview.1"
