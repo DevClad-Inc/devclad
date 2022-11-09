@@ -18,6 +18,7 @@ module.exports = {
 		'prettier/prettier': ['error'],
 		'react-hooks/exhaustive-deps': 'warn',
 		'react-hooks/rules-of-hooks': 'error',
+		'react/jsx-boolean-value': 'off',
 		'react/jsx-indent-props': [2, 'tab'],
 		'react/jsx-indent': [2, 'tab'],
 		'react/jsx-one-expression-per-line': [0],
