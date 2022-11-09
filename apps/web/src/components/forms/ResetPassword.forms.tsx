@@ -108,7 +108,7 @@ export default function PasswordResetForm(): JSX.Element {
 									placeholder="••••••••••••••••"
 									autoComplete="current-password"
 									aria-describedby="password-description"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -136,7 +136,7 @@ export default function PasswordResetForm(): JSX.Element {
 									placeholder="••••••••••••••••"
 									autoComplete="current-password"
 									aria-describedby="password-description"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -247,7 +247,7 @@ export function ForgotPasswordForm(): JSX.Element {
 									type="email"
 									placeholder="cactus@jack.com"
 									autoComplete="email"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>

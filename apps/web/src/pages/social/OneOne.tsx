@@ -406,7 +406,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
 								</button>
 							) : (
 								<button type="button" className={greenString}>
-									<CheckIcon className="mr-2 h-6 w-5" aria-hidden />
+									<CheckIcon className="mr-2 h-6 w-5" aria-hidden={true} />
 									<span>Added To Circle</span>
 								</button>
 							)}

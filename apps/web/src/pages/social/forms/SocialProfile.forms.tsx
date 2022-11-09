@@ -464,7 +464,7 @@ export function SocialProfileForm(): JSX.Element {
 										}
 									}
 								}}
-								multiple
+								multiple={true}
 							>
 								{({ open }) => (
 									<>
@@ -588,7 +588,7 @@ export function SocialProfileForm(): JSX.Element {
 										}
 									}
 								}
-								multiple
+								multiple={true}
 							>
 								{({ open }) => (
 									<>
@@ -709,7 +709,7 @@ export function SocialProfileForm(): JSX.Element {
 										}
 									}
 								}}
-								multiple
+								multiple={true}
 							>
 								{({ open }) => (
 									<>

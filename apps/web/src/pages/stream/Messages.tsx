@@ -32,7 +32,7 @@ function MessagesNav({ user }: { user: string }): JSX.Element {
 	if (connected) {
 		return (
 			<NavLink
-				preventScrollReset
+				preventScrollReset={true}
 				key={user}
 				to={`/messages/${user}/`}
 				className={classNames(

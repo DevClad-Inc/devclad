@@ -124,7 +124,7 @@ export default function SignupForm({
 									type="text"
 									placeholder="John"
 									autoComplete="First Name"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -158,7 +158,7 @@ export default function SignupForm({
 									type="lastName"
 									placeholder="Doe"
 									autoComplete="Last Name"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -192,7 +192,7 @@ export default function SignupForm({
 									type="email"
 									placeholder="cactus@jack.com"
 									autoComplete="email"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -227,7 +227,7 @@ export default function SignupForm({
 									placeholder="••••••••••••••••"
 									autoComplete="current-password"
 									aria-describedby="password-description"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -273,7 +273,7 @@ export default function SignupForm({
 									type="password"
 									placeholder="••••••••••••••••"
 									autoComplete="current-password"
-									required
+									required={true}
 									className="dark:bg-darkBG mt-1 block w-full rounded-md border
                     border-neutral-300 py-2 px-3 shadow-sm focus:outline-none dark:border-neutral-800 sm:text-sm"
 								/>
@@ -297,7 +297,7 @@ export default function SignupForm({
 					<div>
 						{!signedUp ? (
 							<div className="flex justify-center">
-								<PrimaryButton isSubmitting={isSubmitting} wFull>
+								<PrimaryButton isSubmitting={isSubmitting} wFull={true}>
 									<span className="text-lg font-bold">
 										{isSubmitting ? 'Signing up...' : 'Sign Up'}{' '}
 										<span className="text-xs">✨</span>

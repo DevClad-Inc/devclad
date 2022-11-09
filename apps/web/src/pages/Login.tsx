@@ -58,7 +58,7 @@ export function Login() {
 
 							<div className="mt-6">
 								<PrimaryButton
-									wFull
+									wFull={true}
 									onClick={() => {
 										setGithubLogin(true);
 										loginGithub();

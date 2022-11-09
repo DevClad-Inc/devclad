@@ -100,7 +100,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 											'flex items-center px-5 py-3 duration-300'
 										)
 									}
-									end
+									end={true}
 								>
 									<item.icon
 										className={classNames(
@@ -176,7 +176,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 												'mb-1 flex w-1/4 justify-evenly rounded-xl border-t-2 border-transparent py-3'
 											)
 										}
-										end
+										end={true}
 									>
 										<tab.icon
 											className="h-8 w-8 flex-shrink-0"
@@ -249,11 +249,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 													to="/social/circle"
 													className="ml-2 flex font-mono text-sm font-medium text-orange-200
                             duration-300 hover:text-white"
-													end
+													end={true}
 												>
 													<ArrowLeftIcon
 														className="mr-2 h-6 w-5 flex-shrink-0 text-gray-300"
-														aria-hidden
+														aria-hidden={true}
 													/>
 													Circle
 												</NavLink>
