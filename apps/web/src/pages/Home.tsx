@@ -1,18 +1,19 @@
 import React, { Fragment } from 'react';
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import {
+	ArrowLeftOnRectangleIcon,
 	UserGroupIcon,
 	VideoCameraIcon,
 	ChatBubbleLeftRightIcon,
-	WrenchIcon,
 	UserCircleIcon,
 	KeyIcon,
 	CalendarDaysIcon,
+	AdjustmentsHorizontalIcon,
 } from '@heroicons/react/24/outline';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { StarIcon } from '@heroicons/react/24/solid';
 import { API_URL, DEVELOPMENT, logOut } from '@/services/auth.services';
 import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { useAuth } from '@/services/useAuth.services';
@@ -21,7 +22,8 @@ import { useProfile } from '@/services/socialHooks.services';
 const items = [
 	{
 		id: 1,
-		name: 'Messages Dashboard',
+		name: 'Messages',
+		description: 'Messages Dashboard',
 		url: '/messages',
 		icon: ChatBubbleLeftRightIcon,
 	},
@@ -48,15 +50,16 @@ const items = [
 	{
 		id: 5,
 		name: 'Account Settings',
+		description: 'Manage your account',
 		url: '/settings',
-		icon: WrenchIcon,
+		icon: UserCircleIcon,
 	},
 	{
 		id: 6,
 		name: 'Social Preferences',
 		description: 'Tweak ML Preferences',
 		url: '/settings/social',
-		icon: UserCircleIcon,
+		icon: AdjustmentsHorizontalIcon,
 	},
 	{
 		id: 7,
@@ -78,14 +81,15 @@ export function SignOut(): JSX.Element {
 	return (
 		<button
 			onClick={handlelogOut}
+			onKeyDown={handlelogOut}
 			type="button"
-			className="bg-darkBG2 hover:bg-darkBG hover:border-mistyRose hover:text-mistyRose flex w-full items-center
-			justify-between space-x-6 rounded-md border-[1px]  border-neutral-900 p-6 text-neutral-400
+			className="bg-darkBG2 hover:bg-darkBG hover:border-mistyRose/30 hover:text-mistyRose/50 flex w-full items-center
+			justify-between space-x-6 rounded-md border-[1px]  border-neutral-900 p-6 text-neutral-500
 			 shadow-2xl shadow-white/10 focus:ring-red-900"
 		>
 			<div className="flex-1 truncate">
 				<div className="flex items-center space-x-3">
-					<h3 className="truncate text-sm font-medium">
+					<h3 className="truncate text-sm font-medium text-neutral-500 sm:text-base lg:text-xl">
 						{loggingOut ? 'Signing' : 'Sign'} Out
 					</h3>
 				</div>
@@ -93,7 +97,10 @@ export function SignOut(): JSX.Element {
 			{loggingOut ? (
 				<LoadingSpinner />
 			) : (
-				<ArrowLeftOnRectangleIcon className="h-6 w-6 flex-shrink-0 " aria-hidden="true" />
+				<ArrowLeftOnRectangleIcon
+					className="h-6 w-6 flex-shrink-0 lg:h-8 lg:w-8"
+					aria-hidden="true"
+				/>
 			)}
 		</button>
 	);
@@ -110,13 +117,18 @@ function DashCard({ item }: { item: typeof items[0] }): JSX.Element {
 		>
 			<div className="flex-1 truncate">
 				<div className="flex items-center space-x-3">
-					<h3 className="truncate text-sm font-medium text-neutral-100">{name}</h3>
+					<h3 className="truncate text-sm font-light text-neutral-100 sm:text-base lg:text-xl">
+						{name}
+					</h3>
 				</div>
-				<p className="mt-1 hidden truncate text-xs text-neutral-500 sm:block">
+				<p className="mt-1 hidden text-neutral-500 sm:block sm:text-sm lg:text-base">
 					{description}
 				</p>
 			</div>
-			<Icon className="h-6 w-6 flex-shrink-0 text-neutral-400" aria-hidden="true" />
+			<Icon
+				className="h-6 w-6 flex-shrink-0 text-neutral-400 lg:h-8 lg:w-8"
+				aria-hidden="true"
+			/>
 		</Link>
 	);
 }
@@ -126,7 +138,8 @@ export function Home(): JSX.Element {
 	const navigate = useNavigate();
 	const { authed, loggedInUser } = useAuth();
 	const profile = useProfile(loggedInUser.username !== undefined ? loggedInUser.username : '');
-	const someURl = `https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/b385cb56555015.59b2ef09aa6e1.jpg`;
+	const someURl =
+		'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/b385cb56555015.59b2ef09aa6e1.jpg';
 
 	useDocumentTitle('Dashboard');
 	React.useEffect(() => {
@@ -217,6 +230,10 @@ export function Home(): JSX.Element {
 							</div>
 						</div>
 					</div>
+					<span className="mb-2 flex space-x-4 text-xs font-light text-neutral-200 sm:ml-10">
+						<StarIcon className="mr-1 h-4 w-4 text-orange-500" />
+						Free Pro Trial
+					</span>
 				</div>
 			</Disclosure>
 

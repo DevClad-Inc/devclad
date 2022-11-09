@@ -8,7 +8,7 @@ module.exports = {
   darkMode: "class",
   theme: {
     screens: {
-      xs: "400px",
+      xs: "420px",
       ...defaultTheme.screens,
     },
     fontSize: {

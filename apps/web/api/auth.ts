@@ -61,7 +61,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	const CONNECT_URL = `${process.env.VITE_API_URL}/oauth/github/connect/`;
 	const { headers } = req;
 	switch (true) {
-		// callback
 		case req.url?.startsWith('/api/auth/complete/github'): {
 			const { code } = req.body;
 			const tokenUrl = 'https://github.com/login/oauth/access_token';
