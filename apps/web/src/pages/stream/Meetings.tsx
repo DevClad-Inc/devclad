@@ -23,6 +23,7 @@ export const useMeetingImage = (meeting: Meeting): string => {
 
 export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string }): JSX.Element {
 	const avatar = useMeetingImage(meeting);
+	const isPast = new Date(meeting.time).getTime() < new Date().getTime();
 	return (
 		<li
 			key={meeting.id}
@@ -53,26 +54,29 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 			</div>
 			<div>
 				{/* todo: add reschedule request modal */}
-				<div className="-mt-px flex divide-x divide-neutral-800">
-					<div className="flex w-0 flex-1">
-						<a
-							href={`mailto:${meeting.name}`}
-							className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
-						>
-							<CalendarDaysIcon className="h-5 w-5" aria-hidden="true" />
-							<span className="ml-3">Reschedule</span>
-						</a>
+				{!isPast && (
+					<div className="-mt-px flex divide-x divide-neutral-800">
+						<div className="flex w-0 flex-1">
+							<a
+								href={`mailto:${meeting.name}`}
+								className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
+							>
+								<CalendarDaysIcon className="h-5 w-5" aria-hidden="true" />
+								<span className="ml-3">Reschedule</span>
+							</a>
+						</div>
+
+						<div className="-ml-px flex w-0 flex-1">
+							<Link
+								to={`/meetings/${meeting.uid}`}
+								className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
+							>
+								<VideoCameraIcon className="h-5 w-5" aria-hidden="true" />
+								<span className="ml-3">Join Room</span>
+							</Link>
+						</div>
 					</div>
-					<div className="-ml-px flex w-0 flex-1">
-						<Link
-							to={`/meetings/${meeting.uid}`}
-							className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
-						>
-							<VideoCameraIcon className="h-5 w-5" aria-hidden="true" />
-							<span className="ml-3">Join Room</span>
-						</Link>
-					</div>
-				</div>
+				)}
 			</div>
 		</li>
 	);
@@ -83,7 +87,7 @@ export function MeetingList({ past }: { past?: boolean }): JSX.Element {
 	const { token } = useAuth();
 	const socialProfile = useSocialProfile() as SocialProfile;
 	const spState = qc.getQueryState(['social-profile']);
-	const mQ = past ? meetingQuery(token, 'past') : meetingQuery(token, 'all');
+	const mQ = past ? meetingQuery(token, 'past') : meetingQuery(token, 'upcoming');
 
 	const { data: meetingData, isLoading, isSuccess } = useQuery({ ...mQ });
 	if (
@@ -114,8 +118,11 @@ MeetingList.defaultProps = {
 };
 
 export function MeetingDetail(): JSX.Element {
+	const qc = useQueryClient();
 	const { token } = useAuth();
 	const { uid } = useParams<{ uid: string }>() as { uid: string };
+	const socialProfile = useSocialProfile() as SocialProfile;
+	const spState = qc.getQueryState(['social-profile']);
 	const {
 		data: meetingData,
 		isLoading,
@@ -124,17 +131,24 @@ export function MeetingDetail(): JSX.Element {
 		...meetingQuery(token, uid as string),
 	});
 
-	if (isLoading) {
+	if (
+		isLoading ||
+		spState?.status === 'loading' ||
+		spState?.status !== 'success' ||
+		!socialProfile
+	) {
 		return <div>Loading...</div>;
 	}
 	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
+		const time = socialProfile?.timezone as string;
+
 		return (
 			<div className="flex h-full w-full flex-col items-center justify-center">
 				<div className="flex h-full w-full flex-col items-center justify-center">
 					<h1 className="text-3xl font-bold text-neutral-100">{meeting.name}</h1>
 					<p className="text-neutral-100">{meeting.type_of}</p>
-					<p className="text-neutral-100">{meeting.time}</p>
+					<p className="text-neutral-100">{convertTimeZone(meeting.time, time)}</p>
 					<p className="text-neutral-100">{meeting.invites.join(', ')}</p>
 				</div>
 
@@ -190,12 +204,26 @@ export function MeetingDetail(): JSX.Element {
 
 export function Meetings(): JSX.Element {
 	useDocumentTitle('Meetings');
+	const qc = useQueryClient();
+	const { token } = useAuth();
 	return (
 		<>
 			<Tab
 				tabs={[
-					{ name: 'Meetings', href: '/meetings' },
-					{ name: 'Past Meetings', href: '/meetings/past' },
+					{
+						name: 'Meetings',
+						href: '/meetings',
+						onmouseenter() {
+							qc.prefetchQuery(meetingQuery(token, 'upcoming'));
+						},
+					},
+					{
+						name: 'Past Meetings',
+						href: '/meetings/past',
+						onmouseenter() {
+							qc.prefetchQuery(meetingQuery(token, 'past'));
+						},
+					},
 				]}
 			/>
 			<Outlet />

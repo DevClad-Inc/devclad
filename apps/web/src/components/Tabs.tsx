@@ -2,7 +2,11 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { classNames } from '@devclad/lib';
 
-export function Tab({ tabs }: { tabs: { name: string; href: string }[] }) {
+export function Tab({
+	tabs,
+}: {
+	tabs: { name: string; href: string; onmouseenter?: () => void }[];
+}) {
 	const { pathname } = useLocation();
 	return (
 		<div className="mb-4 flex justify-center">
@@ -15,6 +19,7 @@ export function Tab({ tabs }: { tabs: { name: string; href: string }[] }) {
 						<NavLink
 							key={tab.name}
 							to={tab.href}
+							onMouseEnter={() => tab.onmouseenter?.()}
 							className={classNames(
 								tab.href === pathname || `${tab.href}/` === pathname
 									? ' hover:text-white dark:text-orange-200'

@@ -18,57 +18,13 @@ import { API_URL, DEVELOPMENT, logOut } from '@/services/auth.services';
 import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile } from '@/services/socialHooks.services';
-
-const items = [
-	{
-		id: 1,
-		name: 'Messages',
-		description: 'Messages Dashboard',
-		url: '/messages',
-		icon: ChatBubbleLeftRightIcon,
-	},
-	{
-		id: 2,
-		name: '1-on-1',
-		description: "This Week's 1-on-1s",
-		url: '/social',
-		icon: VideoCameraIcon,
-	},
-	{
-		id: 3,
-		name: 'My Circle',
-		url: '/social/circle',
-		icon: UserGroupIcon,
-	},
-	{
-		id: 4,
-		name: 'Meetings',
-		description: 'Upcoming Meetings',
-		url: '/meetings',
-		icon: CalendarDaysIcon,
-	},
-	{
-		id: 5,
-		name: 'Account Settings',
-		description: 'Manage your account',
-		url: '/settings',
-		icon: UserCircleIcon,
-	},
-	{
-		id: 6,
-		name: 'Social Preferences',
-		description: 'Tweak ML Preferences',
-		url: '/settings/social',
-		icon: AdjustmentsHorizontalIcon,
-	},
-	{
-		id: 7,
-		name: 'Email and Password',
-		description: '–and Github OAuth',
-		url: '/settings/password',
-		icon: KeyIcon,
-	},
-];
+import {
+	meetingQuery,
+	socialProfileQuery,
+	userCircleQuery,
+	userMatchesQuery,
+} from '@/lib/queries.lib';
+import { ItemInterface } from './Layout';
 
 const userNavigation = [{ name: 'Settings', href: 'settings/' }];
 
@@ -106,11 +62,12 @@ export function SignOut(): JSX.Element {
 	);
 }
 
-function DashCard({ item }: { item: typeof items[0] }): JSX.Element {
-	const { name, description, url, icon: Icon } = item;
+function DashCard({ item }: { item: ItemInterface }): JSX.Element {
+	const { name, description, href, icon: Icon } = item;
 	return (
 		<Link
-			to={url}
+			to={href}
+			onMouseEnter={() => item.onmouseenter?.()}
 			className="bg-darkBG2 hover:bg-darkBG flex w-full items-center
 			justify-between space-x-6 rounded-md border-[1px]
 			 border-neutral-900 p-6 shadow-2xl shadow-white/10 hover:border-neutral-400"
@@ -136,7 +93,7 @@ function DashCard({ item }: { item: typeof items[0] }): JSX.Element {
 export function Home(): JSX.Element {
 	const qc = useQueryClient();
 	const navigate = useNavigate();
-	const { authed, loggedInUser } = useAuth();
+	const { authed, loggedInUser, token } = useAuth();
 	const profile = useProfile(loggedInUser.username !== undefined ? loggedInUser.username : '');
 	const someURl =
 		'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/b385cb56555015.59b2ef09aa6e1.jpg';
@@ -147,6 +104,77 @@ export function Home(): JSX.Element {
 			navigate('/');
 		}
 	}, [authed, qc, navigate]);
+
+	const items = [
+		{
+			id: 1,
+			name: 'Messages',
+			description: 'Messages Dashboard',
+			alt: 'Messages',
+			href: '/messages',
+			icon: ChatBubbleLeftRightIcon,
+		},
+		{
+			id: 2,
+			name: '1-on-1',
+			description: "This Week's 1-on-1s",
+			alt: '1-on-1',
+			href: '/social',
+			icon: VideoCameraIcon,
+			onmouseenter: () => {
+				qc.prefetchQuery(userMatchesQuery(token));
+			},
+		},
+		{
+			id: 3,
+			name: 'My Circle',
+			alt: 'My Circle',
+			href: '/social/circle',
+			icon: UserGroupIcon,
+			onmouseenter: () => {
+				qc.prefetchQuery(userCircleQuery(token, loggedInUser?.username || ''));
+			},
+		},
+		{
+			id: 4,
+			name: 'Meetings',
+			description: 'Upcoming Meetings',
+			alt: 'Meetings',
+			href: '/meetings',
+			icon: CalendarDaysIcon,
+			onmouseenter: () => {
+				qc.prefetchQuery(meetingQuery(token, 'upcoming'));
+			},
+		},
+		{
+			id: 5,
+			name: 'Account Settings',
+			description: 'Manage your account',
+			alt: 'Account Settings',
+			href: '/settings',
+			icon: UserCircleIcon,
+		},
+		{
+			id: 6,
+			name: 'Social Preferences',
+			description: 'Tweak ML Preferences',
+			alt: 'Social Preferences',
+			href: '/settings/social',
+			icon: AdjustmentsHorizontalIcon,
+			onmouseenter: () => {
+				qc.prefetchQuery(socialProfileQuery(token));
+			},
+		},
+		{
+			id: 7,
+			name: 'Email and Password',
+			description: '–and Github OAuth',
+			alt: 'Email and Password',
+			href: '/settings/password',
+			icon: KeyIcon,
+		},
+	] as ItemInterface[];
+
 	return (
 		<div>
 			<Disclosure

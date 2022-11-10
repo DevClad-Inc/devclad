@@ -21,7 +21,7 @@ def meetings(request: Request, uid: str) -> Response:
     match request.method:
         case "GET":
             match (uid):
-                case "all":
+                case "upcoming":
                     meetings = (
                         MeetingRoom.objects.filter(
                             time__gt=datetime.datetime.now(),

@@ -10,55 +10,74 @@ import {
 
 import { checkIOS, checkMacOS, classNames } from '@devclad/lib';
 import { DevCladSVG } from '@devclad/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import CheckChild from '@/lib/CheckChild.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile } from '@/services/socialHooks.services';
 import { Profile } from '@/lib/types.lib';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
-
-const navigation = [
-	{
-		name: 'Dashboard',
-		href: '/',
-		icon: HomeIcon,
-		alt: 'Home',
-	},
-	{
-		name: 'Social',
-		href: '/social',
-		icon: UsersIcon,
-		alt: 'Social',
-	},
-	{
-		name: 'Messages',
-		href: '/messages',
-		icon: ChatBubbleLeftRightIcon,
-		alt: 'Messages',
-	},
-	{
-		name: 'Meetings',
-		href: '/meetings',
-		icon: CalendarDaysIcon,
-		alt: 'Meetings',
-	},
-];
+import { meetingQuery, userMatchesQuery } from '@/lib/queries.lib';
 
 const noBreadCrumbRoutes = ['profile', ''];
 
+export interface ItemInterface {
+	id: number;
+	name: string;
+	alt: string;
+	href: string;
+	icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+	description?: string;
+	onmouseenter?: () => void;
+}
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+	const qc = useQueryClient();
 	const { pathname } = useLocation();
 	const pathArray = pathname.split('/');
 	pathArray.shift();
 	const pageTitle = document.title.slice(10);
 
 	// user logic
-	const { loggedInUser } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const profileData = useProfile(
 		loggedInUser.username !== undefined ? loggedInUser.username : ''
 	) as Profile;
 
 	// sidebar logic
 	const [sidebarExpand, setSidebarExpand] = React.useState(false);
+
+	const navigation = [
+		{
+			name: 'Dashboard',
+			href: '/',
+			icon: HomeIcon,
+			alt: 'Home',
+		},
+		{
+			name: 'Social',
+			href: '/social',
+			icon: UsersIcon,
+			alt: 'Social',
+			onmouseenter: () => {
+				qc.prefetchQuery(userMatchesQuery(token));
+			},
+		},
+		{
+			name: 'Messages',
+			href: '/messages',
+			icon: ChatBubbleLeftRightIcon,
+			alt: 'Messages',
+		},
+		{
+			name: 'Meetings',
+			href: '/meetings',
+			icon: CalendarDaysIcon,
+			alt: 'Meetings',
+			onmouseenter: () => {
+				qc.prefetchQuery(meetingQuery(token, 'upcoming'));
+			},
+		},
+	] as ItemInterface[];
 
 	return (
 		<div className="flex h-full">
@@ -87,13 +106,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 								'scrollbar mt-10 flex-1 overflow-auto px-2'
 							)}
 						>
-							{navigation.map((item) => (
+							{navigation.map((tab) => (
 								<NavLink
-									key={item.name}
-									to={item.href}
+									key={tab.name}
+									to={tab.href}
+									onMouseEnter={() => tab.onmouseenter?.()}
 									className={({ isActive }) =>
 										classNames(
-											isActive || CheckChild(pathname, item.href)
+											isActive || CheckChild(pathname, tab.href)
 												? 'text-orange-900 dark:text-white'
 												: 'dark:text-neutral-700 dark:hover:text-neutral-100',
 											sidebarExpand ? 'rounded-none' : 'rounded-lg',
@@ -102,7 +122,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 									}
 									end
 								>
-									<item.icon
+									<tab.icon
 										className={classNames(
 											sidebarExpand ? 'mr-3 h-8 w-8' : 'm-auto h-8 w-8',
 											'flex-shrink-1 stroke-2'
@@ -110,7 +130,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 										aria-hidden="true"
 									/>
 									<span className="text-md font-mono font-bold">
-										{sidebarExpand && item.name}
+										{sidebarExpand && tab.name}
 									</span>
 								</NavLink>
 							))}
@@ -168,6 +188,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 									<NavLink
 										key={tab.name}
 										to={tab.href}
+										onMouseEnter={() => tab.onmouseenter?.()}
 										className={({ isActive }) =>
 											classNames(
 												isActive

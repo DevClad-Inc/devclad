@@ -23,20 +23,6 @@ export const getMeeting = (token: string, id: string) => {
 
 export const createUpdateMeeting = (token: string, data: MeetingCreateUpdate) => {
 	const url = `${API_URL}/social/meetings/all/`;
-
-	/*
-	  {
-            "invites": [
-                "pat"
-            ],
-            "type_of": "1:1 Match",
-            "name": "1:1 Meeting",
-            "link": null,
-            "time": "2022-11-16T18:00:00Z",
-            "organizer": "arth"
-        }
-	*/
-
 	if (checkTokenType(token)) {
 		return axios({
 			method: 'PATCH',
