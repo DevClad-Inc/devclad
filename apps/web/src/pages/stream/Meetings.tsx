@@ -11,6 +11,7 @@ import { meetingQuery } from '@/lib/queries.lib';
 import { Meeting } from '@/pages/stream/types';
 import { SocialProfile } from '@/pages/social/types';
 import { Tab } from '@/components/Tabs';
+import { PrimaryButton } from '@/lib/Buttons.lib';
 
 export const useMeetingImage = (meeting: Meeting): string => {
 	const { loggedInUser } = useAuth();
@@ -129,9 +130,57 @@ export function MeetingDetail(): JSX.Element {
 	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
 		return (
-			<div key={meeting.id}>
-				<h2>{meeting.name}</h2>
-				<p>{meeting.invites}</p>
+			<div className="flex h-full w-full flex-col items-center justify-center">
+				<div className="flex h-full w-full flex-col items-center justify-center">
+					<h1 className="text-3xl font-bold text-neutral-100">{meeting.name}</h1>
+					<p className="text-neutral-100">{meeting.type_of}</p>
+					<p className="text-neutral-100">{meeting.time}</p>
+					<p className="text-neutral-100">{meeting.invites.join(', ')}</p>
+				</div>
+
+				<div className="h-full w-full items-center justify-center sm:flex">
+					{/* Stream 1 */}
+					<div className="items-center justify-center lg:mr-2 lg:flex lg:w-1/2 lg:flex-col">
+						<div className="flex h-full w-full items-center justify-center lg:flex-col">
+							<iframe
+								height={typeof window !== 'undefined' ? window.innerHeight / 2 : 0}
+								width={
+									typeof window !== 'undefined' && window.innerWidth > 1024
+										? window.innerWidth / 2.5
+										: window.innerWidth / 1.15
+								}
+								src="https://www.youtube.com/embed/DxmDPrfinXY/?autoplay=1&mute=1"
+								title="YouTube video player"
+								allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowFullScreen
+							/>
+						</div>
+						<div className="flex justify-center p-2">
+							<PrimaryButton>Mute</PrimaryButton>
+						</div>
+					</div>
+
+					{/* Stream 2 */}
+					<div className="items-center justify-center lg:ml-2 lg:flex lg:w-1/2 lg:flex-col">
+						<div className="flex h-full w-full items-center justify-center lg:flex-col">
+							<iframe
+								height={typeof window !== 'undefined' ? window.innerHeight / 2 : 0}
+								width={
+									typeof window !== 'undefined' && window.innerWidth > 1024
+										? window.innerWidth / 2.5
+										: window.innerWidth / 1.15
+								}
+								src="https://www.youtube.com/embed/DxmDPrfinXY/?autoplay=1&mute=1"
+								title="YouTube video player"
+								allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowFullScreen
+							/>
+						</div>
+						<div className="flex justify-center p-2">
+							<PrimaryButton>Mute</PrimaryButton>
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}

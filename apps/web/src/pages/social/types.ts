@@ -32,9 +32,9 @@ export interface AdditionalSP {
 }
 
 export interface MatchProfile extends Profile, SocialProfile {
-	first_name: string;
-	last_name: string;
-	video_call_friendly: boolean;
-	preferred_day: string;
-	preferred_time: string;
+	readonly first_name: string;
+	readonly last_name: string;
+	readonly video_call_friendly: boolean;
+	readonly preferred_day: string;
+	readonly preferred_time: string;
 }

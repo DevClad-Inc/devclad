@@ -313,7 +313,7 @@ export function MessageChild(): JSX.Element {
 		return <MessagesLoading />;
 	}
 	if (channelQData || reloadFetch) {
-		if (messagesWindowRef.current) {
+		if (messagesWindowRef.current && !reloadFetch) {
 			messagesWindowRef.current.scrollTop = messagesWindowRef.current.scrollHeight;
 		}
 		return (
