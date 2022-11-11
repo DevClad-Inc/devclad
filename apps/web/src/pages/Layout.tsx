@@ -16,7 +16,7 @@ import { useAuth } from '@/services/useAuth.services';
 import { useProfile } from '@/services/socialHooks.services';
 import { Profile } from '@/lib/types.lib';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
-import { meetingQuery, userMatchesQuery } from '@/lib/queries.lib';
+import { meetingQuery, userCircleQuery, userMatchesQuery } from '@/lib/queries.lib';
 
 const noBreadCrumbRoutes = ['profile', ''];
 
@@ -67,6 +67,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			href: '/messages',
 			icon: ChatBubbleLeftRightIcon,
 			alt: 'Messages',
+			onmouseenter: () => {
+				qc.prefetchQuery(userCircleQuery(token, loggedInUser?.username || ''));
+			},
 		},
 		{
 			name: 'Meetings',

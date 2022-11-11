@@ -90,13 +90,13 @@ export default function Home() {
 	const desc =
 		'Social Workspace Platform built for developers. Meet developers 1:1 using AI, build your network, and ship the next best thing.';
 	return (
-		<div className="relative overflow-y-auto overflow-x-hidden">
+		<div className="relative overflow-y-auto overflow-x-hidden font-sans">
 			<Head>
 				<meta charSet="UTF-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<meta name="description" content={desc} />
 				<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-				<meta name="theme-color" content="#101218" />
+				<meta name="theme-color" content="#010203" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<link rel="canonical" href="https://devclad.com/" />
 				<meta name="title" content="DevClad - Social Workspace Platform for Developers" />
