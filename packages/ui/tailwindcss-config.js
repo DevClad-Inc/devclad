@@ -55,8 +55,8 @@ module.exports = {
         blackChocolate: "#241B00",
       },
       fontFamily: {
-        mono: ['"JetBrainsMono-Variable"', ...defaultTheme.fontFamily.mono],
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        mono: ['"JetBrainsMono-Variable"', "var(--font-jb-mono)", ...defaultTheme.fontFamily.mono],
+        sans: ["Inter var", "var(--font-inter)", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         gradient: {
@@ -129,7 +129,7 @@ module.exports = {
         },
       },
       animation: {
-        fadeIn: "fadeIn 1.5s ease-in forwards",
+        fadeIn: "fadeIn 0.75s ease-in forwards",
         gradient: "gradient 10s ease-out infinite",
         "gradient-reverse": "gradient 10s ease infinite reverse",
         "spin-slow": "spin 10s linear",

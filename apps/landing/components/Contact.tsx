@@ -8,7 +8,7 @@ export default function Contact(): JSX.Element {
 				<h2 className="text-3xl font-extrabold  text-white sm:text-4xl">
 					<span className="block">Reach out</span>
 					<a
-						href="https://discord.connectdome.com"
+						href="https://https://discord.com/invite/Cu5UgbgPjQ"
 						target="_blank"
 						className="mb-10 inline-flex items-center rounded-full border-[1px]
                border-neutral-900 bg-black p-1 pr-2 sm:text-base lg:text-sm xl:text-base"

@@ -43,7 +43,7 @@ const roadmap = [
 
 export function Features(): JSX.Element {
 	return (
-		<div className="animate-fadeIn space-y-16 py-4 sm:py-8">
+		<div className="animate-fadeIn space-y-16 py-4 sm:animate-none sm:py-8">
 			<div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
 				<h2 className="text-lg font-semibold text-neutral-300">Meet developers</h2>
 				<p className="mt-2 text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">

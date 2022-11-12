@@ -36,7 +36,7 @@ function Nav(): JSX.Element {
 
 function Landing(): JSX.Element {
 	const { ref, inView } = useInView({
-		threshold: 0.5,
+		threshold: 0.1,
 		triggerOnce: true,
 	});
 	const { ref: roadmapRef, inView: roadmapInView } = useInView({
@@ -44,7 +44,7 @@ function Landing(): JSX.Element {
 		triggerOnce: true,
 	});
 	const { ref: contactRef, inView: contactInView } = useInView({
-		threshold: 0.25,
+		threshold: 0.1,
 		triggerOnce: true,
 	});
 	return (
@@ -86,40 +86,9 @@ function Landing(): JSX.Element {
 }
 
 export default function Home() {
-	const title = 'DevClad - Network, Build, and Ship rapidly';
-	const desc =
-		'Social Workspace Platform built for developers. Meet developers 1:1 using AI, build your network, and ship the next best thing.';
 	return (
 		<div className="relative overflow-y-auto overflow-x-hidden font-sans">
 			<Head>
-				<meta charSet="UTF-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-				<meta name="description" content={desc} />
-				<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-				<meta name="theme-color" content="#010203" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-				<link rel="canonical" href="https://devclad.com/" />
-				<meta name="title" content="DevClad - Social Workspace Platform for Developers" />
-
-				{/* <!-- Open Graph / Facebook --> */}
-				<meta property="og:type" content="website" />
-				<meta property="og:url" content="https://devclad.coc}m/" />
-				<meta property="og:title" content={title} />
-				<meta property="og:description" content={desc} />
-				<meta
-					property="og:image"
-					content="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/677a1e0a-bd95-4e85-7aa3-86287a865f00/public"
-				/>
-
-				{/* <!-- Twitter --> */}
-				<meta property="twitter:card" content="summary_large_image" />
-				<meta property="twitter:url" content="https://devclad.com/" />
-				<meta property="twitter:title" content={title} />
-				<meta property="twitter:description" content={desc} />
-				<meta
-					property="twitter:image"
-					content="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/677a1e0a-bd95-4e85-7aa3-86287a865f00/public"
-				/>
 				<title>DevClad | Social Workspace Platform for Developers ⚡️</title>
 			</Head>
 			<div className="relative bg-gradient-to-b from-black via-black/60 to-black">
