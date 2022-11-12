@@ -9,6 +9,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { classNames } from '@devclad/lib';
 
+import MatchImg from '@/public/match.png';
+import ScheduleImg from '@/public/scheduling.png';
+
 const features = [
 	{
 		name: '1 on 1 Matches',
@@ -146,21 +149,13 @@ export function Features(): JSX.Element {
 						<div className="space-y-4">
 							<Image
 								className="rounded-xl bg-black shadow-2xl shadow-white/10"
-								src="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/2af90755-5cb2-4ed0-6192-b34660e3f200/public"
-								alt="1-on-1 Match"
-								width={2000}
-								height={2000}
-								blurDataURL="data:..."
-								placeholder="blur" // Optional blur-up while loading
+								src={MatchImg}
+								alt="1-on-1 Match every week"
 							/>
 							<Image
 								className="rounded-xl bg-black shadow-2xl shadow-white/10"
-								src="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/bb558a00-7647-464b-e168-438fc8d74800/public"
-								alt="1-on-1 Match"
-								width={2000}
-								height={2000}
-								blurDataURL="data:..."
-								placeholder="blur" // Optional blur-up while loading
+								src={ScheduleImg}
+								alt="Scheduling meetings is easy with DevClad"
 							/>
 						</div>
 					</div>
