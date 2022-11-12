@@ -72,7 +72,7 @@ export default function Hero(): JSX.Element {
 										</svg>
 									</span>
 									<span className=" text-xs lg:text-sm">
-										Open-Sourced on GitHub
+										Open-Source on GitHub
 									</span>
 									<ChevronRightIcon
 										className="ml-2 h-5 w-5 text-neutral-500"

@@ -43,10 +43,7 @@ function Landing(): JSX.Element {
 		threshold: 0.1,
 		triggerOnce: true,
 	});
-	const { ref: contactRef, inView: contactInView } = useInView({
-		threshold: 0.1,
-		triggerOnce: true,
-	});
+
 	return (
 		<div className="max-h-min w-full">
 			<div className="pt-6 pb-10 backdrop-blur-0 md:pb-0 lg:pb-0">
@@ -73,10 +70,7 @@ function Landing(): JSX.Element {
 				>
 					<Roadmap />
 				</div>
-				<div
-					ref={contactRef}
-					className={classNames(contactInView ? 'animate-fadeIn' : '', 'mt-5 sm:-mt-20')}
-				>
+				<div className="mt-5 sm:-mt-20">
 					<Contact />
 				</div>
 				<Footer />

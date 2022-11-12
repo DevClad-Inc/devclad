@@ -7,6 +7,9 @@ const nextConfig = {
 	experimental: {
 		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 	},
+	images: {
+		domains: ['imagedelivery.net'],
+	},
 	headers: async () => {
 		return [
 			{
