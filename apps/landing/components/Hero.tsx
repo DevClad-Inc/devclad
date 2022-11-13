@@ -1,8 +1,8 @@
 import React from 'react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { checkIOS, checkMacOS } from '@devclad/lib';
-import CTA from '@/components/CTA';
 import Link from 'next/link';
+import CTA from '@/components/CTA';
 
 // network, build, and ship
 function NBS(): JSX.Element {
@@ -51,7 +51,7 @@ export default function Hero(): JSX.Element {
 								</h1>
 							</span>
 							<span className="mb-2 mt-2 flex sm:justify-center">
-								<a
+								<Link
 									href="https://github.com/devclad-inc/devclad/"
 									target="_blank"
 									className="mb-2 inline-flex items-center rounded-lg border-[1px] border-dashed border-neutral-700 bg-black
@@ -79,11 +79,11 @@ export default function Hero(): JSX.Element {
 										className="ml-2 h-5 w-5 text-neutral-500"
 										aria-hidden="true"
 									/>
-								</a>
+								</Link>
 							</span>
 							<span className="mb-2 ml-4 mt-2 flex sm:justify-center ">
 								<Link
-									href="https://https://discord.com/invite/Cu5UgbgPjQ"
+									href="https://discord.com/invite/Cu5UgbgPjQ"
 									target="_blank"
 									className="inline-flex items-center rounded-lg  border-[1px] border-neutral-800 bg-black p-1
                pr-2 sm:mt-0 sm:rounded-full sm:text-base lg:text-sm xl:text-base"

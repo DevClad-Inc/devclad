@@ -39,7 +39,7 @@ export default function Contact(): JSX.Element {
 					</span>
 					<span className="mb-2 ml-4 mt-2 flex justify-center font-light">
 						<Link
-							href="https://https://discord.com/invite/Cu5UgbgPjQ"
+							href="https://discord.com/invite/Cu5UgbgPjQ"
 							target="_blank"
 							className="inline-flex items-center rounded-lg  border-[1px] border-neutral-800 bg-black p-1
                pr-2 sm:mt-0 sm:rounded-full sm:text-base lg:text-sm xl:text-base"
