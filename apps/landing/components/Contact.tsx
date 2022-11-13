@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import React from 'react';
 
 export default function Contact(): JSX.Element {
@@ -37,7 +38,7 @@ export default function Contact(): JSX.Element {
 						</a>
 					</span>
 					<span className="mb-2 ml-4 mt-2 flex justify-center font-light">
-						<a
+						<Link
 							href="https://https://discord.com/invite/Cu5UgbgPjQ"
 							target="_blank"
 							className="inline-flex items-center rounded-lg  border-[1px] border-neutral-800 bg-black p-1
@@ -59,7 +60,7 @@ export default function Contact(): JSX.Element {
 								className="ml-2 h-5 w-5 text-neutral-500"
 								aria-hidden="true"
 							/>
-						</a>
+						</Link>
 					</span>
 				</h2>
 			</div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { checkIOS, checkMacOS } from '@devclad/lib';
 import CTA from '@/components/CTA';
+import Link from 'next/link';
 
 // network, build, and ship
 function NBS(): JSX.Element {
@@ -81,7 +82,7 @@ export default function Hero(): JSX.Element {
 								</a>
 							</span>
 							<span className="mb-2 ml-4 mt-2 flex sm:justify-center ">
-								<a
+								<Link
 									href="https://https://discord.com/invite/Cu5UgbgPjQ"
 									target="_blank"
 									className="inline-flex items-center rounded-lg  border-[1px] border-neutral-800 bg-black p-1
@@ -103,7 +104,7 @@ export default function Hero(): JSX.Element {
 										className="ml-2 h-5 w-5 text-neutral-500"
 										aria-hidden="true"
 									/>
-								</a>
+								</Link>
 							</span>
 
 							<div className="space-y-4">
