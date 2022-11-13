@@ -57,7 +57,7 @@ export default function Contact(): JSX.Element {
 							</svg>
 							<span className="text-xs lg:text-sm">Join our Discord</span>
 							<ChevronRightIcon
-								className="ml-2 h-5 w-5 text-neutral-500"
+								className="h-5 w-5 text-neutral-500 sm:ml-2"
 								aria-hidden="true"
 							/>
 						</Link>

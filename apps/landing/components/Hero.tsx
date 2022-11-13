@@ -81,7 +81,7 @@ export default function Hero(): JSX.Element {
 									/>
 								</Link>
 							</span>
-							<span className="mb-2 ml-4 mt-2 flex sm:justify-center ">
+							<span className="mb-2 mt-2 flex sm:ml-4 sm:justify-center ">
 								<Link
 									href="https://discord.com/invite/Cu5UgbgPjQ"
 									target="_blank"

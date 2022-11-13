@@ -8,7 +8,6 @@ module.exports = {
 		'node_modules',
 		'public',
 		'dist',
-		'vite.config.ts',
 	],
 	parserOptions: {
 		ecmaFeatures: {
