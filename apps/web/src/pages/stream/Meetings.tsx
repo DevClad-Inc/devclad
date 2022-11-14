@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
+import { Peer } from 'peerjs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
@@ -119,7 +120,7 @@ MeetingList.defaultProps = {
 
 export function MeetingDetail(): JSX.Element {
 	const qc = useQueryClient();
-	const { token } = useAuth();
+	const { token, loggedInUser } = useAuth();
 	const { uid } = useParams<{ uid: string }>() as { uid: string };
 	const socialProfile = useSocialProfile() as SocialProfile;
 	const spState = qc.getQueryState(['social-profile']);
@@ -130,6 +131,17 @@ export function MeetingDetail(): JSX.Element {
 	} = useQuery({
 		...meetingQuery(token, uid as string),
 	});
+
+	React.useEffect(() => {
+		const createPeer = async (username: string) => {
+			const peer = new Peer(`${uid + username}`);
+			console.log(peer);
+		};
+
+		if (isSuccess && meetingData !== null && loggedInUser) {
+			createPeer(loggedInUser?.username as string);
+		}
+	}, [isSuccess, loggedInUser, meetingData, uid]);
 
 	if (
 		isLoading ||
