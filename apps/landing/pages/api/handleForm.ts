@@ -20,11 +20,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
 						fields: { Email: email },
 					},
 				]);
-				response.status(200).end();
 			} catch (error) {
 				response.status(500).json({ error });
 			}
-
+			response.status(200).end();
 			break;
 		default:
 			response.status(405).json({ error: 'Method not allowed' });

@@ -135,7 +135,7 @@ export function MeetingDetail(): JSX.Element {
 	React.useEffect(() => {
 		const createPeer = async (username: string) => {
 			const peer = new Peer(`${uid + username}`);
-			console.log(peer);
+			console.log(peer.id);
 		};
 
 		if (isSuccess && meetingData !== null && loggedInUser) {
