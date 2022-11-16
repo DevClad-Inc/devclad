@@ -4,12 +4,14 @@ import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
 import { toast } from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/services/useAuth.services';
 import { User } from '@/lib/types.lib';
 import { createUpdateMeeting } from '@/services/meetings.services';
 import { Error, Success } from '@/components/Feedback';
 import { MeetingCreateUpdate } from '@/pages/stream/types';
 import { MeetingDate, useDaysOfWeek } from './ActionDialog';
+import { meetingQuery } from '@/lib/queries.lib';
 
 export function ScheduleDialog({
 	open,
@@ -30,6 +32,7 @@ export function ScheduleDialog({
 	action: string;
 }) {
 	const navigate = useNavigate();
+	const qc = useQueryClient();
 	const [submitted, setSubmitted] = React.useState(false);
 	const [scheduled, setScheduled] = React.useState(false);
 	const [selectedDay, setSelectedDay] = React.useState<MeetingDate>();
@@ -47,6 +50,7 @@ export function ScheduleDialog({
 	const apiCall = async (values: MeetingCreateUpdate) => {
 		await createUpdateMeeting(token, values)
 			?.then(() => {
+				qc.invalidateQueries(meetingQuery(token, 'upcoming'));
 				setSubmitted(true);
 				setScheduled(true);
 				toast.custom(<Success success="Meeting Scheduled!" />, {

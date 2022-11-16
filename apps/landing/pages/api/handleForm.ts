@@ -14,16 +14,18 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
 	switch (request.method) {
 		case 'POST':
-			try {
-				base('Table 1').create([
+			base('Table 1')
+				.create([
 					{
 						fields: { Email: email },
 					},
-				]);
-			} catch (error) {
-				response.status(500).json({ error });
-			}
-			response.status(200).end();
+				])
+				.then(() => {
+					response.status(200).json({ message: 'Success' });
+				})
+				.catch((error) => {
+					response.status(500).json({ error });
+				});
 			break;
 		default:
 			response.status(405).json({ error: 'Method not allowed' });
