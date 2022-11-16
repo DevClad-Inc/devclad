@@ -142,7 +142,7 @@ export function MeetingDetail(): JSX.Element {
 		const createPeer = async (username: string) => {
 			const peer = new Peer(`${uid + username}`, {
 				host: 'localhost',
-				port: 9000,
+				port: DEVELOPMENT ? 9000 : 443,
 				path: '/peerjs',
 				debug: DEVELOPMENT ? 3 : 0,
 			});
