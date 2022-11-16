@@ -28,18 +28,18 @@ class SocialProfileSerializer(serializers.ModelSerializer):
         exclude = [
             "id",
             "user",
+            "circle",
             "skipped",
             "blocked",
             "shadowed",
             "matches_this_week",
-            "circle",
-            "preferred_timezone_deviation",
+            "indirect_matching",
             "available_this_week",
             "available_always_off",
+            "preferred_timezone_deviation",
             "preferred_day",
             "preferred_time",
             "video_call_friendly",
-            "indirect_matching",
         ]
 
 
@@ -67,15 +67,15 @@ class SocialDisplayProfileSerializer(serializers.ModelSerializer):
         exclude = [
             "id",
             "user",
-            "skipped",
-            "shadowed",
-            "blocked",
-            "matches_this_week",
             "circle",
-            "preferred_timezone_deviation",
+            "skipped",
+            "blocked",
+            "shadowed",
+            "matches_this_week",
             "indirect_matching",
-            "available_always_off",
             "available_this_week",
+            "available_always_off",
+            "preferred_timezone_deviation",
         ]
 
 
