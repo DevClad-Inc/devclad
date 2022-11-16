@@ -5,6 +5,9 @@
 			"path": "apps/web"
 		},
 		{
+			"path": "apps/peer"
+		},
+		{
 			"path": "apps/landing"
 		},
 		{
