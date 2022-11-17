@@ -192,7 +192,7 @@ export function Home(): JSX.Element {
 							<div className="block">
 								<div className="flex items-baseline space-x-4 sm:ml-10">
 									<h1 className="text-left text-2xl font-bold sm:text-3xl">
-										<span className="font-mono text-orange-200">
+										<span className="text-orange-200">
 											{loggedInUser?.first_name}&apos;s
 										</span>
 										{'  '}

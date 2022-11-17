@@ -141,12 +141,13 @@ export function MeetingDetail(): JSX.Element {
 	React.useEffect(() => {
 		const createPeer = async (username: string) => {
 			const peer = new Peer(`${uid + username}`, {
-				host: DEVELOPMENT ? 'localhost' : import.meta.env.VITE_PEERJS_HOST,
-				port: DEVELOPMENT ? 9000 : 443,
+				secure: !DEVELOPMENT,
+				host: import.meta.env.VITE_PEERJS_HOST,
+				port: 443,
 				path: '/peerjs',
 				debug: DEVELOPMENT ? 3 : 0,
 			});
-			console.log(peer.id);
+			console.log('peer', peer);
 		};
 
 		if (isSuccess && meetingData !== null && loggedInUser) {
