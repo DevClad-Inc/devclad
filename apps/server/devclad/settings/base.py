@@ -194,6 +194,13 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SIMPLE_JWT_SIGNING_KEY,
 }
 
+CSRF_TRUSTED_ORIGINS = config(
+    "CORS_ALLOWED_ORIGINS",
+    default="",
+    cast=lambda allowed_origins: [
+        origin.strip() for origin in allowed_origins.split(" ")
+    ],
+)
 
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
@@ -252,6 +259,20 @@ Q_CLUSTER = {
 STREAM_API_KEY = config("STREAM_API_KEY")
 STREAM_API_SECRET = config("STREAM_API_SECRET")
 
-# ==================================== GRAPHQL ========================================== #
+# ==================================== AWS ========================================== #
 
-# new settings
+"""
+AWS_QUERYSTRING_AUTH = False
+
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = "devclad"  # hc
+AWS_S3_REGION_NAME = "us-west-2"
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = "public-read"
+AWS_HEADERS = {"Cache-Control": "public, max-age=1209600"}
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage
+"""

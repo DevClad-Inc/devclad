@@ -1,17 +1,22 @@
 from decouple import config
 
-PRODUCTION = config("PRODUCTION", default=False, cast=bool)
+ENVIRONMENT = config("ENVIRONMENT", default="DEVELOPMENT")
 
-if PRODUCTION:
-    from devclad.settings.production import *
-else:
-    from devclad.settings.development import *
+match ENVIRONMENT:
+    case "DEVELOPMENT":
+        from devclad.settings.development import *
+    case "PRODUCTION":
+        from devclad.settings.production import *
+    case "GITPOD":
+        from devclad.settings.gitpod import *
 
 # ==== ROLLBAR ====
 
 ROLLBAR = {
     "access_token": "879540db65a74364893afe8a882f05a6",
-    "environment": "development" if PRODUCTION else "production",
+    "environment": "development"
+    if (ENVIRONMENT == "DEVELOPMENT" or "GITPOD")
+    else "production",
     "root": BASE_DIR,
 }
 import rollbar

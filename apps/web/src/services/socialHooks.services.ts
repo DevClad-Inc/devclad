@@ -15,7 +15,7 @@ import {
 import { Profile } from '@/lib/types.lib';
 import { useAuth } from '@/services/useAuth.services';
 import { checkTokenType } from './auth.services';
-import { SocialProfile, AdditionalSP } from '@/pages/social/types';
+import { SocialProfile, AdditionalSP } from '@/app/social/types';
 
 export const useStreamUID = (username: string) => {
 	const { token } = useAuth();

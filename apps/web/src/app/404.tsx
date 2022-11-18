@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '@devclad/lib';
 import Cookies from 'js-cookie';
 import { useAuth } from '@/services/useAuth.services';
-import Layout from '@/pages/Layout';
+import Layout from '@/app/Layout';
 
 export function FourOFour(): JSX.Element {
 	const { authed } = useAuth();

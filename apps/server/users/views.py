@@ -17,8 +17,9 @@ from users.serializers import (
     ProfileSerializer,
     UserStatusSerializer,
     UserEmailSerializer,
+    SubscriptionStatusSerializer,
 )
-from users.models import Profile, UserStatus, User
+from users.models import Profile, UserStatus, User, SubscriptionStatus
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.utils import timezone
@@ -254,6 +255,24 @@ def user_status(request) -> Response:
                     return Response(serializer.data)
                 case _:
                     return Response(serializer.errors, status=400)
+        case _:
+            return Response({"error": "Invalid method"}, status=405)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def user_subscriptions(request) -> Response:
+    """/users/subscription/"""
+    match request.method:
+        case "GET":
+            try:
+                subscription = SubscriptionStatus.objects.get(user=request.user)
+            except SubscriptionStatus.DoesNotExist:
+                return Response(
+                    {"error": "User does not have a Subscription Status"}, status=404
+                )
+            serializer = SubscriptionStatusSerializer(subscription)
+            return Response(serializer.data)
         case _:
             return Response({"error": "Invalid method"}, status=405)
 

@@ -24,7 +24,9 @@ dist-ssr
 *.sw?
 
 # all .env files
-.env*
+.env.local
+.env.prod
+.env
 
 .turbo
 

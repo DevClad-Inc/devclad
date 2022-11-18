@@ -64,6 +64,28 @@ class Profile(models.Model):
         return self.avatar.url
 
 
+class SubscriptionStatus(models.Model):
+    """Will be managed using Stripe"""
+
+    SUBSCRIPTION_STATUS = [
+        ("Free Trial", "Free Trial"),
+        ("Starter", "Starter"),
+        ("X", "X"),
+    ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    status = models.CharField(
+        choices=SUBSCRIPTION_STATUS, default="Free Trial", max_length=64
+    )
+    subscription_id = models.CharField(max_length=64, blank=True, null=True)
+    customer_id = models.CharField(max_length=64, blank=True, null=True)
+    """
+    trial length, billing frequency, billing period, and billing cycle anchor are managed by Stripe
+    """
+
+    def __str__(self: "SubscriptionStatus") -> str:
+        return f"{self.user.username} - {self.status}"
+
+
 class UserStatus(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     status = models.CharField(

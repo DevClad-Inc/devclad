@@ -45,7 +45,7 @@ export function SignOut(): JSX.Element {
 		>
 			<div className="flex-1 truncate">
 				<div className="flex items-center space-x-3">
-					<h3 className="truncate text-sm font-medium text-neutral-500 sm:text-base lg:text-xl">
+					<h3 className="truncate text-sm text-neutral-500 sm:text-base">
 						{loggingOut ? 'Signing' : 'Sign'} Out
 					</h3>
 				</div>
@@ -74,13 +74,9 @@ function DashCard({ item }: { item: ItemInterface }): JSX.Element {
 		>
 			<div className="flex-1 truncate">
 				<div className="flex items-center space-x-3">
-					<h3 className="truncate text-sm font-light text-neutral-100 sm:text-base lg:text-xl">
-						{name}
-					</h3>
+					<h3 className="truncate text-sm text-neutral-100 sm:text-base">{name}</h3>
 				</div>
-				<p className="mt-1 hidden text-neutral-500 sm:block sm:text-sm lg:text-base">
-					{description}
-				</p>
+				<p className="mt-1 hidden text-neutral-500 sm:block sm:text-sm">{description}</p>
 			</div>
 			<Icon
 				className="h-6 w-6 flex-shrink-0 text-neutral-400 lg:h-8 lg:w-8"
@@ -192,7 +188,7 @@ export function Home(): JSX.Element {
 							<div className="block">
 								<div className="flex items-baseline space-x-4 sm:ml-10">
 									<h1 className="text-left text-2xl font-bold sm:text-3xl">
-										<span className="font-mono text-orange-200">
+										<span className="text-orange-200">
 											{loggedInUser?.first_name}&apos;s
 										</span>
 										{'  '}

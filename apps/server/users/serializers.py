@@ -13,7 +13,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from dj_rest_auth.serializers import PasswordResetSerializer
 
-from users.models import Profile, UserStatus, User
+from users.models import Profile, UserStatus, SubscriptionStatus, User
 from users.forms import CustomAllAuthPasswordResetForm
 from users.validators import image_size_validator, validate_email
 
@@ -232,6 +232,13 @@ class UserStatusSerializer(serializers.ModelSerializer):
         model = UserStatus
         fields = ["status", "approved"]
         read_only_fields = ["approved"]
+
+
+class SubscriptionStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubscriptionStatus
+        fields = ["status", "subscription_id", "customer_id"]
+        read_only_fields = fields
 
 
 class UserEmailSerializer(serializers.ModelSerializer):

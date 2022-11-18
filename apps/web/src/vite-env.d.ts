@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
 	readonly VITE_APP_TITLE: string;
+	readonly VITE_PEERJS_HOST: string;
 	readonly VITE_STREAM_API_KEY: string;
 	readonly VITE_GITHUB_CLIENT_ID: string;
 	readonly VITE_CLIENT_URL: string;

@@ -23,7 +23,11 @@ User = get_user_model()
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def profile(request):
-    """Determine if the user is authenticated and return their SocialProfile"""
+    """**/social/profile/** route returns current user's social profile; not meant for display
+    Difference between this route and /social/profile/<username> is that this route does not include
+    "preferred_day", "preferred_time", and "video_call_friendly".
+    The left out fields are available for editing in prefs/ route.
+    """
     match request.method:
         case "GET":
             try:
@@ -59,7 +63,7 @@ def profile(request):
 @api_view(["GET", "PATCH"])
 @permission_classes([IsAuthenticated])
 def additional_preferences(request):
-    """Manage user's additional 1on1 preferences"""
+    """Manage logged in user's additional 1on1 preferences. /social/additional-prefs/"""
     match request.method:
         case "GET":
             try:

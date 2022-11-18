@@ -21,14 +21,14 @@ import {
 	useShadowedUsernames,
 	useConnected,
 } from '@/services/socialHooks.services';
-import { MatchProfile } from '@/pages/social/types';
+import { MatchProfile } from '@/app/social/types';
 import { ProfileLoading } from '@/components/LoadingStates';
-import { genExp, genIdea } from '@/pages/Profile';
+import { genExp, genIdea } from '@/app/Profile';
 import { useAuth } from '@/services/useAuth.services';
 import { patchCircle, shadowUser, skipUser } from '@/services/profile.services';
 import { Success, Error } from '@/components/Feedback';
-import { ActionDialog } from '@/pages/social/components/ActionDialog';
-import { ScheduleDialog } from '@/pages/social/components/ScheduleDialog';
+import { ActionDialog } from '@/app/social/components/ActionDialog';
+import { ScheduleDialog } from '@/app/social/components/ScheduleDialog';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 
 function MatchCard({ username }: { username: string }): JSX.Element {

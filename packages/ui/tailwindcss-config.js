@@ -55,8 +55,10 @@ module.exports = {
         blackChocolate: "#241B00",
       },
       fontFamily: {
-        mono: ['"JetBrainsMono-Variable"', "var(--font-jb-mono)", ...defaultTheme.fontFamily.mono],
-        sans: ["Inter var", "var(--font-inter)", ...defaultTheme.fontFamily.sans],
+        mono: ['"JetBrainsMono-Variable"', ...defaultTheme.fontFamily.mono],
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        monoNext: ["var(--font-jb-mono)", ...defaultTheme.fontFamily.mono],
+        sansNext: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         gradient: {

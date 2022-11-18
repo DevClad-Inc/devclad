@@ -9,7 +9,7 @@ import { useAuth } from '@/services/useAuth.services';
 import { User } from '@/lib/types.lib';
 import { createUpdateMeeting } from '@/services/meetings.services';
 import { Error, Success } from '@/components/Feedback';
-import { MeetingCreateUpdate } from '@/pages/stream/types';
+import { MeetingCreateUpdate } from '@/app/stream/types';
 import { MeetingDate, useDaysOfWeek } from './ActionDialog';
 import { meetingQuery } from '@/lib/queries.lib';
 
