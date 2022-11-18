@@ -69,6 +69,7 @@ export const userQuery = (token: string, qc?: QueryClient) => ({
 });
 
 export const socialProfileQuery = (token: string, username?: string) => ({
+	// username is used only in useOneOneProfile hook
 	queryKey: username ? ['social-profile', username] : ['social-profile'],
 	queryFn: () => getSocialProfile(token, username),
 	enabled: username

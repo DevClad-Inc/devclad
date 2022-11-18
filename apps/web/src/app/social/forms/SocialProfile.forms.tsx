@@ -117,6 +117,7 @@ export function SocialProfileForm(): JSX.Element {
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
 		try {
+			await qc.cancelQueries(['social-profile']);
 			values.preferred_dev_type = selectedPrefDevType?.name;
 			values.idea_status = selectedIdeaStatus?.name;
 			values.location = selectedCountry?.name;

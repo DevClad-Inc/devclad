@@ -1,5 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import express from 'express';
+import express, { Request } from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 
@@ -11,8 +11,14 @@ if (process.env.NODE_ENV !== 'production') {
 
 const allowlist = process.env.ALLOWED_ORIGINS?.split(',');
 
-const corsOptions = (req: any, callback: any) => {
-	if (allowlist?.indexOf(req.header('Origin')) !== -1 || req.header('Origin') === undefined) {
+const corsOptions = (
+	req: Request,
+	callback: (err: Error | null, options?: cors.CorsOptions) => void
+) => {
+	if (
+		allowlist?.indexOf(req.header('Origin') as string) !== -1 ||
+		req.header('Origin') === undefined
+	) {
 		callback(null, { origin: true });
 	} else {
 		throw new Error('CORS not allowed');
@@ -20,7 +26,7 @@ const corsOptions = (req: any, callback: any) => {
 };
 
 const app = express();
-app.use(cors(corsOptions));
+app.use(cors<Request>(corsOptions));
 
 const server = app.listen(process.env.PORT || 9000, () => {}); // defined as 443 in the .env file
 
