@@ -17,10 +17,12 @@ We do not do unit tests. Integration testing is an open issue so you could start
 
 ### Gitpod
 
-- `pyenv install 3.10.6`
-- `pyenv shell 3.10.6`
-- `poetry env use python3.10`
-- `poetry shell`
-- `poetry install`
-- `python manage.py migrate`
-- `python manage.py runserver`
+1. `pyenv install 3.10.6`
+2. `pyenv shell 3.10.6`
+3. `poetry env use python3.10`
+4. `poetry shell`
+5. `poetry install`
+6. `python manage.py migrate`
+7. `python manage.py runserver`
+
+If something is broken about this Gitpod setup, fix it and make a PR.
