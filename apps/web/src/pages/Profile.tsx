@@ -378,35 +378,37 @@ function ProfileCard({ username }: { username: string }): JSX.Element {
 								</div>
 							</>
 						)}
-						<div className="text-md flex justify-start space-x-2 pt-4 sm:ml-24">
-							{!blocked && (
-								<>
-									<div className="flex flex-col">
-										<Link className="flex" to={`/messages/${username}/`}>
+						{username !== loggedInUserUserName && (
+							<div className="text-md flex justify-start space-x-2 pt-4 sm:ml-24">
+								{!blocked && (
+									<>
+										<div className="flex flex-col">
+											<Link className="flex" to={`/messages/${username}/`}>
+												<PrimaryButton>
+													<ChatBubbleBottomCenterIcon
+														className="mr-2 h-6 w-6 lg:h-8"
+														aria-hidden="true"
+													/>
+													Chat
+												</PrimaryButton>
+											</Link>
+										</div>
+										<div className="flex flex-col">
 											<PrimaryButton>
-												<ChatBubbleBottomCenterIcon
+												<VideoCameraIcon
 													className="mr-2 h-6 w-6 lg:h-8"
 													aria-hidden="true"
 												/>
-												Chat
+												Schedule
 											</PrimaryButton>
-										</Link>
-									</div>
-									<div className="flex flex-col">
-										<PrimaryButton>
-											<VideoCameraIcon
-												className="mr-2 h-6 w-6 lg:h-8"
-												aria-hidden="true"
-											/>
-											Schedule
-										</PrimaryButton>
-									</div>
-								</>
-							)}
-							<div className="flex flex-col">
-								<ActionDropdown items={dropdownItems} />
+										</div>
+									</>
+								)}
+								<div className="flex flex-col">
+									<ActionDropdown items={dropdownItems} />
+								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>
