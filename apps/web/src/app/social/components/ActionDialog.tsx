@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { XMarkIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
-import { daysOfWeek } from '@/pages/social/forms/AdditionalSP.forms';
+import { daysOfWeek } from '@/app/social/forms/AdditionalSP.forms';
 
 export interface MeetingDate {
 	day: string;

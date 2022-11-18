@@ -15,9 +15,9 @@ import { Profile } from '@/lib/types.lib';
 import { MessagesLoading } from '@/components/LoadingStates';
 import { Error } from '@/components/Feedback';
 import { useStreamContext } from '@/context/Stream.context';
-import Message from '@/pages/stream/components/Message';
+import Message from '@/app/stream/components/Message';
 import { DEVELOPMENT, API_URL } from '@/services/auth.services';
-import { FetchMessages, ChannelQuery } from '@/pages/stream/types';
+import { FetchMessages, ChannelQuery } from '@/app/stream/types';
 
 const activeClass = `bg-neutral-50 dark:bg-darkBG2
                     hover:text-neutral-700 dark:hover:text-orange-300

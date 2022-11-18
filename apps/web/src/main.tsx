@@ -14,26 +14,26 @@ import { MessagesLoading, ProfileLoading } from '@/components/LoadingStates';
 import '@devclad/ui/fontscss';
 import '@/styles/globals.css';
 // Routes - Primary
-import Root from '@/pages/_root';
-import { ForgotPassword, PassReset } from '@/pages/PasswordReset';
-import { VerifyEmail } from '@/pages/VerifyEmail';
-import { Onboarding, StepOne, StepTwo } from '@/pages/Onboarding';
-import { Settings, AccountProfile, SocialProfile, Password } from '@/pages/Settings';
-import { Home } from '@/pages/Home';
-import { Login } from '@/pages/Login';
-import { Signup } from '@/pages/Signup';
+import Root from '@/app/_root';
+import { ForgotPassword, PassReset } from '@/app/PasswordReset';
+import { VerifyEmail } from '@/app/VerifyEmail';
+import { Onboarding, StepOne, StepTwo } from '@/app/Onboarding';
+import { Settings, AccountProfile, SocialProfile, Password } from '@/app/Settings';
+import { Home } from '@/app/Home';
+import { Login } from '@/app/Login';
+import { Signup } from '@/app/Signup';
 // Routes - Social
-import { Social } from '@/pages/social/Social';
-import { OneOne } from '@/pages/social/OneOne';
-import { Circle } from '@/pages/social/Circle';
-import { Profile } from '@/pages/Profile';
-import { Messages, MessageChild } from '@/pages/stream/Messages';
-import { Meetings, MeetingDetail, MeetingList } from '@/pages/stream/Meetings';
+import { Social } from '@/app/social/Social';
+import { OneOne } from '@/app/social/OneOne';
+import { Circle } from '@/app/social/Circle';
+import { Profile } from '@/app/Profile';
+import { Messages, MessageChild } from '@/app/stream/Messages';
+import { Meetings, MeetingDetail, MeetingList } from '@/app/stream/Meetings';
 import { StreamProvider } from '@/context/Stream.context';
 import { UserProvider } from '@/context/User.context';
 import { DEVELOPMENT } from '@/services/auth.services';
-import { FourOFour } from './pages/404';
-import { GithubAuth } from './pages/Github';
+import { FourOFour } from './app/404';
+import { GithubAuth } from './app/Github';
 
 axios.defaults.headers.common.withCredentials = true;
 

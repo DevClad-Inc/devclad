@@ -13,8 +13,8 @@ import { useAuth } from '@/services/useAuth.services';
 import { useProfile, useSocialProfile } from '@/services/socialHooks.services';
 import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 import { meetingQuery } from '@/lib/queries.lib';
-import { Meeting } from '@/pages/stream/types';
-import { SocialProfile } from '@/pages/social/types';
+import { Meeting } from '@/app/stream/types';
+import { SocialProfile } from '@/app/social/types';
 import { Tab } from '@/components/Tabs';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 
