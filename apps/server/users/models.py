@@ -65,9 +65,7 @@ class Profile(models.Model):
 
 
 class SubscriptionStatus(models.Model):
-    """
-    Will be managed using Stripe
-    """
+    """Will be managed using Stripe"""
 
     SUBSCRIPTION_STATUS = [
         ("Free Trial", "Free Trial"),
