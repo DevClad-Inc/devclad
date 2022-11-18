@@ -1,10 +1,12 @@
-from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Profile, UserStatus, GithubOAuth, SubscriptionStatus
+from django.core.exceptions import ObjectDoesNotExist
 from social.models import SocialProfile
-from work.models import ProjectProfile, HackathonProfile
 from stream.models import StreamUser
+from work.models import HackathonProfile, ProjectProfile
+
+from .models import GithubOAuth, Profile, SubscriptionStatus, UserStatus
 
 User = get_user_model()
 
@@ -35,8 +37,8 @@ def create_profiles(sender, instance, created, **kwargs):
         instance.streamuser.save()
         instance.projectprofile.save()
         instance.hackathonprofile.save()
-    except Exception as e:
-        match e:
+    except ObjectDoesNotExist as DNE:
+        match DNE:
             case UserStatus.DoesNotExist:
                 UserStatus.objects.create(user=instance)
             case SubscriptionStatus.DoesNotExist:
