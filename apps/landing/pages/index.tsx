@@ -81,7 +81,7 @@ function Landing(): JSX.Element {
 
 export default function Home() {
 	return (
-		<div className="relative overflow-y-auto overflow-x-hidden font-sans">
+		<div className="relative overflow-y-auto overflow-x-hidden font-sansNext">
 			<Head>
 				<title>DevClad | Social Workspace Platform for Developers ⚡️</title>
 			</Head>

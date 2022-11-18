@@ -88,7 +88,7 @@ export function Features(): JSX.Element {
 						<span className="font-black text-orange-300">First</span> social-workspace
 						platform for <span className="font-black text-orange-300">developers</span>
 					</h2>
-					<p className=" mx-auto mt-4 max-w-3xl text-center font-sans text-lg text-neutral-200">
+					<p className=" mx-auto mt-4 max-w-3xl text-center font-sansNext text-lg text-neutral-200">
 						🌱 DevClad is built on the principles of collaboration over consumption and
 						reducing friction for developers outside of tech-hubs. Think of this as a
 						Silicon Valley emulation constituting of other{' '}
@@ -102,7 +102,7 @@ export function Features(): JSX.Element {
 							Build a <span className="font-black text-orange-500">strong</span>{' '}
 							network of developers.
 						</h3>
-						<p className="mt-3 text-center font-mono text-lg tracking-tight text-neutral-200">
+						<p className="mt-3 text-center font-monoNext text-lg tracking-tight text-neutral-200">
 							Weekly 1—⁠on⁠—⁠1 match from a pool of vetted developers 🌎 using ML.
 						</p>
 						<span className="text-sm italic text-neutral-400">
@@ -135,7 +135,7 @@ export function Features(): JSX.Element {
 											<h3 className="mx-20 -mt-5 font-bold tracking-tight text-neutral-100 sm:text-xl lg:text-2xl">
 												{feature.name}
 											</h3>
-											<p className="mt-5 font-mono text-neutral-300 sm:text-sm lg:text-lg">
+											<p className="mt-5 font-monoNext text-neutral-300 sm:text-sm lg:text-lg">
 												{feature.description}
 											</p>
 										</div>
@@ -205,7 +205,7 @@ export function Roadmap(): JSX.Element {
 					<span className="font-black text-fuchsia-400">Team up</span> on Projects and
 					Hackathons
 				</p>
-				<p className="mx-auto mt-5 max-w-prose font-mono text-xl text-neutral-300">
+				<p className="mx-auto mt-5 max-w-prose font-monoNext text-xl text-neutral-300">
 					Spend less time configuring your workspace and more time building with minimal
 					interfaces that get you to your MVP faster.
 				</p>
@@ -230,7 +230,7 @@ export function Roadmap(): JSX.Element {
 										<h3 className="mt-8 font-bold tracking-tight text-neutral-100 sm:text-xl lg:text-2xl">
 											{feature.name}
 										</h3>
-										<p className="mt-5 font-mono text-neutral-300 sm:text-sm lg:text-lg">
+										<p className="mt-5 font-monoNext text-neutral-300 sm:text-sm lg:text-lg">
 											{feature.description}
 										</p>
 									</div>

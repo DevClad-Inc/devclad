@@ -19,7 +19,7 @@ SECURE_HSTS_PRELOAD = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)
-SESSION_COOKIE_DOMAIN = "127.0.0.1"
+SESSION_COOKIE_DOMAIN = ".gitpod.io"  #! play around with this till it works
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_NAME = "local-session"
 

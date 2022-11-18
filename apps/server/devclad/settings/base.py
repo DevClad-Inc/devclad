@@ -194,6 +194,13 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SIMPLE_JWT_SIGNING_KEY,
 }
 
+CSRF_TRUSTED_ORIGINS = config(
+    "CORS_ALLOWED_ORIGINS",
+    default="",
+    cast=lambda allowed_origins: [
+        origin.strip() for origin in allowed_origins.split(" ")
+    ],
+)
 
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
