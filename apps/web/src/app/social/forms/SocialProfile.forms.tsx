@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { classNames } from '@devclad/lib';
-import { SocialProfile, SocialProfileFormValues } from '@/pages/social/types';
+import { SocialProfile, SocialProfileFormValues } from '@/app/social/types';
 import { updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success, Error } from '@/components/Feedback';
@@ -118,7 +118,7 @@ export function SocialProfileForm(): JSX.Element {
 	) => {
 		try {
 			values.preferred_dev_type = selectedPrefDevType?.name;
-			values.idea_status = 'TESTESTERROR';
+			values.idea_status = selectedIdeaStatus?.name;
 			values.location = selectedCountry?.name;
 			values.dev_type = selectedDevType
 				.map((type: { name: string; id: number }) => type.name)
