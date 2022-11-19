@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
-import { NewUser, User } from '@/lib/types.lib';
+import { LoginResponse, NewUser, User } from '@/lib/types.lib';
 import { refreshQuery, tokenQuery } from '@/lib/queries.lib';
 import serverlessCookie from '@/lib/serverlessCookie.lib';
 
@@ -184,10 +184,7 @@ export function verifyToken(token: string, queryClient?: QueryClient): Promise<b
 		});
 }
 
-export async function getUser(
-	token: string,
-	queryClient?: QueryClient
-): Promise<AxiosResponse<User> | null> {
+export async function getUser(token: string, queryClient?: QueryClient) {
 	const url = `${API_URL}/auth/user/`;
 	// todo: store this in jotai instead of passing props
 	let isVerified = false;
@@ -196,7 +193,7 @@ export async function getUser(
 	}
 	if (isVerified) {
 		return axios
-			.get(url, {
+			.get<User>(url, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -214,7 +211,7 @@ export function updateUser(
 	username?: string
 ) {
 	if (checkTokenType(token)) {
-		return axios.patch(
+		return axios.patch<User>(
 			`${API_URL}/auth/user/`,
 			{ first_name, last_name, username },
 			{ headers: { Authorization: `Bearer ${token}` } }
@@ -223,25 +220,27 @@ export function updateUser(
 	return null;
 }
 
-export function SignUp(user: NewUser) {
-	return axios
-		.post(`${API_URL}/auth/registration/`, {
+export async function SignUp(user: NewUser) {
+	try {
+		const resp = await axios.post(`${API_URL}/auth/registration/`, {
 			first_name: user.firstName,
 			last_name: user.lastName,
 			email: user.email,
 			password1: user.password1,
 			password2: user.password2,
 			headers,
-		})
-		.then((resp) => resp)
-		.catch((err) => err);
+		});
+		return resp;
+	} catch (err) {
+		return err;
+	}
 }
 
 export async function logIn(queryClient: QueryClient, email: string, password: string) {
 	const url = `${API_URL}/auth/login/`;
 	let token;
 	const response = await axios
-		.post(url, {
+		.post<LoginResponse>(url, {
 			email,
 			password,
 			headers,

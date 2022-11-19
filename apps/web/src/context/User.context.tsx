@@ -3,7 +3,7 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { delMany } from 'idb-keyval';
 import getsetIndexedDB from '@/lib/getsetIndexedDB.lib';
-import { initialUserState, Profile, User } from '@/lib/types.lib';
+import { Profile, User } from '@/lib/types.lib';
 import { tokenQuery, userQuery } from '@/lib/queries.lib';
 import { checkTokenType } from '@/services/auth.services';
 
@@ -38,7 +38,7 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-	const [loggedInUser, dispatch] = useReducer(userReducer, { ...initialUserState });
+	const [loggedInUser, dispatch] = useReducer(userReducer, {});
 	const { data: token } = useQuery(tokenQuery());
 	const { data, isError, isSuccess } = useQuery({
 		...userQuery(token || ''),

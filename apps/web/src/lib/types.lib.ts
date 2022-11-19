@@ -14,13 +14,10 @@ export interface User {
 	last_name?: string;
 }
 
-export const initialUserState: User = {
-	pk: undefined,
-	username: undefined,
-	email: undefined,
-	first_name: undefined,
-	last_name: undefined,
-};
+export interface LoginResponse {
+	access_token?: string;
+	refresh_token?: string;
+}
 
 export interface Profile {
 	avatar: string;
@@ -35,11 +32,6 @@ export interface UserStatus {
 	status?: string;
 	approved?: boolean;
 }
-
-export const initialUserStatus: UserStatus = {
-	status: undefined,
-	approved: undefined,
-};
 
 // FORMS
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { User, initialUserState } from '@/lib/types.lib';
+import { User } from '@/lib/types.lib';
 import {
 	githubDataQuery,
 	refreshQuery,
@@ -21,7 +21,7 @@ export function useAuth() {
 	const tokenRef = React.useRef<string>('');
 	const refreshRef = React.useRef<string>('');
 	const authedRef = React.useRef<boolean>(false);
-	const userRef = React.useRef<User>({ ...initialUserState });
+	const userRef = React.useRef<User>({});
 	const streamTokenRef = React.useRef<StreamTokenT | null>(null);
 
 	const { isSuccess: tokenSuccess, data: tokenData } = useQuery({

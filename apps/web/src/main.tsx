@@ -30,7 +30,6 @@ import { Profile } from '@/app/Profile';
 import { Messages, MessageChild } from '@/app/stream/Messages';
 import { Meetings, MeetingDetail, MeetingList } from '@/app/stream/Meetings';
 import { StreamProvider } from '@/context/Stream.context';
-import { UserProvider } from '@/context/User.context';
 import { DEVELOPMENT } from '@/services/auth.services';
 import { FourOFour } from './app/404';
 import { GithubAuth } from './app/Github';
@@ -202,13 +201,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<UserProvider>
-				<StreamProvider>
-					<ThemeProvider>
-						<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
-					</ThemeProvider>
-				</StreamProvider>
-			</UserProvider>
+			<StreamProvider>
+				<ThemeProvider>
+					<RouterProvider router={router} fallbackElement={<ProfileLoading />} />
+				</ThemeProvider>
+			</StreamProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	</React.StrictMode>
