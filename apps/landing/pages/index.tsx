@@ -21,10 +21,10 @@ function Nav(): JSX.Element {
 					aria-label="DevClad Logo and Name"
 				>
 					<div className="z-20 flex flex-1 items-center md:absolute">
-						<div className="mt-10 flex w-full items-center justify-between rounded-full md:w-auto">
+						<div className="flex w-full items-center justify-between rounded-full sm:justify-center md:w-auto">
 							<Link href="/">
 								<span className="sr-only">DevClad</span>
-								<Image className="h-24 w-24" src={DevCladSVG} alt="" />
+								<Image width={128} height={128} src={DevCladSVG} alt="" />
 							</Link>
 						</div>
 					</div>
@@ -47,10 +47,6 @@ function Landing(): JSX.Element {
 	return (
 		<div className="max-h-min w-full">
 			<div className="pt-6 pb-10 backdrop-blur-0 md:pb-0 lg:pb-0">
-				<div
-					className="hidden sm:absolute sm:inset-y-0 sm:block sm:h-screen sm:w-full"
-					aria-hidden="true"
-				/>
 				<Nav />
 				<main className="sm:h-full">
 					<Hero />

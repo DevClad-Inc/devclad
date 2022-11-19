@@ -35,7 +35,7 @@ export default function Hero(): JSX.Element {
 				<div className="relative">
 					<div className="z-10 mx-auto px-4 sm:px-6 sm:text-center lg:items-center">
 						<div className="lg:py-24">
-							<h1 className="mt-5 text-5xl font-black tracking-tighter text-white lg:-mt-10">
+							<h1 className="mt-5 text-5xl font-black tracking-tighter text-white lg:-mt-20">
 								DevClad
 								<span className="text-base font-medium tracking-normal text-orange-500">
 									beta
