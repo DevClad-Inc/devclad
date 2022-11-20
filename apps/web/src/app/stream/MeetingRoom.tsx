@@ -5,7 +5,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { convertTimeZone } from '@devclad/lib';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
-import { toast } from 'react-hot-toast';
 import { useAuth } from '@/services/useAuth.services';
 import { useSocialProfile } from '@/services/socialHooks.services';
 import { DEVELOPMENT } from '@/services/auth.services';
@@ -13,7 +12,6 @@ import { meetingQuery } from '@/lib/queries.lib';
 import { Meeting } from '@/app/stream/types';
 import { SocialProfile } from '@/app/social/types';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { Error as ErrorToast } from '@/components/Feedback';
 
 export function MeetingRoom(): JSX.Element {
 	const qc = useQueryClient();
@@ -58,10 +56,7 @@ export function MeetingRoom(): JSX.Element {
 	};
 
 	const disconnectCall = useCallback(() => {
-		// this is a peerjs bug so we will transmit a message to the peer to disconnect instead of calling peer.disconnect()
 		peerCallRef.current?.close();
-		peerObjectRef.current?.destroy();
-		peerObjectRef.current = undefined;
 	}, []);
 
 	React.useEffect(() => {
@@ -84,7 +79,9 @@ export function MeetingRoom(): JSX.Element {
 				});
 				peer.on('connection', (conn) => {
 					conn.on('data', (data) => {
-						// close is not received if I don't do something with data here for some absurd reason
+						/*
+						!close is not received if I don't do something with data here for some absurd reason
+						*/
 						console.log(data);
 						peerDataRef.current = conn;
 					});
