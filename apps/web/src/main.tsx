@@ -28,7 +28,8 @@ import { OneOne } from '@/app/social/OneOne';
 import { Circle } from '@/app/social/Circle';
 import { Profile } from '@/app/Profile';
 import { Messages, MessageChild } from '@/app/stream/Messages';
-import { Meetings, MeetingDetail, MeetingList } from '@/app/stream/Meetings';
+import { Meetings, MeetingList } from '@/app/stream/Meetings';
+import { MeetingRoom } from '@/app/stream/MeetingRoom';
 import { StreamProvider } from '@/context/Stream.context';
 import { DEVELOPMENT } from '@/services/auth.services';
 import { FourOFour } from './app/404';
@@ -165,7 +166,7 @@ const router = createBrowserRouter([
 					{
 						path: '/meetings/:uid',
 						hasErrorBoundary: true,
-						element: <MeetingDetail />,
+						element: <MeetingRoom />,
 					},
 				],
 			},
