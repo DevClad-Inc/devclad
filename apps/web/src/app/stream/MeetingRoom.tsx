@@ -1,8 +1,8 @@
-import React from 'react';
-import { Peer } from 'peerjs';
+/* eslint-disable jsx-a11y/media-has-caption */
+import React, { useCallback } from 'react';
+import { DataConnection, MediaConnection, Peer } from 'peerjs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { convertTimeZone } from '@devclad/lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useSocialProfile } from '@/services/socialHooks.services';
@@ -16,10 +16,14 @@ export function MeetingRoom(): JSX.Element {
 	const qc = useQueryClient();
 	const { token, loggedInUser } = useAuth();
 	const { uid } = useParams<{ uid: string }>() as { uid: string };
+	const peerObjectRef = React.useRef<Peer>();
+	const peerCallRef = React.useRef<MediaConnection>();
+	const peerDataRef = React.useRef<DataConnection>();
 	const [peerConnected, setPeerConnected] = React.useState(false);
-	const [peerConnectError, setPeerConnectError] = React.useState(false);
 	const socialProfile = useSocialProfile() as SocialProfile;
 	const spState = qc.getQueryState(['social-profile']);
+	const remoteVideoRef = React.useRef<HTMLVideoElement>(null);
+
 	const {
 		data: meetingData,
 		isLoading,
@@ -28,22 +32,86 @@ export function MeetingRoom(): JSX.Element {
 		...meetingQuery(token, uid as string),
 	});
 
+	const callPeer = async () => {
+		setPeerConnected(true);
+		const meeting = meetingData?.data?.meetings as Meeting;
+		const meetingInvite = meeting?.invites.find((invite) => invite !== loggedInUser?.username);
+		const peerID = `${meetingInvite}-${uid}`;
+		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+			peerDataRef.current = peerObjectRef.current?.connect(peerID);
+			peerDataRef.current?.on('open', () => {
+				peerDataRef.current?.send('connected');
+			});
+			const call = peerObjectRef.current?.call(peerID, stream);
+			call?.on('stream', (remoteStream) => {
+				const remoteVideo = remoteVideoRef.current;
+				if (remoteVideo) {
+					remoteVideo.srcObject = remoteStream;
+					peerCallRef.current = call;
+					remoteVideo.play();
+				}
+			});
+		});
+	};
+
+	const disconnectCall = useCallback(() => {
+		// this is a peerjs bug so we will transmit a message to the peer to disconnect instead of calling peer.disconnect()
+		peerCallRef.current?.close();
+		peerObjectRef.current?.destroy();
+		peerObjectRef.current = undefined;
+	}, []);
+
 	React.useEffect(() => {
 		const createPeer = async (username: string) => {
-			const peer = new Peer(`${uid + username}`, {
-				secure: !DEVELOPMENT,
+			// crypto.getRandomValues(new Uint32Array(1))[0]
+			const peer = new Peer(`${username}-${uid}`, {
+				secure: true,
 				host: import.meta.env.VITE_PEERJS_HOST,
 				port: 443,
 				path: '/peerjs',
 				debug: DEVELOPMENT ? 3 : 0,
 			});
-			console.log('peer', peer);
+			return peer;
 		};
 
 		if (isSuccess && meetingData !== null && loggedInUser) {
-			createPeer(loggedInUser?.username as string);
+			createPeer(loggedInUser.username as string).then((peer) => {
+				peer.on('open', () => {
+					peerObjectRef.current = peer;
+				});
+				peer.on('connection', (conn) => {
+					conn.on('data', (data) => {
+						console.log(data);
+						peerDataRef.current = conn;
+					});
+					conn.on('close', () => {
+						setPeerConnected(false);
+						disconnectCall();
+					});
+				});
+				peer.on('call', (call) => {
+					setPeerConnected(true);
+					navigator.mediaDevices
+						.getUserMedia({ video: true, audio: true })
+						.then((stream) => {
+							call.answer(stream);
+							call.on('stream', (remoteStream) => {
+								const remoteVideo = remoteVideoRef.current;
+								if (remoteVideo) {
+									remoteVideo.srcObject = remoteStream;
+									peerCallRef.current = call;
+									remoteVideo.play();
+								}
+							});
+						});
+				});
+				peer.on('error', () => {
+					peer.destroy();
+					createPeer(loggedInUser.username as string);
+				});
+			});
 		}
-	}, [isSuccess, loggedInUser, meetingData, uid]);
+	}, [disconnectCall, isSuccess, loggedInUser, meetingData, uid]);
 
 	if (
 		isLoading ||
@@ -60,100 +128,59 @@ export function MeetingRoom(): JSX.Element {
 		return (
 			<div className="mt-5 flex h-full w-full flex-col items-center justify-center">
 				<div className="flex h-full w-full flex-col items-center justify-center">
-					<div className="mt-2 rounded-md border-[1px] border-neutral-800 p-4 text-center font-mono">
+					<div className="rounded-md border-[1px] border-neutral-800 p-4 text-center font-mono">
 						<p className="font-sans text-xl">{meeting.name}</p>
-						<p className="text-sm text-neutral-500">{meeting.type_of}</p>
-						<p className="text-sm text-neutral-500">
-							{convertTimeZone(meeting.time, time)}
-						</p>
-						<p className="text-sm text-neutral-500">{meeting.invites.join(', ')}</p>
+						<div className="mt-2">
+							<p className="text-sm text-neutral-500">
+								{convertTimeZone(meeting.time, time)}
+							</p>
+							<p className="text-sm text-neutral-500">{meeting.invites.join(', ')}</p>
+							{peerConnected ? 'Connected' : 'Not Connected'}
+						</div>
 					</div>
 				</div>
 
 				{peerConnected ? (
 					<div className="h-full w-full items-center justify-center sm:flex">
-						{/* Stream 1 */}
-						<div className="items-center justify-center lg:mr-2 lg:flex lg:w-1/2 lg:flex-col">
-							<div className="flex h-full w-full items-center justify-center lg:flex-col">
-								{/* <iframe
-                        height={typeof window !== 'undefined' ? window.innerHeight / 2 : 0}
-                        width={
-                            typeof window !== 'undefined' && window.innerWidth > 1024
-                                ? window.innerWidth / 2.5
-                                : window.innerWidth / 1.15
-                        }
-                        src="https://www.youtube.com/embed/DxmDPrfinXY/?autoplay=1&mute=1"
-                        title="YouTube video player"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    /> */}
-							</div>
-							<div className="flex justify-center p-2">
-								<PrimaryButton>Mute</PrimaryButton>
-							</div>
-						</div>
-
-						{/* Stream 2 */}
 						<div className="items-center justify-center lg:ml-2 lg:flex lg:w-1/2 lg:flex-col">
-							<div className="flex h-full w-full items-center justify-center lg:flex-col">
-								{/* <iframe
-                        height={typeof window !== 'undefined' ? window.innerHeight / 2 : 0}
-                        width={
-                            typeof window !== 'undefined' && window.innerWidth > 1024
-                                ? window.innerWidth / 2.5
-                                : window.innerWidth / 1.15
-                        }
-                        src="https://www.youtube.com/embed/DxmDPrfinXY/?autoplay=1&mute=1"
-                        title="YouTube video player"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    /> */}
+							<div className="mt-5 flex h-full w-full items-center justify-center lg:flex-col">
+								<video id="remote-video" ref={remoteVideoRef} autoPlay />
 							</div>
 							<div className="flex justify-center p-2">
-								<PrimaryButton>Mute</PrimaryButton>
+								<PrimaryButton
+									onClick={() => {
+										setPeerConnected(false);
+										peerDataRef.current?.close();
+										disconnectCall();
+									}}
+								>
+									Disconnect
+								</PrimaryButton>
 							</div>
 						</div>
 					</div>
 				) : (
-					<div className="mt-5 text-center font-mono">
-						<form
-							className="space-y-6"
-							onSubmit={(e) => {
-								e.preventDefault();
-								const target = e.target as typeof e.target & {
-									peerId: { value: string };
-								};
-								console.log(target.peerId.value);
-							}}
-						>
-							<label
-								htmlFor="code"
-								className="block pl-1 text-center text-sm
-           text-neutral-700 dark:text-neutral-300"
+					<div className="text-center font-mono">
+						<div className="mt-5">
+							<PrimaryButton
+								onClick={() => {
+									if (peerObjectRef.current) {
+										callPeer();
+									}
+								}}
 							>
-								<div className="relative mt-1">
-									<input
-										id="peerId"
-										name="peerId"
-										type="peerId"
-										placeholder="Peer ID of your match"
-										autoComplete="peer"
-										required
-										className="dark:bg-darkBG mt-1 block rounded-md border-[1px] border-neutral-800
-                   px-4 py-2 shadow-sm sm:text-sm"
-									/>
-									{peerConnectError && (
-										<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-											<ExclamationTriangleIcon
-												className="text-bloodRed dark:text-mistyRose h-5 w-5"
-												aria-hidden="true"
-											/>
-										</div>
-									)}
-								</div>
-							</label>
-							<PrimaryButton>Connect</PrimaryButton>
-						</form>
+								Connect
+							</PrimaryButton>
+						</div>
+						<div className="mt-5">
+							{peerObjectRef.current?.on ? (
+								<p className="font-sans text-sm">
+									Your Peer ID is {peerObjectRef.current.id}
+								</p>
+							) : (
+								'Refresh the page to get your peer ID'
+							)}
+						</div>
 					</div>
 				)}
 			</div>

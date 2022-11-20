@@ -11,16 +11,16 @@ import { Meeting } from '@/app/stream/types';
 import { SocialProfile } from '@/app/social/types';
 import { Tab } from '@/components/Tabs';
 
-// export const useMeetingImage = (meeting: Meeting): string => {
-// 	const { loggedInUser } = useAuth();
-// 	const loggedInUsername = loggedInUser?.username;
-// 	const meetingInvite = meeting.invites.find((invite) => invite !== loggedInUsername);
-// 	const avatar = useProfile(meetingInvite as string)?.avatar;
-// 	return avatar || '';
-// };
+export const useMeetingImage = (meeting: Meeting): string => {
+	const { loggedInUser } = useAuth();
+	const loggedInUsername = loggedInUser?.username;
+	const meetingInvite = meeting.invites.find((invite) => invite !== loggedInUsername);
+	const avatar = useProfile(meetingInvite as string)?.avatar;
+	return avatar || '';
+};
 
 export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string }): JSX.Element {
-	// const avatar = useMeetingImage(meeting);
+	const avatar = useMeetingImage(meeting);
 	const isPast = new Date(meeting.time).getTime() < new Date().getTime();
 	return (
 		<li
@@ -44,11 +44,11 @@ export function MeetingCard({ meeting, time }: { meeting: Meeting; time: string 
 						{meeting.invites.map((invite) => invite).join(', ')}
 					</p>
 				</div>
-				{/* <img
+				<img
 					className="bg-linen h-32 w-32 rounded-full object-cover sm:h-24 sm:w-24"
 					src={DEVELOPMENT ? `${API_URL}${avatar}` : avatar}
 					alt=""
-				/> */}
+				/>
 			</div>
 			<div>
 				{/* todo: add reschedule request modal */}
