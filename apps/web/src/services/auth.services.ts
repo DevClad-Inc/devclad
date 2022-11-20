@@ -161,7 +161,7 @@ export async function refreshToken(queryClient: QueryClient) {
 	// });
 }
 
-export function verifyToken(token: string, queryClient?: QueryClient): Promise<boolean> {
+export async function verifyToken(token: string, queryClient?: QueryClient): Promise<boolean> {
 	const url = `${API_URL}/auth/token/verify/`;
 	return axios({
 		method: 'POST',
@@ -221,19 +221,17 @@ export function updateUser(
 }
 
 export async function SignUp(user: NewUser) {
-	try {
-		const resp = await axios.post(`${API_URL}/auth/registration/`, {
+	return axios
+		.post(`${API_URL}/auth/registration/`, {
 			first_name: user.firstName,
 			last_name: user.lastName,
 			email: user.email,
 			password1: user.password1,
 			password2: user.password2,
 			headers,
-		});
-		return resp;
-	} catch (err) {
-		return err;
-	}
+		})
+		.then((resp) => resp)
+		.catch((err) => err);
 }
 
 export async function logIn(queryClient: QueryClient, email: string, password: string) {

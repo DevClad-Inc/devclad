@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, Outlet } from 'react-router-dom';
@@ -6,7 +5,7 @@ import { VideoCameraIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { convertTimeZone, useDocumentTitle } from '@devclad/lib';
 import { useAuth } from '@/services/useAuth.services';
 import { useProfile, useSocialProfile } from '@/services/socialHooks.services';
-import { API_URL } from '@/services/auth.services';
+import { API_URL, DEVELOPMENT } from '@/services/auth.services';
 import { meetingQuery } from '@/lib/queries.lib';
 import { Meeting } from '@/app/stream/types';
 import { SocialProfile } from '@/app/social/types';
