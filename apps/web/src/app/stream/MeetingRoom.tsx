@@ -4,6 +4,8 @@ import { DataConnection, MediaConnection, Peer } from 'peerjs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { convertTimeZone } from '@devclad/lib';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { toast } from 'react-hot-toast';
 import { useAuth } from '@/services/useAuth.services';
 import { useSocialProfile } from '@/services/socialHooks.services';
 import { DEVELOPMENT } from '@/services/auth.services';
@@ -11,15 +13,16 @@ import { meetingQuery } from '@/lib/queries.lib';
 import { Meeting } from '@/app/stream/types';
 import { SocialProfile } from '@/app/social/types';
 import { PrimaryButton } from '@/lib/Buttons.lib';
+import { Error as ErrorToast } from '@/components/Feedback';
 
 export function MeetingRoom(): JSX.Element {
 	const qc = useQueryClient();
 	const { token, loggedInUser } = useAuth();
 	const { uid } = useParams<{ uid: string }>() as { uid: string };
-	const peerObjectRef = React.useRef<Peer>();
-	const peerCallRef = React.useRef<MediaConnection>();
-	const peerDataRef = React.useRef<DataConnection>();
-	const [peerConnected, setPeerConnected] = React.useState(false);
+	const peerObjectRef = React.useRef<Peer>(); // local peer object
+	const peerCallRef = React.useRef<MediaConnection>(); // main video call connection
+	const peerDataRef = React.useRef<DataConnection>(); // data connection made to peer when a call is made; event received when peer is ready to receive data
+	const [peerConnected, setPeerConnected] = React.useState(false); // peer connection status
 	const socialProfile = useSocialProfile() as SocialProfile;
 	const spState = qc.getQueryState(['social-profile']);
 	const remoteVideoRef = React.useRef<HTMLVideoElement>(null);
@@ -81,6 +84,7 @@ export function MeetingRoom(): JSX.Element {
 				});
 				peer.on('connection', (conn) => {
 					conn.on('data', (data) => {
+						// close is not received if I don't do something with data here for some absurd reason
 						console.log(data);
 						peerDataRef.current = conn;
 					});
@@ -128,15 +132,27 @@ export function MeetingRoom(): JSX.Element {
 		return (
 			<div className="mt-5 flex h-full w-full flex-col items-center justify-center">
 				<div className="flex h-full w-full flex-col items-center justify-center">
-					<div className="rounded-md border-[1px] border-neutral-800 p-4 text-center font-mono">
-						<p className="font-sans text-xl">{meeting.name}</p>
-						<div className="mt-2">
+					<div className="rounded-md border-[1px] border-neutral-800 pl-4 pr-4 pt-4 text-center font-mono">
+						<div>
+							<p className="font-sans text-xl">{meeting.name}</p>
+
 							<p className="text-sm text-neutral-500">
 								{convertTimeZone(meeting.time, time)}
 							</p>
 							<p className="text-sm text-neutral-500">{meeting.invites.join(', ')}</p>
-							{peerConnected ? 'Connected' : 'Not Connected'}
 						</div>
+						{peerConnected ? (
+							<div className="mt-2">
+								<span className="text-honeyDew inline-flex">
+									<CheckCircleIcon className="text-honeyDew mr-1 h-8 w-5" />
+									Connected
+								</span>
+							</div>
+						) : (
+							<div className="mb-2 mt-2">
+								<span className="text-mistyRose">Not Connected</span>
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -171,15 +187,6 @@ export function MeetingRoom(): JSX.Element {
 							>
 								Connect
 							</PrimaryButton>
-						</div>
-						<div className="mt-5">
-							{peerObjectRef.current?.on ? (
-								<p className="font-sans text-sm">
-									Your Peer ID is {peerObjectRef.current.id}
-								</p>
-							) : (
-								'Refresh the page to get your peer ID'
-							)}
 						</div>
 					</div>
 				)}
