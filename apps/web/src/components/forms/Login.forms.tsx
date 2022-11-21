@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
+import { z, ZodError } from 'zod';
 import { getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
@@ -18,13 +19,28 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 	const qc = useQueryClient();
 	const validate = (values: ILoginForm) => {
 		const errors: ILoginForm['errors'] = {};
-		if (!values.email) {
-			errors.email = 'Required';
-		} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-			errors.email = 'Invalid email address';
-		}
-		if (!values.password) {
-			errors.password = 'Required';
+		const userSchema = z.object({
+			email: z.string().email(),
+			password: z.string(),
+		});
+		try {
+			userSchema.parse(values);
+		} catch (err) {
+			if (err instanceof ZodError) {
+				for (const error of err.errors) {
+					const { path } = error;
+					switch (path[0]) {
+						case 'email':
+							errors.email = error.message;
+							break;
+						case 'password':
+							errors.password = error.message;
+							break;
+						default:
+							break;
+					}
+				}
+			}
 		}
 		return errors;
 	};
