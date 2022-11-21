@@ -16,11 +16,11 @@ export const getGithubData = async (
 	qc: QueryClient
 ): Promise<GithubOAuthResponse | null> => {
 	const url = `${API_URL}/oauth/github/connect/`;
-	let isVerified = false;
+	let isTokenVerified = false;
 	if (checkTokenType(token)) {
-		isVerified = await verifyToken(token, qc);
+		isTokenVerified = await verifyToken(token, qc);
 	}
-	if (isVerified) {
+	if (isTokenVerified) {
 		const response: AxiosResponse<GithubOAuthResponse> = await axios.get(url, {
 			headers: {
 				Authorization: `Bearer ${token}`,

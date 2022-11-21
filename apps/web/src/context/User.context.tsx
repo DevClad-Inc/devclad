@@ -86,6 +86,8 @@ export function useUserContext() {
 }
 
 export async function invalidateAndStoreIDB(qc: QueryClient, key: string) {
+	// idk why i made this, was using it to store user data in idb,
+	// still storing but that data is not used anywhere essential
 	await qc.refetchQueries([key]);
 	if (key === 'user') {
 		const cacheUserData = qc.getQueryData([key]) as { data: User };

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
 import { checkTokenType, DEVELOPMENT, refreshToken } from '@/services/auth.services';
 
-export default async function serverlessCookie<TState>(
+export default async function cookieAdapter<TState>(
 	key: string,
 	value?: string,
 	maxAge?: number,
@@ -50,6 +50,7 @@ export default async function serverlessCookie<TState>(
 			return response.data.value as TState;
 		} catch {
 			if (key === 'token' && qc) {
+				// refresh token is being called here because the token got expired on the client
 				await refreshToken(qc);
 				const response = await axios({
 					method: 'GET',
@@ -62,6 +63,7 @@ export default async function serverlessCookie<TState>(
 			return null;
 		}
 	} else {
+		// use non-httpOnly cookies in dev env directly from Cookies lib
 		if (checkTokenType(value) && !del) {
 			Cookies.set(key, value as string);
 			return value as TState;
@@ -72,6 +74,7 @@ export default async function serverlessCookie<TState>(
 		}
 
 		if (Cookies.get(key) === undefined && Cookies.get('refresh')) {
+			// refresh token is being called here because the token got expired on the client
 			await refreshToken(qc as QueryClient);
 		}
 		return Cookies.get(key) as TState;

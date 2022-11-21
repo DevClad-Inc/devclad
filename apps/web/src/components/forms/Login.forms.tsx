@@ -59,12 +59,8 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 			if (token) {
 				// only exception to checkTokenType; type is checked in checkTokenType within getUser tho
 				await getUser(token || '')
-					.then(() => {
-						invalidateAndStoreIDB(qc, 'user');
-					})
-					.catch(() => {
-						delMany(['loggedInUser', 'profile']);
-					});
+					.then(() => invalidateAndStoreIDB(qc, 'user'))
+					.catch(() => delMany(['loggedInUser', 'profile']));
 			}
 		} catch (error) {
 			setLoginError(true);

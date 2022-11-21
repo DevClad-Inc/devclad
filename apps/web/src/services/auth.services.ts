@@ -4,7 +4,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { delMany } from 'idb-keyval';
 import { LoginResponse, NewUser, User } from '@/lib/types.lib';
 import { refreshQuery, tokenQuery } from '@/lib/queries.lib';
-import serverlessCookie from '@/lib/serverlessCookie.lib';
+import cookieAdapter from '@/lib/cookieAdapter.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 export const DEVELOPMENT = import.meta.env.DEV;
@@ -94,6 +94,9 @@ export const changeEmail = (token: string, email: string) => {
 };
 
 export const checkVerified = (token: string) => {
+	/*
+	 * Check if user's email is verified
+	 */
 	const url = `${API_URL}/users/change-email/`;
 	if (checkTokenType(token)) {
 		return axios({
@@ -110,6 +113,9 @@ export const checkVerified = (token: string) => {
 };
 
 export const forgotPassword = async (email: string) => {
+	/*
+	 * Send email to user with password reset link
+	 */
 	const url = `${API_URL}/auth/password/reset/`;
 	const response = await axios.post(url, { email }, { headers });
 	return response.data;
@@ -122,8 +128,13 @@ export const resendEmail = async (email: string) => {
 };
 
 export async function refreshToken(queryClient: QueryClient) {
+	/*
+	 * Refresh token with old refresh token
+	 * set new token and refresh token in cookies
+	 * set returned tokens in queryClient cache. saved as fresh queries.
+	 */
 	const url = `${API_URL}/auth/token/refresh/`;
-	const refresh = await serverlessCookie<string>('refresh');
+	const refresh = await cookieAdapter<string>('refresh');
 	if (checkTokenType(refresh)) {
 		return axios
 			.post(url, {
@@ -134,31 +145,20 @@ export async function refreshToken(queryClient: QueryClient) {
 				credentials: 'same-origin',
 			})
 			.then((resp) => {
-				serverlessCookie<string>('token', resp.data.access, 60 * 60 * 36, false).then(
-					() => {
-						serverlessCookie<string>(
-							'refresh',
-							resp.data.refresh,
-							60 * 60 * 24 * 28,
-							false
-						);
-						queryClient
-							.setQueryData(tokenQuery().queryKey, resp.data.access)
-							.then(() =>
-								queryClient.setQueryData(refreshQuery().queryKey, resp.data.refresh)
-							)
-							.then(() => {
-								queryClient.invalidateQueries();
-							});
-					}
-				);
+				cookieAdapter<string>('token', resp.data.access, 60 * 60 * 36, false).then(() => {
+					cookieAdapter<string>('refresh', resp.data.refresh, 60 * 60 * 24 * 28, false);
+					queryClient
+						.setQueryData(tokenQuery().queryKey, resp.data.access)
+						.then(() =>
+							queryClient.setQueryData(refreshQuery().queryKey, resp.data.refresh)
+						)
+						.then(() => {
+							queryClient.invalidateQueries();
+						});
+				});
 			});
 	}
 	return null;
-	// .catch(() => {
-	// 	delMany(['loggedInUser', 'profile']);
-	// 	Cookies.remove('token');
-	// });
 }
 
 export async function verifyToken(token: string, queryClient?: QueryClient): Promise<boolean> {
@@ -176,7 +176,7 @@ export async function verifyToken(token: string, queryClient?: QueryClient): Pro
 			return false;
 		})
 		.catch(() => {
-			// case: expiring on the backend but not on client
+			// case: token expired on the server but not on client
 			if (queryClient) {
 				refreshToken(queryClient);
 			}
@@ -186,12 +186,11 @@ export async function verifyToken(token: string, queryClient?: QueryClient): Pro
 
 export async function getUser(token: string, queryClient?: QueryClient) {
 	const url = `${API_URL}/auth/user/`;
-	// todo: store this in jotai instead of passing props
-	let isVerified = false;
+	let isTokenVerified = false;
 	if (checkTokenType(token)) {
-		isVerified = await verifyToken(token, queryClient);
+		isTokenVerified = await verifyToken(token, queryClient);
 	}
-	if (isVerified) {
+	if (isTokenVerified) {
 		return axios
 			.get<User>(url, {
 				headers: {
@@ -245,36 +244,34 @@ export async function logIn(queryClient: QueryClient, email: string, password: s
 			credentials: 'include',
 		})
 		.then((resp) => {
-			serverlessCookie<string>('token', resp.data.access_token, 60 * 60 * 24, false).then(
-				() => {
-					token = resp.data.access_token;
-					queryClient.setQueryData(tokenQuery().queryKey, resp.data.access_token);
-					queryClient.setQueryData(refreshQuery().queryKey, resp.data.refresh_token);
-					serverlessCookie<string>(
-						'refresh',
-						resp.data.refresh_token,
-						60 * 60 * 24 * 14,
-						false
-					).then(() => {
-						Cookies.set('loggedIn', 'true', {
-							path: '/',
-							sameSite: 'Strict',
-						});
+			cookieAdapter<string>('token', resp.data.access_token, 60 * 60 * 24, false).then(() => {
+				token = resp.data.access_token;
+				queryClient.setQueryData(tokenQuery().queryKey, resp.data.access_token);
+				queryClient.setQueryData(refreshQuery().queryKey, resp.data.refresh_token);
+				cookieAdapter<string>(
+					'refresh',
+					resp.data.refresh_token,
+					60 * 60 * 24 * 14,
+					false
+				).then(() => {
+					Cookies.set('loggedIn', 'true', {
+						path: '/',
+						sameSite: 'Strict',
 					});
-				}
-			);
+				});
+			});
 		});
 
 	return { response, token };
 }
 
 export async function logOut() {
-	const refresh = await serverlessCookie<string>('refresh');
+	const refresh = await cookieAdapter<string>('refresh');
 	const url = `${API_URL}/auth/logout/`;
 
 	if (refresh) {
 		Cookies.remove('loggedIn');
-		const response = serverlessCookie<string>('token', '', 0, true).then(async () => {
+		const response = cookieAdapter<string>('token', '', 0, true).then(async () => {
 			await axios
 				.post(url, {
 					refresh,
@@ -285,7 +282,7 @@ export async function logOut() {
 					await delMany(['loggedInUser', 'profile']);
 				})
 				.then(() => {
-					serverlessCookie<string>('refresh', '', 0, true).then(() => {
+					cookieAdapter<string>('refresh', '', 0, true).then(() => {
 						window.location.reload();
 					});
 				})

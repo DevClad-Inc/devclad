@@ -15,7 +15,7 @@ import {
 } from '@/services/profile.services';
 import { getStreamToken, getStreamUID } from '@/services/stream.services';
 import { getMeeting, idTypeCheck } from '@/services/meetings.services';
-import serverlessCookie from './serverlessCookie.lib';
+import cookieAdapter from './cookieAdapter.lib';
 import { getGithubData } from '@/services/github.services';
 
 // ! only using social profile loader rn
@@ -35,14 +35,14 @@ export const streamUIDQuery = (token: string, username: string) => ({
 
 export const tokenQuery = (qc?: QueryClient) => ({
 	queryKey: ['token'],
-	queryFn: () => serverlessCookie<string>('token', undefined, undefined, undefined, qc),
+	queryFn: () => cookieAdapter<string>('token', undefined, undefined, false, qc),
 	enabled: Cookies.get('loggedIn') === 'true',
 	staleTime: 1000 * 60 * 60 * 24,
 });
 
 export const refreshQuery = () => ({
 	queryKey: ['refresh'],
-	queryFn: () => serverlessCookie<string>('refresh'),
+	queryFn: () => cookieAdapter<string>('refresh'),
 	enabled: Cookies.get('loggedIn') === 'true',
 	staleTime: 1000 * 60 * 60 * 24 * 28,
 });

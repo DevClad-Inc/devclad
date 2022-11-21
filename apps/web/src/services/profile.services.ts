@@ -11,11 +11,11 @@ export async function getProfile(
 	qc?: QueryClient
 ): Promise<AxiosResponse<Profile> | null> {
 	const url = `${API_URL}/users/profile/${username}/`;
-	let isVerified = false;
+	let isTokenVerified = false;
 	if (checkTokenType(token)) {
-		isVerified = await verifyToken(token, qc);
+		isTokenVerified = await verifyToken(token, qc);
 	}
-	if (isVerified) {
+	if (isTokenVerified) {
 		return axios
 			.get(url, {
 				headers: {
@@ -191,11 +191,11 @@ setSubmittedStatus() - This is to set the "status" field to "Submitted".
 */
 export const getStatus = async (token: string, qc: QueryClient) => {
 	const url = `${API_URL}/users/status/`;
-	let isVerified = false;
+	let isTokenVerified = false;
 	if (checkTokenType(token)) {
-		isVerified = await verifyToken(token, qc);
+		isTokenVerified = await verifyToken(token, qc);
 	}
-	if (isVerified) {
+	if (isTokenVerified) {
 		return axios({
 			method: 'GET',
 			url,
