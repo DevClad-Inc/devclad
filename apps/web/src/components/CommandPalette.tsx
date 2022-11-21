@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -73,7 +73,7 @@ const items = [
 ];
 
 export default function CommandPalette() {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = React.useState(false);
 	const handleKeyPress = React.useCallback((event: React.KeyboardEvent) => {
 		const target = event.target as HTMLInputElement;
 		if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
@@ -89,10 +89,13 @@ export default function CommandPalette() {
 	React.useEffect(() => {
 		// attach the event listener
 		// check if the user is on a form field
-		document.addEventListener('keydown', handleKeyPress as any);
+		document.addEventListener('keydown', handleKeyPress as (this: React.KeyboardEvent) => void);
 		// remove the event listener
 		return () => {
-			document.removeEventListener('keydown', handleKeyPress as any);
+			document.removeEventListener(
+				'keydown',
+				handleKeyPress as (this: React.KeyboardEvent) => void
+			);
 		};
 	}, [handleKeyPress]);
 

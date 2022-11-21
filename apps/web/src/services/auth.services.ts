@@ -14,8 +14,6 @@ const headers = {
 	Accept: 'application/json',
 };
 
-// const twoHour = new Date(new Date().getTime() + ((120 * 60) * 1000));
-
 export const checkTokenType = (token: string | undefined | null) => {
 	if (
 		typeof token === 'string' &&
