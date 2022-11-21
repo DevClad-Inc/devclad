@@ -44,6 +44,8 @@ class SocialProfileSerializer(serializers.ModelSerializer):
 
 
 class AdditionalSPSerializer(serializers.ModelSerializer):
+    """used in additional social preferences /settings/social on client"""
+
     class Meta:
         model = SocialProfile
         fields = [
