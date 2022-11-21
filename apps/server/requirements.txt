@@ -46,6 +46,7 @@ graphene-django==3.0.0
 graphene==3.1.1; python_version >= "3.6" and python_version < "4.0"
 graphql-core==3.2.3; python_version >= "3.6" and python_version < "4"
 graphql-relay==3.2.0; python_version >= "3.6" and python_version < "4"
+gunicorn==20.1.0; python_version >= "3.5"
 hyperlink==21.0.0; python_full_version >= "3.7.1" and python_version >= "3.7"
 idna==3.4; python_version >= "3.7" and python_version < "4" and python_full_version >= "3.7.1"
 incremental==22.10.0; python_full_version >= "3.7.1" and python_version >= "3.7"
