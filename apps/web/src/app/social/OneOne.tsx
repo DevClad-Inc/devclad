@@ -159,7 +159,7 @@ function MatchCard({ username }: { username: string }): JSX.Element {
                  sm:ml-4 sm:text-3xl"
 								>
 									{profile.first_name} {profile.last_name}{' '}
-									<div className="ml-1 inline-flex text-base text-neutral-600 dark:text-neutral-400">
+									<div className="ml-1 inline-flex text-base font-light text-neutral-600 dark:text-neutral-400">
 										{profile.pronouns ? `(${profile.pronouns})` : ''}
 									</div>
 									{profile.video_call_friendly && (

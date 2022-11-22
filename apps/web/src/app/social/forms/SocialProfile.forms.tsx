@@ -9,7 +9,8 @@ import { classNames } from '@devclad/lib';
 import { SocialProfile, SocialProfileFormValues } from '@/app/social/types';
 import { updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
-import { Success, Error } from '@/components/Feedback';
+import { Success } from '@/components/Feedback';
+import { throwToastError } from '@/app/social/forms/util';
 import Countries from '@/lib/list/Countries.list.json';
 import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
@@ -95,13 +96,6 @@ export function SocialProfileForm(): JSX.Element {
 	}
 
 	// ============= VALIDATE AND SUBMIT =============
-
-	const throwToastError = (error: string) => {
-		toast.custom(<Error error={error} />, {
-			id: `${crypto.randomUUID()}-profile-update-error`,
-		});
-	};
-
 	const validate = (values: SocialProfileFormValues) => {
 		const errors: SocialProfileFormValues['errors'] = {};
 		if (!values.raw_xp) {

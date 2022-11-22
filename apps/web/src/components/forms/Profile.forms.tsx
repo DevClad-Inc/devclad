@@ -5,7 +5,8 @@ import { toast } from 'react-hot-toast';
 import { updateProfile, updateProfileAvatar } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Profile, IUpdateProfileForm } from '@/lib/types.lib';
-import { Error, Success } from '@/components/Feedback';
+import { Success, Error } from '@/components/Feedback';
+import { throwToastError } from '@/app/social/forms/util';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { ProfileLoading } from '../LoadingStates';
@@ -54,6 +55,7 @@ export default function UpdateProfileForm(): JSX.Element {
 		values: IUpdateProfileForm,
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
 	) => {
+		await qc.cancelQueries(['profile', loggedInUser.username]);
 		setSubmitting(true);
 		await updateProfile(token, values, profileData)
 			?.then(() => {
@@ -63,16 +65,29 @@ export default function UpdateProfileForm(): JSX.Element {
 					id: 'profile-update-success',
 				});
 			})
-			.catch((error: any) => {
-				const { data } = error.response;
-				if (data.calendly) {
-					toast.custom(<Error error={data.calendly} />, { id: 'social-update-error' });
-				} else {
-					toast.custom(
-						<Error error="Languages, Development Type, and What makes you want to use this should be filled." />,
-						{ id: 'profile-update-error-unknown' }
-					);
+			.catch((error: unknown) => {
+				const { response } = error as { response: { data: Partial<Profile> } };
+				const { data } = response;
+				switch (true) {
+					case data.about !== undefined:
+						throwToastError(`About: ${data.about}`);
+						break;
+					case data.website !== undefined:
+						throwToastError(`Website: ${data.website}`);
+						break;
+					case data.linkedin !== undefined:
+						throwToastError(`LinkedIn: ${data.linkedin}`);
+						break;
+					case data.calendly !== undefined:
+						throwToastError(`Calendly: ${data.calendly}`);
+						break;
+					case data.pronouns !== undefined:
+						throwToastError(`Pronouns:${data.pronouns}`);
+						break;
+					default:
+						throwToastError('Something went wrong');
 				}
+
 				setSubmitting(false);
 			});
 	};
