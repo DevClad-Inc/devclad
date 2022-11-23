@@ -70,10 +70,6 @@ function Landing(): JSX.Element {
 					<Roadmap />
 				</div>
 				<div className="mt-5 sm:-mt-20">
-					<div
-						className="blob absolute h-96 w-96 rounded-full bg-gradient-to-bl from-orange-200/30
-					via-fuchsia-900/30 to-sky-900/60 mix-blend-difference blur-2xl filter"
-					/>
 					<Contact />
 				</div>
 
@@ -85,7 +81,7 @@ function Landing(): JSX.Element {
 
 export default function Home() {
 	return (
-		<div className="font-sansNext relative overflow-y-auto overflow-x-hidden">
+		<div className="font-sansNext relative overflow-x-hidden">
 			<Head>
 				<title>DevClad | Social Workspace Platform for Developers ⚡️</title>
 			</Head>
@@ -94,10 +90,6 @@ export default function Home() {
 				<div className="relative z-10">
 					<Landing />
 				</div>
-				<div
-					className="blob absolute top-10 left-1/4 h-96 w-96 rounded-full bg-gradient-to-bl from-orange-200/30
-					via-fuchsia-900/10 to-sky-900/30 mix-blend-difference blur-2xl filter"
-				/>
 			</div>
 		</div>
 	);

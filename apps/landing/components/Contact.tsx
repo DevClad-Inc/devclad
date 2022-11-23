@@ -12,7 +12,7 @@ export default function Contact(): JSX.Element {
 						<a
 							href="https://github.com/devclad-inc/devclad/"
 							target="_blank"
-							className="mb-2 inline-flex items-center rounded-lg border-[1px] border-neutral-700 bg-black
+							className="mb-2 inline-flex items-center rounded-lg border-[1px] border-neutral-800 bg-black
                p-1 pr-2 sm:rounded-full sm:text-base lg:text-sm xl:text-base"
 							rel="noreferrer"
 						>
