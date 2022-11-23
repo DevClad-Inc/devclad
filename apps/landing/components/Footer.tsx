@@ -47,11 +47,7 @@ const navigation = [
 export default function Footer(): JSX.Element {
 	return (
 		<footer className="rounded-2xl border-t-[1px] border-neutral-800">
-			<div
-				className="blob absolute top-10 left-1/4 h-96 w-96 rounded-full bg-gradient-to-bl from-orange-200/30
-					via-orange-900/10 to-sky-900/30 mix-blend-difference blur-2xl filter"
-			/>
-			<div className="mx-auto max-w-7xl py-12 px-4 backdrop-blur-2xl sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+			<div className="mx-auto max-w-7xl py-12 px-4  sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
 				<div className="flex justify-center space-x-6 md:order-2">
 					{navigation.map((item) => (
 						<a

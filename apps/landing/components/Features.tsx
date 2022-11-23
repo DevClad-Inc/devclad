@@ -47,7 +47,7 @@ const roadmap = [
 
 export function Features(): JSX.Element {
 	return (
-		<div className="space-y-16 py-4 sm:animate-none sm:py-8">
+		<div className="space-y-16 py-4 sm:animate-none sm:py-0">
 			<div className="relative mx-auto max-w-xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 				<svg
 					className="absolute left-full hidden -translate-x-1/2 -translate-y-1/4 transform lg:block"
@@ -167,7 +167,7 @@ export function Features(): JSX.Element {
 
 export function Roadmap(): JSX.Element {
 	return (
-		<div className="animate-fadeIn space-y-16 py-4 sm:py-32">
+		<div className="animate-fadeIn space-y-16 py-4 sm:py-16">
 			<svg
 				className="absolute right-full hidden translate-x-1/2 translate-y-12 transform lg:block"
 				width={404}

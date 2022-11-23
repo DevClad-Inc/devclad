@@ -5,14 +5,14 @@ import React from 'react';
 export default function Contact(): JSX.Element {
 	return (
 		<div className="relative mx-auto max-w-prose rounded-xl text-center sm:py-6">
-			<div className="max-w-prose p-2 py-8 ">
+			<div className="max-w-prose p-2 ">
 				<h2 className="text-3xl font-extrabold  text-white sm:text-4xl">
 					<span className="block">Community</span>
-					<span className="mb-2 mt-2 flex justify-center font-light">
+					<span className="mb-2 mt-5 flex justify-center font-light">
 						<a
 							href="https://github.com/devclad-inc/devclad/"
 							target="_blank"
-							className="mb-2 inline-flex items-center rounded-lg border-[1px] border-dashed border-neutral-700 bg-black
+							className="mb-2 inline-flex items-center rounded-lg border-[1px] border-neutral-700 bg-black
                p-1 pr-2 sm:rounded-full sm:text-base lg:text-sm xl:text-base"
 							rel="noreferrer"
 						>

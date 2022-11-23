@@ -33,7 +33,6 @@ function Nav(): JSX.Element {
 		</Popover>
 	);
 }
-
 function Landing(): JSX.Element {
 	const { ref, inView } = useInView({
 		threshold: 0.1,
@@ -47,6 +46,10 @@ function Landing(): JSX.Element {
 	return (
 		<div className="max-h-min w-full">
 			<div className="pt-6 pb-10 backdrop-blur-0 md:pb-0 lg:pb-0">
+				<div
+					className="hidden sm:absolute sm:inset-y-0 sm:block sm:h-screen sm:w-full"
+					aria-hidden="true"
+				/>
 				<Nav />
 				<main className="sm:h-full">
 					<Hero />
@@ -67,8 +70,13 @@ function Landing(): JSX.Element {
 					<Roadmap />
 				</div>
 				<div className="mt-5 sm:-mt-20">
+					<div
+						className="blob absolute h-96 w-96 rounded-full bg-gradient-to-bl from-orange-200/30
+					via-fuchsia-900/30 to-sky-900/60 mix-blend-difference blur-2xl filter"
+					/>
 					<Contact />
 				</div>
+
 				<Footer />
 			</div>
 		</div>
@@ -87,12 +95,8 @@ export default function Home() {
 					<Landing />
 				</div>
 				<div
-					className="blob absolute top-10 left-1/4 h-96 w-96 rounded-full bg-gradient-to-bl from-fuchsia-900/50
-					via-orange-900/10 to-sky-900/30 mix-blend-difference blur-2xl filter"
-				/>
-				<div
-					className="blob absolute bottom-5 left-1/3 h-[36rem] w-[42rem] rounded-full bg-gradient-to-bl from-fuchsia-900/60
-	 via-sky-900/30 to-black mix-blend-difference blur-[72px] filter"
+					className="blob absolute top-10 left-1/4 h-96 w-96 rounded-full bg-gradient-to-bl from-orange-200/30
+					via-fuchsia-900/10 to-sky-900/30 mix-blend-difference blur-2xl filter"
 				/>
 			</div>
 		</div>

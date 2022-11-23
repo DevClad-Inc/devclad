@@ -41,7 +41,7 @@ export function SignOut(): JSX.Element {
 			type="button"
 			className="bg-darkBG2 hover:bg-darkBG hover:border-mistyRose/30 hover:text-mistyRose/50 flex w-full items-center
 			justify-between space-x-6 rounded-md border-[1px]  border-neutral-900 p-6 text-neutral-500
-			 shadow-2xl shadow-white/10 focus:ring-red-900"
+			 shadow-2xl shadow-white/5 focus:ring-red-900"
 		>
 			<div className="flex-1 truncate">
 				<div className="flex items-center space-x-3">
@@ -70,7 +70,7 @@ function DashCard({ item }: { item: ItemInterface }): JSX.Element {
 			onMouseEnter={() => item.onmouseenter?.()}
 			className="bg-darkBG2 hover:bg-darkBG flex w-full items-center
 			justify-between space-x-6 rounded-md border-[1px]
-			 border-neutral-900 p-6 shadow-2xl shadow-white/10 hover:border-neutral-400"
+			 border-neutral-900 p-6 shadow-2xl shadow-white/5 hover:border-neutral-400"
 		>
 			<div className="flex-1 truncate">
 				<div className="flex items-center space-x-3">
@@ -261,7 +261,7 @@ export function Home(): JSX.Element {
 				</div>
 			</Disclosure>
 
-			<div className="bg-darkBG2 mx-auto py-8 sm:px-6 lg:px-8">
+			<div className=" mx-auto py-8 sm:px-6 lg:px-8">
 				<div className="mt-12 flex justify-center">
 					<div className="xs:grid-cols-2 grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-3">
 						{items.map((item) => (
