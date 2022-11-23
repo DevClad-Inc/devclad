@@ -189,7 +189,7 @@ export function Home(): JSX.Element {
 								<div className="flex items-baseline space-x-4 sm:ml-10">
 									<h1 className="text-left text-2xl font-bold sm:text-3xl">
 										<span className="text-orange-200">
-											{loggedInUser?.first_name}&apos;s
+											{loggedInUser?.first_name}’s
 										</span>
 										{'  '}
 										Dashboard
@@ -233,7 +233,7 @@ export function Home(): JSX.Element {
 														'block px-4 py-2 text-sm text-orange-200'
 													)}
 												>
-													{loggedInUser.first_name}&apos;s Profile
+													{loggedInUser.first_name}’ Profile
 												</Link>
 											</Menu.Item>
 											{userNavigation.map((item) => (

@@ -25,4 +25,5 @@ export interface Meeting extends MeetingCreateUpdate {
 	uid: string;
 	link: string;
 	attended: boolean;
+	invite_emails: string[];
 }

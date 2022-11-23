@@ -6,6 +6,6 @@
 			"@/*": ["src/*"]
 		}
 	},
-	"include": ["src", "_worker.ts", "api"],
+	"include": ["src", "_worker.ts", "api", "emails"],
 	"exclude": ["node_modules", "dist"]
 }

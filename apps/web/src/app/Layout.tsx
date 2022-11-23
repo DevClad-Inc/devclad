@@ -316,8 +316,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 								<>
 									<h1 className="text-3xl font-bold">
 										{checkIOS() || checkMacOS() ? '⚙' : ''}{' '}
-										{loggedInUser.first_name}
-										&apos;s Settings
+										{loggedInUser.first_name}’ Settings
 									</h1>
 									<hr className="border-1 border-neutral-200 dark:border-neutral-800 xl:my-8" />
 								</>

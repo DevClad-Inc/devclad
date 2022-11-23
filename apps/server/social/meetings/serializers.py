@@ -8,17 +8,24 @@ User = get_user_model()
 
 class MeetingSerializer(serializers.ModelSerializer):
     invites = ReadWriteSerializerMethodField()
+    invite_emails = serializers.SerializerMethodField()
     type_of = serializers.CharField()
 
     class Meta:
         model = MeetingRoom
         fields = "__all__"
-        read_only_fields = ["attended"]
+        read_only_fields = ["attended", "invite_emails"]
 
     @staticmethod
     def get_invites(obj):
         meeting = MeetingRoom.objects.get(uid=obj.uid)
         return meeting.get_flat_values("invites")
+
+    @staticmethod
+    def get_invite_emails(obj):
+        meeting = MeetingRoom.objects.get(uid=obj.uid)
+        meeting_users = meeting.get_flat_values("invites")
+        return [User.objects.get(username=user).email for user in meeting_users]
 
     def validate_organizer(self, value):
         match (value == User.objects.get(username=self.context["request"].user)):

@@ -2,6 +2,7 @@ import datetime
 from urllib.request import Request
 import uuid
 from django.contrib.auth import get_user_model
+from django.template.loader import render_to_string
 
 from django.db.models import Q
 
@@ -87,3 +88,42 @@ def meetings(request: Request, uid: str) -> Response:
                     return Response({"message": serializer.errors}, status=400)
         case _:
             return Response({"error": "Invalid method"}, status=405)
+
+
+def send_email(profile, meeting):
+    html_message = render_to_string(
+        "users/schedulednotif.html",
+        {
+            "name": meeting.name,
+            "type": meeting.type_of,
+            "invites": meeting.invites,
+            "organizer": meeting.organizer,
+            "time": meeting.time,
+        },
+    )
+    # year, month, day, 'T', hour in 24-hr time, minute
+    # Z is the equivalent of UTC; 00 marks offset as 0
+    formatted = meeting.time.astimezone(pytz.UTC).strftime("%Y%m%dT%H%M00Z")
+    elems = [
+        "BEGIN:VCALENDAR",  # Begins the calendar object
+        "VERSION:2.0"  # Denotes the version of ICS we're using
+        # Identifies the product which created this ICS
+        "PRODID:ConnectDome - https://connectdome.com",
+        "BEGIN:VEVENT",  # Begin the event object"
+        f"DTSTART:{formatted}",  # Set the date
+        f"SUMMARY:{meeting.name}",
+        f"UID:{uuid.uuid4()}",  # Generate a UUID
+        f"URL:https://connectdome.com/chat/video/{meeting.slug}",
+        "END:VEVENT",  # End the event object
+        "END:VCALENDAR",  # Env the calendar object
+    ]
+
+    subject = "ConnectDome - Meeting Scheduled"
+    from_email = "ConnectDome Meetings <donotreply@connectdome.com>"
+    to_email = [profile.user.email, meeting.organizer.email]
+    message = EmailMessage(subject, html_message, from_email, to_email)
+    message.content_subtype = "html"
+    message.attach(
+        "meeting.ics", "\n".join(elems), "text/calendar"
+    )  # Attach the string representation of the calendar to the email
+    message.send()

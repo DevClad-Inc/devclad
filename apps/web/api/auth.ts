@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { IncomingHttpHeaders } from 'http';
 import fetch from 'isomorphic-fetch';
@@ -57,8 +56,8 @@ const connectGithub = async (
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 	const CLIENT_ID = process.env.VITE_GITHUB_CLIENT_ID;
-	const LOGIN_URL = `${process.env.VITE_API_URL}/oauth/github/login/`;
-	const CONNECT_URL = `${process.env.VITE_API_URL}/oauth/github/connect/`;
+	const LOGIN_URL = `${process.env.VITE_API_URL}/oauth/github/login/`; // looks like: https://api.devclad.com/oauth/github/login/
+	const CONNECT_URL = `${process.env.VITE_API_URL}/oauth/github/connect/`; // looks like: https://api.devclad.com/oauth/github/connect/
 	const { headers } = req;
 	switch (true) {
 		case req.url?.startsWith('/api/auth/complete/github'): {

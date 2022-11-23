@@ -11,5 +11,7 @@
 		"dev": {
 			"cache": false
 		}
-	}
+	},
+	"globalDependencies": [".env"],
+	"globalEnv": ["SENDGRID_API_KEY", "VITE_GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "VITE_API_URL"]
 }
