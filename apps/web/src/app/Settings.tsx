@@ -1,12 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import {
-	UserCircleIcon,
-	KeyIcon,
-	CreditCardIcon,
-	UsersIcon,
-	EnvelopeIcon,
-} from '@heroicons/react/24/solid';
+import { UserCircleIcon, KeyIcon, UsersIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 import { useDocumentTitle } from '@devclad/lib';
 import { useQueryClient } from '@tanstack/react-query';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
@@ -35,11 +29,11 @@ const navigation = [
 		href: '/settings/password',
 		icon: KeyIcon,
 	},
-	{
-		name: 'Plan & Billing',
-		href: '/billing',
-		icon: CreditCardIcon,
-	},
+	// {
+	// 	name: 'Plan & Billing',
+	// 	href: '/billing',
+	// 	icon: CreditCardIcon,
+	// },
 ];
 
 function classNames(...classes: string[]) {

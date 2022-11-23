@@ -36,9 +36,7 @@ export default function Document() {
 					content="https://imagedelivery.net/nF-ES6OEyyKZDJvRdLK8oA/677a1e0a-bd95-4e85-7aa3-86287a865f00/public"
 				/>
 			</Head>
-			<body
-				className={`scrollbar overflow-x-hidden overflow-y-scroll bg-black ${inter.variable} ${jbMono.variable}`}
-			>
+			<body className="scrollbar overflow-x-hidden overflow-y-scroll bg-black">
 				<Main />
 				<NextScript />
 			</body>

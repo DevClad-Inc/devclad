@@ -48,8 +48,8 @@ export default function Footer(): JSX.Element {
 	return (
 		<footer className="rounded-2xl border-t-[1px] border-neutral-800">
 			<div
-				className="blob absolute top-[30%] left-[25%] -z-10 h-[48rem] w-[48rem] rounded-full bg-gradient-to-b from-fuchsia-500/20
-				via-amber-900/20 to-sky-900/20 mix-blend-difference blur-2xl filter"
+				className="blob absolute top-[30%]  -z-10 h-96 w-96 rounded-full bg-gradient-to-b from-fuchsia-500/20 via-amber-900/20 to-sky-900/20 mix-blend-difference
+				blur-2xl filter sm:left-[25%] lg:h-[48rem] lg:w-[48rem]"
 			/>
 			<div
 				className="blob absolute bottom-[12%] right-1/3 -z-10 h-[36rem] w-[36rem] rounded-full bg-gradient-to-bl from-fuchsia-500/40
