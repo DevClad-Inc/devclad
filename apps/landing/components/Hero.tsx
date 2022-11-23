@@ -42,7 +42,7 @@ export default function Hero(): JSX.Element {
 								</span>
 							</h1>
 							<span className="mb-2 flex sm:justify-center">
-								<h1 className="mt-1 w-fit font-mono text-xl font-bold text-orange-50">
+								<h1 className="font-monoNext mt-1 w-fit text-xl font-bold text-orange-50">
 									<span className="flex sm:block md:block lg:block">
 										<span>Network.</span>
 										<span className="ml-2">Build.</span>
@@ -54,7 +54,7 @@ export default function Hero(): JSX.Element {
 								<Link
 									href="https://github.com/devclad-inc/devclad/"
 									target="_blank"
-									className="mb-2 inline-flex items-center rounded-lg border-[1px] border-dashed border-neutral-700 bg-black
+									className="inline-flex items-center rounded-lg border-[1px] border-neutral-800 bg-black
                p-1 pr-2 sm:rounded-full sm:text-base lg:text-sm xl:text-base"
 									rel="noreferrer"
 								>
@@ -81,7 +81,7 @@ export default function Hero(): JSX.Element {
 									/>
 								</Link>
 							</span>
-							<span className="mb-2 mt-2 flex sm:ml-4 sm:justify-center ">
+							<span className="mb-10 flex sm:ml-4 sm:justify-center ">
 								<Link
 									href="https://discord.com/invite/Cu5UgbgPjQ"
 									target="_blank"
