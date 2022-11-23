@@ -1,10 +1,10 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Analytics } from '@vercel/analytics/react';
-import { Inter, JetBrains_Mono, Manrope } from '@next/font/google';
+import { Inter, JetBrains_Mono } from '@next/font/google';
 import Head from 'next/head';
 
-export const jbMono = Manrope({
+export const jbMono = JetBrains_Mono({
 	variable: '--font-jb-mono',
 });
 
