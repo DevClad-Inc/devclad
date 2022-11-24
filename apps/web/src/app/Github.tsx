@@ -13,7 +13,9 @@ export function GithubAuth() {
 			const code = queryParams.get('code');
 			const tokenUrl = `/api${pathname}`;
 			const serverlessReq = async () => {
-				await axios.post(tokenUrl, { code });
+				await axios.post(tokenUrl, { code }).catch(() => {
+					navigate('/');
+				});
 			};
 			serverlessReq().then(() => {
 				if (pathname.startsWith('/auth/complete/github/login/')) {

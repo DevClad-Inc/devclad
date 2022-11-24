@@ -29,7 +29,11 @@ def github_oauth_login(request) -> Response:
             )
             match serializer.is_valid():
                 case True:
-                    user = GithubOAuth.objects.get(username=username).user
+                    try:
+                        user = GithubOAuth.objects.get(username=username).user
+                        print(user)
+                    except GithubOAuth.DoesNotExist:
+                        return Response({"error": "Github not connected"}, status=400)
                     serializer.save()
                     refresh = RefreshToken.for_user(user)
                     return Response(

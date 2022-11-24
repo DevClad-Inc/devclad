@@ -19,6 +19,7 @@ interface OAuthGithubResponse {
 }
 
 const OAuthGithub = async (
+	res: VercelResponse,
 	headers: IncomingHttpHeaders,
 	token: string,
 	username: string,
@@ -54,6 +55,7 @@ const OAuthGithub = async (
 			username: username.toLowerCase(),
 		}),
 	}).then((resp: { json: () => Promise<OAuthGithubResponse> }) => resp.json());
+
 	return apiResp as OAuthGithubResponse;
 };
 
@@ -100,10 +102,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 				case req.url?.startsWith('/api/auth/complete/github/login'): {
 					const apiURL = LOGIN_URL;
 					const maxAge = 60 * 60 * 24 * 28;
-					OAuthGithub(headers, accessToken, username, apiURL, 'login')
+					OAuthGithub(res, headers, accessToken, username, apiURL, 'login')
 						.then((apiResp) => {
 							if (apiResp) {
 								const { refresh, access } = apiResp;
+								if (refresh === undefined || access === undefined) {
+									res.status(400).json({ error: 'Github not connected' });
+								}
 								res.setHeader('Set-Cookie', [
 									// ! this cookie-setting mechanism will not work as intended in Safari in dev mode.
 									// As a choice, this function is optimized for chromium/firefox (vercel dev mode)
@@ -126,7 +131,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 				 */
 				case req.url?.startsWith('/api/auth/complete/github/connect'): {
 					const apiURL = CONNECT_URL;
-					OAuthGithub(headers, accessToken, username, apiURL, 'connect')
+					OAuthGithub(res, headers, accessToken, username, apiURL, 'connect')
 						.then(() => {
 							res.status(200).json({ success: true });
 						})
