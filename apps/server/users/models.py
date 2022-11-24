@@ -9,12 +9,13 @@ import uuid
 import boto3
 import requests
 
-s3Client = boto3.client(
-    "s3",
-    region_name="us-east-1",
-    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-)
+if settings.ENVIRONMENT == "PRODUCTION":
+    s3Client = boto3.client(
+        "s3",
+        region_name="us-east-1",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    )
 
 
 class User(AbstractUser):
@@ -88,6 +89,8 @@ class Profile(models.Model):
         return self.user.username
 
     def get_avatar_url(self: "Profile") -> str:
+        if settings.ENVIRONMENT == "DEVELOPMENT":
+            return self.avatar.url
         return generate_signed_url(self.avatar.name)
 
 
