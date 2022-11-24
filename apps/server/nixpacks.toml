@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ['python310', 'postgresql', 'gcc']
+
+[phases.install]
+cmds = [ "python -m venv /opt/venv && . /opt/venv/bin/activate && pip install poetry==$NIXPACKS_POETRY_VERSION && poetry install --no-dev --no-interaction --no-ansi"]
+
+[start]
+cmd = "python manage.py migrate && python3 manage.py createsu && python3 manage.py collectstatic --noinput && gunicorn devclad.wsgi"
