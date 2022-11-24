@@ -16,9 +16,9 @@
 			"source": "/api/schedule/(.*)",
 			"destination": "/api/schedule.ts"
 		},
-		{
-			"source": "/api/welcome",
-			"destination": "/api/welcome.ts"
+			{
+			"source": "/((?!api).*)",
+			"destination": "/"
 		}
 	],
 	"headers": [
