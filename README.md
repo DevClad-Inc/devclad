@@ -4,7 +4,7 @@
    <i><b>Network, Build, and Ship rapidly ⚡</b></i>
     <p>A social workspace platform for developers to dive in a new realm.</p>
     <h3>
-    <a href="https://youtube.com/">🎥 Watch Demo</a>
+    <a href="#">🎥 Watch Demo (soon)</a>
     </h3>
     <h3>
     <a href="https://devclad.com/">🔮 Join or Login</a>
@@ -19,7 +19,7 @@
 
 ## Roadmap
 
--   [ ] Release v1 beta. (almost done!! 🎉)
+-   [X] Release v1 beta.
 
 ### Apps
 
