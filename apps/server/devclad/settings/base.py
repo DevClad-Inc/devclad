@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # ALLAUTH
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
     # Enable registration with allauth
     "dj_rest_auth.registration",
     "django_q",
