@@ -9,6 +9,13 @@ import uuid
 import boto3
 import requests
 
+s3Client = boto3.client(
+    "s3",
+    region_name="us-east-1",
+    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+)
+
 
 class User(AbstractUser):
     pass
@@ -42,12 +49,6 @@ def random_avatar() -> str:
                     break
                 f.write(block)
     else:
-        s3Client = boto3.client(
-            "s3",
-            region_name="us-east-1",
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-        )
         bucket = "devclad"
         s3Client.put_object(
             Bucket=bucket,
@@ -55,7 +56,18 @@ def random_avatar() -> str:
             Body=response.raw.read(),
             ContentType="image/png",
         )
-    return f"avatars/{name}.png"
+    return f"media/avatars/{name}.png"
+
+
+def generate_signed_url(
+    key: str,
+) -> str:
+    bucket = "devclad"
+    return s3Client.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": bucket, "Key": key},
+        ExpiresIn=3600,
+    )
 
 
 class Profile(models.Model):
@@ -75,9 +87,8 @@ class Profile(models.Model):
     def __str__(self: "Profile") -> str:
         return self.user.username
 
-    # might not need this if we directly upload to Cloudflare from client
     def get_avatar_url(self: "Profile") -> str:
-        return self.avatar.url
+        return generate_signed_url(self.avatar.name)
 
 
 class SubscriptionStatus(models.Model):

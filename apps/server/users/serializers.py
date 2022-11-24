@@ -12,6 +12,7 @@ from allauth.utils import email_address_exists
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from dj_rest_auth.serializers import PasswordResetSerializer
+from social.serializers import ReadWriteSerializerMethodField
 
 from users.models import Profile, UserStatus, SubscriptionStatus, User
 from users.forms import CustomAllAuthPasswordResetForm
@@ -202,29 +203,30 @@ class CustomPasswordResetSerializer(PasswordResetSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(
-        allow_empty_file=False,
-        use_url=settings.UPLOADED_FILES_USE_URL,
-        validators=[image_size_validator],
-    )
+    avatar = ReadWriteSerializerMethodField()
 
     class Meta:
         model = Profile
         exclude = ["user", "uid"]
 
+    def get_avatar(self, obj):
+        profile = Profile.objects.get(user=obj.user)
+        return profile.get_avatar_url()
+
 
 class DisplayProfileSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(
-        allow_empty_file=False,
-        use_url=settings.UPLOADED_FILES_USE_URL,
-        validators=[image_size_validator],
-    )
+    avatar = ReadWriteSerializerMethodField()
+
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
 
     class Meta:
         model = Profile
         exclude = ["user", "uid"]
+
+    def get_avatar(self, obj):
+        profile = Profile.objects.get(user=obj.user)
+        return profile.get_avatar_url()
 
 
 class UserStatusSerializer(serializers.ModelSerializer):
