@@ -23,7 +23,16 @@ export interface MeetingCreateUpdate {
 export interface Meeting extends MeetingCreateUpdate {
 	id: number;
 	uid: string;
-	link: string;
 	attended: boolean;
 	invite_emails: string[];
+}
+
+export interface MeetingEmail {
+	typeOf: string;
+	time: string;
+	uid: string;
+	email: string;
+	firstName: string;
+	inviteName: string;
+	timeZone: string;
 }

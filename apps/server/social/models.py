@@ -129,7 +129,6 @@ class MeetingRoom(models.Model):
     invites = models.ManyToManyField(
         User, default=None, blank=True, related_name="invites"
     )
-    link = models.CharField(max_length=256, blank=True, null=True)
     type_of = models.CharField(default="1:1 Match", max_length=128, choices=TYPE)
     time = models.DateTimeField(default=None)
     attended = models.BooleanField(default=False)

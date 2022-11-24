@@ -34,3 +34,5 @@ Note: Github is not used for signing up new users on DevClad. It's only used for
     -   `login`:
         -   Validates whether the associated `username` (associated to the token) exists in GithubOAuth table. If it doesn't, an error is thrown. If it does, a refresh and access token is returned.
     -   The access and refresh tokens are saved in cookies and the user is redirected to `/`.
+
+**Note**: You might notice `@sendgrid/mail` being present in both `dependencies` and `devDependencies`. This is because `@sendgrid/mail` is used in the serverless function. Vercel Serverless function sort of fumbles the path of installed modules when testing locally, so it's added in both places.

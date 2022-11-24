@@ -195,7 +195,6 @@ def circle(request: Request, username: str, operation: str) -> Response:
                     match serializer.is_valid():
                         case True:
                             serializer.save()
-                            print(serializer.data)
                             other_user_profile.circle.add(request_user_profile)
                             return Response({"circle": serializer.data["circle"]})
                         case _:

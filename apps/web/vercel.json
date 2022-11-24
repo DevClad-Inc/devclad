@@ -13,8 +13,8 @@
 			"destination": "/api/auth.ts"
 		},
 		{
-			"source": "/api/send-email/(.*)",
-			"destination": "/api/emails.ts"
+			"source": "/api/schedule/(.*)",
+			"destination": "/api/schedule.ts"
 		}
 	],
 	"headers": [

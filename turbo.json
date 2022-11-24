@@ -13,5 +13,13 @@
 		}
 	},
 	"globalDependencies": [".env"],
-	"globalEnv": ["SENDGRID_API_KEY", "VITE_GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "VITE_API_URL"]
+	"globalEnv": [
+		"NODE_ENV",
+		"SENDGRID_API_KEY",
+		"SENDGRID_SCHEDULE_TID",
+		"VITE_GITHUB_CLIENT_ID",
+		"GITHUB_CLIENT_SECRET",
+		"VITE_API_URL",
+		"VITE_CLIENT_URL"
+	]
 }

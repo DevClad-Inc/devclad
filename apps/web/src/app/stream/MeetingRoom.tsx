@@ -124,8 +124,18 @@ export function MeetingRoom(): JSX.Element {
 	}
 	if (isSuccess && meetingData !== null) {
 		const { meetings: meeting } = meetingData.data as { meetings: Meeting };
-		const time = socialProfile?.timezone as string;
+		const timeZone = socialProfile?.timezone as string;
 
+		if (new Date(meeting.time) < new Date()) {
+			return (
+				<div className="flex h-full flex-col items-center justify-center">
+					<div className="flex flex-col items-center justify-center space-y-4">
+						<CheckCircleIcon className="h-16 w-16 text-green-500" />
+						<h1 className="text-2xl font-bold">Meeting has ended</h1>
+					</div>
+				</div>
+			);
+		}
 		return (
 			<div className="mt-5 flex h-full w-full flex-col items-center justify-center">
 				<div className="flex h-full w-full flex-col items-center justify-center">
@@ -134,7 +144,7 @@ export function MeetingRoom(): JSX.Element {
 							<p className="font-sans text-xl">{meeting.name}</p>
 
 							<p className="text-sm text-neutral-500">
-								{convertTimeZone(meeting.time, time)}
+								{convertTimeZone(meeting.time, timeZone)}
 							</p>
 							<p className="text-sm text-neutral-500">{meeting.invites.join(', ')}</p>
 						</div>
