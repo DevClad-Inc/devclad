@@ -305,43 +305,44 @@ export default function SignupForm({
 								</PrimaryButton>
 							</div>
 						) : (
-							<button type="button" onClick={() => resendEmail(emailVal)}>
-								<span
-									className="flex w-full justify-center rounded-md border border-transparent bg-green-50 py-2 px-4
-                    text-sm  text-green-800 shadow-md hover:shadow-lg hover:shadow-green-300
-                    focus:outline-none
-                    focus:ring-2 focus:ring-green-200 focus:ring-offset-2"
-								>
+							<>
+								<div className="border-phthaloGreen shadow-phthaloGreen/30 mb-4 flex justify-center rounded-md border-[1px] bg-green-50 p-4 shadow-2xl dark:bg-black">
 									<div className="flex">
 										<div className="flex-shrink-0">
 											<CheckIcon
-												className="h-5 w-5 text-green-400"
+												className="h-6 w-5 text-green-400 dark:text-green-200"
 												aria-hidden="true"
 											/>
 										</div>
-										<div className="ml-2 text-base font-bold">
-											<span>Account Created.</span> <span>Check Email.</span>
+										<div className="ml-3">
+											<h3 className="text-base font-bold text-green-800 dark:text-green-200">
+												Account Created. Check mail.
+											</h3>
 										</div>
 									</div>
-								</span>
-								<span
-									className="dark:bg-darkBG mt-5 inline-flex justify-center
-                    rounded-md border border-transparent bg-orange-700 py-2
-                    px-4 text-sm font-bold duration-500 dark:text-orange-200"
-								>
-									<div className="flex">
-										<div className="flex-shrink-0">
-											<InboxArrowDownIcon
-												className="h-5 w-5"
-												aria-hidden="true"
-											/>
+								</div>
+								<div className="flex justify-center">
+									<button
+										type="button"
+										onClick={() => resendEmail(emailVal)}
+										className="dark:bg-darkBG mt-5 items-center
+			rounded-md border border-transparent bg-orange-700 py-2
+			px-4 text-sm font-bold duration-500 dark:text-orange-200"
+									>
+										<div className="flex">
+											<div className="flex-shrink-0">
+												<InboxArrowDownIcon
+													className="h-5 w-5"
+													aria-hidden="true"
+												/>
+											</div>
+											<div className="ml-2 text-base font-bold">
+												<span>Resend Email.</span>
+											</div>
 										</div>
-										<div className="ml-2 text-base font-bold">
-											<span>Resend Email.</span>
-										</div>
-									</div>
-								</span>
-							</button>
+									</button>
+								</div>
+							</>
 						)}
 					</div>
 				</Form>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { DevCladSVG } from '@devclad/ui';
 import { classNames, useDocumentTitle } from '@devclad/lib';
 import UpdateProfileForm, { AvatarUploadForm } from '@/components/forms/Profile.forms';
@@ -17,6 +16,7 @@ import {
 import { socialProfileQuery } from '@/lib/queries.lib';
 import { ProfileLoading } from '@/components/LoadingStates';
 import { useApproved, useAuth } from '@/services/useAuth.services';
+import { SignOut } from './Home';
 
 const linkClassesString = `bg-orange-700 dark:bg-orange-900/20 border border-transparent
 duration-500 rounded-md py-1 px-6 inline-flex justify-center text-md dark:text-orange-200`;
@@ -133,12 +133,6 @@ export function StepTwo() {
 
 export function Onboarding() {
 	useDocumentTitle('Onboarding');
-	const navigate = useNavigate();
-	const handlelogOut = async () => {
-		await logOut().then(() => {
-			navigate(0);
-		});
-	};
 	const { loggedInUser } = useAuth();
 	const qc = useQueryClient();
 	const { status, approved } = useApproved();
@@ -179,20 +173,12 @@ export function Onboarding() {
 							Ask on our Discord.
 						</a>
 					</p>
-					<div className="text-center text-sm text-neutral-500">
-						<button
-							onClick={handlelogOut}
-							type="button"
-							className="bg-mistyRose text-bloodRed dark:bg-bloodRed2 dark:text-mistyRose mt-5 inline-flex items-center rounded-md
-              border border-transparent px-4 py-2 text-sm shadow-sm"
-						>
-							<ArrowLeftOnRectangleIcon
-								className="-ml-1 mr-2 h-5 w-5"
-								aria-hidden="true"
-							/>
-							Sign Out
-						</button>
+					<div className="mx-auto max-w-xs py-4">
+						<div className="mt-5">
+							<SignOut />
+						</div>
 					</div>
+
 					<div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
 						<div className="w-fit-content mx-auto p-2">
 							{status === 'Not Submitted' ? (
