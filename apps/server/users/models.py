@@ -1,10 +1,12 @@
 from django.db import models
+from django.conf import settings
 from django.db.models import UniqueConstraint
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_image_file_extension
 from django.core.exceptions import ValidationError
 from django.db.models.functions import Lower
 import uuid
+import boto3
 import requests
 
 
@@ -29,16 +31,30 @@ def file_size(
 
 def random_avatar() -> str:
     name = str(uuid.uuid4())[:8]
-    with open(f"media/avatars/{name}.png", "wb+") as f:
-        url = requests.get("https://userpics.devclad.com/api/getpic")
-        # save the image to the media folder from the url
-        response = requests.get(url.text, stream=True)
-        if not response.ok:
-            raise Exception("Could not get avatar")
-        for block in response.iter_content(1024):
-            if not block:
-                break
-            f.write(block)
+    url = requests.get("https://userpics.devclad.com/api/getpic")
+    response = requests.get(url.text, stream=True)
+    if settings.ENVIRONMENT == "DEVELOPMENT":
+        with open(f"media/avatars/{name}.png", "wb+") as f:
+            if not response.ok:
+                raise Exception("Could not get avatar")
+            for block in response.iter_content(1024):
+                if not block:
+                    break
+                f.write(block)
+    else:
+        s3Client = boto3.client(
+            "s3",
+            region_name="us-east-1",
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        )
+        bucket = "devclad"
+        s3Client.put_object(
+            Bucket=bucket,
+            Key=f"media/avatars/{name}.png",
+            Body=response.raw.read(),
+            ContentType="image/png",
+        )
     return f"avatars/{name}.png"
 
 
