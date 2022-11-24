@@ -33,6 +33,7 @@ graphene-django = "^3.0.0"
 django-graphql-jwt = "^0.3.4"
 django-filter = "^22.1"
 gunicorn = "^20.1.0"
+django-storages = "^1.13.1"
 
 [tool.poetry.dev-dependencies]
 
