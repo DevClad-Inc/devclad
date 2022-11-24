@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'isomorphic-fetch';
 import { convertTimeZone } from '@devclad/lib';
+import type { MeetingEmail } from '@/app/stream/types';
 /*
  * Function to send email invites to users after they have scheduled a meeting
  * uses sendgrid mailing server
@@ -45,18 +46,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	switch (req.method) {
 		case 'POST': {
 			const { body } = req;
-			const { typeOf, time, uid, email, firstName, inviteName, timeZone } = body as {
-				typeOf: string;
-				time: string;
-				uid: string;
-				email: string;
-				firstName: string;
-				inviteName: string;
-				timeZone: string;
-			}; // this will have only 1 meeting
-
+			const { email: Email } = body;
+			const { typeOf, time, uid, email, firstName, inviteName, timeZone } =
+				Email as MeetingEmail;
 			const message = {
-				to: email,
+				to: devMode ? 'arth@letterbolt.app' : email,
 				from: 'Arth from DevClad<arth@devclad.com>',
 				template_id: process.env.SENDGRID_SCHEDULE_TID,
 				dynamic_template_data: {

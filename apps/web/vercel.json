@@ -17,8 +17,8 @@
 			"destination": "/api/schedule.ts"
 		},
 		{
-			"source": "/((?!api).*)",
-			"destination": "/"
+			"source": "/api/welcome",
+			"destination": "/api/welcome.ts"
 		}
 	],
 	"headers": [

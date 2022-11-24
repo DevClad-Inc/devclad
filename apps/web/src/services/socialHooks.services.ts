@@ -136,6 +136,7 @@ export const useOneOneProfile = (username: string) => {
 };
 
 export const useSocialProfile = () => {
+	/* gets social profile of current user */
 	const { token } = useAuth();
 	const spQuery = useQuery({
 		...socialProfileQuery(token),

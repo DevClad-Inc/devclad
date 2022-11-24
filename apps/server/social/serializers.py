@@ -16,6 +16,8 @@ class ReadWriteSerializerMethodField(serializers.SerializerMethodField):
 
 
 class SocialProfileSerializer(serializers.ModelSerializer):
+    """This is for loggedInUser's profile"""
+
     timezone = TimeZoneSerializerField()
     purpose = serializers.CharField(validators=[purpose_validator])
     dev_type = serializers.CharField(validators=[devType_validator])

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
@@ -9,9 +10,21 @@ import { useAuth } from '@/services/useAuth.services';
 import { User } from '@/lib/types.lib';
 import { createUpdateMeeting } from '@/services/meetings.services';
 import { Error, Success } from '@/components/Feedback';
-import { MeetingCreateUpdate } from '@/app/stream/types';
+import { MeetingCreateUpdate, MeetingEmail } from '@/app/stream/types';
 import { MeetingDate, useDaysOfWeek } from './ActionDialog';
 import { meetingQuery } from '@/lib/queries.lib';
+
+const sendMail = async (mails: MeetingEmail[]) => {
+	try {
+		mails.forEach(async (email) => {
+			await axios.post('/api/schedule/', {
+				email,
+			});
+		});
+	} catch (err) {
+		toast.custom(<Error error="Error sending emails" />);
+	}
+};
 
 export function ScheduleDialog({
 	open,
@@ -49,7 +62,9 @@ export function ScheduleDialog({
 
 	const apiCall = async (values: MeetingCreateUpdate) => {
 		await createUpdateMeeting(token, values)
-			?.then(() => {
+			?.then(async (resp) => {
+				const { data } = resp as { data: MeetingEmail[] };
+				await sendMail(data);
 				qc.invalidateQueries(meetingQuery(token, 'upcoming'));
 				setSubmitted(true);
 				setScheduled(true);
