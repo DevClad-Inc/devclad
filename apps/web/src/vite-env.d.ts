@@ -18,6 +18,8 @@ declare module '@heroicons/react/solid';
 declare module '@heroicons/react/24/outline';
 declare module '@heroicons/react/24/solid';
 
+declare module '@sendgrid/mail';
+
 declare module '@devclad/config/eslint-react';
 declare module 'rollup-plugin-visualizer';
 declare module 'isomorphic-fetch';
