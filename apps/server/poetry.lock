@@ -454,18 +454,6 @@ requests = "*"
 requests-oauthlib = ">=0.3.0"
 
 [[package]]
-name = "django-allow-cidr"
-version = "0.5.0"
-description = "A Django Middleware to enable use of CIDR IP ranges in ALLOWED_HOSTS."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Django = ">=2.2"
-packaging = "*"
-
-[[package]]
 name = "django-cors-headers"
 version = "3.13.0"
 description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
@@ -1340,7 +1328,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.12"
-content-hash = "2064f2fe0d2bc050881dc0640c54ca60a054c05edcf327bb268a14d35a94eacc"
+content-hash = "d318d8ed4cfe691df40d7761575e90ffabe81c835236f6e20f38283c4f9a22ce"
 
 [metadata.files]
 aiodns = [
@@ -1712,10 +1700,6 @@ django = [
 ]
 django-allauth = [
     {file = "django-allauth-0.51.0.tar.gz", hash = "sha256:ca1622733b6faa591580ccd3984042f12d8c79ade93438212de249b7ffb6f91f"},
-]
-django-allow-cidr = [
-    {file = "django-allow-cidr-0.5.0.tar.gz", hash = "sha256:d17347e75d6c02864022f52ed608775a5e9ab144d1a82bb40853714f125f5d87"},
-    {file = "django_allow_cidr-0.5.0-py2.py3-none-any.whl", hash = "sha256:2fd88ffe697caf0c1d0fd147b88cf44d81282c069bbc475166a2ff1637ad9155"},
 ]
 django-cors-headers = [
     {file = "django-cors-headers-3.13.0.tar.gz", hash = "sha256:f9dc6b4e3f611c3199700b3e5f3398c28757dcd559c2f82932687f3d0443cfdf"},

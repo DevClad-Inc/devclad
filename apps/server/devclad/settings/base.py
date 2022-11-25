@@ -15,7 +15,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 # ALLOWED_HOST in .env as ALLOWED_HOSTS=name.com name.com name.com
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="",
+    default="*",
     cast=lambda allowed_hosts: [host.strip() for host in allowed_hosts.split(" ")],
 )
 
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     # CORS
-    "allow_cidr.middleware.AllowCIDRMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
