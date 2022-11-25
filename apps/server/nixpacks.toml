@@ -1,6 +1,6 @@
 [phases.setup]
 nixPkgs = ['python310', 'postgresql', 'gcc']
-nixLibs = ["zlib","stdenv.cc.cc.lib"]
+nixLibs = ["zlib"]
 
 [phases.install]
 cmds = [ "python -m venv /opt/venv && . /opt/venv/bin/activate && pip install poetry && cd apps/server && poetry install --no-dev --no-interaction --no-ansi"]
