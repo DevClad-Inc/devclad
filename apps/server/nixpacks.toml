@@ -1,5 +1,5 @@
 [phases.setup]
-nixLibs = ["zlib"]
+nixLibs = ["zlib","stdenv.cc.cc.lib"]
 nixPkgs = ['python310', 'postgresql', 'gcc']
 
 [phases.install]
