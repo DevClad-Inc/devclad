@@ -1,0 +1,3 @@
+"envVariables": {
+    "NIXPACKS_CONFIG_FILE": "./apps/server/nixpacks.toml"
+}
