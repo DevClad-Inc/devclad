@@ -10,9 +10,12 @@ from users.views import (
 )
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 from django.http import HttpResponse
+import rollbar
 
 
 def health_check(request):
+    # log request to rollbar
+    rollbar.report_message("Health check", "info", request=request)
     return HttpResponse("OK", status=200)
 
 
