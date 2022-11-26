@@ -10,6 +10,22 @@ from users.views import (
 )
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
+from rest_framework.decorators import (
+    api_view,
+    permission_classes,
+    authentication_classes,
+)
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+@authentication_classes([AllowAny])
+def health_check(request):
+    return Response({"status": "ok"})
+
+
 urlpatterns = [
     path(config("ADMIN_URL", default="admin/"), admin.site.urls),
     path("auth/token/refresh/", RefreshToken.as_view(), name="refresh_token"),
@@ -31,6 +47,7 @@ urlpatterns = [
     path("stream/", include("stream.urls")),
     path("users/", include("users.urls")),
     path("social/", include("social.urls")),
+    path("health/", health_check),
 ]
 
 
