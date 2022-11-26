@@ -14,7 +14,7 @@ import rollbar
 
 
 def health_check(request):
-    # log request to rollbar
+    print("health_check", request)
     rollbar.report_message("Health check", "info", request=request)
     return HttpResponse("OK", status=200)
 
