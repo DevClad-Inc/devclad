@@ -9,21 +9,11 @@ from users.views import (
     RefreshToken,
 )
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
-
-from rest_framework.decorators import (
-    api_view,
-    permission_classes,
-    authentication_classes,
-)
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from django.http import HttpResponse
 
 
-@api_view(["GET"])
-@permission_classes([AllowAny])
-@authentication_classes([AllowAny])
 def health_check(request):
-    return Response({"status": "ok"})
+    return HttpResponse("OK", status=200)
 
 
 urlpatterns = [
