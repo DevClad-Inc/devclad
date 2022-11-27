@@ -1,3 +1,4 @@
+from urllib.request import Request
 import requests
 from rest_framework.decorators import (
     api_view,
@@ -14,7 +15,7 @@ from django.conf import settings
 
 @api_view(["PATCH"])
 @permission_classes([AllowAny])
-def github_oauth_login(request) -> Response:
+def github_oauth_login(request: Request) -> Response:
     """Login with Github"""
     match request.method:
         case "PATCH":
