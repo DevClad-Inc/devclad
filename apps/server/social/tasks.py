@@ -15,38 +15,37 @@ User = get_user_model()
 4. Set available_this_week = False for all users with matches_this_week.
 """
 
+# TODO Rename this here and in `assign_matches_this_week`
+def assign():
+    # AVAILABLE
+    SocialProfile.objects.filter(available_always_off=False).update(
+        available_this_week=True
+    )
+    # CLEAR
+    for profile in SocialProfile.objects.all():
+        profile.matches_this_week.clear()
+        profile.save()
+    # MATCH
+    for social_profile in SocialProfile.objects.filter(available_this_week=True).all():
+        user = User.objects.get(id=social_profile.user.id)
+        if match := get_one_one_match(user):
+            matched_profile = SocialProfile.objects.get(user__id=match[0])
+            social_profile.matches_this_week.add(matched_profile)
+            social_profile.available_this_week = False
+            social_profile.save()
+            matched_profile.available_this_week = False
+            matched_profile.save()
+    SocialProfile.objects.filter(matches_this_week__isnull=False).update(
+        available_this_week=False
+    )
+    rollbar.report_message("assign_matches_this_week")
+    return True
+
 
 def assign_matches_this_week():
     try:
-        # AVAILABLE
-        SocialProfile.objects.filter(available_always_off=False).update(
-            available_this_week=True
-        )
-        # CLEAR
-        for profile in SocialProfile.objects.all():
-            profile.matches_this_week.clear()
-            profile.save()
-        # MATCH
-        for social_profile in SocialProfile.objects.filter(
-            available_this_week=True
-        ).all():
-            user = User.objects.get(id=social_profile.user.id)
-            if match := get_one_one_match(user):
-                matched_profile = SocialProfile.objects.get(user__id=match[0])
-                social_profile.matches_this_week.add(matched_profile)
-                social_profile.available_this_week = False
-                social_profile.save()
-                matched_profile.available_this_week = False
-                matched_profile.save()
-        SocialProfile.objects.filter(matches_this_week__isnull=False).update(
-            available_this_week=False
-        )
-        rollbar.report_message("assign_matches_this_week")
-        return True
+        return assign()
     except Exception as e:
         print(e)
         rollbar.report_message("assign_matches_this_week failed")
         return False
-
-
-# TODO: better LOGGING INTO ROLLBAR
