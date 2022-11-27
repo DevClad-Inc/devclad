@@ -98,3 +98,5 @@ celerybeat-schedule
 
 
 # yes ik there are duplicates probably. remove them if you want, it's a chore to do it myself
+
+dump.sql
