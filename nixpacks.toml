@@ -9,4 +9,4 @@ cmds = [ "python -m venv /opt/venv && . /opt/venv/bin/activate && pip install po
 cmd = "echo0"
 
 [start]
-cmd = "cd apps/server && . /opt/venv/bin/activate && python ./manage.py migrate && python ./manage.py createsu && python ./manage.py collectstatic --noinput && gunicorn -b :8000 --workers 4 --threads 15 devclad.wsgi"
+cmd = "cd apps/server && . /opt/venv/bin/activate && python ./manage.py migrate && python ./manage.py createsu && python ./manage.py collectstatic --noinput && gunicorn -b :8000 --workers 4 --threads 15 --timeout 1000 devclad.wsgi"
