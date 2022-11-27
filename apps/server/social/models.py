@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from users.models import UserStatus
+
 from timezone_field import TimeZoneField
 
 User = get_user_model()

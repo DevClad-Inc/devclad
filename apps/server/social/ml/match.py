@@ -9,7 +9,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from social.models import SocialProfile
-from users.models import User
+from users.models import User, UserStatus
 
 User = get_user_model()
 
@@ -92,34 +92,38 @@ def get_indirect_match(user, number_of_matches_to_make=1):
 def get_one_one_match(user, number_of_matches_to_make=1):
     indirect_matching = False
     logged_in_social_profile = SocialProfile.objects.get(user=user)
+
+    base_profiles = (
+        SocialProfile.objects.exclude(user=user)
+        .filter(user__userstatus__approved=True)
+        .exclude(
+            available_always_off=True
+        )  # for users who just logged in and haven't set their availability yet
+        .exclude(available_this_week=False)
+        .exclude(blocked=logged_in_social_profile)
+        .exclude(shadowed=logged_in_social_profile)
+        .exclude(circle=logged_in_social_profile)
+        .exclude(skipped=logged_in_social_profile)
+        .values_list(
+            "user",
+            "idea_status",
+            "video_call_friendly",
+            "raw_xp",
+            "location",
+            "timezone",
+        )
+    )
+
     all_profiles = [
         transform_variables_profile(social_profile)
-        for social_profile in list(
-            SocialProfile.objects.exclude(user=user)
-            .exclude(
-                available_always_off=True
-            )  # for users who just logged in and haven't set their availability yet
-            .exclude(available_this_week=False)
-            .exclude(blocked=logged_in_social_profile)
-            .exclude(shadowed=logged_in_social_profile)
-            .exclude(circle=logged_in_social_profile)
-            .exclude(skipped=logged_in_social_profile)
-            .values_list(
-                "user",
-                "idea_status",
-                "video_call_friendly",
-                "raw_xp",
-                "location",
-                "timezone",
-            )
-        )
+        for social_profile in list(base_profiles)
     ]
 
     indirect_all_profiles = [
         transform_variables_profile(social_profile)
         for social_profile in list(
-            SocialProfile.objects
-            # .exclude(user=logged_in_user)
+            SocialProfile.objects.exclude(user=user)
+            .filter(user__userstatus__approved=True)
             .exclude(
                 available_always_off=True
             )  # for users who just logged in and haven't set their availability yet

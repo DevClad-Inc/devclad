@@ -18,12 +18,15 @@ User = get_user_model()
 
 def assign_matches_this_week():
     try:
+        # AVAILABLE
         SocialProfile.objects.filter(available_always_off=False).update(
             available_this_week=True
         )
+        # CLEAR
         for profile in SocialProfile.objects.all():
             profile.matches_this_week.clear()
             profile.save()
+        # MATCH
         for social_profile in SocialProfile.objects.filter(
             available_this_week=True
         ).all():
