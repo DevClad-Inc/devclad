@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
 import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, { useState } from 'react';
-import { resendEmail, SignUp } from '@/services/auth.services';
+import { CF_KEY, DEVELOPMENT, resendEmail, SignUp } from '@/services/auth.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { SignupFormValues } from '@/lib/types.lib';
 
@@ -296,14 +296,21 @@ export default function SignupForm({
 
 					<div>
 						{!signedUp ? (
-							<div className="flex justify-center">
-								<PrimaryButton isSubmitting={isSubmitting} wFull>
-									<span className="text-lg font-bold">
-										{isSubmitting ? 'Signing up...' : 'Sign Up'}{' '}
-										<span className="text-xs">✨</span>
-									</span>
-								</PrimaryButton>
-							</div>
+							<>
+								<div
+									className="cf-turnstile"
+									data-sitekey={DEVELOPMENT ? '1x00000000000000000000AA' : CF_KEY}
+									data-theme="dark"
+								/>
+								<div className="flex justify-center">
+									<PrimaryButton isSubmitting={isSubmitting} wFull>
+										<span className="text-lg font-bold">
+											{isSubmitting ? 'Signing up...' : 'Sign Up'}{' '}
+											<span className="text-xs">✨</span>
+										</span>
+									</PrimaryButton>
+								</div>
+							</>
 						) : (
 							<>
 								<div className="border-phthaloGreen shadow-phthaloGreen/30 mb-4 flex justify-center rounded-md border-[1px] bg-green-50 p-4 shadow-2xl dark:bg-black">

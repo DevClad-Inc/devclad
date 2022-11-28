@@ -5,7 +5,7 @@ import { delMany } from 'idb-keyval';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { z, ZodError } from 'zod';
-import { getUser, logIn } from '@/services/auth.services';
+import { CF_KEY, DEVELOPMENT, getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { ILoginForm } from '@/lib/types.lib';
@@ -156,7 +156,12 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 							</Link>
 						</div>
 					</div>
-
+					{/* dummy key is 1x00000000000000000000AA */}
+					<div
+						className="cf-turnstile"
+						data-sitekey={DEVELOPMENT ? '1x00000000000000000000AA' : CF_KEY}
+						data-theme="dark"
+					/>
 					<div className="flex w-full justify-center">
 						<PrimaryButton isSubmitting={isSubmitting} wFull>
 							<span className="w-full">
