@@ -43,3 +43,8 @@
 
 _Usage_: Use `@` for absolute imports.
 _Exception_: Code within shared packages.
+
+### Nixpack
+
+Nixpack is used to deploy the server.
+_Why are there 2 of those files?_ The one at the root of the repo is used for deployment. The one in `apps/server` is used for local builds. They are almost identical.
