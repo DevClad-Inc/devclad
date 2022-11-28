@@ -79,7 +79,7 @@ class Profile(models.Model):
         default=random_avatar,
         validators=[validate_image_file_extension, file_size],
     )
-    pronouns = models.CharField(max_length=20, default="he/him")
+    pronouns = models.CharField(max_length=20, default="")
     about = models.CharField(max_length=255, default="")
     website = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
