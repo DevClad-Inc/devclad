@@ -8,7 +8,7 @@ import cookieAdapter from '@/lib/cookieAdapter.lib';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 export const DEVELOPMENT = import.meta.env.DEV;
-export const CF_KEY = import.meta.env.VITE_CF_SITE_KEY;
+export const CF_KEY = import.meta.env.VITE_CF_SITE_KEY as string;
 
 const headers = {
 	'Content-Type': 'application/json',

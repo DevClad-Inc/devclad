@@ -297,11 +297,19 @@ export default function SignupForm({
 					<div>
 						{!signedUp ? (
 							<>
-								<div
-									className="cf-turnstile"
-									data-sitekey={DEVELOPMENT ? '1x00000000000000000000AA' : CF_KEY}
-									data-theme="dark"
-								/>
+								{DEVELOPMENT ? (
+									<div
+										className="cf-turnstile"
+										data-sitekey="1x00000000000000000000AA"
+										data-theme="dark"
+									/>
+								) : (
+									<div
+										className="cf-turnstile"
+										data-sitekey={CF_KEY}
+										data-theme="dark"
+									/>
+								)}
 								<div className="flex justify-center">
 									<button
 										disabled={isSubmitting}
