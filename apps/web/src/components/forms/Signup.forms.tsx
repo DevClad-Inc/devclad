@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { CF_KEY, DEVELOPMENT, resendEmail, SignUp } from '@/services/auth.services';
-import { PrimaryButton } from '@/lib/Buttons.lib';
+import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { SignupFormValues } from '@/lib/types.lib';
 
 interface SignupFormProps {
@@ -303,12 +303,22 @@ export default function SignupForm({
 									data-theme="dark"
 								/>
 								<div className="flex justify-center">
-									<PrimaryButton isSubmitting={isSubmitting} wFull>
-										<span className="text-lg font-bold">
-											{isSubmitting ? 'Signing up...' : 'Sign Up'}{' '}
-											<span className="text-xs">✨</span>
-										</span>
-									</PrimaryButton>
+									<button
+										disabled={isSubmitting}
+										type="submit"
+										className="bg-darkBG2 hover:bg-darkBG hover:border-mistyRose/30 hover:text-mistyRose/50 flex w-full items-center
+			justify-between space-x-6 rounded-md border-[1px]  border-neutral-900 p-6 text-neutral-500
+			 shadow-2xl shadow-white/5 focus:ring-red-900"
+									>
+										<div className="flex-1 truncate">
+											<div className="flex items-center space-x-3">
+												<h3 className="truncate text-sm text-neutral-500 sm:text-base">
+													{isSubmitting ? 'Signing' : 'Sign'} Up
+												</h3>
+											</div>
+										</div>
+										{isSubmitting && <LoadingSpinner />}
+									</button>
 								</div>
 							</>
 						) : (

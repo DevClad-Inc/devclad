@@ -5,9 +5,10 @@ import { delMany } from 'idb-keyval';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { z, ZodError } from 'zod';
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { CF_KEY, DEVELOPMENT, getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
-import { PrimaryButton } from '@/lib/Buttons.lib';
+import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { ILoginForm } from '@/lib/types.lib';
 
 interface LoginFormProps {
@@ -163,11 +164,29 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 						data-theme="dark"
 					/>
 					<div className="flex w-full justify-center">
-						<PrimaryButton isSubmitting={isSubmitting} wFull>
-							<span className="w-full">
-								{isSubmitting ? 'Signing In...' : 'Sign In'} <span>✨</span>
-							</span>
-						</PrimaryButton>
+						<button
+							disabled={isSubmitting}
+							type="submit"
+							className="bg-darkBG2 hover:bg-darkBG hover:border-mistyRose/30 hover:text-mistyRose/50 flex w-full items-center
+			justify-between space-x-6 rounded-md border-[1px]  border-neutral-900 p-6 text-neutral-500
+			 shadow-2xl shadow-white/5 focus:ring-red-900"
+						>
+							<div className="flex-1 truncate">
+								<div className="flex items-center space-x-3">
+									<h3 className="truncate text-sm text-neutral-500 sm:text-base">
+										{isSubmitting ? 'Signing' : 'Sign'} In
+									</h3>
+								</div>
+							</div>
+							{isSubmitting ? (
+								<LoadingSpinner />
+							) : (
+								<ArrowRightOnRectangleIcon
+									className="h-6 w-6 flex-shrink-0 lg:h-8 lg:w-8"
+									aria-hidden="true"
+								/>
+							)}
+						</button>
 					</div>
 				</Form>
 			)}
