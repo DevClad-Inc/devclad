@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { CF_KEY, DEVELOPMENT, resendEmail, SignUp } from '@/services/auth.services';
+import { DEVELOPMENT, resendEmail, SignUp } from '@/services/auth.services';
 import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { SignupFormValues } from '@/lib/types.lib';
 
@@ -306,7 +306,7 @@ export default function SignupForm({
 								) : (
 									<div
 										className="cf-turnstile"
-										data-sitekey={CF_KEY}
+										data-sitekey="0x4AAAAAAABZVdf8DE1E_a9m"
 										data-theme="dark"
 									/>
 								)}

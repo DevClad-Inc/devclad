@@ -6,7 +6,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { z, ZodError } from 'zod';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import { CF_KEY, DEVELOPMENT, getUser, logIn } from '@/services/auth.services';
+import { DEVELOPMENT, getUser, logIn } from '@/services/auth.services';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { ILoginForm } from '@/lib/types.lib';
@@ -164,7 +164,11 @@ export default function LoginForm({ loginError, setLoginError }: LoginFormProps)
 							data-theme="dark"
 						/>
 					) : (
-						<div className="cf-turnstile" data-sitekey={CF_KEY} data-theme="dark" />
+						<div
+							className="cf-turnstile"
+							data-sitekey="0x4AAAAAAABZVdf8DE1E_a9m"
+							data-theme="dark"
+						/>
 					)}
 
 					<div className="flex w-full justify-center">
