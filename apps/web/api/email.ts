@@ -45,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 	switch (req.method) {
 		case 'POST': {
-			switch (req.body.type) {
+			switch (true) {
 				case req.url?.startsWith('/api/email/schedule/'): {
 					const { body } = req;
 					const { email: Email } = body;

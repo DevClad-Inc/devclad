@@ -67,7 +67,6 @@ MIDDLEWARE = [
     "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
-
 ROOT_URLCONF = "devclad.urls"
 
 TEMPLATES = [
@@ -96,27 +95,6 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-        "OPTIONS": {
-            "user_attributes": ["first_name", "last_name", "email", "username"],
-            "max_similarity": 0.6,
-        },
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        "OPTIONS": {"min_length": 10},
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

@@ -54,9 +54,10 @@ export default function SignupForm({
 		return errors;
 	};
 
-	const sendMail = async (email: string) => {
+	const sendMail = async (firstName: string, email: string) => {
 		await axios
 			.post('/api/email/welcome/', {
+				firstName,
 				email,
 			})
 			.catch(() => {
@@ -79,11 +80,13 @@ export default function SignupForm({
 		};
 		await SignUp(user).then(async (resp) => {
 			if (resp.status === 201) {
-				setEmailVal(email);
+				if (firstName && email) {
+					setEmailVal(email);
+					await sendMail(firstName, email);
+				}
 				if (signupErrorState) {
 					setSignupErrorState('');
 				}
-				await sendMail(email);
 				setSignedUp(true);
 			} else if (resp.response.status === 400) {
 				setSubmitting(false);
