@@ -187,7 +187,7 @@ def circle(request: Request, username: str, operation: str) -> Response:
                     request.data["circle"] = [User.objects.get(username=username).id]
 
                     serializer = CircleSerializer(
-                        request_user_profile, data=request.data
+                        request_user_profile, data=request.data, partial=True
                     )
                     match serializer.is_valid():
                         case True:
