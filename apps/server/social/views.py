@@ -184,10 +184,15 @@ def circle(request: Request, username: str, operation: str) -> Response:
                                 {"error": "User not in matches this week"}, status=400
                             )
 
-                    request.data["circle"] = [User.objects.get(username=username).id]
+                    print(request.data["circle"])
+                    request.data["circle"] = [
+                        User.objects.get(username=uname).id
+                        for uname in request.data["circle"]
+                    ]
+                    print(request.data)
 
                     serializer = CircleSerializer(
-                        request_user_profile, data=request.data, partial=True
+                        request_user_profile, data=request.data
                     )
                     match serializer.is_valid():
                         case True:
@@ -198,7 +203,10 @@ def circle(request: Request, username: str, operation: str) -> Response:
                             return Response(serializer.errors, status=400)
 
                 case "remove":
-                    request.data["circle"] = [User.objects.get(username=username).id]
+                    request.data["circle"] = [
+                        User.objects.get(username=uname).id
+                        for uname in request.data["circle"]
+                    ]
                     serializer = CircleSerializer(
                         request_user_profile, data=request.data, partial=True
                     )

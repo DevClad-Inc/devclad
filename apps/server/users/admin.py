@@ -10,7 +10,15 @@ User = get_user_model()
 
 @admin.register(User)
 class CustomUserAdmin(BaseUserAdmin):
-    pass
+    list_display = [
+        "id",
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "is_staff",
+        "is_active",
+    ]
 
 
 admin.site.register(Profile)
