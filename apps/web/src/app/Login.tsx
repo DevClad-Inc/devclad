@@ -84,6 +84,12 @@ export function Login() {
 						</div>
 					</div>
 				</div>
+				<span className=" text-center text-sm dark:text-gray-500">
+					Github is only for login. To create an account, go to{' '}
+					<span className="text-orange-200">
+						<Link to="/signup">Signup</Link>
+					</span>
+				</span>
 			</div>
 		</div>
 	);

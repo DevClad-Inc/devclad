@@ -184,10 +184,12 @@ def circle(request: Request, username: str, operation: str) -> Response:
                                 {"error": "User not in matches this week"}, status=400
                             )
 
+                    print(request.data["circle"])
                     request.data["circle"] = [
                         User.objects.get(username=uname).id
                         for uname in request.data["circle"]
                     ]
+                    print(request.data)
 
                     serializer = CircleSerializer(
                         request_user_profile, data=request.data
