@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { InboxArrowDownIcon, ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { toast } from 'react-hot-toast';
 import { DEVELOPMENT, resendEmail, SignUp } from '@/services/auth.services';
 import { LoadingSpinner } from '@/lib/Buttons.lib';
 import { SignupFormValues } from '@/lib/types.lib';
+import { Error } from '../Feedback';
 
 interface SignupFormProps {
 	signupErrorState: string;
@@ -51,6 +54,16 @@ export default function SignupForm({
 		return errors;
 	};
 
+	const sendMail = async (email: string) => {
+		await axios
+			.post('/api/email/welcome/', {
+				email,
+			})
+			.catch(() => {
+				toast.custom(<Error error="Error sending welcome email :(" />);
+			});
+	};
+
 	const handleSignUp = async (
 		values: SignupFormValues,
 		{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -64,12 +77,13 @@ export default function SignupForm({
 			password1,
 			password2,
 		};
-		await SignUp(user).then((resp) => {
+		await SignUp(user).then(async (resp) => {
 			if (resp.status === 201) {
 				setEmailVal(email);
 				if (signupErrorState) {
 					setSignupErrorState('');
 				}
+				await sendMail(email);
 				setSignedUp(true);
 			} else if (resp.response.status === 400) {
 				setSubmitting(false);

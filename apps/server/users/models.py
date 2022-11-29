@@ -57,6 +57,8 @@ def random_avatar() -> str:
             Body=response.raw.read(),
             ContentType="image/png",
         )
+    if settings.ENVIRONMENT == "DEVELOPMENT":
+        return f"avatars/{name}.png"
     return f"media/avatars/{name}.png"
 
 

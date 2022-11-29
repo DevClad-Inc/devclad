@@ -17,7 +17,7 @@ import { meetingQuery } from '@/lib/queries.lib';
 const sendMail = async (mails: MeetingEmail[]) => {
 	try {
 		mails.forEach(async (email) => {
-			await axios.post('/api/schedule/', {
+			await axios.post('/api/email/schedule/', {
 				email,
 			});
 		});

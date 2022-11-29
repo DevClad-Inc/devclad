@@ -45,32 +45,63 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 	switch (req.method) {
 		case 'POST': {
-			const { body } = req;
-			const { email: Email } = body;
-			const { typeOf, time, uid, email, firstName, inviteName, timeZone } =
-				Email as MeetingEmail;
-			const message = {
-				to: devMode ? 'arth@letterbolt.app' : email,
-				from: 'Arth from DevClad<arth@devclad.com>',
-				template_id: process.env.SENDGRID_SCHEDULE_TID,
-				dynamic_template_data: {
-					typeOf,
-					firstName,
-					inviteName,
-					time: convertTimeZone(time, timeZone),
-					link: `${process.env.VITE_CLIENT_URL}/meetings/${uid}`,
-				},
-			};
-			sgMail
-				.send(message)
-				.then(() => {
-					res.status(200).json({
-						message: 'Email sent successfully',
-					});
-				})
-				.catch((error: unknown) => {
-					res.status(400).json({ message: 'Email not sent', error });
-				});
+			switch (req.body.type) {
+				case req.url?.startsWith('/api/email/schedule/'): {
+					const { body } = req;
+					const { email: Email } = body;
+					const { typeOf, time, uid, email, firstName, inviteName, timeZone } =
+						Email as MeetingEmail;
+					const message = {
+						to: devMode ? 'arth@letterbolt.app' : email,
+						from: 'Arth from DevClad<arth@devclad.com>',
+						template_id: process.env.SENDGRID_SCHEDULE_TID,
+						dynamic_template_data: {
+							typeOf,
+							firstName,
+							inviteName,
+							time: convertTimeZone(time, timeZone),
+							link: `${process.env.VITE_CLIENT_URL}/meetings/${uid}`,
+						},
+					};
+					sgMail
+						.send(message)
+						.then(() => {
+							res.status(200).json({
+								message: 'Email sent successfully',
+							});
+						})
+						.catch((error: unknown) => {
+							res.status(400).json({ message: 'Email not sent', error });
+						});
+					break;
+				}
+				case req.url?.startsWith('/api/email/welcome/'): {
+					const { firstName, email } = req.body;
+					const message = {
+						to: devMode ? 'arth@letterbolt.app' : email,
+						from: 'Arth from DevClad<arth@devclad.com>',
+						template_id: process.env.SENDGRID_WELCOME_TID,
+						dynamic_template_data: {
+							firstName,
+						},
+					};
+					sgMail
+						.send(message)
+						.then(() => {
+							res.status(200).json({
+								message: 'Email sent successfully',
+							});
+						})
+						.catch((error: unknown) => {
+							res.status(400).json({ message: 'Email not sent', error });
+						});
+					break;
+				}
+				default: {
+					res.status(400).json({ message: 'Invalid request' });
+					break;
+				}
+			}
 			break;
 		}
 		default:
@@ -82,6 +113,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 /* a sample request body
 
+case 1
 {
     "typeOf": "1:1 Match",
     "time": "2022-11-24T03:45:00Z",
@@ -90,6 +122,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     "firstName": "Arth",
     "inviteName": "Pat",
     "timeZone": "Asia/Kolkata"
+}
+
+case 2
+
+{
+	firstName: 'Arth',
+	email: 'arth@letterbolt.app',
 }
 
 */
