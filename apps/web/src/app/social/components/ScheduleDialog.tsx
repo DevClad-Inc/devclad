@@ -11,8 +11,29 @@ import { User } from '@/lib/types.lib';
 import { createUpdateMeeting } from '@/services/meetings.services';
 import { Error, Success } from '@/components/Feedback';
 import { MeetingCreateUpdate, MeetingEmail } from '@/app/stream/types';
-import { MeetingDate, useDaysOfWeek } from './ActionDialog';
 import { meetingQuery } from '@/lib/queries.lib';
+import { daysOfWeek } from '@/app/social/forms/utils';
+
+interface MeetingDate {
+	day: string;
+	month: string;
+	date: Date;
+	id: number;
+}
+
+const useDaysOfWeek = () => {
+	const days: MeetingDate[] = [];
+	const today = new Date().getDay();
+	for (const day of daysOfWeek.slice(today, 7)) {
+		days.push({
+			day: day.name.slice(0, 3),
+			date: new Date(new Date().setDate(new Date().getDate() + day.id - today)),
+			month: new Date().toLocaleString('default', { month: 'short' }),
+			id: day.id,
+		});
+	}
+	return days;
+};
 
 const sendMail = async (mails: MeetingEmail[]) => {
 	try {

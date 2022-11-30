@@ -2,28 +2,6 @@ import React, { Fragment } from 'react';
 import { XMarkIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { Transition, Dialog } from '@headlessui/react';
 import { classNames } from '@devclad/lib';
-import { daysOfWeek } from '@/app/social/forms/AdditionalSP.forms';
-
-export interface MeetingDate {
-	day: string;
-	month: string;
-	date: Date;
-	id: number;
-}
-
-export const useDaysOfWeek = () => {
-	const days: MeetingDate[] = [];
-	const today = new Date().getDay();
-	for (const day of daysOfWeek.slice(today, 7)) {
-		days.push({
-			day: day.name.slice(0, 3),
-			date: new Date(new Date().setDate(new Date().getDate() + day.id - today)),
-			month: new Date().toLocaleString('default', { month: 'short' }),
-			id: day.id,
-		});
-	}
-	return days;
-};
 
 export function ActionDialog({
 	open,

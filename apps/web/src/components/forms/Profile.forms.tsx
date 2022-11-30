@@ -6,7 +6,7 @@ import { updateProfile, updateProfileAvatar } from '@/services/profile.services'
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Profile, IUpdateProfileForm } from '@/lib/types.lib';
 import { Success, Error } from '@/components/Feedback';
-import { throwToastError } from '@/app/social/forms/util';
+import { throwToastError } from '@/app/social/forms/utils';
 import { ThemeContext } from '@/context/Theme.context';
 import { invalidateAndStoreIDB } from '@/context/User.context';
 import { ProfileLoading } from '../LoadingStates';

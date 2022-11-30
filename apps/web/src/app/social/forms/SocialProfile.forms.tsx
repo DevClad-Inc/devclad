@@ -10,7 +10,7 @@ import { SocialProfile, SocialProfileFormValues } from '@/app/social/types';
 import { updateSocialProfile } from '@/services/profile.services';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 import { Success } from '@/components/Feedback';
-import { throwToastError } from '@/app/social/forms/util';
+import { throwToastError } from '@/app/social/forms/utils';
 import Countries from '@/lib/list/Countries.list.json';
 import Languages from '@/lib/list/Languages.list.json';
 import Purposes from '@/lib/list/Purpose.list.json';
