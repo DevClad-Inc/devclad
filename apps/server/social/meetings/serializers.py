@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from social.models import MeetingRoom
+from social.models import MeetingRoom, SocialProfile
 from social.serializers import ReadWriteSerializerMethodField
 from django.contrib.auth import get_user_model
 
@@ -44,17 +44,19 @@ class MeetingSerializer(serializers.ModelSerializer):
                 is_in_circle = invite in self.context[
                     "request"
                 ].user.socialprofile.circle_symmetrical.all().values_list(
-                    "id", flat=True
+                    "pk", flat=True
                 )
                 is_match = invite in self.context[
                     "request"
                 ].user.socialprofile.matches_this_week.all().values_list(
-                    "id", flat=True
+                    "pk", flat=True
                 )
                 match (is_in_circle or is_match or is_self):
                     case True:
                         self.context["request"].data["invites"].append(
-                            self.context["request"].user.id
+                            SocialProfile.objects.get(
+                                user=self.context["request"].user
+                            ).pk
                         )
                     case _:
                         raise serializers.ValidationError(
