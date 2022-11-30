@@ -15,6 +15,8 @@ from .serializers import MeetingSerializer
 
 User = get_user_model()
 
+"""using SP's pk to get reference to the user (organizer) and modify request data with username"""
+
 
 def JSONTimeZone(time):
     time = time.replace(tzinfo=None)
@@ -65,9 +67,9 @@ def meetings(request: Request, uid: str) -> Response:
                     )
                     serializer = MeetingSerializer(meetings, many=True)
                     for meeting in serializer.data:
-                        meeting["organizer"] = User.objects.get(
-                            id=meeting["organizer"]
-                        ).username
+                        meeting["organizer"] = SocialProfile.objects.get(
+                            pk=meeting["organizer"]
+                        ).user.username
                 case "past":
                     meetings = (
                         MeetingRoom.objects.filter(
@@ -81,9 +83,9 @@ def meetings(request: Request, uid: str) -> Response:
                     )
                     serializer = MeetingSerializer(meetings, many=True)
                     for meeting in serializer.data:
-                        meeting["organizer"] = User.objects.get(
-                            id=meeting["organizer"]
-                        ).username
+                        meeting["organizer"] = SocialProfile.objects.get(
+                            pk=meeting["organizer"]
+                        ).user.username
                 case _:
                     try:
                         uuid.UUID(uid)

@@ -22,18 +22,17 @@ export default function PasswordResetForm(): JSX.Element {
 		if (!values.password2) {
 			errors.password2 = 'Required';
 		}
-		if (values.password1.length < 10) {
+		if (values.password1.length < 8) {
 			errors.password1 = 'Password must be at least 10 characters.';
 		}
 		if (values.password1 !== values.password2 && values.password2.length > 0) {
 			errors.password1 = 'Passwords do not match';
 			errors.password2 = 'Passwords do not match';
 		}
-		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=[\S]+$)/;
-		// /^[@#](?=.{7,13}$)(?=\w{7,13})(?=[^aeiou_]{7,13})(?=.*[A-Z])(?=.*\d)/;
+		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=[\S]+$)/;
 		if (!passwordRegex.test(values.password1)) {
 			errors.password1 =
-				'Password must contain at least one number, one lowercase, one uppercase, and one special character.';
+				'Password must contain at least one number, one lowercase, and one uppercase character.';
 		}
 		return errors;
 	};

@@ -127,7 +127,7 @@ export function ScheduleDialog({
 			}
 			const meeting: MeetingCreateUpdate = {
 				name: `15-min 1-on-1 | ${loggedInUser.first_name} <-> ${otherUser.firstName}`,
-				invites: [otherUser.username.toLowerCase()],
+				invites: [otherUser.username],
 				type_of: '1:1 Match',
 				time: processedTime,
 				organizer: loggedInUser.username || '',

@@ -5,6 +5,13 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+#! the createsu creates the admin user but it sort of fucked up the pk/id sync of users and socialprofiles
+#! so, the code contains fixes for that
+
+"""
+- using invite_profile to reference the SP user; not a nasty workaround but modification from existing code.
+"""
+
 
 class MeetingSerializer(serializers.ModelSerializer):
     invites = ReadWriteSerializerMethodField()
@@ -41,22 +48,24 @@ class MeetingSerializer(serializers.ModelSerializer):
             case True:
                 invite = value["invites"][0]
                 is_self = invite == self.context["request"].user.id
-                is_in_circle = invite in self.context[
-                    "request"
-                ].user.socialprofile.circle_symmetrical.all().values_list(
-                    "pk", flat=True
+                invite_profile = SocialProfile.objects.get(user=invite).pk
+                circle_list = (
+                    self.context["request"]
+                    .user.socialprofile.matches_this_week.all()
+                    .values_list("id", flat=True)
                 )
-                is_match = invite in self.context[
-                    "request"
-                ].user.socialprofile.matches_this_week.all().values_list(
-                    "pk", flat=True
+                match_list = (
+                    self.context["request"]
+                    .user.socialprofile.matches_this_week.all()
+                    .values_list("id", flat=True)
                 )
+
+                is_in_circle = invite_profile in circle_list
+                is_match = invite_profile in match_list
                 match (is_in_circle or is_match or is_self):
                     case True:
                         self.context["request"].data["invites"].append(
-                            SocialProfile.objects.get(
-                                user=self.context["request"].user
-                            ).pk
+                            User.objects.get(username=self.context["request"].user).id
                         )
                     case _:
                         raise serializers.ValidationError(
