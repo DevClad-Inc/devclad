@@ -19,9 +19,6 @@ export default function CTA() {
 							</button>
 						</div>
 					</div>
-					<p className="font-monoNext mt-5 text-center text-sm text-orange-100 sm:p-3 lg:p-2">
-						50% off any future plans for the first 1000 users.
-					</p>
 				</div>
 			</div>
 		</div>
