@@ -3,6 +3,14 @@ from .base import *
 
 DATABASES = {
     "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+"""
+DATABASES = {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": config("POSTGRES_DB"),
         "USER": config("POSTGRES_USER"),
@@ -12,6 +20,7 @@ DATABASES = {
         "OPTIONS": {"sslmode": "require"},
     }
 }
+"""
 
 AUTH_PASSWORD_VALIDATORS = [
     {
