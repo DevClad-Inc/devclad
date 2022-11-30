@@ -81,7 +81,7 @@ function Landing(): JSX.Element {
 
 export default function Home() {
 	return (
-		<div className="font-sansNext relative">
+		<div className="font-sansNext">
 			<Head>
 				<title>DevClad | Social Workspace Platform for Developers ⚡️</title>
 			</Head>

@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
