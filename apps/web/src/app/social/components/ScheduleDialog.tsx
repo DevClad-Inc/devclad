@@ -28,7 +28,13 @@ const useDaysOfWeek = () => {
 		days.push({
 			day: day.name.slice(0, 3),
 			date: new Date(new Date().setDate(new Date().getDate() + day.id - today)),
-			month: new Date().toLocaleString('default', { month: 'short' }),
+			month:
+				new Date(new Date().setDate(new Date().getDate() + day.id - today)).getMonth() ===
+				new Date().getMonth()
+					? new Date().toLocaleString('default', { month: 'short' })
+					: new Date(
+							new Date().setDate(new Date().getDate() + day.id - today)
+					  ).toLocaleString('default', { month: 'short' }),
 			id: day.id,
 		});
 	}
