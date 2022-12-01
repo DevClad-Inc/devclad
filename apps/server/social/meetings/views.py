@@ -67,9 +67,9 @@ def meetings(request: Request, uid: str) -> Response:
                     )
                     serializer = MeetingSerializer(meetings, many=True)
                     for meeting in serializer.data:
-                        meeting["organizer"] = SocialProfile.objects.get(
-                            pk=meeting["organizer"]
-                        ).user.username
+                        meeting["organizer"] = User.objects.get(
+                            id=meeting["organizer"]
+                        ).username
                 case "past":
                     meetings = (
                         MeetingRoom.objects.filter(
@@ -83,9 +83,9 @@ def meetings(request: Request, uid: str) -> Response:
                     )
                     serializer = MeetingSerializer(meetings, many=True)
                     for meeting in serializer.data:
-                        meeting["organizer"] = SocialProfile.objects.get(
+                        meeting["organizer"] = User.objects.get(
                             pk=meeting["organizer"]
-                        ).user.username
+                        ).username
                 case _:
                     try:
                         uuid.UUID(uid)
