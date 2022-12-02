@@ -23,7 +23,7 @@ export default function PasswordResetForm(): JSX.Element {
 			errors.password2 = 'Required';
 		}
 		if (values.password1.length < 8) {
-			errors.password1 = 'Password must be at least 10 characters.';
+			errors.password1 = 'Password must be at least 8 characters.';
 		}
 		if (values.password1 !== values.password2 && values.password2.length > 0) {
 			errors.password1 = 'Passwords do not match';
