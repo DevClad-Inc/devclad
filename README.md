@@ -48,3 +48,12 @@ _Exception_: Code within shared packages.
 
 Nixpack is used to deploy the server.
 _Why are there 2 of those files?_ The one at the root of the repo is used for deployment. The one in `apps/server` is used for local builds. They are almost identical.
+
+<div>
+<h2>Sponsors</h2>
+<a href="https://flightcontrol.dev">
+<img src="https://user-images.githubusercontent.com/41021374/205244735-0746e0b3-6c26-4ca2-ad06-80ba2e5372e5.png" width=50%>
+</a>
+<br>
+Shout out to <a href="https://flightcontrol.dev">FlightControl</a> for sponsoring <a href="https://devclad.com">DevClad's</a> API deployments to AWS Fargate on the Team Plan for free.
+</div>
