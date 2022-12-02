@@ -81,12 +81,13 @@ export default function SignupForm({
 			if (resp.status === 201) {
 				if (firstName && email) {
 					setEmailVal(email);
-					await sendMail(firstName, email);
+					await sendMail(firstName, email).then(() => {
+						setSignedUp(true);
+					});
 				}
 				if (signupErrorState) {
 					setSignupErrorState('');
 				}
-				setSignedUp(true);
 			} else if (resp.response.status === 400) {
 				setSubmitting(false);
 				const { data } = resp.response;
