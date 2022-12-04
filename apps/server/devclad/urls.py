@@ -21,6 +21,7 @@ def health_check(request):
 
 urlpatterns = [
     path(config("ADMIN_URL", default="admin/"), admin.site.urls),
+    path("internal/", include("users.internal.urls")),
     path("auth/token/refresh/", RefreshToken.as_view(), name="refresh_token"),
     path("auth/login/", Login.as_view(), name="login"),
     path("auth/", include("dj_rest_auth.urls")),
