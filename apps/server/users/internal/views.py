@@ -22,7 +22,9 @@ def manage_users(request: Request) -> Response:
     match request.method:
         case "GET":
             if status := request.query_params.get("status"):
-                user_statuses = UserStatus.objects.filter(approved=status)
+                user_statuses = UserStatus.objects.exclude(
+                    submitted="Not Submitted"
+                ).filter(status=status)
                 users = [user_status.user for user_status in user_statuses]
                 status_serializer = UserStatusSerializer(user_statuses, many=True)
                 user_serializer = UserSerializer(users, many=True)
