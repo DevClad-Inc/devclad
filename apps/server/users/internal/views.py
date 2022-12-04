@@ -21,11 +21,18 @@ User = get_user_model()
 def manage_users(request: Request) -> Response:
     match request.method:
         case "GET":
+            if status := request.query_params.get("status"):
+                user_statuses = UserStatus.objects.filter(approved=status)
+                users = [user_status.user for user_status in user_statuses]
+                status_serializer = UserStatusSerializer(user_statuses, many=True)
+                user_serializer = UserSerializer(users, many=True)
+                return Response(
+                    {"users": user_serializer.data, "statuses": status_serializer.data}
+                )
             users = User.objects.all()
             user_statuses = UserStatus.objects.all()
             serializer = UserSerializer(users, many=True)
             status_serializer = UserStatusSerializer(user_statuses, many=True)
-
             return Response(
                 {"users": serializer.data, "user_statuses": status_serializer.data}
             )
