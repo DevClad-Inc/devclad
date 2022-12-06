@@ -7,6 +7,51 @@ import type { MeetingEmail } from '@/app/stream/types';
  * uses sendgrid mailing server
  */
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const sgMail = require('@sendgrid/mail');
+// this is documented somewhere in the github discussion of vercel;
+// when using vite with vercel serverless, use the require syntax
+
+type EmailType = 'welcome' | 'reminder';
+
+const sendEmail = async (
+	req: VercelRequest,
+	devMode: boolean,
+	res: VercelResponse,
+	emailT: EmailType
+) => {
+	const { firstName, email } = req.body;
+	let templateId;
+	switch (emailT) {
+		case 'welcome':
+			templateId = process.env.SENDGRID_WELCOME_TID;
+			break;
+		case 'reminder':
+			templateId = process.env.SENDGRID_REMINDER_TID;
+			break;
+		default:
+			templateId = process.env.SENDGRID_WELCOME_TID;
+	}
+	const message = {
+		to: devMode ? 'arth@letterbolt.app' : email,
+		from: 'Arth from DevClad<arth@devclad.com>',
+		template_id: templateId,
+		dynamic_template_data: {
+			firstName,
+		},
+	};
+	sgMail
+		.send(message)
+		.then(() => {
+			res.status(200).json({
+				message: 'Email sent successfully',
+			});
+		})
+		.catch((error: unknown) => {
+			res.status(400).json({ message: 'Email not sent', error });
+		});
+};
+
 const verifyToken = async (token: string): Promise<boolean> => {
 	const apiURL = process.env.VITE_API_URL;
 	const apiHeaders = {
@@ -25,11 +70,6 @@ const verifyToken = async (token: string): Promise<boolean> => {
 	}
 	return false;
 };
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const sgMail = require('@sendgrid/mail');
-// this is documented somewhere in the github discussion of vercel;
-// when using vite with vercel serverless, use the require syntax
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	const { headers } = req;
@@ -76,25 +116,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					break;
 				}
 				case req.url?.startsWith('/api/email/welcome/'): {
-					const { firstName, email } = req.body;
-					const message = {
-						to: devMode ? 'arth@letterbolt.app' : email,
-						from: 'Arth from DevClad<arth@devclad.com>',
-						template_id: process.env.SENDGRID_WELCOME_TID,
-						dynamic_template_data: {
-							firstName,
-						},
-					};
-					sgMail
-						.send(message)
-						.then(() => {
-							res.status(200).json({
-								message: 'Email sent successfully',
-							});
-						})
-						.catch((error: unknown) => {
-							res.status(400).json({ message: 'Email not sent', error });
-						});
+					sendEmail(req, devMode, res, 'welcome');
+					break;
+				}
+				case req.url?.startsWith('/api/email/remind/'): {
+					sendEmail(req, devMode, res, 'reminder');
 					break;
 				}
 				default: {
