@@ -12,7 +12,7 @@ const sgMail = require('@sendgrid/mail');
 // this is documented somewhere in the github discussion of vercel;
 // when using vite with vercel serverless, use the require syntax
 
-type EmailType = 'welcome' | 'reminder';
+type EmailType = 'welcome' | 'reminder' | 'approved' | 'rejected';
 
 const sendEmail = async (
 	req: VercelRequest,
@@ -29,6 +29,8 @@ const sendEmail = async (
 		case 'reminder':
 			templateId = process.env.SENDGRID_REMINDER_TID;
 			break;
+		case 'approved':
+			templateId = process.env.SENDGRID_APPROVED_TID;
 		default:
 			templateId = process.env.SENDGRID_WELCOME_TID;
 	}
@@ -121,6 +123,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 				}
 				case req.url?.startsWith('/api/email/remind/'): {
 					sendEmail(req, devMode, res, 'reminder');
+					break;
+				}
+				case req.url?.startsWith('/api/email/approved/'): {
+					sendEmail(req, devMode, res, 'approved');
 					break;
 				}
 				default: {
