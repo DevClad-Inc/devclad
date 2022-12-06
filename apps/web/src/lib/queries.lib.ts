@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { QueryClient } from '@tanstack/react-query';
-import { checkAdmin, checkTokenType, getUser } from '@/services/auth.services';
+import { checkTokenType, getUser } from '@/services/auth.services';
 import {
 	getAdded,
 	getAdditionalSP,
@@ -85,12 +85,6 @@ export const additionalSPQuery = (token: string) => ({
 export const statusQuery = (token: string, qc: QueryClient) => ({
 	queryKey: ['userStatus'],
 	queryFn: () => getStatus(token, qc),
-	enabled: checkTokenType(token),
-});
-
-export const adminQuery = (token: string, qc: QueryClient) => ({
-	queryKey: ['admin'],
-	queryFn: () => checkAdmin(token, qc),
 	enabled: checkTokenType(token),
 });
 

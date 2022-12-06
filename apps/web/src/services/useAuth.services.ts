@@ -2,7 +2,6 @@ import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { User } from '@/lib/types.lib';
 import {
-	adminQuery,
 	githubDataQuery,
 	refreshQuery,
 	statusQuery,
@@ -10,6 +9,7 @@ import {
 	tokenQuery,
 	userQuery,
 } from '@/lib/queries.lib';
+import { adminQuery } from '@/services/internal.services';
 import { checkTokenType } from './auth.services';
 
 export type StreamTokenT = {
