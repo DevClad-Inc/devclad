@@ -34,6 +34,7 @@ import { StreamProvider } from '@/context/Stream.context';
 import { DEVELOPMENT } from '@/services/auth.services';
 import { FourOFour } from './app/404';
 import { GithubAuth } from './app/Github';
+import Internal from './app/internal';
 
 axios.defaults.headers.common.withCredentials = true;
 
@@ -190,6 +191,11 @@ const router = createBrowserRouter([
 						element: <Password />,
 					},
 				],
+			},
+			{
+				path: 'internal',
+				hasErrorBoundary: true,
+				element: <Internal />,
 			},
 		],
 	},

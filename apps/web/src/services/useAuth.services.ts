@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { User } from '@/lib/types.lib';
 import {
+	adminQuery,
 	githubDataQuery,
 	refreshQuery,
 	statusQuery,
@@ -85,6 +86,21 @@ export function useApproved(): { approved: boolean; status: string } {
 		status.current = data.data.status;
 	}
 	return { approved: approved.current, status: status.current };
+}
+
+export function useAdmin(): { admin: boolean } {
+	const admin = React.useRef<boolean>(false);
+	const { token } = useAuth();
+	const qc = useQueryClient();
+	const { isSuccess, data } = useQuery({
+		...adminQuery(token, qc),
+		enabled: checkTokenType(token),
+	});
+
+	if (isSuccess && data && admin !== data.data.is_admin) {
+		admin.current = data.data.is_admin;
+	}
+	return { admin: admin.current };
 }
 
 export function useGithubOAuth(): {

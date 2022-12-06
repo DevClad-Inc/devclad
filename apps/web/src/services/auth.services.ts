@@ -183,6 +183,26 @@ export async function verifyToken(token: string, queryClient?: QueryClient): Pro
 		});
 }
 
+export const checkAdmin = async (token: string, qc: QueryClient) => {
+	const url = `${API_URL}/internal/check-admin/`;
+	let isTokenVerified = false;
+	if (checkTokenType(token)) {
+		isTokenVerified = await verifyToken(token, qc);
+	}
+	if (isTokenVerified) {
+		return axios({
+			method: 'GET',
+			url,
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+			},
+		});
+	}
+	return null;
+};
+
 export async function getUser(token: string, queryClient?: QueryClient) {
 	const url = `${API_URL}/auth/user/`;
 	let isTokenVerified = false;

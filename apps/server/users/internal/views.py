@@ -49,3 +49,16 @@ def manage_users(request: Request) -> Response:
             return Response(serializer.errors, status=400)
         case _:
             return Response(status=405)
+
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def check_admin(request: Request) -> Response:
+    match request.method:
+        case "GET":
+            if request.user.is_superuser:
+                return Response({"is_admin": True})
+            # this shouldn't happen since the decorator should prevent it
+            return Response({"is_admin": False})
+        case _:
+            return Response(status=405)

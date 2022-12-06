@@ -31,6 +31,7 @@ const sendEmail = async (
 			break;
 		case 'approved':
 			templateId = process.env.SENDGRID_APPROVED_TID;
+			break;
 		default:
 			templateId = process.env.SENDGRID_WELCOME_TID;
 	}
