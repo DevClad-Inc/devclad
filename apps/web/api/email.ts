@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'isomorphic-fetch';
 import { convertTimeZone } from '@devclad/lib';
-import type { MeetingEmail } from '@/app/stream/types';
+import type { MeetingEmail, EmailType } from '@/app/stream/types';
 /*
  * Function to send email invites to users after they have scheduled a meeting
  * uses sendgrid mailing server
@@ -11,8 +11,6 @@ import type { MeetingEmail } from '@/app/stream/types';
 const sgMail = require('@sendgrid/mail');
 // this is documented somewhere in the github discussion of vercel;
 // when using vite with vercel serverless, use the require syntax
-
-type EmailType = 'welcome' | 'reminder' | 'approved' | 'rejected';
 
 const sendEmail = async (
 	req: VercelRequest,
@@ -122,7 +120,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					sendEmail(req, devMode, res, 'welcome');
 					break;
 				}
-				case req.url?.startsWith('/api/email/remind/'): {
+				case req.url?.startsWith('/api/email/reminder/'): {
 					sendEmail(req, devMode, res, 'reminder');
 					break;
 				}

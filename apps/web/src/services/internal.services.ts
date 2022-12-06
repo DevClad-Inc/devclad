@@ -26,7 +26,7 @@ export const getUsers = async (token: string, filter?: string) => {
 	let url;
 
 	if (filter) {
-		url = `${API_URL}/internal/users/?status=${filter}`;
+		url = `${API_URL}/internal/users?status=${filter}`;
 	} else {
 		url = `${API_URL}/internal/users`;
 	}

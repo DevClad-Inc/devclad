@@ -36,3 +36,5 @@ export interface MeetingEmail {
 	inviteName: string;
 	timeZone: string;
 }
+
+export type EmailType = 'welcome' | 'reminder' | 'approved' | 'rejected';
