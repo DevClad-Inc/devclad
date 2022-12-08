@@ -191,7 +191,7 @@ export default function SignupForm({
 							<ErrorMessage
 								name="lastName"
 								component="div"
-								className="dark:text-mistyRose0 text-bloodRed text-sm"
+								className="text-bloodRed dark:text-mistyRose text-sm"
 							/>
 						</label>
 					</div>
