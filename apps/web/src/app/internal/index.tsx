@@ -31,18 +31,32 @@ export default function Internal() {
 	const reminderURL = '/api/email/reminder/';
 	const approvedURL = '/api/email/approved/';
 
-	const handleMail = async (firstName: string, email: string, type: EmailType) => {
+	const handleMail = async (
+		firstName: string,
+		email: string,
+		type: EmailType,
+		id?: number,
+		approved?: string
+	) => {
 		let url;
+		let body;
 		if (type === 'reminder') {
 			url = reminderURL;
-		} else {
-			url = approvedURL;
-		}
-		try {
-			await axios.post(url, {
+			body = {
 				firstName,
 				email,
-			});
+			};
+		} else {
+			url = approvedURL;
+			body = {
+				firstName,
+				email,
+				id,
+				approved,
+			};
+		}
+		try {
+			await axios.post(url, body);
 		} catch {
 			toast.custom(<Error error="Error sending emails" />);
 		}
@@ -110,7 +124,13 @@ export default function Internal() {
 									<div className="-ml-px flex w-0 flex-1">
 										<PrimaryButton
 											onClick={() => {
-												handleMail(user.first_name, user.email, 'approved');
+												handleMail(
+													user.first_name,
+													user.email,
+													'approved',
+													user.id,
+													'True'
+												);
 											}}
 											className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md border border-transparent py-4 text-sm font-medium text-neutral-300 hover:text-neutral-100"
 										>

@@ -139,7 +139,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 						headers: { ...apiHeaders },
 						body: {
 							id: req.body.id,
-							status: req.body.status,
 							approved: req.body.approved,
 						},
 					}).then((resp: Response) => {
