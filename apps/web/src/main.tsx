@@ -193,7 +193,7 @@ const router = createBrowserRouter([
 				],
 			},
 			{
-				path: 'interal',
+				path: 'internal',
 				hasErrorBoundary: true,
 				element: <Internal />,
 			},

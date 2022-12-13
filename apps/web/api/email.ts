@@ -125,6 +125,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					break;
 				}
 				case req.url?.startsWith('/api/email/approved/'): {
+					const { id, approved } = req.body as { id: string; approved: string };
 					let apiHeaders;
 					if (tokenValue) {
 						apiHeaders = {
@@ -137,14 +138,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					await fetch(`${process.env.VITE_API_URL}/internal/users`, {
 						method: 'PATCH',
 						headers: { ...apiHeaders },
-						body: {
-							id: req.body.id,
-							approved: req.body.approved,
-						},
+						body: JSON.stringify({
+							id,
+							approved,
+						}),
 					}).then((resp: Response) => {
 						if (resp.status === 200) {
 							sendEmail(req, devMode, res, 'approved');
 						} else {
+							console.log(resp);
 							res.status(400).json({ message: 'Email not sent' });
 						}
 					});
