@@ -125,7 +125,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					break;
 				}
 				case req.url?.startsWith('/api/email/approved/'): {
-					sendEmail(req, devMode, res, 'approved');
+					let apiHeaders;
+					if (tokenValue) {
+						apiHeaders = {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${tokenValue}`,
+						};
+					} else {
+						res.status(401).json({ error: 'Unauthorized' }).end();
+					}
+					await fetch(`${process.env.VITE_API_URL}/internal/users`, {
+						method: 'PATCH',
+						headers: { ...apiHeaders },
+						body: {
+							id: req.body.id,
+							status: req.body.status,
+							approved: req.body.approved,
+						},
+					}).then((resp: Response) => {
+						if (resp.status === 200) {
+							sendEmail(req, devMode, res, 'approved');
+						} else {
+							res.status(400).json({ message: 'Email not sent' });
+						}
+					});
 					break;
 				}
 				default: {

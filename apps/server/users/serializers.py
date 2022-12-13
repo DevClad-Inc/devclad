@@ -236,6 +236,12 @@ class UserStatusSerializer(serializers.ModelSerializer):
         read_only_fields = ["approved"]
 
 
+class AdminUserStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserStatus
+        fields = ["status", "approved"]
+
+
 class SubscriptionStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubscriptionStatus

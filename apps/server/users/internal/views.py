@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from users.models import UserStatus
-from users.serializers import UserStatusSerializer
+from users.serializers import UserStatusSerializer, AdminUserStatusSerializer
 from users.internal.serializers import UserSerializer
 
 from django.contrib.auth import get_user_model
@@ -41,7 +41,9 @@ def manage_users(request: Request) -> Response:
         case "PATCH":
             user = User.objects.get(id=request.data["id"])
             user_status = UserStatus.objects.get(user=user)
-            serializer = UserStatusSerializer(user_status, data=request.data)
+            serializer = AdminUserStatusSerializer(
+                user_status, data=request.data, partial=True
+            )
 
             if serializer.is_valid():
                 serializer.save()
