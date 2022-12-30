@@ -24,7 +24,6 @@ export const checkAdmin = async (token: string, qc: QueryClient) => {
 
 export const getUsers = async (token: string, filter?: string) => {
 	let url;
-
 	if (filter) {
 		url = `${API_URL}/internal/users?status=${filter}`;
 	} else {

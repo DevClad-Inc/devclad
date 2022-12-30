@@ -1,33 +1,33 @@
 import React from 'react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { checkIOS, checkMacOS } from '@devclad/lib';
+// import { checkIOS, checkMacOS } from '@devclad/lib';
 import Link from 'next/link';
 import CTA from '@/components/CTA';
 
 // network, build, and ship
-function NBS(): JSX.Element {
-	return (
-		<div className="flex justify-center text-center">
-			<div
-				className="space-y-4 rounded-xl border-[1px] border-neutral-800 bg-black p-3
-         shadow-2xl shadow-orange-900/20 duration-1000 hover:border-neutral-400 sm:max-w-prose"
-			>
-				<h2 className="space-x-4 text-4xl sm:text-6xl md:text-5xl xl:text-6xl">
-					<span aria-label="Network">🤝</span>
-					<span aria-label="Build">🛠️</span>
-					<span aria-label="Ship">🚀</span>
-				</h2>
-			</div>
-		</div>
-	);
-}
+// function NBS(): JSX.Element {
+// 	return (
+// 		<div className="flex justify-center text-center">
+// 			<div
+// 				className="space-y-4 rounded-xl border-[1px] border-neutral-800 bg-black p-3
+//          shadow-2xl shadow-orange-900/20 duration-1000 hover:border-neutral-400 sm:max-w-prose"
+// 			>
+// 				<h2 className="space-x-4 text-4xl sm:text-6xl md:text-5xl xl:text-6xl">
+// 					<span aria-label="Network">🤝</span>
+// 					<span aria-label="Build">🛠️</span>
+// 					<span aria-label="Ship">🚀</span>
+// 				</h2>
+// 			</div>
+// 		</div>
+// 	);
+// }
 
 export default function Hero(): JSX.Element {
-	const [isIOSMacOS, setIsIOSMacOS] = React.useState(false);
+	// const [isIOSMacOS, setIsIOSMacOS] = React.useState(false);
 
-	React.useEffect(() => {
-		setIsIOSMacOS(checkIOS() || checkMacOS());
-	}, []);
+	// React.useEffect(() => {
+	// 	setIsIOSMacOS(checkIOS() || checkMacOS());
+	// }, []);
 
 	return (
 		<div className="lg:overflow-hidden">
@@ -127,7 +127,7 @@ export default function Hero(): JSX.Element {
 										</h1>
 									</div>
 								</div>
-								{isIOSMacOS && <NBS />}
+								{/* {isIOSMacOS && <NBS />} */}
 							</div>
 							<CTA />
 						</div>
