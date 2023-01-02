@@ -8,7 +8,8 @@ const nextConfig = {
 		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 	},
 	images: {
-		domains: ['imagedelivery.net'],
+		dangerouslyAllowSVG: true,
+		domains: ['imagedelivery.net', 'api.producthunt.com'],
 	},
 	headers: async () => {
 		return [

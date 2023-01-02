@@ -41,6 +41,7 @@ export default function Hero(): JSX.Element {
 									beta
 								</span>
 							</h1>
+
 							<span className="mb-2 flex sm:justify-center">
 								<h1 className="font-monoNext mt-1 w-fit text-xl font-bold text-orange-50">
 									<span className="flex sm:block md:block lg:block">
