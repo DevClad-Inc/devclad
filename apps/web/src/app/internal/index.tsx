@@ -100,7 +100,7 @@ export default function Internal() {
 									</span>
 								</div>
 
-								<p className="mt-1 truncate text-sm text-neutral-500">
+								<p className="mt-2 truncate text-sm text-neutral-500">
 									{user.email}
 								</p>
 							</div>
