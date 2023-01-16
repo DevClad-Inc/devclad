@@ -4,7 +4,6 @@
 	"private": true,
 	"version": "0.0.0",
 	"license": "Elastic License 2.0",
-	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
