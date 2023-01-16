@@ -35,7 +35,7 @@ export default function CTA() {
 							>
 								<Image
 									src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=373373&theme=dark"
-									alt="DevClad - Meet&#0032;other&#0032;developers&#0032;1&#0058;1&#0044;&#0032;team&#0032;up&#0032;on&#0032;projects&#0032;&#0043;&#0032;hackathons&#0046; | Product Hunt"
+									alt="DevClad - Meet&#0032;other&#0032;developers&#0032;1&#0058;1&#0032;&#0045;&#0032;team&#0032;up&#0032;on&#0032;projects&#0032;&#0043;&#0032;hackathons | Product Hunt"
 									width={250}
 									height={54}
 								/>
