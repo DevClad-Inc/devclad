@@ -16,7 +16,7 @@ const features = [
 	{
 		name: '1 on 1 Matches',
 		description:
-			'Every week, you are matched with another dev using an ML algorithm for a 1 on 1 call.',
+			'Every week, you are matched with another dev automatically for a 1 on 1 call.',
 		icon: HandRaisedIcon,
 	},
 	{
