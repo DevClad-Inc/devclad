@@ -1,4 +1,4 @@
-import { Channel, DefaultGenerics } from 'stream-chat';
+import type { Channel, DefaultGenerics } from 'stream-chat';
 
 export type LtOrGtType = 'id_lte' | 'id_gte' | undefined;
 

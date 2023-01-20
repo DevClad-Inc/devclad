@@ -62,6 +62,25 @@ export default function Internal() {
 		}
 	};
 
+	const handleBulkMail = async (type: EmailType) => {
+		if (data !== null) {
+			const users = data?.data;
+			for (const user of users) {
+				if (type === 'reminder') {
+					handleMail(user.first_name, user.email, type);
+				} else {
+					handleMail(
+						user.first_name,
+						user.email,
+						type,
+						user.id,
+						queryParams.get('status') === 'True' ? 'False' : 'True'
+					);
+				}
+			}
+		}
+	};
+
 	interface ManagedUser {
 		id: number;
 		email: string;
@@ -100,21 +119,15 @@ export default function Internal() {
 									</p>
 									<div className="mt-6">
 										<PrimaryButton
-											onClick={() => {
-												handleMail(
-													'',
-													'',
-													'approved',
-													0,
-													queryParams.get('status') === 'True'
-														? 'False'
-														: 'True'
-												);
-											}}
+											onClick={() =>
+												queryParams.get('status') === 'True'
+													? handleBulkMail('approved')
+													: handleBulkMail('reminder')
+											}
 										>
 											{queryParams.get('status') === 'True'
-												? 'Send Unapproved Emails'
-												: 'Send Approved Emails'}
+												? 'Send Approved Emails'
+												: 'Send Reminder Emails'}
 										</PrimaryButton>
 									</div>
 								</div>
