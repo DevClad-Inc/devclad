@@ -34,7 +34,7 @@ const sendEmail = async (
 			templateId = process.env.SENDGRID_WELCOME_TID;
 	}
 	const message = {
-		to: devMode ? 'arth@letterbolt.app' : email,
+		to: devMode ? 'arth@pulp.sh' : email,
 		from: 'Arth from DevClad<arth@devclad.com>',
 		template_id: templateId,
 		dynamic_template_data: {
@@ -93,7 +93,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 					const { typeOf, time, uid, email, firstName, inviteName, timeZone } =
 						Email as MeetingEmail;
 					const message = {
-						to: devMode ? 'arth@letterbolt.app' : email,
+						to: devMode ? 'arth@pulp.sh' : email,
 						from: 'Arth from DevClad<arth@devclad.com>',
 						template_id: process.env.SENDGRID_SCHEDULE_TID,
 						dynamic_template_data: {
@@ -173,7 +173,7 @@ case 1
     "typeOf": "1:1 Match",
     "time": "2022-11-24T03:45:00Z",
     "uid": "56fb3f59-584a-4ad0-b2e4-58ba8736a9fb",
-    "email": "arth@letterbolt.app",
+    "email": "arth@pulp.sh",
     "firstName": "Arth",
     "inviteName": "Pat",
     "timeZone": "Asia/Kolkata"
@@ -183,7 +183,7 @@ case 2
 
 {
 	firstName: 'Arth',
-	email: 'arth@letterbolt.app',
+	email: 'arth@pulp.sh',
 }
 
 */

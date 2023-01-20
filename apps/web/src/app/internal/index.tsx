@@ -64,11 +64,13 @@ export default function Internal() {
 
 	const handleBulkMail = async (type: EmailType) => {
 		if (data !== null) {
-			const users = data?.data;
-			for (const user of users) {
-				if (type === 'reminder') {
+			const users = data?.data.users as ManagedUser[];
+			if (type === 'reminder') {
+				for (const user of users) {
 					handleMail(user.first_name, user.email, type);
-				} else {
+				}
+			} else {
+				for (const user of users) {
 					handleMail(
 						user.first_name,
 						user.email,
