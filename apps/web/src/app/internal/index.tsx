@@ -7,7 +7,7 @@ import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useAdmin, useAuth } from '@/services/useAuth.services';
 import { usersQuery } from '@/services/internal.services';
 import { Error } from '@/components/Feedback';
-import { EmailType } from '../stream/types';
+import type { EmailType } from '../stream/types';
 import { PrimaryButton } from '@/lib/Buttons.lib';
 
 export default function Internal() {
@@ -26,7 +26,7 @@ export default function Internal() {
 		uQ = usersQuery(token);
 	}
 
-	const { data, isLoading, isSuccess } = useQuery({ ...uQ });
+	const { data, isLoading, isSuccess, isFetching } = useQuery({ ...uQ });
 
 	const reminderURL = '/api/email/reminder/';
 	const approvedURL = '/api/email/approved/';
@@ -95,7 +95,7 @@ export default function Internal() {
 		return <div>Not authorized</div>;
 	}
 
-	if (isLoading) {
+	if (isLoading || isFetching) {
 		return <div>Loading...</div>;
 	}
 

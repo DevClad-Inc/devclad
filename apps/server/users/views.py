@@ -68,39 +68,41 @@ class Login(LoginView):
 
         response = Response(serializer.data, status=status.HTTP_200_OK)
         if getattr(settings, "REST_USE_JWT", False):
-            cookie_name = getattr(settings, "JWT_AUTH_COOKIE", None)
-            access_token_expiration = (
-                timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
-            )
-            cookie_secure = getattr(settings, "JWT_AUTH_SECURE", False)
-            cookie_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", True)
-            cookie_samesite = getattr(settings, "JWT_AUTH_SAMESITE", "Lax")
-            refresh_cookie_name = getattr(settings, "JWT_AUTH_REFRESH_COOKIE", None)
-            refresh_cookie_path = getattr(settings, "JWT_AUTH_REFRESH_COOKIE_PATH", "/")
-            cookie_domain = getattr(settings, "SESSION_COOKIE_DOMAIN", None)
-            if cookie_name:
-                response.set_cookie(
-                    cookie_name,
-                    self.access_token,
-                    expires=access_token_expiration,
-                    secure=cookie_secure,
-                    domain=cookie_domain,
-                    httponly=cookie_httponly,
-                    samesite=cookie_samesite,
-                )
-
-            if refresh_cookie_name:
-                response.set_cookie(
-                    refresh_cookie_name,
-                    self.refresh_token,
-                    expires=refresh_token_expiration,
-                    secure=cookie_secure,
-                    domain=cookie_domain,
-                    httponly=cookie_httponly,
-                    samesite=cookie_samesite,
-                    path=refresh_cookie_path,
-                )
+            self.get_response_op(response, refresh_token_expiration)
         return response
+
+    # TODO Rename this here and in `get_response`
+    def get_response_op(self, response, refresh_token_expiration):
+        cookie_name = getattr(settings, "JWT_AUTH_COOKIE", None)
+        access_token_expiration = timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
+        cookie_secure = getattr(settings, "JWT_AUTH_SECURE", False)
+        cookie_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", True)
+        cookie_samesite = getattr(settings, "JWT_AUTH_SAMESITE", "Lax")
+        refresh_cookie_name = getattr(settings, "JWT_AUTH_REFRESH_COOKIE", None)
+        refresh_cookie_path = getattr(settings, "JWT_AUTH_REFRESH_COOKIE_PATH", "/")
+        cookie_domain = getattr(settings, "SESSION_COOKIE_DOMAIN", None)
+        if cookie_name:
+            response.set_cookie(
+                cookie_name,
+                self.access_token,
+                expires=access_token_expiration,
+                secure=cookie_secure,
+                domain=cookie_domain,
+                httponly=cookie_httponly,
+                samesite=cookie_samesite,
+            )
+
+        if refresh_cookie_name:
+            response.set_cookie(
+                refresh_cookie_name,
+                self.refresh_token,
+                expires=refresh_token_expiration,
+                secure=cookie_secure,
+                domain=cookie_domain,
+                httponly=cookie_httponly,
+                samesite=cookie_samesite,
+                path=refresh_cookie_path,
+            )
 
 
 class RefreshToken(TokenRefreshView):
@@ -108,26 +110,30 @@ class RefreshToken(TokenRefreshView):
         response = super().post(request, *args, **kwargs)
         cookie_name = getattr(settings, "JWT_AUTH_COOKIE", None)
         if cookie_name and response.status_code == 200 and "access" in response.data:
-            cookie_secure = getattr(settings, "JWT_AUTH_SECURE", False)
-            cookie_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", True)
-            cookie_samesite = getattr(settings, "JWT_AUTH_SAMESITE", "Lax")
-
-            # read domain from django settings
-            cookie_domain = getattr(settings, "SESSION_COOKIE_DOMAIN", None)
-
-            token_expiration = timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
-            response.set_cookie(
-                cookie_name,
-                response.data["access"],
-                expires=token_expiration,
-                secure=cookie_secure,
-                domain=cookie_domain,
-                httponly=cookie_httponly,
-                samesite=cookie_samesite,
-            )
-
-            response.data["access_token_expiration"] = token_expiration
+            self.refresh_op(response, cookie_name)
         return response
+
+    # TODO Rename this here and in `post`
+    def refresh_op(self, response, cookie_name):
+        cookie_secure = getattr(settings, "JWT_AUTH_SECURE", False)
+        cookie_httponly = getattr(settings, "JWT_AUTH_HTTPONLY", True)
+        cookie_samesite = getattr(settings, "JWT_AUTH_SAMESITE", "Lax")
+
+        # read domain from django settings
+        cookie_domain = getattr(settings, "SESSION_COOKIE_DOMAIN", None)
+
+        token_expiration = timezone.now() + jwt_settings.ACCESS_TOKEN_LIFETIME
+        response.set_cookie(
+            cookie_name,
+            response.data["access"],
+            expires=token_expiration,
+            secure=cookie_secure,
+            domain=cookie_domain,
+            httponly=cookie_httponly,
+            samesite=cookie_samesite,
+        )
+
+        response.data["access_token_expiration"] = token_expiration
 
 
 class VerifyEmailView(APIView, ConfirmEmailView):
